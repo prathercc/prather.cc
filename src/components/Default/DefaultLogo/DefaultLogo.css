@@ -1,0 +1,10 @@
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 4s linear;
+    }
+  }
+  @keyframes App-logo-spin {
+    0% {transform: translateY(-8vh);}
+    50% {transform: translateY(-6vh);}
+    100% {transform: translateY(-8vh);}
+  }
