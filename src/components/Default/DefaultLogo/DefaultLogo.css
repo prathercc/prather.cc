@@ -1,10 +1,33 @@
 @media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-      animation: App-logo-spin infinite 4s linear;
-    }
+  .App-logo-large {
+    animation: App-logo-spin-large infinite 4s linear;
   }
-  @keyframes App-logo-spin {
-    0% {transform: translateY(-8vh);}
-    50% {transform: translateY(-6vh);}
-    100% {transform: translateY(-8vh);}
+}
+@keyframes App-logo-spin-large {
+  0% {
+    transform: translateY(-8vh);
   }
+  50% {
+    transform: translateY(-7vh);
+  }
+  100% {
+    transform: translateY(-8vh);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo-small {
+    animation: App-logo-spin-small infinite 4s linear;
+  }
+}
+@keyframes App-logo-spin-small {
+  0% {
+    transform: translateY(-3vh);
+  }
+  50% {
+    transform: translateY(-2vh);
+  }
+  100% {
+    transform: translateY(-3vh);
+  }
+}
