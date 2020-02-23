@@ -5,20 +5,20 @@ import DefaultLogo from "./components/Default/DefaultLogo/DefaultLogo";
 import { BreakpointProvider } from "react-socks";
 
 const appStyle = {
-  "background-color": "#666666",
-  "min-height": "100vh",
+  backgroundColor: "#666666",
+  minHeight: "100vh",
   display: "flex",
-  "flex-direction": "column",
-  "align-items": "center",
-  "justify-content": "center",
-  "font-size": "calc(10px + 2vmin)",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  fontSize: "calc(10px + 2vmin)",
   color: "white"
 };
 
 function App() {
   return (
     <BreakpointProvider>
-      <div style={{ "text-align": "center" }}>
+      <div style={{ textAlign: "center" }}>
         <DefaultAppBar></DefaultAppBar>
         <header style={appStyle}>
           <DefaultLogo></DefaultLogo>
