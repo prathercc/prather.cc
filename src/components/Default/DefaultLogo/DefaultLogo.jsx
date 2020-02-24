@@ -1,9 +1,9 @@
-import React from "react";
-import "./DefaultLogo.css";
-import { Image, Container, Row, Col } from "react-bootstrap";
-import prathdevtext from "./prathdevtext.png";
-import prathdevsplat from "./prathdevsplat.png";
-import { Breakpoint } from "react-socks";
+import React from 'react';
+import './DefaultLogo.css';
+import { Image, Container, Row, Col } from 'react-bootstrap';
+import prathdevtext from '../../../images/prathdevtext.png';
+import prathdevsplat from '../../../images/prathdevsplat.png';
+import { Breakpoint } from 'react-socks';
 
 const PrathImage = props => {
   const { imageObj } = props;
@@ -15,7 +15,7 @@ const PrathImage = props => {
             src={prathdevsplat}
             style={{
               width: imageObj.splatWidth,
-              height: "auto"
+              height: 'auto'
             }}
             rounded
           ></Image>
@@ -28,7 +28,7 @@ const PrathImage = props => {
             className={imageObj.imageClass}
             style={{
               width: imageObj.textWidth,
-              height: "auto"
+              height: 'auto'
             }}
             src={prathdevtext}
           ></Image>
@@ -40,9 +40,9 @@ const PrathImage = props => {
 
 function DefaultLogo() {
   const imageObj = {
-    splatWidth: "30vw",
-    textWidth: "15vw",
-    imageClass: "App-logo-large"
+    splatWidth: '30vw',
+    textWidth: '15vw',
+    imageClass: 'App-logo-large'
   };
   return (
     <>
@@ -50,9 +50,9 @@ function DefaultLogo() {
         <PrathImage
           imageObj={{
             ...imageObj,
-            imageClass: "App-logo-small",
-            splatWidth: "60vw",
-            textWidth: "30vw"
+            imageClass: 'App-logo-small',
+            splatWidth: '60vw',
+            textWidth: '30vw'
           }}
         />
       </Breakpoint>
