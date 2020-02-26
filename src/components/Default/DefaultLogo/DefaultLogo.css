@@ -5,13 +5,13 @@
 }
 @keyframes App-logo-spin-large {
   0% {
-    transform: translateY(-6vh);
+    transform: translateY(-4vh);
   }
   50% {
-    transform: translateY(-5vh);
+    transform: translateY(-3vh);
   }
   100% {
-    transform: translateY(-6vh);
+    transform: translateY(-4vh);
   }
 }
 
@@ -22,12 +22,12 @@
 }
 @keyframes App-logo-spin-small {
   0% {
-    transform: translateY(-3vh);
-  }
-  50% {
     transform: translateY(-2vh);
   }
+  50% {
+    transform: translateY(-1vh);
+  }
   100% {
-    transform: translateY(-3vh);
+    transform: translateY(-2vh);
   }
 }

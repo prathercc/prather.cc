@@ -1,8 +1,8 @@
 import React from 'react';
 import './DefaultLogo.css';
 import { Image, Container, Row, Col } from 'react-bootstrap';
-import prathdevtext from '../../../images/prathdevtext.png';
-import prathdevsplat from '../../../images/prathdevsplat.png';
+import prathercctext from '../../../images/prathercctext.png';
+import pratherccsplat from '../../../images/pratherccsplat.png';
 import { Breakpoint } from 'react-socks';
 
 const PrathImage = props => {
@@ -12,7 +12,7 @@ const PrathImage = props => {
       <Row>
         <Col>
           <Image
-            src={prathdevsplat}
+            src={pratherccsplat}
             style={{
               width: imageObj.splatWidth,
               height: 'auto'
@@ -30,7 +30,7 @@ const PrathImage = props => {
               width: imageObj.textWidth,
               height: 'auto'
             }}
-            src={prathdevtext}
+            src={prathercctext}
           ></Image>
         </Col>
       </Row>
@@ -41,7 +41,7 @@ const PrathImage = props => {
 function DefaultLogo() {
   const imageObj = {
     splatWidth: '30vw',
-    textWidth: '15vw',
+    textWidth: '20vw',
     imageClass: 'App-logo-large'
   };
   return (
@@ -52,7 +52,7 @@ function DefaultLogo() {
             ...imageObj,
             imageClass: 'App-logo-small',
             splatWidth: '60vw',
-            textWidth: '30vw'
+            textWidth: '50vw'
           }}
         />
       </Breakpoint>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, Image } from 'react-bootstrap';
 import { Breakpoint } from 'react-socks';
-import prathdevsplat from '../../../images/prathdevsplat.png';
+import pratherccsplat from '../../../images/pratherccsplat.png';
 
 const BannerImage = props => {
   const { width } = props;
@@ -9,7 +9,7 @@ const BannerImage = props => {
     <Image
       roundedCircle
       style={{ height: 'auto', width, backgroundColor: '#666666' }}
-      src={prathdevsplat}
+      src={pratherccsplat}
     ></Image>
   );
 };
