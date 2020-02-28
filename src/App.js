@@ -1,26 +1,42 @@
-import React from "react";
-import DefaultAppBar from "./components/Default/DefaultAppBar/DefaultAppBar";
-import "bootstrap/dist/css/bootstrap.min.css";
-import DefaultLogo from "./components/Default/DefaultLogo/DefaultLogo";
-import { BreakpointProvider } from "react-socks";
-
-const appStyle = {
-  textAlign: "center",
-  fontFamily: "Tlwg Typist Bold Oblique",
-  backgroundColor: "#666666",
-  minHeight: "100vh"
-};
+import React, { useContext } from 'react';
+import DefaultAppBar from './components/Default/DefaultAppBar/DefaultAppBar';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import DefaultLogo from './components/Default/DefaultLogo/DefaultLogo';
+import { BreakpointProvider } from 'react-socks';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import ClickServant from './components/Software/ClickServant/ClickServant';
+import { AppContext } from './AppContext';
 
 function App() {
+  const appSettings = useContext(AppContext);
+  const { fontStyle, bgColor, textColor } = appSettings;
+  console.log(appSettings);
   return (
-    <BreakpointProvider>
-      <div style={appStyle}>
-        <DefaultAppBar></DefaultAppBar>
-        <header style={{ marginTop: "15vh" }}>
-          <DefaultLogo />
-        </header>
-      </div>
-    </BreakpointProvider>
+    <AppContext.Provider value={appSettings}>
+      <Router>
+        <BreakpointProvider>
+          <div
+            style={{
+              fontFamily: fontStyle,
+              backgroundColor: bgColor,
+              color: textColor,
+              minHeight: '100vh',
+              textAlign: 'center'
+            }}
+          >
+            <DefaultAppBar />
+            <Switch>
+              <Route path='/software'>
+                <ClickServant />
+              </Route>
+              <Route path='/'>
+                <DefaultLogo />
+              </Route>
+            </Switch>
+          </div>
+        </BreakpointProvider>
+      </Router>
+    </AppContext.Provider>
   );
 }
 
