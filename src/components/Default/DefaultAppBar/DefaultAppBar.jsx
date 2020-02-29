@@ -1,22 +1,27 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Navbar, Nav, Image } from 'react-bootstrap';
 import { Breakpoint } from 'react-socks';
 import pratherccsplat from '../../../images/pratherccsplat.png';
+import { AppContext } from '../../../AppContext';
 
 const BannerImage = props => {
+  const appSettings = useContext(AppContext);
+  const { bgColor } = appSettings;
   const { width } = props;
   return (
     <Image
       roundedCircle
-      style={{ height: 'auto', width, backgroundColor: '#666666' }}
+      style={{ height: 'auto', width, backgroundColor: bgColor }}
       src={pratherccsplat}
     ></Image>
   );
 };
 
 function DefaultAppBar() {
+  const appSettings = useContext(AppContext);
+  const { fgColor } = appSettings;
   return (
-    <Navbar style={{ fontSize: 'calc(10px + 2vmin)' }} bg='dark' variant='dark'>
+    <Navbar style={{ fontSize: 'calc(10px + 2vmin)', backgroundColor:fgColor }}  variant='dark'>
       <Navbar.Brand>
         <Breakpoint xlarge up>
           <BannerImage width='4vw' />

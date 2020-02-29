@@ -23,7 +23,7 @@ function ClickServant() {
             title: 'Click-Servant',
             description: appDescription,
             image: `${clickservantMainView}`,
-            imageWidth: { desktop: '35vw', mobile: '35vw' },
+            imageWidth: { desktop: '30vw', mobile: '35vw' },
             thumbnail: `${poico5}`,
             thumbnailWidth: { desktop: '3vw', mobile: '3vw' }
           }}

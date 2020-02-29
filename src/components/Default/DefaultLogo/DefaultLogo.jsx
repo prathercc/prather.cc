@@ -45,7 +45,7 @@ function DefaultLogo() {
     imageClass: 'App-logo-large'
   };
   return (
-    <>
+    <header style={{ marginTop: '15vh' }}>
       <Breakpoint large down>
         <PrathImage
           imageObj={{
@@ -59,7 +59,7 @@ function DefaultLogo() {
       <Breakpoint xlarge up>
         <PrathImage imageObj={{ ...imageObj }} />
       </Breakpoint>
-    </>
+    </header>
   );
 }
 

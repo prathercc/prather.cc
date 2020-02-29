@@ -16,7 +16,6 @@ function ClickServant(props) {
 const DesktopView = props => {
   const appSettings = useContext(AppContext);
   const { fgColorDetail } = appSettings;
-  console.log(appSettings);
   const { titleObject } = props;
   return (
     <Card
