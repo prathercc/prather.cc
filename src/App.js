@@ -10,7 +10,6 @@ import { AppContext } from './AppContext';
 function App() {
   const appSettings = useContext(AppContext);
   const { fontStyle, bgColor, textColor } = appSettings;
-  console.log(appSettings);
   return (
     <AppContext.Provider value={appSettings}>
       <Router>
@@ -22,7 +21,7 @@ function App() {
               color: textColor,
               minHeight: '100vh',
               textAlign: 'center',
-              border:'1px solid transparent'
+              border: '1px solid transparent'
             }}
           >
             <DefaultAppBar />
