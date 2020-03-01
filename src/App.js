@@ -21,7 +21,8 @@ function App() {
               backgroundColor: bgColor,
               color: textColor,
               minHeight: '100vh',
-              textAlign: 'center'
+              textAlign: 'center',
+              border:'1px solid transparent'
             }}
           >
             <DefaultAppBar />
