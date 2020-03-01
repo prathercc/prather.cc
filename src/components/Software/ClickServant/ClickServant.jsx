@@ -23,6 +23,7 @@ function ClickServant() {
           marginTop: '5vh'
         }}
       >
+        <MaintenanceAlert applicationName='Click-Servant' />
         <SoftwareTitle
           titleObject={{
             title: 'Click-Servant',
@@ -33,7 +34,6 @@ function ClickServant() {
             thumbnailWidth: { desktop: '3vw', mobile: '6vw' }
           }}
         />
-        <MaintenanceAlert applicationName='Click-Servant' />
 
         <SoftwareDescription
           descriptionObject={{

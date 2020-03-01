@@ -8,7 +8,7 @@ function MaintenanceAlert(props) {
       {maintained ? (
         <Alert
           variant='success'
-          dismissible
+          dismissible={false}
           onClose={() => setAlertOpen(false)}
           show={alertOpen}
         >
@@ -17,7 +17,7 @@ function MaintenanceAlert(props) {
       ) : (
         <Alert
           variant='danger'
-          dismissible
+          dismissible={false}
           onClose={() => setAlertOpen(false)}
           show={alertOpen}
         >
