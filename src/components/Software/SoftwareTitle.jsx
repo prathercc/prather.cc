@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { Image, Card } from 'react-bootstrap';
+import { Image, Card, Container } from 'react-bootstrap';
 import { Breakpoint } from 'react-socks';
 import { AppContext } from '../../AppContext';
 
-function ClickServant(props) {
+function SoftwareTitle(props) {
   return (
     <>
       <Breakpoint xlarge down>
@@ -25,24 +25,25 @@ const DesktopView = props => {
         alignItems: 'center'
       }}
     >
-      <Card.Header>
+      <Container>
         <Image
           rounded
           src={titleObject.thumbnail}
           style={{ width: titleObject.thumbnailWidth.desktop }}
         />
         {titleObject.title}
-      </Card.Header>
-      <Card.Img
-        style={{ width: titleObject.imageWidth.desktop }}
-        variant='top'
-        src={titleObject.image}
-      />
+      </Container>
+
       <Card.Body style={{ fontSize: 'calc(5px + 2vmin)' }}>
         <Card.Text>{titleObject.description}</Card.Text>
+        <Card.Img
+          style={{ width: titleObject.imageWidth.desktop }}
+          variant='top'
+          src={titleObject.image}
+        />
       </Card.Body>
     </Card>
   );
 };
 
-export default ClickServant;
+export default SoftwareTitle;
