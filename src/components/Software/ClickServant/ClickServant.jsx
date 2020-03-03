@@ -10,12 +10,14 @@ import SoftwareTitle from '../SoftwareTitle';
 import SoftwareDescription from '../SoftwareDescription';
 import MaintenanceAlert from '../MaintenanceAlert';
 import { AppContext } from '../../../AppContext';
+import { useCurrentBreakpointName } from 'react-socks';
 
 function ClickServant() {
   const appSettings = useContext(AppContext);
   const { fgColor } = appSettings;
+  const breakpoint = useCurrentBreakpointName();
   return (
-    <Container>
+    <Container style={{ width: breakpoint === 'xlarge' ? '50vw' : '' }}>
       <Jumbotron
         bg='dark'
         style={{
