@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import DefaultAppBar from './components/Default/DefaultAppBar/DefaultAppBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DefaultLogo from './components/Default/DefaultLogo/DefaultLogo';
+import DefaultFooter from './components/Default/DefaultFooter/DefaultFooter';
 import { BreakpointProvider } from 'react-socks';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ClickServant from './components/Software/ClickServant/ClickServant';
@@ -14,6 +15,7 @@ function App() {
     <AppContext.Provider value={appSettings}>
       <Router>
         <BreakpointProvider>
+        <DefaultAppBar />
           <div
             style={{
               fontFamily: fontStyle,
@@ -24,7 +26,6 @@ function App() {
               border: '1px solid transparent'
             }}
           >
-            <DefaultAppBar />
             <Switch>
               <Route path='/software'>
                 <ClickServant />
@@ -34,6 +35,7 @@ function App() {
               </Route>
             </Switch>
           </div>
+          <DefaultFooter />
         </BreakpointProvider>
       </Router>
     </AppContext.Provider>
