@@ -1,4 +1,38 @@
 @media (prefers-reduced-motion: no-preference) {
+  .App-splat-to-color {
+    animation: App-splat-to-color forwards 0.5s linear;
+  }
+}
+@keyframes App-splat-to-color {
+  0% {
+    filter: grayscale(100%);
+  }
+  50% {
+    filter: grayscale(50%);
+  }
+  100% {
+    filter: grayscale(0%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-splat-to-dark {
+    animation: App-splat-to-dark forwards 0.5s linear;
+  }
+}
+@keyframes App-splat-to-dark {
+  0% {
+    filter: grayscale(0%);
+  }
+  50% {
+    filter: grayscale(50%);
+  }
+  100% {
+    filter: grayscale(100%);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
   .App-logo-large {
     animation: App-logo-spin-large infinite 4s linear;
   }
