@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import DefaultAppBar from './components/Default/DefaultAppBar/DefaultAppBar';
+import AppBar from './components/Mainpage/AppBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import DefaultLogo from './components/Default/DefaultLogo/DefaultLogo';
-import DefaultFooter from './components/Default/DefaultFooter/DefaultFooter';
+import Display from './components/Mainpage/Display/Display';
+import Footer from './components/Mainpage/Footer';
 import { BreakpointProvider } from 'react-socks';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ClickServant from './components/Software/ClickServant/ClickServant';
@@ -15,7 +15,7 @@ function App() {
     <AppContext.Provider value={appSettings}>
       <Router>
         <BreakpointProvider>
-        <DefaultAppBar />
+        <AppBar />
           <div
             style={{
               fontFamily: fontStyle,
@@ -31,11 +31,11 @@ function App() {
                 <ClickServant />
               </Route>
               <Route path='/'>
-                <DefaultLogo />
+                <Display />
               </Route>
             </Switch>
           </div>
-          <DefaultFooter />
+          <Footer />
         </BreakpointProvider>
       </Router>
     </AppContext.Provider>

@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { Image, Card, Container, Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 import { Breakpoint } from 'react-socks';
-import { AppContext } from '../../../AppContext';
+import { AppContext } from '../../AppContext';
 
-function DefaultFooter(props) {
+function Footer(props) {
   return (
     <>
       <Breakpoint xlarge down>
@@ -23,4 +23,4 @@ const DesktopView = props => {
   );
 };
 
-export default DefaultFooter;
+export default Footer;

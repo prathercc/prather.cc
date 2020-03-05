@@ -1,26 +1,18 @@
-import React, { useState } from 'react';
-import './DefaultLogo.css';
+import React from 'react';
+import './Display.css';
 import { Image, Container, Row, Col } from 'react-bootstrap';
 import prathercctext from '../../../images/prathercctext.png';
 import { Breakpoint } from 'react-socks';
-import pratherccsplatBright from '../../../images/pratherccsplatABS1.png';
+import Logo from '../../Logo/Logo';
 
 const PrathImage = props => {
   const { imageObj } = props;
-  const [splatClass, setSplatClass] = useState('');
 
   return (
     <Container>
       <Row>
         <Col>
-          <Image
-            roundedCircle
-            className={splatClass}
-            src={pratherccsplatBright}
-            style={{ width: imageObj.splatWidth, filter: 'grayscale(100%)' }}
-            onMouseEnter={() => setSplatClass('App-splat-to-color')}
-            onMouseLeave={() => setSplatClass('App-splat-to-dark')}
-          />
+          <Logo imageObj={imageObj} />
         </Col>
       </Row>
       <Row>
@@ -40,10 +32,10 @@ const PrathImage = props => {
   );
 };
 
-function DefaultLogo() {
+function Display() {
   const imageObj = {
     splatWidth: '30vw',
-    textWidth: '20vw',
+    textWidth: '25vw',
     imageClass: 'App-logo-large'
   };
   return (
@@ -65,4 +57,4 @@ function DefaultLogo() {
   );
 }
 
-export default DefaultLogo;
+export default Display;

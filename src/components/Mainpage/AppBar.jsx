@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { Navbar, Nav, Image, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Breakpoint } from 'react-socks';
-import { AppContext } from '../../../AppContext';
+import { AppContext } from '../../AppContext';
 
-function DefaultAppBar() {
+function AppBar() {
   return (
     <>
       <Breakpoint large down>
@@ -63,4 +63,4 @@ const MobileView = () => {
   );
 };
 
-export default DefaultAppBar;
+export default AppBar;
