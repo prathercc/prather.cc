@@ -39,8 +39,8 @@ function Display() {
     imageClass: 'App-logo-large'
   };
   return (
-    <header style={{ marginTop: '15vh' }}>
-      <Breakpoint large down>
+    <header style={{ marginTop: '20vh' }}>
+      <Breakpoint medium down>
         <PrathImage
           imageObj={{
             ...imageObj,
@@ -49,6 +49,13 @@ function Display() {
             textWidth: '50vw'
           }}
         />
+      </Breakpoint>
+      <Breakpoint large only>
+        <PrathImage imageObj={{ 
+          ...imageObj,
+          splatWidth: '50vw',
+          textWidth: '45vw'
+        }} />
       </Breakpoint>
       <Breakpoint xlarge up>
         <PrathImage imageObj={{ ...imageObj }} />
