@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Container, Jumbotron, Col, Row, ListGroup } from 'react-bootstrap';
+import { Container, Col, Row, ListGroup } from 'react-bootstrap';
 import clickservantMainView from '../../../images/software/clickservant/clickservantMainView.jpg';
 import clickservantIntervalClicker from '../../../images/software/clickservant/clickservantIntervalClicker.jpg';
 import clickservantIntervalKeyer from '../../../images/software/clickservant/clickservantIntervalKeyer.jpg';
@@ -8,72 +8,61 @@ import clickservantLoad from '../../../images/software/clickservant/clickservant
 import poico5 from '../../../images/software/clickservant/poico5.png';
 import SoftwareTitle from '../SoftwareTitle';
 import SoftwareDescription from '../SoftwareDescription';
+import SoftwarePage from '../SoftwarePage';
 import MaintenanceAlert from '../MaintenanceAlert';
 import { AppContext } from '../../../AppContext';
-import { useCurrentBreakpointName } from 'react-socks';
 
 function ClickServant() {
-  const appSettings = useContext(AppContext);
-  const { fgColor } = appSettings;
-  const breakpoint = useCurrentBreakpointName();
   return (
-    <Container style={{ width: breakpoint === 'xlarge' ? '50vw' : '' }}>
-      <Jumbotron
-        bg='dark'
-        style={{
-          backgroundColor: fgColor,
-          marginTop: '5vh'
+    <SoftwarePage>
+      <MaintenanceAlert applicationName='Click-Servant' />
+      <SoftwareTitle
+        titleObject={{
+          title: 'Click-Servant',
+          description: appTitleInfo,
+          image: `${clickservantMainView}`,
+          imageWidth: { desktop: '30vw', mobile: '50vw' },
+          thumbnail: `${poico5}`,
+          thumbnailWidth: { desktop: '3vw', mobile: '6vw' }
         }}
-      >
-        <MaintenanceAlert applicationName='Click-Servant' />
-        <SoftwareTitle
-          titleObject={{
-            title: 'Click-Servant',
-            description: appTitleInfo,
-            image: `${clickservantMainView}`,
-            imageWidth: { desktop: '30vw', mobile: '50vw' },
-            thumbnail: `${poico5}`,
-            thumbnailWidth: { desktop: '3vw', mobile: '6vw' }
-          }}
-        />
+      />
 
-        <SoftwareDescription
-          descriptionObject={{
-            image: `${clickservantIntervalClicker}`,
-            imageWidth: { desktop: '25vw', mobile: '50vw' },
-            description: desc1,
-            content: content1
-          }}
-        />
+      <SoftwareDescription
+        descriptionObject={{
+          image: `${clickservantIntervalClicker}`,
+          imageWidth: { desktop: '25vw', mobile: '50vw' },
+          description: desc1,
+          content: content1
+        }}
+      />
 
-        <SoftwareDescription
-          descriptionObject={{
-            image: `${clickservantIntervalKeyer}`,
-            imageWidth: { desktop: '20vw', mobile: '50vw' },
-            description: desc2,
-            content: content2
-          }}
-        />
+      <SoftwareDescription
+        descriptionObject={{
+          image: `${clickservantIntervalKeyer}`,
+          imageWidth: { desktop: '20vw', mobile: '50vw' },
+          description: desc2,
+          content: content2
+        }}
+      />
 
-        <SoftwareDescription
-          descriptionObject={{
-            image: `${clickservantSave}`,
-            imageWidth: { desktop: '25vw', mobile: '50vw' },
-            description: desc3,
-            content: content3
-          }}
-        />
+      <SoftwareDescription
+        descriptionObject={{
+          image: `${clickservantSave}`,
+          imageWidth: { desktop: '25vw', mobile: '50vw' },
+          description: desc3,
+          content: content3
+        }}
+      />
 
-        <SoftwareDescription
-          descriptionObject={{
-            image: `${clickservantLoad}`,
-            imageWidth: { desktop: '25vw', mobile: '50vw' },
-            description: desc4,
-            content: content4
-          }}
-        />
-      </Jumbotron>
-    </Container>
+      <SoftwareDescription
+        descriptionObject={{
+          image: `${clickservantLoad}`,
+          imageWidth: { desktop: '25vw', mobile: '50vw' },
+          description: desc4,
+          content: content4
+        }}
+      />
+    </SoftwarePage>
   );
 }
 const ListItem = props => {
