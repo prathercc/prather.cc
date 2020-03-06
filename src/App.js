@@ -7,6 +7,7 @@ import { BreakpointProvider } from 'react-socks';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import ClickServant from './components/Software/ClickServant/ClickServant';
 import { AppContext } from './AppContext';
+import background from './images/background.png';
 
 function App() {
   const appSettings = useContext(AppContext);
@@ -15,7 +16,7 @@ function App() {
     <AppContext.Provider value={appSettings}>
       <Router>
         <BreakpointProvider>
-        <AppBar />
+          <AppBar />
           <div
             style={{
               fontFamily: fontStyle,
@@ -23,7 +24,8 @@ function App() {
               color: textColor,
               minHeight: '100vh',
               textAlign: 'center',
-              border: '1px solid transparent'
+              border: '1px solid transparent',
+              backgroundImage: `url(${background})`
             }}
           >
             <Switch>
