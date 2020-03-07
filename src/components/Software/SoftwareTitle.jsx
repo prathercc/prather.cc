@@ -67,7 +67,7 @@ const DesktopView = props => {
           src={titleObject.thumbnail}
           style={{ width: titleObject.thumbnailWidth.desktop }}
         />
-        {titleObject.title}
+        <strong>{titleObject.title}</strong>
       </Container>
 
       <Card.Body style={{ fontSize: 'calc(5px + 2vmin)' }}>

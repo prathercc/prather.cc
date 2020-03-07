@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Badge } from 'react-bootstrap';
 import { Breakpoint } from 'react-socks';
 import { AppContext } from '../../AppContext';
 import Logo from '../Logo/Logo';
@@ -43,10 +43,10 @@ const DesktopView = () => {
         <Nav.Link href='/software'>Software</Nav.Link>
       </Nav>
       <Navbar.Brand style={{ right: '1vw', position: 'fixed' }}>
-      <Logo imageObj={{ ...imageObj, alwaysFast: true }} />
-        <Navbar.Text style={{ color: 'white', cursor: 'default' }}>
-          prather.cc
-        </Navbar.Text>
+          <Logo imageObj={{ ...imageObj, alwaysFast: true }} />
+          <Navbar.Text style={{ color: 'white', cursor: 'default' }}>
+            <strong>prather.cc</strong>
+          </Navbar.Text>
       </Navbar.Brand>
     </Navbar>
   );
@@ -75,10 +75,10 @@ const MobileView = () => {
         </NavDropdown>
       </Nav>
       <Navbar.Brand style={{ right: '1vw', position: 'fixed' }}>
-        <Logo imageObj={{ ...imageObj, alwaysFast: true }} />
-        <Navbar.Text style={{ color: 'white', cursor: 'default' }}>
-          prather.cc
-        </Navbar.Text>
+      <Logo imageObj={{ ...imageObj, alwaysFast: true }} />
+          <Navbar.Text style={{ color: 'white', cursor: 'default' }}>
+            <strong>prather.cc</strong>
+          </Navbar.Text>
       </Navbar.Brand>
     </Navbar>
   );

@@ -17,7 +17,12 @@ const DesktopView = props => {
   const appSettings = useContext(AppContext);
   const { fgColorDetail } = appSettings;
   return (
-    <Navbar style={{ backgroundColor: fgColorDetail, height: '15vh' }}>
+    <Navbar
+      style={{
+        backgroundColor: fgColorDetail,
+        height: '15vh',
+      }}
+    >
       <Nav></Nav>
     </Navbar>
   );

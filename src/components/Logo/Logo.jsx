@@ -13,7 +13,7 @@ function Logo(props) {
       className={alwaysFast ? 'App-splat-to-mobile-fast' : dispClass}
       src={pratherccsplatBright}
       style={{ width: imageObj.splatWidth, filter: 'grayscale(100%)' }}
-      onMouseEnter={() => setDispClass(alwaysFast ? 'App-splat-to-mobile-fast' : 'App-splat-to-mobile-fast')}
+      onMouseEnter={() => setDispClass('App-splat-to-mobile-fast')}
       onMouseLeave={() => setDispClass(alwaysFast ? 'App-splat-to-mobile-fast' : 'App-splat-to-mobile')}
     />
   );

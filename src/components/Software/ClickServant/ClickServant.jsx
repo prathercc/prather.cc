@@ -76,10 +76,14 @@ const ListItem = props => {
 let appTitleInfo = (
   <Container>
     <strong>Click-Servant</strong>&nbsp;is a&nbsp;
-    <a href='https://docs.microsoft.com/en-us/cpp/dotnet' rel='nofollow'>
+    <a
+      href='https://docs.microsoft.com/en-us/cpp/dotnet'
+      rel='noopener noreferrer'
+      target='_blank'
+    >
       C++/CLI
     </a>
-    &nbsp;application that is used to automate mouse &amp; key events.
+    &nbsp;application that automates mouse &amp; key events at a given interval.
   </Container>
 );
 
