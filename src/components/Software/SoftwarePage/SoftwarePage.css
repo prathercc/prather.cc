@@ -1,0 +1,13 @@
+@media (prefers-reduced-motion: no-preference) {
+    .Page-fade-in {
+      animation: Page-fade-in forwards 0.5s linear;
+    }
+  }
+  @keyframes Page-fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+        opacity: 0.9;
+    }
+  }

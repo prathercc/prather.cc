@@ -12,7 +12,7 @@ import {
 import { Breakpoint } from 'react-socks';
 import { AppContext } from '../../AppContext';
 
-function SoftwareDescription(props) {
+function SoftwareFeature(props) {
   return (
     <>
       <Breakpoint xlarge up>
@@ -134,4 +134,4 @@ const DesktopView = props => {
   );
 };
 
-export default SoftwareDescription;
+export default SoftwareFeature;

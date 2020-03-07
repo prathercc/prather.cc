@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { Container, Jumbotron } from 'react-bootstrap';
-import { AppContext } from '../../AppContext';
+import { AppContext } from '../../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
-
+import './SoftwarePage.css';
 function SoftwarePage(props) {
     const appSettings = useContext(AppContext);
     const { fgColor } = appSettings;
@@ -13,8 +13,10 @@ function SoftwarePage(props) {
         bg='dark'
         style={{
           backgroundColor: fgColor,
-          marginTop: '15vh'
+          marginTop: '15vh',
+          opacity:'0'
         }}
+        className='Page-fade-in'
       >
         {props.children}
       </Jumbotron>
