@@ -7,8 +7,8 @@ import clickservantSave from '../../../images/software/clickservant/clickservant
 import clickservantLoad from '../../../images/software/clickservant/clickservantLoad.jpg';
 import poico5 from '../../../images/software/clickservant/poico5.png';
 import SoftwareTitle from '../SoftwareTitle';
-import SoftwareDescription from '../SoftwareDescription';
-import SoftwarePage from '../SoftwarePage';
+import SoftwareFeature from '../SoftwareFeature';
+import SoftwarePage from '../SoftwarePage/SoftwarePage';
 import MaintenanceAlert from '../MaintenanceAlert';
 import { AppContext } from '../../../AppContext';
 
@@ -27,7 +27,7 @@ function ClickServant() {
         }}
       />
 
-      <SoftwareDescription
+      <SoftwareFeature
         descriptionObject={{
           image: `${clickservantIntervalClicker}`,
           imageWidth: { desktop: '25vw', mobile: '50vw' },
@@ -36,7 +36,7 @@ function ClickServant() {
         }}
       />
 
-      <SoftwareDescription
+      <SoftwareFeature
         descriptionObject={{
           image: `${clickservantIntervalKeyer}`,
           imageWidth: { desktop: '20vw', mobile: '50vw' },
@@ -45,7 +45,7 @@ function ClickServant() {
         }}
       />
 
-      <SoftwareDescription
+      <SoftwareFeature
         descriptionObject={{
           image: `${clickservantSave}`,
           imageWidth: { desktop: '25vw', mobile: '50vw' },
@@ -54,7 +54,7 @@ function ClickServant() {
         }}
       />
 
-      <SoftwareDescription
+      <SoftwareFeature
         descriptionObject={{
           image: `${clickservantLoad}`,
           imageWidth: { desktop: '25vw', mobile: '50vw' },
@@ -79,9 +79,7 @@ let appTitleInfo = (
     <a href='https://docs.microsoft.com/en-us/cpp/dotnet' rel='nofollow'>
       C++/CLI
     </a>
-    &nbsp;application that is used to automate mouse clicks &amp; key presses.
-    This application supports profile saving/loading so that preferred settings
-    may be shared or used again with ease.
+    &nbsp;application that is used to automate mouse &amp; key events.
   </Container>
 );
 
@@ -94,9 +92,7 @@ let desc1 = (
     </Row>
     <Row>
       <Col>
-        The&nbsp;<strong>Interval Clicker</strong>&nbsp;has two main features,
-        the&nbsp;<em>Main Interval</em>&nbsp;and an optional&nbsp;
-        <em>Sub-Interval</em>.
+        <em>Main Interval</em>&nbsp;and optional&nbsp;<em>Sub-Interval</em>
       </Col>
     </Row>
   </Container>
@@ -109,21 +105,13 @@ let content1 = (
       </Col>
     </Row>
     <ListGroup style={{ textAlign: 'left' }}>
+      <ListItem>Consumes time range in milliseconds.</ListItem>
       <ListItem>
-        The&nbsp;<em>Main Interval</em>&nbsp;takes a time range in milliseconds.
+        Random interval time is generated from the given range.
       </ListItem>
+      <ListItem>Mouse event is simulated at cursor location</ListItem>
       <ListItem>
-        A random interval time will be chosen from the given range and a timer
-        will be set.
-      </ListItem>
-      <ListItem>
-        After the timer hits zero, a click will be simulated where the mouse
-        cursor is positioned.
-      </ListItem>
-      <ListItem>
-        The&nbsp;<em>'R-CTRL Hot-Key'</em>&nbsp;check box will allow the user
-        the stop/start the&nbsp;<strong>Interval Clicker</strong>
-        &nbsp;by pressing the Right Ctrl key.
+        Optional start functionality with Right Ctrl key stroke.
       </ListItem>
     </ListGroup>
     <Row>
@@ -133,14 +121,11 @@ let content1 = (
     </Row>
     <ListGroup style={{ textAlign: 'left' }}>
       <ListItem>
-        Toggling&nbsp;<em>'Enable Multiple Clicks'</em>&nbsp;means that upon
-        every&nbsp;<em>Main Interval</em>&nbsp;more than one click will be
-        simulated.
+        Simulates more than one event on the&nbsp;<em>Main Interval </em>event.
       </ListItem>
       <ListItem>
-        The range of clicks is user supplied, randomly picked and for each of
-        these clicks, you may specify another random interval in milliseconds
-        before each random click event will fire.
+        Click range supplied by user determines the number of simulated mouse
+        events.
       </ListItem>
     </ListGroup>
   </Container>
@@ -155,8 +140,7 @@ let desc2 = (
     </Row>
     <Row>
       <Col>
-        The&nbsp;<strong>Interval Keyer</strong>&nbsp;currently supports only
-        a&nbsp;<em>Main Interval</em>.
+        <em>Main Interval only</em>
       </Col>
     </Row>
   </Container>
@@ -170,21 +154,13 @@ let content2 = (
       </Col>
     </Row>
     <ListGroup style={{ textAlign: 'left' }}>
+      <ListItem>Consumes a time range in milliseconds.</ListItem>
       <ListItem>
-        The&nbsp;<em>Main Interval</em>&nbsp;takes a time range in milliseconds.
+        Random interval time is generated from the given range.
       </ListItem>
+      <ListItem>Selected is simulated as key stroke.</ListItem>
       <ListItem>
-        A random interval time will be chosen from the given range and a timer
-        will be set.
-      </ListItem>
-      <ListItem>
-        After the timer hits zero, a key press with the selected key will be
-        simulated.
-      </ListItem>
-      <ListItem>
-        The&nbsp;<em>'R-SHIFT Hot-Key'</em>&nbsp;check box will allow the user
-        the stop/start the&nbsp;<strong>Interval Keyer</strong>&nbsp;by pressing
-        the Right Shift key.
+        Optional start functionality with Right Shift key stroke.
       </ListItem>
     </ListGroup>
   </Container>
