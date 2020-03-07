@@ -1,6 +1,6 @@
 @media (prefers-reduced-motion: no-preference) {
     .Page-fade-in {
-      animation: Page-fade-in forwards 0.5s linear;
+      animation: Page-fade-in forwards 0.1s linear;
     }
   }
   @keyframes Page-fade-in {
