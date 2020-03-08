@@ -5,7 +5,7 @@ import Display from './components/Mainpage/Display/Display';
 import Footer from './components/Mainpage/Footer';
 import { BreakpointProvider } from 'react-socks';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import ClickServant from './components/Software/ClickServant/ClickServant';
+import ClickServant from './components/Software/Applications/ClickServant/ClickServant';
 import { AppContext } from './AppContext';
 import background from './images/background.png';
 
