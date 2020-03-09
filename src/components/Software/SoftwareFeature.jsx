@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Image,
   Card,
@@ -77,8 +77,9 @@ const MobileView = props => {
 
 const DesktopView = props => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail } = appSettings;
+  const { fgColorDetail, fgColor } = appSettings;
   const { descriptionObject } = props;
+  const [bgColor, setBgColor] = useState(fgColorDetail);
   return (
     <Accordion>
       <Card
@@ -102,7 +103,11 @@ const DesktopView = props => {
                     </Popover>
                   }
                 >
-                  <Card.Header style={{ cursor: 'pointer' }}>
+                  <Card.Header
+                    onMouseEnter={() => setBgColor(fgColor)}
+                    onMouseLeave={() => setBgColor(fgColorDetail)}
+                    style={{ cursor: 'pointer', backgroundColor: bgColor }}
+                  >
                     {descriptionObject.description}
                   </Card.Header>
                 </OverlayTrigger>
