@@ -1,16 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Container, Col, Row, ListGroup } from 'react-bootstrap';
-import clickservantMainView from '../../../images/software/clickservant/clickservantMainView.jpg';
-import clickservantIntervalClicker from '../../../images/software/clickservant/clickservantIntervalClicker.jpg';
-import clickservantIntervalKeyer from '../../../images/software/clickservant/clickservantIntervalKeyer.jpg';
-import clickservantSave from '../../../images/software/clickservant/clickservantSave.jpg';
-import clickservantLoad from '../../../images/software/clickservant/clickservantLoad.jpg';
-import poico5 from '../../../images/software/clickservant/poico5.png';
-import SoftwareTitle from '../SoftwareTitle';
-import SoftwareFeature from '../SoftwareFeature';
-import SoftwarePage from '../SoftwarePage/SoftwarePage';
-import MaintenanceAlert from '../MaintenanceAlert';
-import { AppContext } from '../../../AppContext';
+import clickservantMainView from '../../../../images/software/clickservant/clickservantMainView.jpg';
+import clickservantIntervalClicker from '../../../../images/software/clickservant/clickservantIntervalClicker.jpg';
+import clickservantIntervalKeyer from '../../../../images/software/clickservant/clickservantIntervalKeyer.jpg';
+import clickservantSave from '../../../../images/software/clickservant/clickservantSave.jpg';
+import clickservantLoad from '../../../../images/software/clickservant/clickservantLoad.jpg';
+import poico5 from '../../../../images/software/clickservant/poico5.png';
+import SoftwareTitle from '../../SoftwareTitle';
+import SoftwareFeature from '../../SoftwareFeature';
+import SoftwarePage from '../../SoftwarePage/SoftwarePage';
+import MaintenanceAlert from '../../MaintenanceAlert';
+import SoftwareDownload from '../../SoftwareDownload';
 
 function ClickServant() {
   return (
@@ -25,6 +25,9 @@ function ClickServant() {
           thumbnail: `${poico5}`,
           thumbnailWidth: { desktop: '3vw', mobile: '6vw' }
         }}
+      />
+      <SoftwareDownload
+        dlObject={{ windowsObj: {link:'/', downloadName:'Windows Binary'}, linuxObj: null, macObj: null }}
       />
 
       <SoftwareFeature
