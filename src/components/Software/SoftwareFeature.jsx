@@ -27,8 +27,9 @@ function SoftwareFeature(props) {
 
 const MobileView = props => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail } = appSettings;
+  const { fgColorDetail, fgColor } = appSettings;
   const { descriptionObject } = props;
+  const [bgColor, setBgColor] = useState(fgColorDetail);
   return (
     <Accordion>
       <Card
@@ -44,7 +45,12 @@ const MobileView = props => {
           <Row>
             <Col>
               <Accordion.Toggle as={Card.Body} eventKey='0'>
-                <Card.Header style={{ cursor: 'pointer' }}>
+                <Card.Header
+                  onMouseEnter={() => setBgColor(fgColor)}
+                  onMouseLeave={() => setBgColor(fgColorDetail)}
+                  onClick={() => setBgColor(fgColorDetail)}
+                  style={{ cursor: 'pointer', backgroundColor: bgColor }}
+                >
                   {descriptionObject.description}
                 </Card.Header>
               </Accordion.Toggle>
