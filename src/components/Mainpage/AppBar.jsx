@@ -1,16 +1,16 @@
 import React, { useContext, useState } from 'react';
-import { Navbar, Nav, Dropdown } from 'react-bootstrap';
-import { Breakpoint } from 'react-socks';
+import { Navbar, Nav, Dropdown, Container } from 'react-bootstrap';
+import { Breakpoint, useCurrentBreakpointName } from 'react-socks';
 import { AppContext } from '../../AppContext';
 import Logo from '../Logo/Logo';
 
 function AppBar() {
   return (
     <>
-      <Breakpoint large down>
+      <Breakpoint small down>
         <MobileView />
       </Breakpoint>
-      <Breakpoint xlarge up>
+      <Breakpoint medium up>
         <DesktopView />
       </Breakpoint>
     </>
@@ -20,8 +20,9 @@ function AppBar() {
 const DesktopView = () => {
   const appSettings = useContext(AppContext);
   const { fgColorDetail, fontStyle } = appSettings;
+  const breakpoint = useCurrentBreakpointName();
   const imageObj = {
-    splatWidth: '4vw'
+    splatWidth: breakpoint === 'xlarge' ? '4vw' : '6vw'
   };
   return (
     <Navbar
@@ -33,17 +34,19 @@ const DesktopView = () => {
       variant='dark'
       fixed='top'
     >
-      <Nav style={{ alignItems: 'center' }}>
-        <CustomNavLink href='/'>Home</CustomNavLink>
-        <CustomNavLink disabled={true}> /</CustomNavLink>
-        <CustomNavLink href='/software'>Software</CustomNavLink>
-      </Nav>
-      <Navbar.Brand style={{ right: '1vw', position: 'fixed' }}>
-        <Logo imageObj={{ ...imageObj, alwaysFast: true }} />
-        <Navbar.Text style={{ color: 'white', cursor: 'default' }}>
-          <strong>prather.cc</strong>
-        </Navbar.Text>
-      </Navbar.Brand>
+      <Container style={{ textAlign: 'center' }}>
+        <Nav>
+          <CustomNavLink href='/'>Home</CustomNavLink>
+          <CustomNavLink disabled={true}> |</CustomNavLink>
+          <CustomNavLink href='/software'>Software</CustomNavLink>
+        </Nav>
+        <Navbar.Brand>
+          <Navbar.Text style={{ color: 'white', cursor: 'default', fontSize: 'calc(10px + 2vmin)', }}>
+            prather.cc
+          </Navbar.Text>
+          <Logo imageObj={imageObj} />
+        </Navbar.Brand>
+      </Container>
     </Navbar>
   );
 };
@@ -64,16 +67,18 @@ const MobileView = () => {
       variant='dark'
       fixed='top'
     >
-      <CustomNavDropDown>
-        <Dropdown.Item href='/'>Home</Dropdown.Item>
-        <Dropdown.Item href='/software'>Software</Dropdown.Item>
-      </CustomNavDropDown>
-      <Navbar.Brand style={{ right: '1vw', position: 'fixed' }}>
-        <Logo imageObj={{ ...imageObj, alwaysFast: true }} />
-        <Navbar.Text style={{ color: 'white', cursor: 'default' }}>
-          <strong>prather.cc</strong>
-        </Navbar.Text>
-      </Navbar.Brand>
+      <Container style={{ alignItem: 'center' }}>
+        <CustomNavDropDown>
+          <Dropdown.Item href='/'>Home</Dropdown.Item>
+          <Dropdown.Item href='/software'>Software</Dropdown.Item>
+        </CustomNavDropDown>
+        <Navbar.Brand>
+          <Navbar.Text style={{ color: 'white', cursor: 'default', fontSize: 'calc(10px + 2vmin)', }}>
+            prather.cc
+          </Navbar.Text>
+          <Logo imageObj={imageObj} />
+        </Navbar.Brand>
+      </Container>
     </Navbar>
   );
 };
@@ -84,15 +89,13 @@ const CustomNavDropDown = props => {
   const [activeColor, setActiveColor] = useState(textColor);
   return (
     <Nav
-      style={{ alignItems: 'center', color: activeColor, cursor:'default' }}
+      style={{ alignItems: 'center', color: activeColor, cursor: 'default' }}
       onMouseEnter={() => setActiveColor('grey')}
       onMouseLeave={() => setActiveColor(textColor)}
     >
       <Dropdown>
         <Dropdown.Toggle as={'NavLink'}>Navigate</Dropdown.Toggle>
-        <Dropdown.Menu>
-          {props.children}
-        </Dropdown.Menu>
+        <Dropdown.Menu>{props.children}</Dropdown.Menu>
       </Dropdown>
     </Nav>
   );
