@@ -10,9 +10,18 @@ import SoftwareTitle from '../../SoftwareTitle';
 import SoftwareFeature from '../../SoftwareFeature';
 import SoftwarePage from '../../SoftwarePage/SoftwarePage';
 import MaintenanceAlert from '../../MaintenanceAlert';
-import SoftwareDownload from '../../SoftwareDownload';
+import SoftwareDownloadButton from '../../SoftwareDownloadButton';
+import SoftwareDownloadOption from '../../SoftwareDownloadOption';
 
 function ClickServant() {
+  const compatibility = {
+    windows: false,
+    linux: false,
+    mac: false,
+    android: false,
+    ios: false
+  };
+
   return (
     <SoftwarePage>
       <MaintenanceAlert applicationName='Click-Servant' />
@@ -26,9 +35,11 @@ function ClickServant() {
           thumbnailWidth: { desktop: '3vw', mobile: '6vw' }
         }}
       />
-      <SoftwareDownload
-        dlObject={{ windowsObj: {link:'/', downloadName:'Windows Binary'}, linuxObj: null, macObj: null }}
-      />
+      <SoftwareDownloadButton
+        compatibility={{ ...compatibility, windows: true }}
+      >
+        <SoftwareDownloadOption link='/' name='Windows Executable (.EXE)' />
+      </SoftwareDownloadButton>
 
       <SoftwareFeature
         descriptionObject={{
