@@ -5,7 +5,7 @@ import { useCurrentBreakpointName } from 'react-socks';
 import './SoftwarePage.css';
 function SoftwarePage(props) {
     const appSettings = useContext(AppContext);
-    const { fgColor } = appSettings;
+    const { fgColor, fontStyle } = appSettings;
     const breakpoint = useCurrentBreakpointName();
   return (
 <Container style={{ width: breakpoint === 'xlarge' ? '50vw' : '' }}>
@@ -13,6 +13,7 @@ function SoftwarePage(props) {
         bg='dark'
         style={{
           backgroundColor: fgColor,
+          fontFamily:fontStyle,
           marginTop: '15vh',
           opacity:'0'
         }}

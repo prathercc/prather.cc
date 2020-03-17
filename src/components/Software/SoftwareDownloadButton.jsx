@@ -68,7 +68,7 @@ const CompatibilityTable = props => {
           <th>Linux</th>
           <th>Mac</th>
           <th>Android</th>
-          <th>IOS</th>
+          <th>iOS</th>
         </tr>
       </thead>
       <tbody>

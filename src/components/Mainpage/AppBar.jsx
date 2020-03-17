@@ -19,7 +19,7 @@ function AppBar() {
 
 const DesktopView = () => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fontStyle } = appSettings;
+  const { fgColorDetail, fontStyleAppBar } = appSettings;
   const breakpoint = useCurrentBreakpointName();
   const imageObj = {
     splatWidth: breakpoint === 'xlarge' ? '4vw' : '6vw'
@@ -29,7 +29,7 @@ const DesktopView = () => {
       style={{
         fontSize: 'calc(10px + 2vmin)',
         backgroundColor: fgColorDetail,
-        fontFamily: fontStyle
+        fontFamily: fontStyleAppBar
       }}
       variant='dark'
       fixed='top'
@@ -53,7 +53,7 @@ const DesktopView = () => {
 
 const MobileView = () => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fontStyle } = appSettings;
+  const { fgColorDetail, fontStyleAppBar } = appSettings;
   const imageObj = {
     splatWidth: '10vw'
   };
@@ -62,7 +62,7 @@ const MobileView = () => {
       style={{
         fontSize: 'calc(10px + 2vmin)',
         backgroundColor: fgColorDetail,
-        fontFamily: fontStyle
+        fontFamily: fontStyleAppBar
       }}
       variant='dark'
       fixed='top'

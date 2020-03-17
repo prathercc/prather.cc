@@ -4,7 +4,7 @@ function MaintenanceAlert(props) {
   const { applicationName, maintained = false } = props;
   const [alertOpen, setAlertOpen] = useState(true);
   return (
-    <>
+    <div style={{fontSize:'calc(2px + 2vmin)'}}>
       {maintained ? (
         <Alert
           variant='success'
@@ -24,7 +24,7 @@ function MaintenanceAlert(props) {
           {`${applicationName} is no longer maintained and will not receive updates!`}
         </Alert>
       )}
-    </>
+    </div>
   );
 }
 

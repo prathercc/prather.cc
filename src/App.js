@@ -19,7 +19,6 @@ function App() {
           <AppBar />
           <div
             style={{
-              fontFamily: fontStyle,
               backgroundColor: bgColor,
               color: textColor,
               minHeight: '100vh',
