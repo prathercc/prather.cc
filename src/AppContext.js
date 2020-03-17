@@ -5,7 +5,8 @@ const appSettings = {
   fgColorDetail: '#2E2929',
   fgColor: '#3E3E3E',
   textColor: '#FFFFFF',
-  fontStyle: 'Tlwg Typist Bold Oblique'
+  fontStyle: 'Gaegu',
+  fontStyleAppBar: 'Annie Use Your Telescope'
 };
 
 export const AppContext = createContext(appSettings);
