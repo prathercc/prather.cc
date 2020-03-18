@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import { Card, Table, Dropdown, DropdownButton } from 'react-bootstrap';
-import { useCurrentBreakpointName } from 'react-socks';
+import { Card, Table, DropdownButton } from 'react-bootstrap';
 import { AppContext } from '../../AppContext';
 import { Check, X } from 'react-bootstrap-icons';
 
