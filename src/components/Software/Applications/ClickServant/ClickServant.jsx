@@ -12,8 +12,10 @@ import SoftwarePage from '../../SoftwarePage/SoftwarePage';
 import MaintenanceAlert from '../../MaintenanceAlert';
 import SoftwareDownloadButton from '../../SoftwareDownloadButton';
 import SoftwareDownloadOption from '../../SoftwareDownloadOption';
+import SoftwareTableRow from '../../SoftwareTable/SoftwareTableRow';
 
-function ClickServant() {
+function ClickServant(props) {
+  const { sample = false } = props;
   const compatibility = {
     windows: false,
     linux: false,
@@ -23,62 +25,69 @@ function ClickServant() {
   };
 
   return (
-    <SoftwarePage>
-      <MaintenanceAlert applicationName='Click-Servant' />
-      <SoftwareTitle
-        titleObject={{
-          title: 'Click-Servant',
-          description: appTitleInfo,
-          image: `${clickservantMainView}`,
-          imageWidth: { desktop: '30vw', mobile: '50vw' },
-          thumbnail: `${poico5}`,
-          thumbnailWidth: { desktop: '3vw', mobile: '6vw' }
-        }}
-      />
-      <SoftwareDownloadButton
-        compatibility={{ ...compatibility, windows: true }}
-      >
-        <SoftwareDownloadOption link='/' name='Windows Executable (.EXE)' />
-      </SoftwareDownloadButton>
+    <>
+      {sample ? (
+        <SoftwareTableRow applicationName='Click-Servant' icon={`${poico5}`} />
+      ) : (
+        <SoftwarePage>
+          <MaintenanceAlert applicationName='Click-Servant' />
+          <SoftwareTitle
+            titleObject={{
+              title: 'Click-Servant',
+              description: appTitleInfo,
+              image: `${clickservantMainView}`,
+              imageWidth: { desktop: '30vw', mobile: '50vw' },
+              thumbnail: `${poico5}`,
+              thumbnailWidth: { desktop: '3vw', mobile: '6vw' }
+            }}
+          />
+          <SoftwareDownloadButton
+            compatibility={{ ...compatibility, windows: true }}
+          >
+            <SoftwareDownloadOption link='/' name='Windows Executable (.EXE)' />
+          </SoftwareDownloadButton>
 
-      <SoftwareFeature
-        descriptionObject={{
-          image: `${clickservantIntervalClicker}`,
-          imageWidth: { desktop: '25vw', mobile: '50vw' },
-          description: desc1,
-          content: content1
-        }}
-      />
+          <SoftwareFeature
+            descriptionObject={{
+              image: `${clickservantIntervalClicker}`,
+              imageWidth: { desktop: '25vw', mobile: '50vw' },
+              description: desc1,
+              content: content1
+            }}
+          />
 
-      <SoftwareFeature
-        descriptionObject={{
-          image: `${clickservantIntervalKeyer}`,
-          imageWidth: { desktop: '20vw', mobile: '50vw' },
-          description: desc2,
-          content: content2
-        }}
-      />
+          <SoftwareFeature
+            descriptionObject={{
+              image: `${clickservantIntervalKeyer}`,
+              imageWidth: { desktop: '20vw', mobile: '50vw' },
+              description: desc2,
+              content: content2
+            }}
+          />
 
-      <SoftwareFeature
-        descriptionObject={{
-          image: `${clickservantSave}`,
-          imageWidth: { desktop: '25vw', mobile: '50vw' },
-          description: desc3,
-          content: content3
-        }}
-      />
+          <SoftwareFeature
+            descriptionObject={{
+              image: `${clickservantSave}`,
+              imageWidth: { desktop: '25vw', mobile: '50vw' },
+              description: desc3,
+              content: content3
+            }}
+          />
 
-      <SoftwareFeature
-        descriptionObject={{
-          image: `${clickservantLoad}`,
-          imageWidth: { desktop: '25vw', mobile: '50vw' },
-          description: desc4,
-          content: content4
-        }}
-      />
-    </SoftwarePage>
+          <SoftwareFeature
+            descriptionObject={{
+              image: `${clickservantLoad}`,
+              imageWidth: { desktop: '25vw', mobile: '50vw' },
+              description: desc4,
+              content: content4
+            }}
+          />
+        </SoftwarePage>
+      )}
+    </>
   );
 }
+
 const ListItem = props => {
   return (
     <ListGroup.Item style={{ cursor: 'default' }} action variant='dark'>
