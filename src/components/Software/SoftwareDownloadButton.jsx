@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Card, Table, DropdownButton } from 'react-bootstrap';
 import { AppContext } from '../../AppContext';
 import { Check, X } from 'react-bootstrap-icons';
+import { useCurrentBreakpointName } from 'react-socks';
 
 function SoftwareDownloadButton(props) {
   return (
@@ -35,8 +36,14 @@ const DesktopView = props => {
 };
 
 const DownloadButton = props => {
+  const breakpoint = useCurrentBreakpointName();
   return (
-    <DropdownButton title='Download Application' variant='dark' style={{ marginTop: '1vh' }} size='lg'>
+    <DropdownButton
+      title='Download Application'
+      variant='dark'
+      style={{ marginTop: '1vh' }}
+      size={breakpoint === 'xsmall' ? 'sm' : 'lg'}
+    >
       {props.children}
     </DropdownButton>
   );
