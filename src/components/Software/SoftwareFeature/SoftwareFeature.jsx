@@ -1,16 +1,8 @@
 import React, { useContext, useState } from 'react';
-import {
-  Image,
-  Card,
-  Accordion,
-  OverlayTrigger,
-  Popover,
-  Container,
-  Col,
-  Row
-} from 'react-bootstrap';
+import { Image, Card, Accordion, Container, Col, Row } from 'react-bootstrap';
 import { Breakpoint } from 'react-socks';
-import { AppContext } from '../../AppContext';
+import { AppContext } from '../../../AppContext';
+import './SoftwareFeature.css';
 
 function SoftwareFeature(props) {
   return (
@@ -27,9 +19,8 @@ function SoftwareFeature(props) {
 
 const MobileView = props => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fgColor } = appSettings;
+  const { fgColorDetail } = appSettings;
   const { descriptionObject } = props;
-  const [bgColor, setBgColor] = useState(fgColorDetail);
   return (
     <Accordion>
       <Card
@@ -42,20 +33,7 @@ const MobileView = props => {
         }}
       >
         <Container>
-          <Row>
-            <Col>
-              <Accordion.Toggle as={Card.Body} eventKey='0'>
-                <Card.Header
-                  onMouseEnter={() => setBgColor(fgColor)}
-                  onMouseLeave={() => setBgColor(fgColorDetail)}
-                  onClick={() => setBgColor(fgColorDetail)}
-                  style={{ cursor: 'pointer', backgroundColor: bgColor }}
-                >
-                  {descriptionObject.description}
-                </Card.Header>
-              </Accordion.Toggle>
-            </Col>
-          </Row>
+          <FeatureHeader descriptionObject={descriptionObject} />
           <Row>
             <Col>
               <Accordion.Collapse eventKey='0'>
@@ -83,9 +61,8 @@ const MobileView = props => {
 
 const DesktopView = props => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fgColor } = appSettings;
+  const { fgColorDetail } = appSettings;
   const { descriptionObject } = props;
-  const [bgColor, setBgColor] = useState(fgColorDetail);
   return (
     <Accordion>
       <Card
@@ -98,28 +75,7 @@ const DesktopView = props => {
         }}
       >
         <Container>
-          <Row>
-            <Col>
-              <Accordion.Toggle as={Card.Body} eventKey='0'>
-                <OverlayTrigger
-                  placement='bottom'
-                  overlay={
-                    <Popover>
-                      <Popover.Title>Click to expand/collapse</Popover.Title>
-                    </Popover>
-                  }
-                >
-                  <Card.Header
-                    onMouseEnter={() => setBgColor(fgColor)}
-                    onMouseLeave={() => setBgColor(fgColorDetail)}
-                    style={{ cursor: 'pointer', backgroundColor: bgColor }}
-                  >
-                    {descriptionObject.description}
-                  </Card.Header>
-                </OverlayTrigger>
-              </Accordion.Toggle>
-            </Col>
-          </Row>
+          <FeatureHeader descriptionObject={descriptionObject} />
           <Row>
             <Col>
               <Accordion.Collapse eventKey='0'>
@@ -142,6 +98,29 @@ const DesktopView = props => {
         </Container>
       </Card>
     </Accordion>
+  );
+};
+
+const FeatureHeader = props => {
+  const appSettings = useContext(AppContext);
+  const { fgColorDetail, fgColor } = appSettings;
+  const { descriptionObject } = props;
+  const [bgColor, setBgColor] = useState(fgColorDetail);
+  return (
+    <Row>
+      <Col>
+        <Accordion.Toggle as={Card.Body} eventKey='0'>
+          <Card.Header
+            onMouseEnter={() => setBgColor(fgColor)}
+            onMouseLeave={() => setBgColor(fgColorDetail)}
+            style={{ cursor: 'pointer', backgroundColor: bgColor }}
+            className={'Header-glow'}
+          >
+            {descriptionObject.description}
+          </Card.Header>
+        </Accordion.Toggle>
+      </Col>
+    </Row>
   );
 };
 

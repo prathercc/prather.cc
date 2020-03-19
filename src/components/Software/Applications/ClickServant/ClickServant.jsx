@@ -7,7 +7,7 @@ import clickservantSave from '../../../../images/software/clickservant/clickserv
 import clickservantLoad from '../../../../images/software/clickservant/clickservantLoad.jpg';
 import poico5 from '../../../../images/software/clickservant/poico5.png';
 import SoftwareTitle from '../../SoftwareTitle';
-import SoftwareFeature from '../../SoftwareFeature';
+import SoftwareFeature from '../../SoftwareFeature/SoftwareFeature';
 import SoftwarePage from '../../SoftwarePage/SoftwarePage';
 import MaintenanceAlert from '../../MaintenanceAlert';
 import SoftwareDownloadButton from '../../SoftwareDownloadButton';
