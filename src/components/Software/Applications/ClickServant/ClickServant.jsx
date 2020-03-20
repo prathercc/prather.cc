@@ -13,6 +13,7 @@ import MaintenanceAlert from '../../MaintenanceAlert';
 import SoftwareDownloadButton from '../../SoftwareDownloadButton';
 import SoftwareDownloadOption from '../../SoftwareDownloadOption';
 import SoftwareTableRow from '../../SoftwareTable/SoftwareTableRow';
+import SoftwareCode from '../../SoftwareCode/SoftwareCode';
 
 function ClickServant(props) {
   const { sample = false } = props;
@@ -46,6 +47,8 @@ function ClickServant(props) {
           >
             <SoftwareDownloadOption link='/' name='Windows Executable (.EXE)' />
           </SoftwareDownloadButton>
+
+          <SoftwareCode repoLink='https://github.com/aaprather/Click-Servant' />
 
           <SoftwareFeature
             descriptionObject={{
