@@ -1,0 +1,16 @@
+@media (prefers-reduced-motion: no-preference) {
+    .Hover-glow {
+      animation: Hover-glow infinite 0.8s linear;
+    }
+  }
+  @keyframes Hover-glow {
+    0% {
+      opacity: 1;
+    }
+    50% {
+        opacity: 0.2;
+    }
+    100% {
+        opacity: 1
+    }
+  }

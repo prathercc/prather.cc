@@ -9,15 +9,28 @@ import {
   FormControl
 } from 'react-bootstrap';
 import { AppContext } from '../../../AppContext';
-import { CloudDownload, Alarm } from 'react-bootstrap-icons';
+import * as RBI from 'react-bootstrap-icons';
 import './SoftwareCode.css';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
 import { useCurrentBreakpointName } from 'react-socks';
+import SoftwareLinkModal from '../SoftwareModal/SoftwareLinkModal';
 
 function SoftwareCode(props) {
   const appSettings = useContext(AppContext);
   const { fgColorDetail, fgColor } = appSettings;
   const { repoLink } = props;
+  const breakpoint = useCurrentBreakpointName();
+  const iconSizing = breakpoint === 'xsmall' ? '10vw' : '5vw';
+
+  const VisitRepoIcon = () => {
+    return <RBI.Code style={{ fontSize: iconSizing }} />;
+  };
+  const ViewOpenIssuesIcon = () => {
+    return <RBI.DocumentText style={{ fontSize: iconSizing }} />;
+  };
+  const SubmitIssueIcon = () => {
+    return <RBI.Envelope style={{ fontSize: iconSizing }} />;
+  };
 
   return (
     <Card
@@ -29,81 +42,25 @@ function SoftwareCode(props) {
         outline: '1px solid gray'
       }}
     >
+      <SoftwareLinkModal
+        link={`${repoLink}`}
+        title='View Project Repository'
+        icon={<VisitRepoIcon />}
+      />
       <CloneRepository repoLink={repoLink} />
-      <IssuesLink repoLink={repoLink} />
+      <SoftwareLinkModal
+        link={`${repoLink}/issues`}
+        title='View Open Issues'
+        icon={<ViewOpenIssuesIcon />}
+      />
+      <SoftwareLinkModal
+        link={`${repoLink}/issues/new`}
+        title='Submit an Issue'
+        icon={<SubmitIssueIcon />}
+      />
     </Card>
   );
 }
-
-const IssuesLink = props => {
-  const appSettings = useContext(AppContext);
-  const { fgColorDetail, fgColor } = appSettings;
-  const [activeColor, setActiveColor] = useState(fgColorDetail);
-  const [activeClass, setActiveClass] = useState('');
-  const { repoLink } = props;
-  const [modalOpen, setModalOpen] = useState(false);
-  const breakpoint = useCurrentBreakpointName();
-
-  const handleModalClose = () => {
-    setModalOpen(false);
-  };
-
-  const Icon = () => {
-    return (
-      <Alarm style={{ fontSize: breakpoint === 'xsmall' ? '10vw' : '5vw' }} />
-    );
-  };
-
-  return (
-    <>
-      <Container style={{ fontSize: 'calc(15px + 2vmin)' }}>
-        <Row>
-          <Col>
-            <Card.Header
-              style={{ cursor: 'pointer', backgroundColor: activeColor }}
-              onMouseEnter={() => {
-                setActiveColor(fgColor);
-                setActiveClass('Hover-glow');
-              }}
-              onMouseLeave={() => {
-                setActiveColor(fgColorDetail);
-                setActiveClass('');
-              }}
-              className={activeClass}
-              onClick={() => setModalOpen(true)}
-            >
-              <Icon />
-              Submit an Issue
-            </Card.Header>
-          </Col>
-        </Row>
-      </Container>
-      <SoftwareModal
-        title='Submit an Issue'
-        modalOpen={modalOpen}
-        handleModalClose={handleModalClose}
-        titleIcon={<Icon />}
-      >
-        <p>You are about to navigate to: </p>
-        <FormControl
-          style={{ cursor: 'text' }}
-          disabled
-          value={`${repoLink}/issues/new`}
-        />
-        <p style={{ marginTop: '1vh' }}>Are you sure you wish to continue?</p>
-        <Button
-          onClick={() => {
-            handleModalClose();
-            window.open(`${repoLink}/issues/new`);
-          }}
-          variant='dark'
-        >
-          Yes, Submit a New Issue
-        </Button>
-      </SoftwareModal>
-    </>
-  );
-};
 
 const CloneRepository = props => {
   const appSettings = useContext(AppContext);
@@ -125,7 +82,7 @@ const CloneRepository = props => {
 
   const Icon = () => {
     return (
-      <CloudDownload
+      <RBI.CloudDownload
         style={{ fontSize: breakpoint === 'xsmall' ? '10vw' : '5vw' }}
       />
     );
@@ -171,7 +128,7 @@ const CloneRepository = props => {
         </a>
         <InputGroup style={{ marginTop: '2vh' }}>
           <FormControl
-            style={{ cursor: 'text' }}
+            style={{ cursor: 'text', textAlign: 'center' }}
             disabled
             ref={textAreaRef}
             value={`${repoLink}.git`}
