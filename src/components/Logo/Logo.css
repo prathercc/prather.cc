@@ -8,13 +8,13 @@
     filter: grayscale(0%);
   }
   25% {
-    filter: grayscale(25%);
+    filter: grayscale(35%);
   }
   50% {
-    filter: grayscale(75%);
+    filter: grayscale(95%);
   }
   75% {
-    filter: grayscale(25%);
+    filter: grayscale(35%);
   }
   100% {
     filter: grayscale(0%);
