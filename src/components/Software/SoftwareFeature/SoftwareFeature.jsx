@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Image, Card, Accordion, Container, Col, Row } from 'react-bootstrap';
 import { Breakpoint } from 'react-socks';
 import { AppContext } from '../../../AppContext';
+import { Window } from 'react-bootstrap-icons';
 import './SoftwareFeature.css';
 
 function SoftwareFeature(props) {
@@ -29,7 +30,8 @@ const MobileView = props => {
           fontSize: 'calc(5px + 2vmin)',
           alignItems: 'center',
           marginTop: '5vh',
-          flexDirection: 'row'
+          flexDirection: 'row',
+          outline: '1px solid gray'
         }}
       >
         <Container>
@@ -71,7 +73,8 @@ const DesktopView = props => {
           fontSize: 'calc(5px + 2vmin)',
           alignItems: 'center',
           marginTop: '5vh',
-          flexDirection: 'row'
+          flexDirection: 'row',
+          outline: '1px solid gray'
         }}
       >
         <Container>
@@ -106,6 +109,7 @@ const FeatureHeader = props => {
   const { fgColorDetail, fgColor } = appSettings;
   const { descriptionObject } = props;
   const [bgColor, setBgColor] = useState(fgColorDetail);
+
   return (
     <Row>
       <Col>
@@ -116,6 +120,7 @@ const FeatureHeader = props => {
             style={{ cursor: 'pointer', backgroundColor: bgColor }}
             className={'Header-glow'}
           >
+            <Window style={{color: 'white', fontSize: '5vw'}}/>
             {descriptionObject.description}
           </Card.Header>
         </Accordion.Toggle>

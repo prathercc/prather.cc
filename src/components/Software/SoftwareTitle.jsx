@@ -25,7 +25,8 @@ const MobileView = props => {
       style={{
         backgroundColor: fgColorDetail,
         fontSize: 'calc(10px + 2vmin)',
-        alignItems: 'center'
+        alignItems: 'center',
+        outline: '1px solid gray'
       }}
     >
       <Container>
@@ -58,7 +59,8 @@ const DesktopView = props => {
       style={{
         backgroundColor: fgColorDetail,
         fontSize: 'calc(10px + 2vmin)',
-        alignItems: 'center'
+        alignItems: 'center',
+        outline: '1px solid gray'
       }}
     >
       <Container>

@@ -23,7 +23,8 @@ const DesktopView = props => {
         backgroundColor: fgColorDetail,
         fontSize: 'calc(10px + 2vmin)',
         alignItems: 'center',
-        marginTop: '5vh'
+        marginTop: '5vh',
+        outline: '1px solid gray'
       }}
     >
       <Card.Body style={{ fontSize: 'calc(5px + 2vmin)' }}>
