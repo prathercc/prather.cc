@@ -4,7 +4,7 @@ import { AppContext } from '../../AppContext';
 import { Check, X } from 'react-bootstrap-icons';
 import { useCurrentBreakpointName } from 'react-socks';
 
-function SoftwareDownloadButton(props) {
+function SoftwareDownload(props) {
   return (
     <DesktopView compatibility={props.compatibility}>
       {props.children}
@@ -40,7 +40,7 @@ const DownloadButton = props => {
   return (
     <DropdownButton
       title='Download Application'
-      variant='dark'
+      variant='outline-light'
       style={{ marginTop: '1vh' }}
       size={breakpoint === 'xsmall' ? 'sm' : 'lg'}
     >
@@ -103,4 +103,4 @@ const CompatiblityResult = props => {
   );
 };
 
-export default SoftwareDownloadButton;
+export default SoftwareDownload;
