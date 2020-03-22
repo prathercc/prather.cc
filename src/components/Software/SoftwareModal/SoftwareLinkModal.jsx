@@ -13,7 +13,7 @@ import SoftwareModal from '../SoftwareModal/SoftwareModal';
 
 const SoftwareLinkModal = props => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fgColor, softwareFontSize } = appSettings;
+  const { fgColorDetail, fgColor, softwareMaintenanceFontSize } = appSettings;
   const [activeColor, setActiveColor] = useState(fgColorDetail);
   const [activeClass, setActiveClass] = useState('');
   const { link, title, icon } = props;
@@ -58,7 +58,7 @@ const SoftwareLinkModal = props => {
           style={{
             cursor: 'text',
             textAlign: 'center',
-            fontSize: softwareFontSize
+            fontSize: softwareMaintenanceFontSize
           }}
           disabled
           value={`${link}`}
@@ -70,7 +70,7 @@ const SoftwareLinkModal = props => {
             window.open(`${link}`);
           }}
           variant='dark'
-          style={{ fontSize: softwareFontSize }}
+          style={{ fontSize: softwareMaintenanceFontSize }}
         >
           Yes, {title}
         </Button>

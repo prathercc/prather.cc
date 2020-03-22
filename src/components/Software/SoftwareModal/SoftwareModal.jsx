@@ -4,7 +4,7 @@ import { AppContext } from '../../../AppContext';
 
 function SoftwareModal(props) {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fgColor, textColor, softwareFontSize } = appSettings;
+  const { fgColorDetail, fgColor, textColor, softwareFontSize, softwareMaintenanceFontSize } = appSettings;
 
   const { modalOpen, title, handleModalClose, titleIcon } = props;
 
@@ -37,7 +37,7 @@ function SoftwareModal(props) {
           backgroundColor: fgColorDetail,
           color: textColor,
           outline: '1px solid gray',
-          fontSize: softwareFontSize
+          fontSize: softwareMaintenanceFontSize
         }}
       >
         {props.children}

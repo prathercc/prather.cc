@@ -61,7 +61,7 @@ function SoftwareCode(props) {
 
 const CloneRepository = props => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fgColor, iconSizing, softwareFontSize } = appSettings;
+  const { fgColorDetail, fgColor, iconSizing, softwareMaintenanceFontSize } = appSettings;
   const [activeColor, setActiveColor] = useState(fgColorDetail);
   const [activeClass, setActiveClass] = useState('');
   const { repoLink } = props;
@@ -123,7 +123,7 @@ const CloneRepository = props => {
             style={{
               cursor: 'text',
               textAlign: 'center',
-              fontSize: softwareFontSize
+              fontSize: softwareMaintenanceFontSize
             }}
             disabled
             ref={textAreaRef}
@@ -139,7 +139,7 @@ const CloneRepository = props => {
               setButtonEnabled(false);
             }}
             variant='dark'
-            style={{ fontSize: softwareFontSize }}
+            style={{ fontSize: softwareMaintenanceFontSize }}
           >
             {buttonText}
           </Button>
