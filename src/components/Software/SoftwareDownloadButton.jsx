@@ -21,13 +21,12 @@ const DesktopView = props => {
     <Card
       style={{
         backgroundColor: fgColorDetail,
-        fontSize: 'calc(10px + 2vmin)',
         alignItems: 'center',
         marginTop: '5vh',
         outline: '1px solid gray'
       }}
     >
-      <Card.Body style={{ fontSize: 'calc(5px + 2vmin)' }}>
+      <Card.Body>
         <strong>System Compatibility</strong>
         <CompatibilityTable compatibility={compatibility} />
         <DownloadButton>{props.children}</DownloadButton>
@@ -90,13 +89,15 @@ const CompatibilityTable = props => {
 };
 
 const CompatiblityResult = props => {
+  const appSettings = useContext(AppContext);
+  const { iconSizing } = appSettings;
   const { boolean } = props;
   return (
     <td>
       {boolean ? (
-        <Check style={{ color: 'green', fontSize: '5vw' }} />
+        <Check style={{ color: 'green', fontSize: iconSizing }} />
       ) : (
-        <X style={{ color: 'red', fontSize: '5vw' }} />
+        <X style={{ color: 'red', fontSize: iconSizing }} />
       )}
     </td>
   );

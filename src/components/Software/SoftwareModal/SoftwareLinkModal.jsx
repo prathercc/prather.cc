@@ -25,7 +25,7 @@ const SoftwareLinkModal = props => {
 
   return (
     <>
-      <Container style={{ fontSize: 'calc(15px + 2vmin)' }}>
+      <Container>
         <Row>
           <Col>
             <Card.Header

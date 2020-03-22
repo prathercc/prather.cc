@@ -27,7 +27,6 @@ const MobileView = props => {
       <Card
         style={{
           backgroundColor: fgColorDetail,
-          fontSize: 'calc(5px + 2vmin)',
           alignItems: 'center',
           marginTop: '5vh',
           flexDirection: 'row',
@@ -70,7 +69,6 @@ const DesktopView = props => {
       <Card
         style={{
           backgroundColor: fgColorDetail,
-          fontSize: 'calc(5px + 2vmin)',
           alignItems: 'center',
           marginTop: '5vh',
           flexDirection: 'row',
@@ -106,7 +104,7 @@ const DesktopView = props => {
 
 const FeatureHeader = props => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fgColor } = appSettings;
+  const { fgColorDetail, fgColor, iconSizing, textColor } = appSettings;
   const { descriptionObject } = props;
   const [bgColor, setBgColor] = useState(fgColorDetail);
 
@@ -120,7 +118,7 @@ const FeatureHeader = props => {
             style={{ cursor: 'pointer', backgroundColor: bgColor }}
             className={'Header-glow'}
           >
-            <Window style={{color: 'white', fontSize: '5vw'}}/>
+            <Window style={{ color: textColor, fontSize: iconSizing }} />
             {descriptionObject.description}
           </Card.Header>
         </Accordion.Toggle>

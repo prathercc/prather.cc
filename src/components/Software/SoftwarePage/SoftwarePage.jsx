@@ -5,7 +5,7 @@ import { useCurrentBreakpointName } from 'react-socks';
 import './SoftwarePage.css';
 function SoftwarePage(props) {
     const appSettings = useContext(AppContext);
-    const { fgColor, fontStyle } = appSettings;
+    const { fgColor, fontStyle, softwareFontSize } = appSettings;
     const breakpoint = useCurrentBreakpointName();
   return (
 <Container style={{ width: breakpoint === 'xlarge' ? '50vw' : '' }}>
@@ -15,7 +15,8 @@ function SoftwarePage(props) {
           backgroundColor: fgColor,
           fontFamily:fontStyle,
           marginTop: '15vh',
-          opacity:'0'
+          opacity:'0',
+          fontSize: softwareFontSize
         }}
         className='Page-fade-in'
       >

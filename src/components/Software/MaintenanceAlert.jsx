@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Alert } from 'react-bootstrap';
+import { AppContext } from '../../AppContext';
 function MaintenanceAlert(props) {
+  const appSettings = useContext(AppContext);
+  const { softwareMaintenanceFontSize } = appSettings;
   const { applicationName, maintained = false } = props;
   const [alertOpen, setAlertOpen] = useState(true);
   return (
-    <div style={{fontSize:'calc(2px + 2vmin)'}}>
+    <div style={{ fontSize: softwareMaintenanceFontSize }}>
       {maintained ? (
         <Alert
           variant='success'

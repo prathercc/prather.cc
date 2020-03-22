@@ -19,7 +19,12 @@ function AppBar() {
 
 const DesktopView = () => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fontStyleAppBar } = appSettings;
+  const {
+    fgColorDetail,
+    appbarFontStyle,
+    textColor,
+    appbarFontSize
+  } = appSettings;
   const breakpoint = useCurrentBreakpointName();
   const imageObj = {
     splatWidth: breakpoint === 'xlarge' ? '4vw' : '6vw'
@@ -27,9 +32,9 @@ const DesktopView = () => {
   return (
     <Navbar
       style={{
-        fontSize: 'calc(10px + 2vmin)',
+        fontSize: appbarFontSize,
         backgroundColor: fgColorDetail,
-        fontFamily: fontStyleAppBar
+        fontFamily: appbarFontStyle
       }}
       variant='dark'
       fixed='top'
@@ -41,7 +46,13 @@ const DesktopView = () => {
           <CustomNavLink href='/software'>Software</CustomNavLink>
         </Nav>
         <Navbar.Brand>
-          <Navbar.Text style={{ color: 'white', cursor: 'default', fontSize: 'calc(10px + 2vmin)', }}>
+          <Navbar.Text
+            style={{
+              color: textColor,
+              cursor: 'default',
+              fontSize: appbarFontSize
+            }}
+          >
             prather.cc
           </Navbar.Text>
           <Logo imageObj={imageObj} />
@@ -53,16 +64,21 @@ const DesktopView = () => {
 
 const MobileView = () => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fontStyleAppBar } = appSettings;
+  const {
+    fgColorDetail,
+    appbarFontStyle,
+    textColor,
+    appbarFontSize
+  } = appSettings;
   const imageObj = {
     splatWidth: '10vw'
   };
   return (
     <Navbar
       style={{
-        fontSize: 'calc(10px + 2vmin)',
+        fontSize: appbarFontSize,
         backgroundColor: fgColorDetail,
-        fontFamily: fontStyleAppBar
+        fontFamily: appbarFontStyle
       }}
       variant='dark'
       fixed='top'
@@ -73,7 +89,13 @@ const MobileView = () => {
           <Dropdown.Item href='/software'>Software</Dropdown.Item>
         </CustomNavDropDown>
         <Navbar.Brand>
-          <Navbar.Text style={{ color: 'white', cursor: 'default', fontSize: 'calc(10px + 2vmin)', }}>
+          <Navbar.Text
+            style={{
+              color: textColor,
+              cursor: 'default',
+              fontSize: appbarFontSize
+            }}
+          >
             prather.cc
           </Navbar.Text>
           <Logo imageObj={imageObj} />

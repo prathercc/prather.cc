@@ -1,12 +1,10 @@
-import React, { useContext, useState } from 'react';
-import { Image, Modal } from 'react-bootstrap';
-import { Breakpoint } from 'react-socks';
+import React, { useContext } from 'react';
+import { Modal } from 'react-bootstrap';
 import { AppContext } from '../../../AppContext';
-import { CloudDownload } from 'react-bootstrap-icons';
 
 function SoftwareModal(props) {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fgColor } = appSettings;
+  const { fgColorDetail, fgColor, textColor } = appSettings;
 
   const { modalOpen, title, handleModalClose, titleIcon } = props;
 
@@ -20,7 +18,7 @@ function SoftwareModal(props) {
       <Modal.Header
         style={{
           backgroundColor: fgColor,
-          color: 'white',
+          color: textColor,
           outline: '1px solid gray'
         }}
         closeButton
@@ -33,7 +31,7 @@ function SoftwareModal(props) {
       <Modal.Body
         style={{
           backgroundColor: fgColorDetail,
-          color: 'white',
+          color: textColor,
           outline: '1px solid gray'
         }}
       >

@@ -24,7 +24,6 @@ const MobileView = props => {
     <Card
       style={{
         backgroundColor: fgColorDetail,
-        fontSize: 'calc(10px + 2vmin)',
         alignItems: 'center',
         outline: '1px solid gray'
       }}
@@ -38,7 +37,7 @@ const MobileView = props => {
         {titleObject.title}
       </Container>
 
-      <Card.Body style={{ fontSize: 'calc(5px + 2vmin)' }}>
+      <Card.Body>
         <Card.Text>{titleObject.description}</Card.Text>
         <Card.Img
           style={{ width: titleObject.imageWidth.mobile }}
@@ -58,7 +57,6 @@ const DesktopView = props => {
     <Card
       style={{
         backgroundColor: fgColorDetail,
-        fontSize: 'calc(10px + 2vmin)',
         alignItems: 'center',
         outline: '1px solid gray'
       }}
@@ -71,8 +69,7 @@ const DesktopView = props => {
         />
         <strong>{titleObject.title}</strong>
       </Container>
-
-      <Card.Body style={{ fontSize: 'calc(5px + 2vmin)' }}>
+      <Card.Body>
         <Card.Text>{titleObject.description}</Card.Text>
         <Card.Img
           style={{ width: titleObject.imageWidth.desktop }}

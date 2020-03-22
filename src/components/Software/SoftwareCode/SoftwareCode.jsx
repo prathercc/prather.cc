@@ -12,15 +12,12 @@ import { AppContext } from '../../../AppContext';
 import * as RBI from 'react-bootstrap-icons';
 import './SoftwareCode.css';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
-import { useCurrentBreakpointName } from 'react-socks';
 import SoftwareLinkModal from '../SoftwareModal/SoftwareLinkModal';
 
 function SoftwareCode(props) {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fgColor } = appSettings;
+  const { fgColorDetail, iconSizing, softwareFontSize } = appSettings;
   const { repoLink } = props;
-  const breakpoint = useCurrentBreakpointName();
-  const iconSizing = breakpoint === 'xsmall' ? '10vw' : '5vw';
 
   const VisitRepoIcon = () => {
     return <RBI.Code style={{ fontSize: iconSizing }} />;
@@ -36,7 +33,7 @@ function SoftwareCode(props) {
     <Card
       style={{
         backgroundColor: fgColorDetail,
-        fontSize: 'calc(10px + 2vmin)',
+        fontSize: softwareFontSize,
         alignItems: 'center',
         marginTop: '5vh',
         outline: '1px solid gray'
@@ -64,7 +61,7 @@ function SoftwareCode(props) {
 
 const CloneRepository = props => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fgColor } = appSettings;
+  const { fgColorDetail, fgColor, iconSizing } = appSettings;
   const [activeColor, setActiveColor] = useState(fgColorDetail);
   const [activeClass, setActiveClass] = useState('');
   const { repoLink } = props;
@@ -72,7 +69,6 @@ const CloneRepository = props => {
   const [buttonText, setButtonText] = useState('Copy to Clipboard');
   const [buttonEnabled, setButtonEnabled] = useState(true);
   const textAreaRef = useRef(null);
-  const breakpoint = useCurrentBreakpointName();
 
   const handleModalClose = () => {
     setModalOpen(false);
@@ -81,16 +77,12 @@ const CloneRepository = props => {
   };
 
   const Icon = () => {
-    return (
-      <RBI.CloudDownload
-        style={{ fontSize: breakpoint === 'xsmall' ? '10vw' : '5vw' }}
-      />
-    );
+    return <RBI.CloudDownload style={{ fontSize: iconSizing }} />;
   };
 
   return (
     <>
-      <Container style={{ fontSize: 'calc(15px + 2vmin)' }}>
+      <Container>
         <Row>
           <Col>
             <Card.Header
