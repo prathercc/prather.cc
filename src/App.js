@@ -5,13 +5,15 @@ import Display from './components/Mainpage/Display/Display';
 import Footer from './components/Mainpage/Footer';
 import { BreakpointProvider } from 'react-socks';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import ClickServant from './components/Software/Applications/ClickServant/ClickServant';
 import { AppContext } from './AppContext';
 import background from './images/background.png';
+import SoftwareRouting from './components/Routing/SoftwareRouting';
+import ClickServant from './components/Software/Applications/ClickServant/ClickServant';
+import SoftwareTable from './components/Software/SoftwareTable/SoftwareTable';
 
 function App() {
   const appSettings = useContext(AppContext);
-  const { fontStyle, bgColor, textColor } = appSettings;
+  const { bgColor, textColor } = appSettings;
   return (
     <AppContext.Provider value={appSettings}>
       <Router>
@@ -27,11 +29,9 @@ function App() {
               backgroundImage: `url(${background})`
             }}
           >
+            <SoftwareRouting />
             <Switch>
-              <Route path='/software'>
-                <ClickServant />
-              </Route>
-              <Route path='/'>
+              <Route exact path='/'>
                 <Display />
               </Route>
             </Switch>
