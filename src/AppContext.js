@@ -6,7 +6,13 @@ const appSettings = {
   fgColor: '#3E3E3E',
   textColor: '#FFFFFF',
   fontStyle: 'Gaegu',
-  fontStyleAppBar: 'Annie Use Your Telescope'
+  iconSizing: '5vw',
+
+  appbarFontStyle: 'Annie Use Your Telescope',
+  appbarFontSize: 'calc(10px + 2vmin)',
+
+  softwareFontSize: 'calc(5px + 2vmin)',
+  softwareMaintenanceFontSize: 'calc(2px + 2vmin)'
 };
 
 export const AppContext = createContext(appSettings);
