@@ -61,7 +61,7 @@ function SoftwareCode(props) {
 
 const CloneRepository = props => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fgColor, iconSizing } = appSettings;
+  const { fgColorDetail, fgColor, iconSizing, softwareFontSize } = appSettings;
   const [activeColor, setActiveColor] = useState(fgColorDetail);
   const [activeClass, setActiveClass] = useState('');
   const { repoLink } = props;
@@ -120,7 +120,11 @@ const CloneRepository = props => {
         </a>
         <InputGroup style={{ marginTop: '2vh' }}>
           <FormControl
-            style={{ cursor: 'text', textAlign: 'center' }}
+            style={{
+              cursor: 'text',
+              textAlign: 'center',
+              fontSize: softwareFontSize
+            }}
             disabled
             ref={textAreaRef}
             value={`${repoLink}.git`}
@@ -135,6 +139,7 @@ const CloneRepository = props => {
               setButtonEnabled(false);
             }}
             variant='dark'
+            style={{ fontSize: softwareFontSize }}
           >
             {buttonText}
           </Button>

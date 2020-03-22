@@ -13,7 +13,7 @@ import SoftwareModal from '../SoftwareModal/SoftwareModal';
 
 const SoftwareLinkModal = props => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fgColor } = appSettings;
+  const { fgColorDetail, fgColor, softwareFontSize } = appSettings;
   const [activeColor, setActiveColor] = useState(fgColorDetail);
   const [activeClass, setActiveClass] = useState('');
   const { link, title, icon } = props;
@@ -55,7 +55,11 @@ const SoftwareLinkModal = props => {
       >
         <p>You are about to navigate to: </p>
         <FormControl
-          style={{ cursor: 'text', textAlign: 'center' }}
+          style={{
+            cursor: 'text',
+            textAlign: 'center',
+            fontSize: softwareFontSize
+          }}
           disabled
           value={`${link}`}
         />
@@ -66,6 +70,7 @@ const SoftwareLinkModal = props => {
             window.open(`${link}`);
           }}
           variant='dark'
+          style={{ fontSize: softwareFontSize }}
         >
           Yes, {title}
         </Button>

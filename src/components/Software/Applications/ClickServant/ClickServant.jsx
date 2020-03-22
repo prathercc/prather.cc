@@ -10,7 +10,7 @@ import SoftwareTitle from '../../SoftwareTitle';
 import SoftwareFeature from '../../SoftwareFeature/SoftwareFeature';
 import SoftwarePage from '../../SoftwarePage/SoftwarePage';
 import MaintenanceAlert from '../../MaintenanceAlert';
-import SoftwareDownloadButton from '../../SoftwareDownloadButton';
+import SoftwareDownload from '../../SoftwareDownload';
 import SoftwareDownloadOption from '../../SoftwareDownloadOption';
 import SoftwareTableRow from '../../SoftwareTable/SoftwareTableRow';
 import SoftwareCode from '../../SoftwareCode/SoftwareCode';
@@ -42,11 +42,11 @@ function ClickServant(props) {
               thumbnailWidth: { desktop: '3vw', mobile: '6vw' }
             }}
           />
-          <SoftwareDownloadButton
+          <SoftwareDownload
             compatibility={{ ...compatibility, windows: true }}
           >
             <SoftwareDownloadOption link='/' name='Windows Executable (.EXE)' />
-          </SoftwareDownloadButton>
+          </SoftwareDownload>
 
           <SoftwareCode repoLink='https://github.com/aaprather/Click-Servant' />
 
