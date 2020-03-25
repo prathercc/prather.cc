@@ -61,7 +61,12 @@ function SoftwareCode(props) {
 
 const CloneRepository = props => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fgColor, iconSizing, softwareMaintenanceFontSize } = appSettings;
+  const {
+    fgColorDetail,
+    fgColor,
+    iconSizing,
+    softwareMaintenanceFontSize
+  } = appSettings;
   const [activeColor, setActiveColor] = useState(fgColorDetail);
   const [activeClass, setActiveClass] = useState('');
   const { repoLink } = props;
@@ -110,7 +115,7 @@ const CloneRepository = props => {
         handleModalClose={handleModalClose}
         titleIcon={<Icon />}
       >
-        Use the link below to clone the project repository using{' '}
+        Copy link below to clone project with {' '} 
         <a
           href='https://git-scm.com/'
           target='_blank'
@@ -129,21 +134,21 @@ const CloneRepository = props => {
             ref={textAreaRef}
             value={`${repoLink}.git`}
           />
-          <Button
-            visible={false}
-            disabled={!buttonEnabled}
-            onClick={() => {
-              textAreaRef.current.select();
-              document.execCommand('copy');
-              setButtonText('Copied!');
-              setButtonEnabled(false);
-            }}
-            variant='dark'
-            style={{ fontSize: softwareMaintenanceFontSize }}
-          >
-            {buttonText}
-          </Button>
         </InputGroup>
+        <Button
+          visible={false}
+          disabled={!buttonEnabled}
+          onClick={() => {
+            textAreaRef.current.select();
+            document.execCommand('copy');
+            setButtonText('Copied!');
+            setButtonEnabled(false);
+          }}
+          variant='dark'
+          style={{ fontSize: softwareMaintenanceFontSize, marginTop:'2vh', cursor:buttonEnabled ? 'pointer' : 'default' }}
+        >
+          {buttonText}
+        </Button>
       </SoftwareModal>
     </>
   );
