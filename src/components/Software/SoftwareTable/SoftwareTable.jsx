@@ -11,11 +11,13 @@ function SoftwareTable(props) {
         responsive
         variant='dark'
         hover
+        size='sm'
         style={{ cursor: 'default' }}
       >
         <thead>
           <tr>
-            <th>Application</th>
+            <th>Name</th>
+            <th>Platform(s)</th>
           </tr>
         </thead>
         <tbody>
