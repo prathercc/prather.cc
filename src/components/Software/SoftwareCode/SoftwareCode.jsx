@@ -130,7 +130,7 @@ const CloneRepository = props => {
               textAlign: 'center',
               fontSize: softwareMaintenanceFontSize
             }}
-            disabled
+            
             ref={textAreaRef}
             value={`${repoLink}.git`}
           />
