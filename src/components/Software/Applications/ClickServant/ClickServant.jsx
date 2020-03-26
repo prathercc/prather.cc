@@ -28,7 +28,13 @@ function ClickServant(props) {
   return (
     <>
       {sample ? (
-        <SoftwareTableRow applicationName='Click-Servant' icon={`${poico5}`} />
+        <SoftwareTableRow
+          applicationName='Click-Servant'
+          icon={`${poico5}`}
+          pageLink='/software/Click-Servant'
+          language='C++/CLI'
+          compatibility={{...compatibility, windows:true}}
+        />
       ) : (
         <SoftwarePage>
           <MaintenanceAlert applicationName='Click-Servant' />
@@ -42,9 +48,7 @@ function ClickServant(props) {
               thumbnailWidth: { desktop: '3vw', mobile: '6vw' }
             }}
           />
-          <SoftwareDownload
-            compatibility={{ ...compatibility, windows: true }}
-          >
+          <SoftwareDownload compatibility={{ ...compatibility, windows: true }}>
             <SoftwareDownloadOption link='/' name='Windows Executable (.EXE)' />
           </SoftwareDownload>
 
@@ -101,15 +105,7 @@ const ListItem = props => {
 
 let appTitleInfo = (
   <Container>
-    <strong>Click-Servant</strong>&nbsp;is a&nbsp;
-    <a
-      href='https://docs.microsoft.com/en-us/cpp/dotnet'
-      rel='noopener noreferrer'
-      target='_blank'
-    >
-      C++/CLI
-    </a>
-    &nbsp;application that automates mouse &amp; key events at a given interval.
+    Desktop application that automates mouse &amp; key events at a given interval.
   </Container>
 );
 

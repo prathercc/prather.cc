@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image } from 'react-bootstrap';
+import { Image, Container, Row, Col, Badge } from 'react-bootstrap';
 import { useCurrentBreakpointName } from 'react-socks';
 
 function SoftwareTableRow(props) {
@@ -7,6 +7,7 @@ function SoftwareTableRow(props) {
     applicationName,
     icon,
     pageLink,
+    language,
     compatibility = {
       windows: false,
       linux: false,
@@ -21,16 +22,17 @@ function SoftwareTableRow(props) {
       style={{ cursor: 'pointer' }}
       onClick={() => window.open(pageLink, '_self')}
     >
-        <td>
-          <Icon icon={icon} />
-          {applicationName}
-        </td>
       <td>
-        <p>{compatibility.windows ? 'Windows' : ''}</p>
-        <p>{compatibility.linux ? 'Linux' : ''}</p>
-        <p>{compatibility.mac ? 'Mac' : ''}</p>
-        <p>{compatibility.android ? 'Android' : ''}</p>
-        <p>{compatibility.ios ? 'iOS' : ''}</p>
+        <Icon icon={icon} />
+        {applicationName}
+      </td>
+      <td>{language}</td>
+      <td>
+        {compatibility.windows ? <Badge variant='light'>Windows</Badge> : ''}{' '}
+        {compatibility.linux ? <Badge variant='warning'>Linux</Badge> : ''}{' '}
+        {compatibility.mac ? <Badge variant='danger'>Mac</Badge> : ''}{' '}
+        {compatibility.android ? <Badge variant='info'>Android</Badge> : ''}{' '}
+        {compatibility.ios ? <Badge variant='success'>iOS</Badge> : ''}
       </td>
     </tr>
   );

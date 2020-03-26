@@ -17,6 +17,7 @@ function SoftwareTable(props) {
         <thead>
           <tr>
             <th>Name</th>
+            <th>Language</th>
             <th>Platform(s)</th>
           </tr>
         </thead>
