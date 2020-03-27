@@ -44,17 +44,12 @@ function SoftwareCode(props) {
         title='View Project Repository'
         icon={<VisitRepoIcon />}
       />
-      <CloneRepository repoLink={repoLink} />
       <SoftwareLinkModal
         link={`${repoLink}/issues`}
         title='View Open Issues'
         icon={<ViewOpenIssuesIcon />}
       />
-      <SoftwareLinkModal
-        link={`${repoLink}/issues/new`}
-        title='Submit an Issue'
-        icon={<SubmitIssueIcon />}
-      />
+      <CloneRepository repoLink={repoLink} />
     </Card>
   );
 }
@@ -115,7 +110,7 @@ const CloneRepository = props => {
         handleModalClose={handleModalClose}
         titleIcon={<Icon />}
       >
-        Copy link below to clone project with {' '} 
+        Copy link below to clone project with{' '}
         <a
           href='https://git-scm.com/'
           target='_blank'
@@ -130,7 +125,6 @@ const CloneRepository = props => {
               textAlign: 'center',
               fontSize: softwareMaintenanceFontSize
             }}
-            
             ref={textAreaRef}
             value={`${repoLink}.git`}
           />
@@ -145,7 +139,11 @@ const CloneRepository = props => {
             setButtonEnabled(false);
           }}
           variant='outline-light'
-          style={{ fontSize: softwareMaintenanceFontSize, marginTop:'2vh', cursor:buttonEnabled ? 'pointer' : 'default' }}
+          style={{
+            fontSize: softwareMaintenanceFontSize,
+            marginTop: '2vh',
+            cursor: buttonEnabled ? 'pointer' : 'default'
+          }}
         >
           {buttonText}
         </Button>
