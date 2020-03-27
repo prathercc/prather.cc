@@ -69,7 +69,7 @@ const SoftwareLinkModal = props => {
             handleModalClose();
             window.open(`${link}`);
           }}
-          variant='dark'
+          variant='outline-light'
           style={{ fontSize: softwareMaintenanceFontSize }}
         >
           Yes, {title}

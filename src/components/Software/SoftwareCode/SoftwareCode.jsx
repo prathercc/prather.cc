@@ -144,7 +144,7 @@ const CloneRepository = props => {
             setButtonText('Copied!');
             setButtonEnabled(false);
           }}
-          variant='dark'
+          variant='outline-light'
           style={{ fontSize: softwareMaintenanceFontSize, marginTop:'2vh', cursor:buttonEnabled ? 'pointer' : 'default' }}
         >
           {buttonText}
