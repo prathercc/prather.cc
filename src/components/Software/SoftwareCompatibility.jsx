@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import { Card, Table, DropdownButton } from 'react-bootstrap';
+import { Card, Table, Button, Container } from 'react-bootstrap';
 import { AppContext } from '../../AppContext';
 import { Check, X } from 'react-bootstrap-icons';
 import { useCurrentBreakpointName } from 'react-socks';
 
-function SoftwareDownload(props) {
+function SoftwareCompatibility(props) {
   return (
     <DesktopView compatibility={props.compatibility}>
       {props.children}
@@ -29,23 +29,12 @@ const DesktopView = props => {
       <Card.Body>
         <strong>System Compatibility</strong>
         <CompatibilityTable compatibility={compatibility} />
-        <DownloadButton>{props.children}</DownloadButton>
+        <Container>
+        {props.children}
+        </Container>
+
       </Card.Body>
     </Card>
-  );
-};
-
-const DownloadButton = props => {
-  const breakpoint = useCurrentBreakpointName();
-  return (
-    <DropdownButton
-      title='Download Application'
-      variant='outline-light'
-      style={{ marginTop: '1vh' }}
-      size={breakpoint === 'xsmall' ? 'sm' : 'lg'}
-    >
-      {props.children}
-    </DropdownButton>
   );
 };
 
@@ -95,12 +84,12 @@ const CompatiblityResult = props => {
   return (
     <td>
       {boolean ? (
-        <Check style={{ color: 'green', fontSize: iconSizing }} />
+        <Check style={{ color: 'green', fontSize: iconSizing, filter: 'grayscale(0.5)' }} />
       ) : (
-        <X style={{ color: 'red', fontSize: iconSizing }} />
+        <X style={{ color: 'red', fontSize: iconSizing,filter: 'grayscale(0.5)' }} />
       )}
     </td>
   );
 };
 
-export default SoftwareDownload;
+export default SoftwareCompatibility;
