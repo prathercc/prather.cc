@@ -4,9 +4,21 @@ import { AppContext } from '../../../AppContext';
 
 function SoftwareModal(props) {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fgColor, textColor, softwareFontSize, softwareMaintenanceFontSize } = appSettings;
+  const {
+    fgColorDetail,
+    fgColor,
+    textColor,
+    softwareFontSize,
+    softwareMaintenanceFontSize
+  } = appSettings;
 
-  const { modalOpen, title, handleModalClose, titleIcon } = props;
+  const {
+    modalOpen,
+    title,
+    handleModalClose,
+    titleIcon,
+    closable = true
+  } = props;
 
   return (
     <Modal
@@ -21,7 +33,7 @@ function SoftwareModal(props) {
           color: textColor,
           outline: '1px solid gray'
         }}
-        closeButton
+        closeButton={closable}
       >
         <Modal.Title
           style={{
