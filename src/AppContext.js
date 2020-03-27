@@ -7,6 +7,7 @@ const appSettings = {
   textColor: '#FFFFFF',
   fontStyle: 'Gaegu',
   iconSizing: '5vw',
+  iconSizingSmall: '3vw',
 
   appbarFontStyle: 'Annie Use Your Telescope',
   appbarFontSize: 'calc(10px + 2vmin)',
