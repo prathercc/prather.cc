@@ -53,7 +53,7 @@ const SoftwareLinkModal = props => {
         handleModalClose={handleModalClose}
         titleIcon={icon}
       >
-        <p>You are about to navigate to: </p>
+        <p>You are about to leave <strong>prather.cc</strong> and navigate to:</p>
         <FormControl
           style={{
             cursor: 'text',
@@ -63,16 +63,16 @@ const SoftwareLinkModal = props => {
           disabled
           value={`${link}`}
         />
-        <p style={{ marginTop: '1vh' }}>Are you sure you wish to continue?</p>
         <Button
           onClick={() => {
             handleModalClose();
             window.open(`${link}`);
           }}
           variant='outline-light'
-          style={{ fontSize: softwareMaintenanceFontSize }}
+          style={{ fontSize: softwareMaintenanceFontSize, marginTop:'2vh' }}
+          
         >
-          Yes, {title}
+          Continue
         </Button>
       </SoftwareModal>
     </>
