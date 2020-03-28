@@ -49,7 +49,8 @@ function ClickServant(props) {
             }}
           />
           <SoftwareCompatibility compatibility={{ ...compatibility, windows: true }}>
-            <SoftwareDownloadOption downloadLink='/' downloadName='ClickServant.exe' type='windows' />
+            {/* Will want to map the SoftwareDownloadOptions here from a json obj containing the downloads + their info */}
+            <SoftwareDownloadOption downloadLink='/' downloadName='ClickServant.exe' type='windows' downloadSize='2.3 mb' downloads={55} />
           </SoftwareCompatibility>
 
           <SoftwareCode repoLink='https://github.com/aaprather/Click-Servant' />
