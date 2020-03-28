@@ -5,14 +5,6 @@ import { Check, X } from 'react-bootstrap-icons';
 import { useCurrentBreakpointName } from 'react-socks';
 
 function SoftwareCompatibility(props) {
-  return (
-    <DesktopView compatibility={props.compatibility}>
-      {props.children}
-    </DesktopView>
-  );
-}
-
-const DesktopView = props => {
   const appSettings = useContext(AppContext);
   const { fgColorDetail } = appSettings;
   const { compatibility } = props;
@@ -30,13 +22,14 @@ const DesktopView = props => {
         <strong>System Compatibility</strong>
         <CompatibilityTable compatibility={compatibility} />
         <Container>
+          <strong>Download(s)</strong>
         {props.children}
         </Container>
 
       </Card.Body>
     </Card>
   );
-};
+}
 
 const CompatibilityTable = props => {
   const {
