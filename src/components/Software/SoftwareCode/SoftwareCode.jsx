@@ -110,14 +110,6 @@ const CloneRepository = props => {
         handleModalClose={handleModalClose}
         titleIcon={<Icon />}
       >
-        Copy link below to clone project with{' '}
-        <a
-          href='https://git-scm.com/'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Git
-        </a>
         <InputGroup style={{ marginTop: '2vh' }}>
           <FormControl
             style={{
