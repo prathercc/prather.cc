@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Image, Card, Container } from 'react-bootstrap';
 import { Breakpoint } from 'react-socks';
-import { AppContext } from '../../AppContext';
+import { AppContext } from '../../../AppContext';
 
 function SoftwareTitle(props) {
   return (

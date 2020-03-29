@@ -6,12 +6,12 @@ import clickservantIntervalKeyer from '../../../../images/software/clickservant/
 import clickservantSave from '../../../../images/software/clickservant/clickservantSave.jpg';
 import clickservantLoad from '../../../../images/software/clickservant/clickservantLoad.jpg';
 import poico5 from '../../../../images/software/clickservant/poico5.png';
-import SoftwareTitle from '../../SoftwareTitle';
+import SoftwareTitle from '../../SoftwareTitle/SoftwareTitle';
 import SoftwareFeature from '../../SoftwareFeature/SoftwareFeature';
 import SoftwarePage from '../../SoftwarePage/SoftwarePage';
-import MaintenanceAlert from '../../MaintenanceAlert';
-import SoftwareCompatibility from '../../SoftwareCompatibility';
-import SoftwareDownloadOption from '../../SoftwareDownloadOption';
+import MaintenanceAlert from '../../SoftwarePage/MaintenanceAlert';
+import SoftwareCompatibility from '../../SoftwareCompatibility/SoftwareCompatibility';
+import SoftwareDownloadOption from '../../SoftwareCompatibility/SoftwareDownloadOption';
 import SoftwareTableRow from '../../SoftwareTable/SoftwareTableRow';
 import SoftwareCode from '../../SoftwareCode/SoftwareCode';
 

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Card, Table, Button, Container } from 'react-bootstrap';
-import { AppContext } from '../../AppContext';
+import { AppContext } from '../../../AppContext';
 import { Check, X } from 'react-bootstrap-icons';
 import { useCurrentBreakpointName } from 'react-socks';
 

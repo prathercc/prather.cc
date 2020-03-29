@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react';
 import { Button, Container, Row, Col, Spinner } from 'react-bootstrap';
 import { useCurrentBreakpointName } from 'react-socks';
 import * as RBI from 'react-bootstrap-icons';
-import { AppContext } from '../../AppContext';
-import SoftwareModal from './SoftwareModal/SoftwareModal';
+import { AppContext } from '../../../AppContext';
+import SoftwareModal from '../SoftwareModal/SoftwareModal';
 
 function SoftwareDownloadOption(props) {
   const { downloadName, downloadLink, type, downloadSize, downloads } = props;
@@ -31,7 +31,7 @@ function SoftwareDownloadOption(props) {
         <Col>
           <Button
             variant='dark'
-            style={{ marginTop: '1vh', outline: '1px solid gray' }}
+            style={{ marginTop: '1vh' }}
             size={breakpoint === 'xsmall' ? 'sm' : 'lg'}
             onClick={() => handleModalOpen()}
             block

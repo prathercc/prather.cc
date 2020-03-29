@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Alert } from 'react-bootstrap';
-import { AppContext } from '../../AppContext';
+import { AppContext } from '../../../AppContext';
 function MaintenanceAlert(props) {
   const appSettings = useContext(AppContext);
   const { softwareMaintenanceFontSize } = appSettings;
