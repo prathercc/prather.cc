@@ -23,7 +23,7 @@ function SoftwareCompatibility(props) {
         <CompatibilityTable compatibility={compatibility} />
         <Container>
           <strong>Download(s)</strong>
-        {props.children}
+        {props.children ? props.children : <p>N/A</p>}
         </Container>
 
       </Card.Body>

@@ -45,7 +45,15 @@ const MobileView = props => {
                         ? descriptionObject.image
                         : ''
                     }
-                    style={{ width: descriptionObject.imageWidth.mobile }}
+                    onClick={() =>
+                      descriptionObject.image !== undefined
+                        ? window.open(descriptionObject.image)
+                        : ''
+                    }
+                    style={{
+                      width: descriptionObject.imageWidth.mobile,
+                      cursor: 'pointer'
+                    }}
                   />
                   <div style={{ marginTop: '1vh' }}>
                     {descriptionObject.content}
@@ -87,7 +95,15 @@ const DesktopView = props => {
                         ? descriptionObject.image
                         : ''
                     }
-                    style={{ width: descriptionObject.imageWidth.desktop }}
+                    onClick={() =>
+                      descriptionObject.image !== undefined
+                        ? window.open(descriptionObject.image)
+                        : ''
+                    }
+                    style={{
+                      width: descriptionObject.imageWidth.desktop,
+                      cursor: 'pointer'
+                    }}
                   />
                   <div style={{ marginTop: '1vh' }}>
                     {descriptionObject.content}
