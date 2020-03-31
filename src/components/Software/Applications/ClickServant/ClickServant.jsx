@@ -14,6 +14,7 @@ import SoftwareCompatibility from '../../SoftwareCompatibility/SoftwareCompatibi
 import SoftwareDownloadOption from '../../SoftwareCompatibility/SoftwareDownloadOption';
 import SoftwareTableRow from '../../SoftwareTable/SoftwareTableRow';
 import SoftwareCode from '../../SoftwareCode/SoftwareCode';
+import ListItem from '../../SoftwarePage/SoftwareListItem';
 
 function ClickServant(props) {
   const { sample = false } = props;
@@ -95,14 +96,6 @@ function ClickServant(props) {
     </>
   );
 }
-
-const ListItem = props => {
-  return (
-    <ListGroup.Item style={{ cursor: 'default' }} action variant='dark'>
-      {props.children}
-    </ListGroup.Item>
-  );
-};
 
 let appTitleInfo = (
   <Container>
