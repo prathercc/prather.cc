@@ -2,6 +2,7 @@ import React from 'react';
 import { Table } from 'react-bootstrap';
 import SoftwarePage from '../SoftwarePage/SoftwarePage';
 import ClickServant from '../Applications/ClickServant/ClickServant';
+import DroppedFile from '../Applications/DroppedFile/DroppedFile';
 function SoftwareTable(props) {
   return (
     <SoftwarePage>
@@ -23,6 +24,7 @@ function SoftwareTable(props) {
         </thead>
         <tbody>
           <ClickServant sample={true} />
+          <DroppedFile sample={true} />
         </tbody>
       </Table>
     </SoftwarePage>
