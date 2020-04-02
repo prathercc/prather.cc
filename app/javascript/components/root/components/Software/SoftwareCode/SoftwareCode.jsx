@@ -108,7 +108,7 @@ const CloneRepository = props => {
       >
         <InputGroup style={{ marginTop: '2vh' }}>
           <FormControl
-          readOnly
+            readOnly
             style={{
               cursor: 'text',
               textAlign: 'center',
