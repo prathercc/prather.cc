@@ -37,8 +37,15 @@ const DesktopView = props => {
       <Container style={{textAlign:'center'}}>
           <Row>
             <Col>
-            <a href="https://github.com/prathercc" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a style={{color:'white'}}href="https://github.com/prathercc" target="_blank" rel="noopener noreferrer">GitHub</a>
             </Col>
+            <Col></Col>
+            <Col>
+            <a style={{color:'white'}}href="https://youtube.com/prathercc" target="_blank" rel="noopener noreferrer">Youtube</a>
+            </Col>
+          </Row>
+          <Row>
+            <Col>© 2020 prather.cc</Col>
           </Row>
         </Container>
     </Navbar>

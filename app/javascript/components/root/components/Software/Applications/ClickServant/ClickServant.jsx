@@ -98,7 +98,7 @@ function ClickServant(props) {
 }
 
 let appTitleInfo = (
-    'Desktop application that automates mouse &amp; key events at a given interval.'
+    'Desktop application that automates mouse and key events at a given interval.'
 );
 
 let desc1 = (

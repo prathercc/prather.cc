@@ -85,8 +85,8 @@ const MobileView = () => {
     >
       <Container style={{ alignItem: 'center' }}>
         <CustomNavDropDown>
-          <Dropdown.Item href='/'>Home</Dropdown.Item>
-          <Dropdown.Item href='/software'>Software</Dropdown.Item>
+          <Dropdown.Item href='/' onClick={()=>window.open('/','_self')}>Home</Dropdown.Item>
+          <Dropdown.Item href='/' onClick={()=>window.open('/software','_self')}>Software</Dropdown.Item>
         </CustomNavDropDown>
         <Navbar.Brand>
           <Navbar.Text

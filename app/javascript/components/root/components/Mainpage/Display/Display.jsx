@@ -34,18 +34,18 @@ const PrathImage = props => {
 
 function Display() {
   const imageObj = {
-    splatWidth: '30vw',
+    splatWidth: '35vw',
     textWidth: '25vw',
     imageClass: 'App-logo-large'
   };
   return (
-    <header style={{ marginTop: '20vh' }}>
+    <header style={{ marginTop: '10vh' }}>
       <Breakpoint medium down>
         <PrathImage
           imageObj={{
             ...imageObj,
             imageClass: 'App-logo-small',
-            splatWidth: '60vw',
+            splatWidth: '75vw',
             textWidth: '50vw'
           }}
         />
