@@ -116,7 +116,7 @@ const CustomNavDropDown = props => {
       onMouseLeave={() => setActiveColor(textColor)}
     >
       <Dropdown>
-        <Dropdown.Toggle as={'NavLink'}>Navigate</Dropdown.Toggle>
+        <Dropdown.Toggle style={{color:activeColor}} as={Nav.Link}>Navigate</Dropdown.Toggle>
         <Dropdown.Menu>{props.children}</Dropdown.Menu>
       </Dropdown>
     </Nav>
