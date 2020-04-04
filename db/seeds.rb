@@ -8,14 +8,14 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 1.times do
-  Image.create({
-                 application_id: 1,
-                 image_name: 'Test Image Name',
-                 image: 'deadbeef'.bytes
-               })
-  Image.create({
-                 application_id: 22,
-                 image_name: 'Another image name test',
-                 image: 'test'.bytes
-               })
+  Download.create({
+                    application_name: 'testapp',
+                    path: 'http://prather.cc/somelink.ewxe',
+                    os_type: 'Lindows'
+                  })
+  Download.create({
+                    application_name: 'testapp2',
+                    path: 'http://prather.cc/somelink.deweb',
+                    os_type: 'Winux'
+                  })
 end
