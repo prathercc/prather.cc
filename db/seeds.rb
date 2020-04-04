@@ -9,13 +9,17 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 1.times do
   Download.create({
-                    application_name: 'testapp',
+                    application_name: 'Click-Servant',
                     path: 'http://prather.cc/somelink.ewxe',
-                    os_type: 'Lindows'
+                    os_type: 'Windows',
+                    file_size: '5.3mb',
+                    file_name: 'ClickServant.exe'
                   })
   Download.create({
-                    application_name: 'testapp2',
+                    application_name: 'testapp',
                     path: 'http://prather.cc/somelink.deweb',
-                    os_type: 'Winux'
+                    os_type: 'Linux',
+                    file_size: '1mb',
+                    file_name: 'test.exe'
                   })
 end

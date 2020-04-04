@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 2020_04_04_212155) do
     t.integer "download_count"
     t.string "application_name"
     t.string "os_type"
+    t.string "file_name"
+    t.string "file_size"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

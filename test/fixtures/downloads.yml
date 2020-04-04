@@ -11,3 +11,5 @@ two:
   download_count: 1
   application_name: MyString
   os_type: MyString
+  file_name: MyString
+  file_size: MyString
