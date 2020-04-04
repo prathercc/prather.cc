@@ -3,4 +3,4 @@
 *.html linguist-detectable=false
 *.js linguist-detectable=false
 *.ru linguist-detectable=true
-*.jsx linguist-detectable=false
+*.jsx linguist-detectable=true
