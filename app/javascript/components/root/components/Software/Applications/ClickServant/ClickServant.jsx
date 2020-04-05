@@ -68,9 +68,9 @@ function ClickServant(props) {
           />
           <SoftwareCompatibility
             appName='Click-Servant'
+            setMainDownloads={setDownloads}
             compatibility={{ ...compatibility, windows: true }}
           >
-            {/* Will want to map the SoftwareDownloadOptions here from a json obj containing the downloads + their info */}
             {downloadsLoading ? (
               <Container>
                 <Spinner animation='border' />
