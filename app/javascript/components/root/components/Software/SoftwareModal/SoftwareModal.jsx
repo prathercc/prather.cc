@@ -26,7 +26,7 @@ function SoftwareModal(props) {
       centered
       show={modalOpen}
       onHide={() => handleModalClose()}
-      size='lg'
+      size='xl'
     >
       <Modal.Header
         style={{
