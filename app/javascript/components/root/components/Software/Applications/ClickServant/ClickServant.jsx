@@ -1,5 +1,5 @@
-import React from 'react';
-import { Container, Col, Row, ListGroup } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Container, Col, Row, ListGroup, Spinner } from 'react-bootstrap';
 import clickservantMainView from '../../../../images/software/clickservant/clickservantMainView.jpg';
 import clickservantIntervalClicker from '../../../../images/software/clickservant/clickservantIntervalClicker.jpg';
 import clickservantIntervalKeyer from '../../../../images/software/clickservant/clickservantIntervalKeyer.jpg';
@@ -15,15 +15,32 @@ import SoftwareDownloadOption from '../../SoftwareCompatibility/SoftwareDownload
 import SoftwareTableRow from '../../SoftwareTable/SoftwareTableRow';
 import SoftwareCode from '../../SoftwareCode/SoftwareCode';
 import ListItem from '../../SoftwarePage/SoftwareListItem';
+import { fetchDownloads } from '../../../../downloadService';
 
 function ClickServant(props) {
   const { sample = false } = props;
+  const [downloads, setDownloads] = useState(null);
+  const [downloadsLoading, setDownloadsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetch = async () => {
+      await fetchDownloads('Click-Servant', setDownloads);
+    };
+    fetch();
+  }, []);
+
+  useEffect(() => {
+    if (downloads !== null) {
+      setDownloadsLoading(false);
+    }
+  }, [downloads]);
+
   const compatibility = {
     windows: false,
     linux: false,
     mac: false,
     android: false,
-    ios: false
+    ios: false,
   };
 
   return (
@@ -34,7 +51,7 @@ function ClickServant(props) {
           icon={`${poico5}`}
           pageLink='/software/Click-Servant'
           language='C++/CLI'
-          compatibility={{...compatibility, windows:true}}
+          compatibility={{ ...compatibility, windows: true }}
         />
       ) : (
         <SoftwarePage>
@@ -46,12 +63,32 @@ function ClickServant(props) {
               image: `${clickservantMainView}`,
               imageWidth: { desktop: '30vw', mobile: '50vw' },
               thumbnail: `${poico5}`,
-              thumbnailWidth: { desktop: '3vw', mobile: '6vw' }
+              thumbnailWidth: { desktop: '3vw', mobile: '6vw' },
             }}
           />
-          <SoftwareCompatibility compatibility={{ ...compatibility, windows: true }}>
+          <SoftwareCompatibility
+            appName='Click-Servant'
+            compatibility={{ ...compatibility, windows: true }}
+          >
             {/* Will want to map the SoftwareDownloadOptions here from a json obj containing the downloads + their info */}
-            <SoftwareDownloadOption downloadLink='/' downloadName='ClickServant.exe' type='windows' downloadSize='2.3 mb' downloads={55} />
+            {downloadsLoading ? (
+              <Container>
+                <Spinner animation='border' />
+              </Container>
+            ) : (
+              downloads.map((download) => {
+                return (
+                  <SoftwareDownloadOption
+                    key={download.id}
+                    downloadLink={download.path}
+                    downloadName={download.file_name}
+                    type={download.os_type}
+                    downloadSize={download.file_size}
+                    downloads={download.download_count}
+                  />
+                );
+              })
+            )}
           </SoftwareCompatibility>
 
           <SoftwareCode repoLink='https://github.com/aaprather/Click-Servant' />
@@ -61,7 +98,7 @@ function ClickServant(props) {
               image: `${clickservantIntervalClicker}`,
               imageWidth: { desktop: '25vw', mobile: '50vw' },
               description: desc1,
-              content: content1
+              content: content1,
             }}
           />
 
@@ -70,7 +107,7 @@ function ClickServant(props) {
               image: `${clickservantIntervalKeyer}`,
               imageWidth: { desktop: '20vw', mobile: '50vw' },
               description: desc2,
-              content: content2
+              content: content2,
             }}
           />
 
@@ -79,7 +116,7 @@ function ClickServant(props) {
               image: `${clickservantSave}`,
               imageWidth: { desktop: '25vw', mobile: '50vw' },
               description: desc3,
-              content: content3
+              content: content3,
             }}
           />
 
@@ -88,7 +125,7 @@ function ClickServant(props) {
               image: `${clickservantLoad}`,
               imageWidth: { desktop: '25vw', mobile: '50vw' },
               description: desc4,
-              content: content4
+              content: content4,
             }}
           />
         </SoftwarePage>
@@ -97,9 +134,8 @@ function ClickServant(props) {
   );
 }
 
-let appTitleInfo = (
-    'Desktop application that automates mouse and key events at a given interval.'
-);
+let appTitleInfo =
+  'Desktop application that automates mouse and key events at a given interval.';
 
 let desc1 = (
   <Container>

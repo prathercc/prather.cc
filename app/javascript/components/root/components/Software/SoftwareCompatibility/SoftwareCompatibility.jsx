@@ -1,13 +1,15 @@
-import React, { useContext } from 'react';
-import { Card, Table, Button, Container } from 'react-bootstrap';
+import React, { useContext, useState, useEffect } from 'react';
+import { Card, Table, Button, Container, Spinner } from 'react-bootstrap';
 import { AppContext } from '../../../AppContext';
 import { Check, X } from 'react-bootstrap-icons';
 import { useCurrentBreakpointName } from 'react-socks';
+import SoftwareModal from '../SoftwareModal/SoftwareModal';
+import { fetchDownloads } from '../../../downloadService';
 
 function SoftwareCompatibility(props) {
   const appSettings = useContext(AppContext);
   const { fgColorDetail } = appSettings;
-  const { compatibility } = props;
+  const { compatibility, appName } = props;
 
   return (
     <Card
@@ -15,12 +17,13 @@ function SoftwareCompatibility(props) {
         backgroundColor: fgColorDetail,
         alignItems: 'center',
         marginTop: '5vh',
-        outline: '1px solid gray'
+        outline: '1px solid gray',
       }}
     >
       <Card.Body>
         <strong>System Compatibility</strong>
         <CompatibilityTable compatibility={compatibility} />
+        <EditDownloads appName={appName} />
         <Container>
           <strong>Download(s)</strong>
           {props.children ? props.children : <p>N/A</p>}
@@ -30,15 +33,53 @@ function SoftwareCompatibility(props) {
   );
 }
 
-const CompatibilityTable = props => {
+const EditDownloads = (props) => {
+  const { appName } = props;
+  const [modalOpen, setModalOpen] = useState(false);
+  const [downloads, setDownloads] = useState(null);
+  const [downloadsLoading, setDownloadsLoading] = useState(true);
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setDownloadsLoading(true);
+  };
+
+  const openAndLoadDownloads = async () => {
+    setModalOpen(true);
+    await fetchDownloads(appName, setDownloads);
+  };
+
+  useEffect(() => {
+    if (downloads !== null) {
+      setDownloadsLoading(false);
+    }
+  }, [downloads]);
+
+  return (
+    <>
+      <Button onClick={() => openAndLoadDownloads()} variant='warning' block>
+        Modify {appName} Downloads
+      </Button>
+      <SoftwareModal
+        title='Modify Downloads'
+        modalOpen={modalOpen}
+        handleModalClose={handleModalClose}
+      >
+        {downloadsLoading ? <Spinner animation='border' /> : 'Loaded'}
+      </SoftwareModal>
+    </>
+  );
+};
+
+const CompatibilityTable = (props) => {
   const {
     compatibility = {
       windows: false,
       linux: false,
       mac: false,
       android: false,
-      ios: false
-    }
+      ios: false,
+    },
   } = props;
   return (
     <Table
@@ -71,7 +112,7 @@ const CompatibilityTable = props => {
   );
 };
 
-const CompatiblityResult = props => {
+const CompatiblityResult = (props) => {
   const appSettings = useContext(AppContext);
   const { iconSizing } = appSettings;
   const { boolean } = props;
@@ -82,7 +123,7 @@ const CompatiblityResult = props => {
           style={{
             color: 'green',
             fontSize: iconSizing,
-            filter: 'grayscale(0.5)'
+            filter: 'grayscale(0.5)',
           }}
         />
       ) : (
@@ -90,7 +131,7 @@ const CompatiblityResult = props => {
           style={{
             color: 'red',
             fontSize: iconSizing,
-            filter: 'grayscale(0.5)'
+            filter: 'grayscale(0.5)',
           }}
         />
       )}
