@@ -1,15 +1,28 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Card, Table, Button, Container, Spinner } from 'react-bootstrap';
+import {
+  Card,
+  Table,
+  Button,
+  Container,
+  Spinner,
+  Form,
+  Row,
+  Col,
+} from 'react-bootstrap';
 import { AppContext } from '../../../AppContext';
 import { Check, X } from 'react-bootstrap-icons';
-import { useCurrentBreakpointName } from 'react-socks';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
-import { fetchDownloads } from '../../../downloadService';
+import {
+  fetchDownloads,
+  postDownload,
+  putDownload,
+  deleteDownload,
+} from '../../../downloadService';
 
 function SoftwareCompatibility(props) {
   const appSettings = useContext(AppContext);
   const { fgColorDetail } = appSettings;
-  const { compatibility, appName } = props;
+  const { compatibility, appName, setMainDownloads } = props;
 
   return (
     <Card
@@ -23,7 +36,7 @@ function SoftwareCompatibility(props) {
       <Card.Body>
         <strong>System Compatibility</strong>
         <CompatibilityTable compatibility={compatibility} />
-        <EditDownloads appName={appName} />
+        <EditDownloads appName={appName} setMainDownloads={setMainDownloads} />
         <Container>
           <strong>Download(s)</strong>
           {props.children ? props.children : <p>N/A</p>}
@@ -34,14 +47,15 @@ function SoftwareCompatibility(props) {
 }
 
 const EditDownloads = (props) => {
-  const { appName } = props;
+  const { appName, setMainDownloads } = props;
   const [modalOpen, setModalOpen] = useState(false);
   const [downloads, setDownloads] = useState(null);
   const [downloadsLoading, setDownloadsLoading] = useState(true);
 
-  const handleModalClose = () => {
+  const handleModalClose = async () => {
     setModalOpen(false);
     setDownloadsLoading(true);
+    await fetchDownloads(appName, setMainDownloads);
   };
 
   const openAndLoadDownloads = async () => {
@@ -65,8 +79,132 @@ const EditDownloads = (props) => {
         modalOpen={modalOpen}
         handleModalClose={handleModalClose}
       >
-        {downloadsLoading ? <Spinner animation='border' /> : 'Loaded'}
+        {downloadsLoading ? (
+          <Spinner animation='border' />
+        ) : (
+          downloads.map((download) => {
+            return (
+              <Download
+                key={download.id}
+                value={download}
+                appName={appName}
+                reloadDownloads={openAndLoadDownloads}
+              />
+            );
+          })
+        )}
+        <Download appName={appName} reloadDownloads={openAndLoadDownloads} />
       </SoftwareModal>
+    </>
+  );
+};
+
+const Download = (props) => {
+  const { value, appName, reloadDownloads } = props;
+
+  const blankDownload = {
+    application_name: appName,
+    file_name: '',
+    file_size: '',
+    os_type: '',
+    path: '',
+  };
+
+  const [download, setDownload] = useState(
+    value === undefined ? blankDownload : value
+  );
+
+  const handleDeleteDownload = async () => {
+    await deleteDownload(download.id);
+    reloadDownloads();
+  };
+
+  const handleAddDownload = async () => {
+    await postDownload(download);
+    reloadDownloads();
+    setDownload(blankDownload);
+  };
+
+  const handleEditDownload = async () => {
+    await putDownload(download);
+    reloadDownloads();
+  };
+
+  return (
+    <>
+      <Form style={{ marginTop: '2vh' }}>
+        <Container>
+          <Row>
+            <Col>
+              <Form.Control
+                size='sm'
+                type='text'
+                placeholder='Name'
+                value={download.file_name}
+                onChange={(e) =>
+                  setDownload({ ...download, file_name: e.target.value })
+                }
+              />
+            </Col>
+            <Col>
+              <Form.Control
+                size='sm'
+                type='text'
+                placeholder='Size'
+                value={download.file_size}
+                onChange={(e) =>
+                  setDownload({ ...download, file_size: e.target.value })
+                }
+              />
+            </Col>
+            <Col>
+              <Form.Control
+                size='sm'
+                type='text'
+                placeholder='Path'
+                value={download.path}
+                onChange={(e) =>
+                  setDownload({ ...download, path: e.target.value })
+                }
+              />
+            </Col>
+            <Col>
+              <Form.Control
+                onChange={(e) =>
+                  setDownload({ ...download, os_type: e.target.value })
+                }
+                size='sm'
+                as='select'
+                value={download.os_type}
+              >
+                <option></option>
+                <option>Windows</option>
+                <option>Linux</option>
+                <option>Mac</option>
+                <option>Android</option>
+                <option>iOS</option>
+              </Form.Control>
+            </Col>
+
+            {value === undefined ? (
+              <Button onClick={() => handleAddDownload()} variant='success'>
+                Add
+              </Button>
+            ) : (
+              <Button onClick={() => handleEditDownload()} variant='success'>
+                Save
+              </Button>
+            )}
+            {value === undefined ? (
+              ''
+            ) : (
+              <Button onClick={() => handleDeleteDownload()} variant='danger'>
+                Delete
+              </Button>
+            )}
+          </Row>
+        </Container>
+      </Form>
     </>
   );
 };
