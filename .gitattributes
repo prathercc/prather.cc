@@ -4,3 +4,4 @@
 *.js linguist-detectable=false
 *.ru linguist-detectable=true
 *.jsx linguist-detectable=true
+*.erb linguist-detectable=true
