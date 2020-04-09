@@ -29,23 +29,20 @@ module Api
       # POST /user
       # POST /user.json
       def create
-        user = User.new(user_params)
-
-        respond_to do |_format|
-          if user.save
-            render json: {
-              status: 'SUCCESS',
-              message: 'User created',
-              data: user
-            }, status: 200
-          else
-            render json: {
-              status: 'FAILURE',
-              message: 'Failed to create user',
-              data: users
-            }, status: 400
-          end
-        end
+        user = User.new({ email: params[:email], password: params[:password], password_confirmation: params[:password_confirmation] })
+        if user.save
+          render json: {
+            status: 'SUCCESS',
+            message: 'User created',
+            data: user
+          }, status: 200
+        else
+          render json: {
+            status: 'FAILURE',
+            message: 'Failed to create user',
+            data: nil
+          }, status: 400
+      end
       end
 
       # PATCH/PUT /user/1
