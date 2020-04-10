@@ -5,7 +5,7 @@ module Api
     class DownloadController < ApplicationController
       def index
         app_name = params[:application_name]
-        downloads = Download.order('created_at DESC')
+        downloads = Download.all
         if !app_name.nil?
           filtered_downloads = []
 
@@ -71,7 +71,12 @@ module Api
       end
 
       def update
-        if current_user
+        download_param = params[:dl]
+        if download_param
+          download = Download.find(params[:id])
+          download.download_count = download.download_count + 1
+          download.save
+        elsif current_user
           download = Download.find(params[:id])
           if download.update(download_params)
             render json: {
@@ -93,7 +98,7 @@ module Api
       end
 
       def download_params
-        params.require(:download).permit(:os_type, :application_name, :path, :file_name, :file_size)
+        params.require(:download).permit(:os_type, :application_name, :path, :file_name, :file_size, :download_count)
       end
     end
   end

@@ -4,16 +4,18 @@ import { useCurrentBreakpointName } from 'react-socks';
 import * as RBI from 'react-bootstrap-icons';
 import { AppContext } from '../../../AppContext';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
+import { incrementDownload } from '../../../downloadService';
 
 function SoftwareDownloadOption(props) {
-  const { downloadName, downloadLink, type, downloadSize, downloads } = props;
+  const { downloadName, downloadLink, type, downloadSize, downloads, id } = props;
   const appSettings = useContext(AppContext);
   const { softwareFontSize, iconSizing } = appSettings;
   const [modalOpen, setModalOpen] = useState(false);
 
   const breakpoint = useCurrentBreakpointName();
 
-  const handleModalOpen = () => {
+  const handleModalOpen = async () => {
+    await incrementDownload(id)
     setModalOpen(true);
     window.setTimeout(() => {
       window.open(downloadLink);
@@ -40,7 +42,7 @@ function SoftwareDownloadOption(props) {
               <Row>
                 <Col
                   style={{
-                    fontSize: softwareFontSize
+                    fontSize: softwareFontSize,
                   }}
                 >
                   {downloadName}

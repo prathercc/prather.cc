@@ -110,6 +110,7 @@ const Download = (props) => {
     file_size: '',
     os_type: '',
     path: '',
+    download_count: 0
   };
 
   const [download, setDownload] = useState(

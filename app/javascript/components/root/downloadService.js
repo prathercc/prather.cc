@@ -9,7 +9,7 @@ export const fetchDownloads = async (appName, setDownloads) => {
     .then((resp) => {
       setDownloads(resp.data);
     })
-    .catch((err) => console.err(err));
+    .catch((err) => console.log(err));
 };
 
 export const postDownload = async (download) => {
@@ -25,7 +25,7 @@ export const postDownload = async (download) => {
     .then((resp) => {
       console.log(resp);
     })
-    .catch((err) => console.err(err));
+    .catch((err) => console.log(err));
 };
 
 export const putDownload = async (download) => {
@@ -40,7 +40,19 @@ export const putDownload = async (download) => {
     .json()
     .then((resp) => {
     })
-    .catch((err) => console.err(err));
+    .catch((err) => console.log(err));
+
+};
+
+export const incrementDownload = async (id) => {
+  const response = await fetch(`${host}/api/v1/download/${id}?dl=true`, {
+    method: 'PUT'
+  });
+  response
+    .json()
+    .then((resp) => {
+    })
+    .catch((err) => console.log(err));
 
 };
 
@@ -52,5 +64,5 @@ export const deleteDownload = async (downloadId) => {
     .json()
     .then((resp) => {
     })
-    .catch((err) => console.err(err));
+    .catch((err) => console.log(err));
 };
