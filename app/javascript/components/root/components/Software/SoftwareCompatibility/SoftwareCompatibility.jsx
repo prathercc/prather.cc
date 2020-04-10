@@ -1,28 +1,23 @@
 import React, { useContext, useState, useEffect } from 'react';
-import {
-  Card,
-  Table,
-  Button,
-  Container,
-  Spinner,
-  Form,
-  Row,
-  Col,
-} from 'react-bootstrap';
+import {Card,Table,Button,Container,Spinner,Form,Row,Col,} from 'react-bootstrap';
 import { AppContext } from '../../../AppContext';
 import { Check, X } from 'react-bootstrap-icons';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
-import {
-  fetchDownloads,
-  postDownload,
-  putDownload,
-  deleteDownload,
-} from '../../../downloadService';
+import {fetchDownloads,postDownload,putDownload,deleteDownload} from '../../../downloadService';
+import { getSession } from '../../../authService';
 
 function SoftwareCompatibility(props) {
   const appSettings = useContext(AppContext);
   const { fgColorDetail } = appSettings;
   const { compatibility, appName, setMainDownloads } = props;
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      await getSession(setUserData);
+    };
+    fetchSession();
+  }, []);
 
   return (
     <Card
@@ -36,7 +31,14 @@ function SoftwareCompatibility(props) {
       <Card.Body>
         <strong>System Compatibility</strong>
         <CompatibilityTable compatibility={compatibility} />
-        <EditDownloads appName={appName} setMainDownloads={setMainDownloads} />
+        {userData ? (
+          <EditDownloads
+            appName={appName}
+            setMainDownloads={setMainDownloads}
+          />
+        ) : (
+          ''
+        )}
         <Container>
           <strong>Download(s)</strong>
           {props.children ? props.children : <p>N/A</p>}
