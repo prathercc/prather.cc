@@ -5,6 +5,14 @@ module Api
     class SessionsController < ApplicationController
       def new; end
 
+      def index
+        render json: {
+          status: 'SUCCESS',
+          message: 'Retrieved current session',
+          data: session[:user_id]
+        }, status: 200
+      end
+
       def create
         user = User.find_by_email(params[:email])
         if user&.authenticate(params[:password])
@@ -12,7 +20,7 @@ module Api
           render json: {
             status: 'SUCCESS',
             message: 'Session created',
-            data: session
+            data: session[:user_id]
           }, status: 200
         else
           render json: {
