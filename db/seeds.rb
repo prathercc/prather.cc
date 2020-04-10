@@ -13,13 +13,12 @@
                     path: 'http://prather.cc/somelink.ewxe',
                     os_type: 'Windows',
                     file_size: '5.3mb',
-                    file_name: 'ClickServant.exe'
+                    file_name: 'ClickServant.exe',
+                    download_count: 0
                   })
-  Download.create({
-                    application_name: 'testapp',
-                    path: 'http://prather.cc/somelink.deweb',
-                    os_type: 'Linux',
-                    file_size: '1mb',
-                    file_name: 'test.exe'
-                  })
+  User.create({
+                email: 'admin@prather.cc',
+                password: 'test',
+                password_confirmation: 'test'
+              })
 end
