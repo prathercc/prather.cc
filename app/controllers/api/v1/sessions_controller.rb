@@ -6,25 +6,31 @@ module Api
       def new; end
 
       def index
-        render json: {
-          status: 'SUCCESS',
-          message: 'Retrieved current session',
-          data: session[:user_id]
-        }, status: 200
+        if current_user
+          render json: {
+            message: 'Retrieved current session',
+            data: current_user
+          }, status: 200
+        else
+          render json: {
+            message: 'No session found',
+            data: nil
+          }, status: 200
+        end
       end
 
       def create
         user = User.find_by_email(params[:email])
         if user&.authenticate(params[:password])
-          session[:user_id] = user.id
+          user.token = SecureRandom.uuid
+          user.save
+          session[:user_id] = user.token
           render json: {
-            status: 'SUCCESS',
             message: 'Session created',
-            data: session[:user_id]
+            data: current_user
           }, status: 200
         else
           render json: {
-            status: 'FAILURE',
             message: 'Unable to create session',
             data: nil
           }, status: 400
@@ -34,7 +40,6 @@ module Api
       def destroy
         session[:user_id] = nil
         render json: {
-          status: 'SUCCESS',
           message: 'Session ended',
           data: nil
         }, status: 200
