@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AppContext } from './AppContext';
 import background from './images/background.png';
 import SoftwareRouting from './components/Routing/SoftwareRouting';
+import Login from './components/Login/Login';
 
 function Root() {
   const appSettings = useContext(AppContext);
@@ -30,6 +31,9 @@ function Root() {
             <Switch>
               <Route exact path='/'>
                 <Display />
+              </Route>
+              <Route exact path='/login'>
+                <Login />
               </Route>
             </Switch>
           </div>
