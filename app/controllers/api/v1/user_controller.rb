@@ -8,12 +8,18 @@ module Api
       # GET /user
       # GET /user.json
       def index
-        users = User.all
-        render json: {
-          status: 'SUCCESS',
-          message: 'Retrieved users',
-          data: users
-        }, status: 200
+        if current_user
+          users = User.all
+          render json: {
+            message: 'Retrieved users',
+            data: users
+          }, status: 200
+        else
+          render json: {
+            message: 'Unauthorized',
+            data: nil
+          }, status: 401
+        end
       end
 
       # GET /user/1
@@ -29,20 +35,25 @@ module Api
       # POST /user
       # POST /user.json
       def create
-        user = User.new({ email: params[:email], password: params[:password], password_confirmation: params[:password_confirmation] })
-        if user.save
-          render json: {
-            status: 'SUCCESS',
-            message: 'User created',
-            data: user
-          }, status: 200
+        if current_user
+          user = User.new({ email: params[:email], password: params[:password], password_confirmation: params[:password_confirmation] })
+          if user.save
+            render json: {
+              message: 'User created',
+              data: user
+            }, status: 200
+          else
+            render json: {
+              message: 'Failed to create user',
+              data: nil
+            }, status: 400
+        end
         else
           render json: {
-            status: 'FAILURE',
-            message: 'Failed to create user',
+            message: 'Unauthorized',
             data: nil
-          }, status: 400
-      end
+          }, status: 401
+        end
       end
 
       # PATCH/PUT /user/1
@@ -52,13 +63,19 @@ module Api
       # DELETE /user/1
       # DELETE /user/1.json
       def destroy
-        user = User.find(params[:id])
-        user.destroy
-        render json: {
-          status: 'SUCCESS',
-          message: 'Deleted user',
-          data: user
-        }, status: 200
+        if current_user
+          user = User.find(params[:id])
+          user.destroy
+          render json: {
+            message: 'Deleted user',
+            data: user
+          }, status: 200
+        else
+          render json: {
+            message: 'Unauthorized',
+            data: nil
+          }, status: 401
+        end
       end
 
       private
