@@ -1,18 +1,16 @@
 const host = `${window.location.origin}`;
 
-export const getSession = async () => {
-  const response = await fetch(
-    `${host}/api/v1/sessions`
-  );
+export const getSession = async (setUserData) => {
+  const response = await fetch(`${host}/api/v1/sessions`);
   response
     .json()
     .then((resp) => {
-      console.log(resp);
+      setUserData(resp.data);
     })
-    .catch((err) => console.err(err));
+    .catch((err) => console.log(err));
 };
 
-export const authenticate = async (user) => {
+export const authenticate = async (user, setUserData) => {
   const response = await fetch(`${host}/api/v1/sessions`, {
     method: 'POST',
     headers: {
@@ -23,8 +21,19 @@ export const authenticate = async (user) => {
   response
     .json()
     .then((resp) => {
-      console.log(resp);
+      setUserData(resp.data);
     })
-    .catch((err) => console.err(err));
+    .catch((err) => console.log(err));
 };
 
+export const clearSession = async (setUserData) => {
+  const response = await fetch(`${host}/api/v1/sessions/1`, {
+    method: 'DELETE',
+  });
+  response
+    .json()
+    .then(() => {
+      setUserData(null);
+    })
+    .catch((err) => console.log(err));
+};
