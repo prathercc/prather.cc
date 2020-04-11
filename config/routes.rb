@@ -9,7 +9,9 @@ Rails.application.routes.draw do
     namespace 'v1' do
       resources :download
       resources :user
-      resources :sessions, only: %i[new create destroy index]
+      resources :sessions, only: %i[create destroy index]
+      resources :software, only: %i[create destroy index update]
+      resources :feature, only: %i[create destroy index update]
     end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

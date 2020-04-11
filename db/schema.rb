@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_10_160855) do
+ActiveRecord::Schema.define(version: 2020_04_11_191552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,34 @@ ActiveRecord::Schema.define(version: 2020_04_10_160855) do
     t.string "os_type"
     t.string "file_name"
     t.string "file_size"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "features", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "image_link"
+    t.string "content_title"
+    t.text "content_description"
+    t.string "application_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "softwares", force: :cascade do |t|
+    t.boolean "is_legacy"
+    t.string "icon_link"
+    t.string "name"
+    t.text "description"
+    t.string "image_link"
+    t.boolean "windows"
+    t.boolean "linux"
+    t.boolean "mac"
+    t.boolean "android"
+    t.boolean "ios"
+    t.string "repo_link"
+    t.string "languages"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
