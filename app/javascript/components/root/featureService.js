@@ -11,6 +11,17 @@ export const fetchFeatures = async (appName, setFeatures) => {
     })
     .catch((err) => console.log(err));
 };
+export const fetchFeature = async (id, setFeature) => {
+  const response = await fetch(
+    `${host}/api/v1/feature?id=${id}`
+  );
+  response
+    .json()
+    .then((resp) => {
+      setFeature(resp.data);
+    })
+    .catch((err) => console.log(err));
+};
 
 export const postFeature = async (feature) => {
   const response = await fetch(`${host}/api/v1/feature`, {
