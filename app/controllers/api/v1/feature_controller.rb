@@ -5,6 +5,7 @@ module Api
     class FeatureController < ApplicationController
       def index
         app_name = params[:application_name]
+        id = params[:id]
         features = Feature.all
         if !app_name.nil?
           filtered_features = []
@@ -14,6 +15,12 @@ module Api
           render json: {
             message: "Retrieved '#{app_name}'",
             data: filtered_features.first
+          }, status: 200
+        elsif !id.nil?
+          feature = Feature.find(id)
+          render json: {
+            message: "Retrieved feature",
+            data: feature
           }, status: 200
         else
           render json: {
@@ -93,7 +100,7 @@ module Api
         end
           end
 
-      def software_params
+      def feature_params
         params.require(:feature).permit(:title, :description, :image_link, :content_title, :content_description, :application_name)
       end
 end
