@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import SoftwarePage from '../SoftwarePage/SoftwarePage';
 import {
   postSoftware,
   putSoftware,
   deleteSoftware,
+  fetchSoftware,
 } from '../../../softwareService';
+import { useParams } from 'react-router-dom';
 
 function NewSoftware(props) {
-  const { value } = props;
+  let { name } = useParams();
   const blankSoftware = {
     is_legacy: false,
     icon_link: '',
@@ -23,7 +25,16 @@ function NewSoftware(props) {
     repo_link: '',
     languages: '',
   };
-  const [software, setSoftware] = useState(value ? value : blankSoftware);
+  const [software, setSoftware] = useState(blankSoftware);
+
+  useEffect(() => {
+    const fetch = async () => {
+      await fetchSoftware(name, setSoftware);
+    };
+    if (name) {
+      fetch();
+    }
+  }, []);
 
   const handleCreateSoftware = async () => {
     await postSoftware(software);
@@ -42,6 +53,7 @@ function NewSoftware(props) {
       <Form.Control
         size='sm'
         type='text'
+        disabled={name}
         placeholder='Name'
         value={software.name}
         onChange={(e) => setSoftware({ ...software, name: e.target.value })}
@@ -136,17 +148,17 @@ function NewSoftware(props) {
         checked={software.ios}
         onChange={() => setSoftware({ ...software, ios: !software.ios })}
       />
-      {value ? (
-          <>
-        <Button onClick={()=> handleEditSoftware()} variant='warning' block>
-          Edit
-        </Button>
-        <Button onClick={()=> handleDeleteSoftware()} variant='danger' block>
-          Delete
-        </Button>
+      {name ? (
+        <>
+          <Button onClick={() => handleEditSoftware()} variant='warning' block>
+            Save
+          </Button>
+          <Button onClick={() => handleDeleteSoftware()} variant='danger' block>
+            Delete
+          </Button>
         </>
       ) : (
-        <Button onClick={()=> handleCreateSoftware()} variant='warning' block>
+        <Button disabled={software.name.length === 0} onClick={() => handleCreateSoftware()} variant='warning' block>
           Create
         </Button>
       )}
