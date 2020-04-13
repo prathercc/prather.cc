@@ -6,8 +6,11 @@ import Footer from './components/Mainpage/Footer';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AppContext } from './AppContext';
 import background from './images/background.png';
-import SoftwareRouting from './components/Routing/SoftwareRouting';
 import Login from './components/Login/Login';
+import SoftwareApplication from './components/Software/SoftwareApplication/SoftwareApplication';
+import SoftwareTable from './components/Software/SoftwareTable/SoftwareTable';
+import NewSoftware from './components/Software/NewSoftware/NewSoftware';
+import NewFeature from './components/Software/NewSoftware/NewFeature';
 
 function Root() {
   const appSettings = useContext(AppContext);
@@ -24,10 +27,31 @@ function Root() {
               minHeight: '100vh',
               textAlign: 'center',
               border: '1px solid transparent',
-              backgroundImage: `url(${background})`
+              backgroundImage: `url(${background})`,
             }}
           >
-            <SoftwareRouting />
+            <Switch>
+              <Route exact path='/software/:name'>
+                <SoftwareApplication />
+              </Route>
+            </Switch>
+            <Switch>
+              <Route exact path='/software'>
+                <SoftwareTable />
+              </Route>
+              <Route exact path='/software/admin/new'>
+                <NewSoftware />
+              </Route>
+              <Route exact path='/software/admin/edit/:name'>
+                <NewSoftware />
+              </Route>
+              <Route exact path='/software/admin/feature/new/:name'>
+                <NewFeature />
+              </Route>
+              <Route exact path='/software/admin/feature/edit/:name/:id'>
+                <NewFeature />
+              </Route>
+            </Switch>
             <Switch>
               <Route exact path='/'>
                 <Display />
@@ -43,5 +67,4 @@ function Root() {
     </div>
   );
 }
-
 export default Root;
