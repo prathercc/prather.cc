@@ -14,12 +14,12 @@ module Api
           end
           render json: {
             message: "Retrieved '#{app_name}'",
-            data: filtered_features.first
+            data: filtered_features
           }, status: 200
         elsif !id.nil?
           feature = Feature.find(id)
           render json: {
-            message: "Retrieved feature",
+            message: 'Retrieved feature',
             data: feature
           }, status: 200
         else
@@ -33,17 +33,7 @@ module Api
       def create
         if current_user
           feature = Feature.new(feature_params)
-          features = Feature.all
-          exists = false
-          features.each do |s|
-            exists = true if feature.name == s.name
-          end
-          if exists
-            render json: {
-              message: "Feature with name '#{feature.name}' already exists",
-              data: feature
-            }, status: 400
-          elsif feature.save
+          if feature.save
             render json: {
               message: 'Created feature',
               data: feature
