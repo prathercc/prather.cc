@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import AppBar from './components/Mainpage/AppBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Display from './components/Mainpage/Display/Display';
@@ -11,10 +11,20 @@ import SoftwareApplication from './components/Software/SoftwareApplication/Softw
 import SoftwareTable from './components/Software/SoftwareTable/SoftwareTable';
 import NewSoftware from './components/Software/NewSoftware/NewSoftware';
 import NewFeature from './components/Software/NewSoftware/NewFeature';
+import { getSession } from './authService';
 
 function Root() {
   const appSettings = useContext(AppContext);
   const { bgColor, textColor } = appSettings;
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      await getSession(setUserData);
+    };
+    fetchSession();
+  }, []);
+
   return (
     <div style={{ userSelect: 'none' }}>
       <AppContext.Provider value={appSettings}>
@@ -32,12 +42,12 @@ function Root() {
           >
             <Switch>
               <Route exact path='/software/:name'>
-                <SoftwareApplication />
+                <SoftwareApplication userData={userData} />
               </Route>
             </Switch>
             <Switch>
               <Route exact path='/software'>
-                <SoftwareTable />
+                <SoftwareTable userData={userData} />
               </Route>
               <Route exact path='/software/admin/new'>
                 <NewSoftware />

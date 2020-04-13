@@ -1,26 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Spinner } from 'react-bootstrap';
 import SoftwarePage from '../SoftwarePage/SoftwarePage';
-import ClickServant from '../Applications/ClickServant/ClickServant';
-import DroppedFile from '../Applications/DroppedFile/DroppedFile';
-import { getSession } from '../../../authService';
 import { fetchAllSoftware } from '../../../softwareService';
 import SoftwareSample from '../SoftwareApplication/SoftwareSample';
 
 function SoftwareTable(props) {
-  const [userData, setUserData] = useState(null);
+  const { userData } = props;
   const [software, setSoftware] = useState(null);
 
   useEffect(() => {
-    const fetchSession = async () => {
-      await getSession(setUserData);
-    };
-
     const loadSoftware = async () => {
       await fetchAllSoftware(setSoftware);
     };
-
-    fetchSession();
     loadSoftware();
   }, []);
 
