@@ -50,7 +50,9 @@ function NewFeature(props) {
         placeholder='Application Name'
         disabled
         value={feature.application_name}
-        onChange={(e) => setFeature({ ...feature, application_name: e.target.value })}
+        onChange={(e) =>
+          setFeature({ ...feature, application_name: e.target.value })
+        }
       />
       <Form.Control
         size='sm'
@@ -75,9 +77,7 @@ function NewFeature(props) {
         type='text'
         placeholder='Image Link'
         value={feature.image_link}
-        onChange={(e) =>
-          setFeature({ ...feature, image_link: e.target.value })
-        }
+        onChange={(e) => setFeature({ ...feature, image_link: e.target.value })}
       />
       <Form.Control
         size='sm'
@@ -117,6 +117,15 @@ function NewFeature(props) {
           Create
         </Button>
       )}
+      <Button
+        onClick={() =>
+          window.open(`/software/${feature.application_name}`, '_self')
+        }
+        variant='danger'
+        block
+      >
+        Back
+      </Button>
     </SoftwarePage>
   );
 }
