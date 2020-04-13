@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Container, Row, Col, Badge } from 'react-bootstrap';
+import { Image, Badge, Button } from 'react-bootstrap';
 import { useCurrentBreakpointName } from 'react-socks';
 
 function SoftwareTableRow(props) {
@@ -8,6 +8,7 @@ function SoftwareTableRow(props) {
     icon,
     pageLink,
     language,
+    userData,
     compatibility = {
       windows: false,
       linux: false,
@@ -20,20 +21,20 @@ function SoftwareTableRow(props) {
   return (
     <tr
       style={{ cursor: 'pointer' }}
-      onClick={() => window.open(pageLink, '_self')}
     >
-      <td>
+      <td onClick={() => window.open(pageLink, '_self')}>
         <Icon icon={icon} />
         {applicationName}
       </td>
-      <td>{language}</td>
-      <td>
+      <td onClick={() => window.open(pageLink, '_self')}>{language}</td>
+      <td onClick={() => window.open(pageLink, '_self')}>
         {compatibility.windows ? <Badge variant='light'>Windows</Badge> : ''}{' '}
         {compatibility.linux ? <Badge variant='warning'>Linux</Badge> : ''}{' '}
         {compatibility.mac ? <Badge variant='danger'>Mac</Badge> : ''}{' '}
         {compatibility.android ? <Badge variant='info'>Android</Badge> : ''}{' '}
         {compatibility.ios ? <Badge variant='success'>iOS</Badge> : ''}
       </td>
+      {userData ? <td ><Button onClick={() => window.open(`/software/admin/edit/${applicationName}`, '_self')} size='sm' block variant='warning'>Edit</Button></td> : ''}
     </tr>
   );
 }

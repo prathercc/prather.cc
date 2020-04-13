@@ -16,7 +16,7 @@ function SoftwareTitle(props) {
   );
 }
 
-const MobileView = props => {
+const MobileView = (props) => {
   const appSettings = useContext(AppContext);
   const { fgColorDetail } = appSettings;
   const { titleObject } = props;
@@ -25,7 +25,7 @@ const MobileView = props => {
       style={{
         backgroundColor: fgColorDetail,
         alignItems: 'center',
-        outline: '1px solid gray'
+        outline: '1px solid gray',
       }}
     >
       <Container>
@@ -38,7 +38,9 @@ const MobileView = props => {
       </Container>
 
       <Card.Body>
-        <Card.Text>{titleObject.description}</Card.Text>
+        <Card.Text
+          dangerouslySetInnerHTML={{ __html: titleObject.description }}
+        ></Card.Text>
         <Card.Img
           style={{ width: titleObject.imageWidth.mobile }}
           variant='top'
@@ -49,7 +51,7 @@ const MobileView = props => {
   );
 };
 
-const DesktopView = props => {
+const DesktopView = (props) => {
   const appSettings = useContext(AppContext);
   const { fgColorDetail } = appSettings;
   const { titleObject } = props;
@@ -58,7 +60,7 @@ const DesktopView = props => {
       style={{
         backgroundColor: fgColorDetail,
         alignItems: 'center',
-        outline: '1px solid gray'
+        outline: '1px solid gray',
       }}
     >
       <Container>
@@ -70,7 +72,9 @@ const DesktopView = props => {
         <strong>{titleObject.title}</strong>
       </Container>
       <Card.Body>
-        <Card.Text>{titleObject.description}</Card.Text>
+        <Card.Text
+          dangerouslySetInnerHTML={{ __html: titleObject.description }}
+        ></Card.Text>
         <Card.Img
           style={{ width: titleObject.imageWidth.desktop }}
           variant='top'

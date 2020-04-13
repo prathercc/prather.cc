@@ -1,5 +1,15 @@
 const host = `${window.location.origin}`;
 
+export const fetchAllSoftware = async (setSoftwares) => {
+  const response = await fetch(`${host}/api/v1/software`);
+  response
+    .json()
+    .then((resp) => {
+      setSoftwares(resp.data);
+    })
+    .catch((err) => console.log(err));
+};
+
 export const fetchSoftware = async (appName, setSoftwares) => {
   const response = await fetch(
     `${host}/api/v1/software?application_name=${appName}`
@@ -7,9 +17,14 @@ export const fetchSoftware = async (appName, setSoftwares) => {
   response
     .json()
     .then((resp) => {
-      setSoftwares(resp.data);
+      if(resp.data !== null){
+        setSoftwares(resp.data);
+      }
+      else{
+        window.open('/software', '_self')
+      }
     })
-    .catch((err) => console.log(err));
+    .catch((err) => setSoftwares(null));
 };
 
 export const postSoftware = async (software) => {
@@ -38,12 +53,9 @@ export const putSoftware = async (software) => {
   });
   response
     .json()
-    .then((resp) => {
-    })
+    .then((resp) => {})
     .catch((err) => console.log(err));
-
 };
-
 
 export const deleteSoftware = async (softwareId) => {
   const response = await fetch(`${host}/api/v1/software/${softwareId}`, {
@@ -51,7 +63,6 @@ export const deleteSoftware = async (softwareId) => {
   });
   response
     .json()
-    .then((resp) => {
-    })
+    .then((resp) => {})
     .catch((err) => console.log(err));
 };
