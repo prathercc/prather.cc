@@ -50,7 +50,9 @@ function NewSoftware(props) {
   };
   return (
     <SoftwarePage>
+      <Form.Text>Name</Form.Text>
       <Form.Control
+      style={{ textAlign: 'center' }}
         size='sm'
         type='text'
         disabled={name}
@@ -58,7 +60,9 @@ function NewSoftware(props) {
         value={software.name}
         onChange={(e) => setSoftware({ ...software, name: e.target.value })}
       />
+      <Form.Text>Icon Image Link</Form.Text>
       <Form.Control
+      style={{ textAlign: 'center' }}
         size='sm'
         type='text'
         placeholder='Icon Image Link'
@@ -67,7 +71,9 @@ function NewSoftware(props) {
           setSoftware({ ...software, icon_link: e.target.value })
         }
       />
+      <Form.Text>Image Link</Form.Text>
       <Form.Control
+      style={{ textAlign: 'center' }}
         size='sm'
         type='text'
         placeholder='Image Link'
@@ -76,7 +82,9 @@ function NewSoftware(props) {
           setSoftware({ ...software, image_link: e.target.value })
         }
       />
+      <Form.Text>Description</Form.Text>
       <Form.Control
+      style={{ textAlign: 'center' }}
         size='sm'
         type='text'
         placeholder='Description (html)'
@@ -87,7 +95,9 @@ function NewSoftware(props) {
           setSoftware({ ...software, description: e.target.value })
         }
       />
+      <Form.Text>Repository Link</Form.Text>
       <Form.Control
+      style={{ textAlign: 'center' }}
         size='sm'
         type='text'
         placeholder='Repository Link'
@@ -96,7 +106,9 @@ function NewSoftware(props) {
           setSoftware({ ...software, repo_link: e.target.value })
         }
       />
+      <Form.Text>Languages</Form.Text>
       <Form.Control
+      style={{ textAlign: 'center' }}
         size='sm'
         type='text'
         placeholder='Languages'

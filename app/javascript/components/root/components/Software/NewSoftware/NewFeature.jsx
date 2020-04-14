@@ -44,59 +44,77 @@ function NewFeature(props) {
   };
   return (
     <SoftwarePage>
-      <Form.Control
-        size='sm'
-        type='text'
-        placeholder='Application Name'
-        disabled
-        value={feature.application_name}
-        onChange={(e) =>
-          setFeature({ ...feature, application_name: e.target.value })
-        }
-      />
-      <Form.Control
-        size='sm'
-        type='text'
-        placeholder='Title'
-        value={feature.title}
-        onChange={(e) => setFeature({ ...feature, title: e.target.value })}
-      />
-      <Form.Control
-        size='sm'
-        type='text'
-        placeholder='Description (html)'
-        as='textarea'
-        rows='3'
-        value={feature.description}
-        onChange={(e) =>
-          setFeature({ ...feature, description: e.target.value })
-        }
-      />
-      <Form.Control
-        size='sm'
-        type='text'
-        placeholder='Image Link'
-        value={feature.image_link}
-        onChange={(e) => setFeature({ ...feature, image_link: e.target.value })}
-      />
-      <Form.Control
-        size='sm'
-        type='text'
-        placeholder='Content Title'
-        value={feature.content_title}
-        onChange={(e) =>
-          setFeature({ ...feature, content_title: e.target.value })
-        }
-      />
-      <Form.Control
-        size='sm'
-        type='text'
-        placeholder='Content Description'
-        value={feature.content_description}
-        onChange={(e) =>
-          setFeature({ ...feature, content_description: e.target.value })
-        }
-      />
+      <Form>
+        <Form.Group>
+          <Form.Text>Application Name</Form.Text>
+          <Form.Control
+            style={{ textAlign: 'center' }}
+            size='sm'
+            type='text'
+            placeholder='Application Name'
+            disabled
+            value={feature.application_name}
+            onChange={(e) =>
+              setFeature({ ...feature, application_name: e.target.value })
+            }
+          />
+          <Form.Text>Title</Form.Text>
+          <Form.Control
+            style={{ textAlign: 'center' }}
+            size='sm'
+            type='text'
+            placeholder='Title'
+            value={feature.title}
+            onChange={(e) => setFeature({ ...feature, title: e.target.value })}
+          />
+          <Form.Text>Description</Form.Text>
+          <Form.Control
+            style={{ textAlign: 'center' }}
+            size='sm'
+            type='text'
+            placeholder='Description (html)'
+            as='textarea'
+            rows='3'
+            value={feature.description}
+            onChange={(e) =>
+              setFeature({ ...feature, description: e.target.value })
+            }
+          />
+          <Form.Text>Image Link</Form.Text>
+          <Form.Control
+            style={{ textAlign: 'center' }}
+            size='sm'
+            type='text'
+            placeholder='Image Link'
+            value={feature.image_link}
+            onChange={(e) =>
+              setFeature({ ...feature, image_link: e.target.value })
+            }
+          />
+          <Form.Text>Content Title</Form.Text>
+          <Form.Control
+            style={{ textAlign: 'center' }}
+            size='sm'
+            type='text'
+            placeholder='Content Title'
+            value={feature.content_title}
+            onChange={(e) =>
+              setFeature({ ...feature, content_title: e.target.value })
+            }
+          />
+          <Form.Text>Content Description</Form.Text>
+          <Form.Control
+            style={{ textAlign: 'center' }}
+            size='sm'
+            type='text'
+            placeholder='Content Description'
+            value={feature.content_description}
+            onChange={(e) =>
+              setFeature({ ...feature, content_description: e.target.value })
+            }
+          />
+        </Form.Group>
+      </Form>
 
       {id ? (
         <>
