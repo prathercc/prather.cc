@@ -7,6 +7,7 @@ import {
   Col,
   Row,
   ListGroup,
+  Button,
 } from 'react-bootstrap';
 import { AppContext } from '../../../AppContext';
 import { Window } from 'react-bootstrap-icons';
@@ -59,7 +60,11 @@ function SoftwareFeature(props) {
                     </Row>
                     <ListGroup style={{ textAlign: 'left' }}>
                       <ListItem>
-                        {descriptionObject.content_description}
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: descriptionObject.content_description,
+                          }}
+                        ></div>
                       </ListItem>
                     </ListGroup>
                   </Container>
@@ -67,6 +72,22 @@ function SoftwareFeature(props) {
               </Accordion.Collapse>
             </Col>
           </Row>
+          {userData ? (
+            <Button
+              onClick={() =>
+                window.open(
+                  `/software/admin/feature/edit/${descriptionObject.application_name}/${descriptionObject.id}`,
+                  '_self'
+                )
+              }
+              block
+              variant='warning'
+            >
+              Edit
+            </Button>
+          ) : (
+            ''
+          )}
         </Container>
       </Card>
     </Accordion>

@@ -140,6 +140,7 @@ function SoftwareApplication(props) {
             return (
               <SoftwareFeature
                 key={feature.id}
+                userData={userData}
                 descriptionObject={{
                   image: feature.image_link,
                   imageWidth: { desktop: '25vw', mobile: '50vw' },
@@ -147,6 +148,8 @@ function SoftwareApplication(props) {
                   description: feature.description,
                   content_title: feature.content_title,
                   content_description: feature.content_description,
+                  id: feature.id,
+                  application_name: feature.application_name
                 }}
               />
             );
