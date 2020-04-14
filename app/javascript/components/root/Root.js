@@ -50,16 +50,16 @@ function Root() {
                 <SoftwareTable userData={userData} />
               </Route>
               <Route exact path='/software/admin/new'>
-                <NewSoftware />
+                {userData ? <NewSoftware /> : <Display />}
               </Route>
               <Route exact path='/software/admin/edit/:name'>
-                <NewSoftware />
+                {userData ? <NewSoftware /> : <Display />}
               </Route>
               <Route exact path='/software/admin/feature/new/:name'>
-                <NewFeature />
+                {userData ? <NewFeature /> : <Display />}
               </Route>
               <Route exact path='/software/admin/feature/edit/:name/:id'>
-                <NewFeature />
+                {userData ? <NewFeature /> : <Display />}
               </Route>
             </Switch>
             <Switch>
