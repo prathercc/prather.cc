@@ -6,7 +6,7 @@ module Api
       def index
         app_name = params[:application_name]
         id = params[:id]
-        features = Feature.all
+        features = Feature.all.sort_by(&:id)
         if !app_name.nil?
           filtered_features = []
           features.each do |d|
