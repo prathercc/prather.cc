@@ -38,7 +38,6 @@ export const postSoftware = async (software) => {
   response
     .json()
     .then((resp) => {
-      console.log(resp);
     })
     .catch((err) => console.log(err));
 };
