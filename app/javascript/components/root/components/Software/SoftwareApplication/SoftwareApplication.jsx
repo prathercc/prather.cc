@@ -1,23 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Spinner, Button } from 'react-bootstrap';
-import SoftwareTitle from '../SoftwareTitle/SoftwareTitle';
-import SoftwareFeature from '../SoftwareFeature/SoftwareFeature';
+import React, { useEffect, useState, useContext } from 'react';
+import {
+  Container,
+  Spinner,
+  Button,
+  Image,
+  Card,
+  Accordion,
+  Col,
+  Row,
+  ListGroup,
+  Alert
+} from 'react-bootstrap';
 import SoftwarePage from '../SoftwarePage/SoftwarePage';
-import MaintenanceAlert from '../SoftwarePage/MaintenanceAlert';
 import SoftwareCompatibility from '../SoftwareCompatibility/SoftwareCompatibility';
-import SoftwareDownloadOption from '../SoftwareCompatibility/SoftwareDownloadOption';
 import SoftwareCode from '../SoftwareCode/SoftwareCode';
 import { fetchDownloads } from '../../../downloadService';
 import { fetchSoftware } from '../../../softwareService';
 import { useParams } from 'react-router-dom';
 import { fetchFeatures } from '../../../featureService';
+import './SoftwareFeature.css';
+import { Window } from 'react-bootstrap-icons';
+import { AppContext } from '../../../AppContext';
+import { useCurrentBreakpointName } from 'react-socks';
+import SoftwareModal from '../SoftwareModal/SoftwareModal';
+import { incrementDownload } from '../../../downloadService';
+import * as RBI from 'react-bootstrap-icons';
 
 function SoftwareApplication(props) {
   const { userData } = props;
   let { name } = useParams();
   const [downloads, setDownloads] = useState(null);
   const [features, setFeatures] = useState(null);
-  console.log(features);
   const blankApp = {
     android: false,
     description: '',
@@ -149,7 +162,7 @@ function SoftwareApplication(props) {
                   content_title: feature.content_title,
                   content_description: feature.content_description,
                   id: feature.id,
-                  application_name: feature.application_name
+                  application_name: feature.application_name,
                 }}
               />
             );
@@ -158,4 +171,264 @@ function SoftwareApplication(props) {
     </SoftwarePage>
   );
 }
+
+const SoftwareFeature = (props) => {
+  const appSettings = useContext(AppContext);
+  const { fgColorDetail, fgColor, iconSizing, textColor } = appSettings;
+  const { userData, descriptionObject } = props;
+  const [bgColor, setBgColor] = useState(fgColorDetail);
+  return (
+    <Accordion>
+      <Card
+        style={{
+          backgroundColor: fgColorDetail,
+          alignItems: 'center',
+          marginTop: '5vh',
+          flexDirection: 'row',
+          outline: '1px solid gray',
+        }}
+      >
+        <Container>
+          <Row>
+            <Col>
+              <Accordion.Toggle as={Card.Body} eventKey='0'>
+                <Card.Header
+                  onMouseEnter={() => setBgColor(fgColor)}
+                  onMouseLeave={() => setBgColor(fgColorDetail)}
+                  style={{ cursor: 'pointer', backgroundColor: bgColor }}
+                  className={'Header-glow'}
+                >
+                  <Window style={{ color: textColor, fontSize: iconSizing }} />
+
+                  <Container>
+                    <Row>
+                      <Col>
+                        <strong>{descriptionObject.title}</strong>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>{descriptionObject.description}</Col>
+                    </Row>
+                  </Container>
+                </Card.Header>
+              </Accordion.Toggle>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col>
+              <Accordion.Collapse eventKey='0'>
+                <Card.Body>
+                  <Image
+                    src={
+                      descriptionObject.image !== undefined
+                        ? descriptionObject.image
+                        : ''
+                    }
+                    onClick={() =>
+                      descriptionObject.image !== undefined
+                        ? window.open(descriptionObject.image)
+                        : ''
+                    }
+                    style={{
+                      width: descriptionObject.imageWidth.desktop,
+                      cursor: 'pointer',
+                    }}
+                  />
+
+                  <Container style={{ marginTop: '1vh' }}>
+                    <Row>
+                      <Col>
+                        <strong>{descriptionObject.content_title}</strong>
+                      </Col>
+                    </Row>
+                    <ListGroup style={{ textAlign: 'left' }}>
+                      <ListGroup.Item
+                        style={{ cursor: 'default' }}
+                        action
+                        variant='dark'
+                      >
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: descriptionObject.content_description,
+                          }}
+                        ></div>
+                      </ListGroup.Item>
+                    </ListGroup>
+                  </Container>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Col>
+          </Row>
+          {userData ? (
+            <Button
+              onClick={() =>
+                window.open(
+                  `/software/admin/feature/edit/${descriptionObject.application_name}/${descriptionObject.id}`,
+                  '_self'
+                )
+              }
+              block
+              variant='warning'
+            >
+              Edit
+            </Button>
+          ) : (
+            ''
+          )}
+        </Container>
+      </Card>
+    </Accordion>
+  );
+};
+
+const SoftwareDownloadOption = (props) => {
+  const {
+    downloadName,
+    downloadLink,
+    type,
+    downloadSize,
+    downloads,
+    id,
+  } = props;
+  const appSettings = useContext(AppContext);
+  const { softwareFontSize, iconSizing } = appSettings;
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const breakpoint = useCurrentBreakpointName();
+
+  const handleModalOpen = async () => {
+    await incrementDownload(id);
+    setModalOpen(true);
+    window.setTimeout(() => {
+      window.open(downloadLink);
+      setModalOpen(false);
+    }, 3000);
+  };
+
+  const Icon = () => {
+    return <RBI.Download style={{ fontSize: iconSizing }} />;
+  };
+
+  return (
+    <>
+      <Row>
+        <Col>
+          <Button
+            variant='dark'
+            style={{ marginTop: '1vh' }}
+            size={breakpoint === 'xsmall' ? 'sm' : 'lg'}
+            onClick={() => handleModalOpen()}
+            block
+          >
+            <Container style={{ color: 'white' }}>
+              <Row>
+                <Col
+                  style={{
+                    fontSize: softwareFontSize,
+                  }}
+                >
+                  {downloadName}
+                </Col>
+                <Col>{type.charAt(0).toUpperCase() + type.slice(1)}_x64</Col>
+              </Row>
+              <Row>
+                <Col>{downloadSize}</Col>
+                <Col>{downloads} downloads</Col>
+              </Row>
+            </Container>
+          </Button>
+        </Col>
+      </Row>
+
+      <SoftwareModal
+        title=''
+        modalOpen={modalOpen}
+        handleModalClose={() => {}}
+        titleIcon={<Icon />}
+        closable={false}
+      >
+        <p>Starting download for {downloadName}...</p>
+        <Spinner animation='border' />
+      </SoftwareModal>
+    </>
+  );
+};
+
+const SoftwareTitle = (props) => {
+  const appSettings = useContext(AppContext);
+  const { fgColorDetail } = appSettings;
+  const { titleObject } = props;
+  const breakpoint = useCurrentBreakpointName();
+
+  return (
+    <Card
+      style={{
+        backgroundColor: fgColorDetail,
+        alignItems: 'center',
+        outline: '1px solid gray',
+      }}
+    >
+      <Container>
+        <Image
+          rounded
+          src={titleObject.thumbnail}
+          style={{
+            width:
+              breakpoint === 'xlarge'
+                ? titleObject.thumbnailWidth.desktop
+                : titleObject.thumbnailWidth.mobile,
+          }}
+        />
+        <strong>{titleObject.title}</strong>
+      </Container>
+      <Card.Body>
+        <Card.Text
+          dangerouslySetInnerHTML={{ __html: titleObject.description }}
+        ></Card.Text>
+        <Card.Img
+          style={{
+            width:
+              breakpoint === 'xlarge'
+                ? titleObject.imageWidth.desktop
+                : titleObject.imageWidth.mobile,
+          }}
+          variant='top'
+          src={titleObject.image}
+        />
+      </Card.Body>
+    </Card>
+  );
+};
+
+const MaintenanceAlert = (props) => {
+  const appSettings = useContext(AppContext);
+  const { softwareMaintenanceFontSize } = appSettings;
+  const { applicationName, maintained = false } = props;
+  const [alertOpen, setAlertOpen] = useState(true);
+  return (
+    <div style={{ fontSize: softwareMaintenanceFontSize }}>
+      {maintained ? (
+        <Alert
+          variant='success'
+          dismissible={false}
+          onClose={() => setAlertOpen(false)}
+          show={alertOpen}
+        >
+          {`${applicationName} is actively maintained!`}
+        </Alert>
+      ) : (
+        <Alert
+          variant='danger'
+          dismissible={false}
+          onClose={() => setAlertOpen(false)}
+          show={alertOpen}
+        >
+          {`${applicationName} is no longer maintained and will not receive updates!`}
+        </Alert>
+      )}
+    </div>
+  );
+}
+
 export default SoftwareApplication;
