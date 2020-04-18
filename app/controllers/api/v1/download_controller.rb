@@ -4,24 +4,12 @@ module Api
   module V1
     class DownloadController < ApplicationController
       def index
-        app_name = params[:application_name]
-        downloads = Download.all
-        if !app_name.nil?
-          filtered_downloads = []
-
-          downloads.each do |d|
-            filtered_downloads.push(d) if d.application_name == app_name
-          end
-          render json: {
-            message: "Retrieved downloads for '#{app_name}'",
-            data: filtered_downloads
-          }, status: 200
-        else
-          render json: {
-            message: 'Loaded downloads',
-            data: downloads
-          }, status: 200
-        end
+        software = Software.find(params[:software_id])
+        downloads = software.downloads.all
+        render json: {
+          message: 'Loaded downloads',
+          data: downloads
+        }, status: 200
       end
 
       def show
@@ -34,18 +22,12 @@ module Api
 
       def create
         if current_user
-          download = Download.new(download_params)
-          if download.save
-            render json: {
-              message: 'Created download',
-              data: download
-            }, status: 200
-          else
-            render json: {
-              message: 'Could not create download',
-              data: download
-            }, status: 400
-          end
+          software = Software.find(params[:software_id])
+          download = software.downloads.create(download_params)
+          render json: {
+            message: 'Created download',
+            data: download
+          }, status: 200
         else
           render json: {
             message: 'Unauthorized',
@@ -98,7 +80,7 @@ module Api
       end
 
       def download_params
-        params.require(:download).permit(:os_type, :application_name, :path, :file_name, :file_size, :download_count)
+        params.require(:download).permit(:os_type, :application_name, :path, :file_name, :file_size, :download_count, :software_id)
       end
     end
   end
