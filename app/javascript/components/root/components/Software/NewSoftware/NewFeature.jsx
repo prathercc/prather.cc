@@ -7,6 +7,7 @@ import {
   deleteFeature,
   fetchFeature,
 } from '../../../featureService';
+import { fetchSoftware } from '../../../softwareService';
 import { useParams } from 'react-router-dom';
 
 function NewFeature(props) {
@@ -18,17 +19,32 @@ function NewFeature(props) {
     content_title: '',
     content_description: '',
     application_name: name,
+    software_id: ''
   };
   const [feature, setFeature] = useState(blankFeature);
+  const [app, setApp] = useState(null);
 
   useEffect(() => {
     const fetch = async () => {
       await fetchFeature(id, setFeature);
     };
+    const fetchApp = async () => {
+      await fetchSoftware(name, setApp);
+    }
     if (id) {
       fetch();
     }
+    if (name) {
+      fetchApp();
+    }
   }, []);
+
+  useEffect(() => {
+    console.log(app);
+    if (app !== null) {
+      setFeature({ ...feature, software_id: app.id })
+    }
+  }, [app])
 
   const handleCreateFeature = async () => {
     await postFeature(feature);
@@ -126,15 +142,15 @@ function NewFeature(props) {
           </Button>
         </>
       ) : (
-        <Button
-          disabled={feature.title.length === 0}
-          onClick={() => handleCreateFeature()}
-          variant='warning'
-          block
-        >
-          Create
-        </Button>
-      )}
+          <Button
+            disabled={feature.title.length === 0}
+            onClick={() => handleCreateFeature()}
+            variant='warning'
+            block
+          >
+            Create
+          </Button>
+        )}
       <Button
         onClick={() =>
           window.open(`/software/${feature.application_name}`, '_self')
