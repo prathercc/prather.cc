@@ -81,5 +81,6 @@ test:
 production:
   <<: *default
   database: prather_cc_production
-  username: prather_cc
-  password: <%= ENV['PRATHER_CC_DATABASE_PASSWORD'] %>
+  # username: prather_cc
+  # password: <%= ENV['PRATHER_CC_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
