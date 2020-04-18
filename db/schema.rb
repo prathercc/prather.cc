@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_11_191552) do
+ActiveRecord::Schema.define(version: 2020_04_18_164400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 2020_04_11_191552) do
     t.string "file_size"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "software_id", null: false
+    t.index ["software_id"], name: "index_downloads_on_software_id"
   end
 
   create_table "features", force: :cascade do |t|
@@ -35,6 +37,8 @@ ActiveRecord::Schema.define(version: 2020_04_11_191552) do
     t.string "application_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "software_id", null: false
+    t.index ["software_id"], name: "index_features_on_software_id"
   end
 
   create_table "softwares", force: :cascade do |t|
@@ -63,4 +67,6 @@ ActiveRecord::Schema.define(version: 2020_04_11_191552) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "downloads", "softwares"
+  add_foreign_key "features", "softwares"
 end
