@@ -4,25 +4,16 @@ module Api
   module V1
     class FeatureController < ApplicationController
       def index
-        app_name = params[:application_name]
         id = params[:id]
-        features = Feature.all.sort_by(&:id)
-        if !app_name.nil?
-          filtered_features = []
-          features.each do |d|
-            filtered_features.push(d) if d.application_name == app_name
-          end
-          render json: {
-            message: "Retrieved '#{app_name}'",
-            data: filtered_features
-          }, status: 200
-        elsif !id.nil?
+        if !id.nil?
           feature = Feature.find(id)
           render json: {
             message: 'Retrieved feature',
             data: feature
           }, status: 200
         else
+          software = Software.find(params[:software_id])
+          features = software.features.all.sort_by(&:id)
           render json: {
             message: 'Loaded feature',
             data: features
@@ -32,25 +23,19 @@ module Api
 
       def create
         if current_user
-          feature = Feature.new(feature_params)
-          if feature.save
-            render json: {
-              message: 'Created feature',
-              data: feature
-            }, status: 200
-          else
-            render json: {
-              message: 'Could not create feature',
-              data: feature
-            }, status: 400
-          end
+          software = Software.find(params[:software_id])
+          feature = software.features.create(feature_params)
+          render json: {
+            message: 'Created feature',
+            data: feature
+          }, status: 200
         else
           render json: {
             message: 'Unauthorized',
             data: nil
           }, status: 401
         end
-        end
+      end
 
       def destroy
         if current_user
@@ -73,7 +58,7 @@ module Api
           feature = Feature.find(params[:id])
           if feature.update(feature_params)
             render json: {
-              message: "Updated #{feature.name}",
+              message: 'Updated',
               data: feature
             }, status: 200
           else
@@ -91,7 +76,7 @@ module Api
           end
 
       def feature_params
-        params.require(:feature).permit(:title, :description, :image_link, :content_title, :content_description, :application_name)
+        params.require(:feature).permit(:title, :description, :image_link, :content_title, :content_description, :application_name, :software_id)
       end
 end
 end
