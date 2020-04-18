@@ -50,10 +50,10 @@ function SoftwareApplication(props) {
 
   useEffect(() => {
     const fetch = async () => {
-      await fetchDownloads(app.name, setDownloads);
+      await fetchDownloads(app.id, setDownloads);
     };
     const featureFetch = async () => {
-      await fetchFeatures(app.name, setFeatures);
+      await fetchFeatures(app.id, setFeatures);
     };
     if (app !== blankApp) {
       fetch();
@@ -101,7 +101,7 @@ function SoftwareApplication(props) {
             }}
           />
           <SoftwareCompatibility
-            appName={app.name}
+            app={app}
             setMainDownloads={setDownloads}
             compatibility={{ ...compatibility }}
             userData={userData}
@@ -136,7 +136,7 @@ function SoftwareApplication(props) {
       {userData ? (
         <Button
           onClick={() =>
-            window.open(`/software/admin/feature/new/${name}`, '_self')
+            window.open(`/software/admin/feature/new/${app.name}`, '_self')
           }
           style={{ marginTop: '1vh' }}
           block
