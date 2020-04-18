@@ -1,8 +1,8 @@
 const host = `${window.location.origin}`;
 
-export const fetchDownloads = async (appName, setDownloads) => {
+export const fetchDownloads = async (software_id, setDownloads) => {
   const response = await fetch(
-    `${host}/api/v1/download?application_name=${appName}`
+    `${host}/api/v1/download?software_id=${software_id}`
   );
   response
     .json()
