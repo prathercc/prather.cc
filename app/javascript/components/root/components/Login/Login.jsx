@@ -1,13 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Container, Jumbotron, Form, Button } from 'react-bootstrap';
-import { AppContext } from '../../AppContext';
-import { useCurrentBreakpointName } from 'react-socks';
+import React, { useState, useEffect } from 'react';
+import { Form, Button } from 'react-bootstrap';
 import { authenticate, clearSession, getSession } from '../../authService';
+import SoftwarePage from '../Software/SoftwarePage/SoftwarePage';
 
-function Login(props) {
-  const appSettings = useContext(AppContext);
-  const { fgColor, fontStyle, softwareFontSize } = appSettings;
-  const breakpoint = useCurrentBreakpointName();
+function Login() {
   const [userData, setUserData] = useState(null);
   const [credentials, setCredentials] = useState({
     email: '',
@@ -30,22 +26,12 @@ function Login(props) {
   }, []);
 
   return (
-    <Container style={{ width: breakpoint === 'xlarge' ? '50vw' : '' }}>
-      <Jumbotron
-        bg='dark'
-        style={{
-          backgroundColor: fgColor,
-          fontFamily: fontStyle,
-          marginTop: '15vh',
-          opacity: '100',
-          fontSize: softwareFontSize,
-        }}
-      >
-        {userData ? (
-          <Button onClick={() => signOut()} variant='warning'>
-            Sign Out
-          </Button>
-        ) : (
+    <SoftwarePage>
+      {userData ? (
+        <Button onClick={() => signOut()} variant='warning'>
+          Sign Out
+        </Button>
+      ) : (
           <>
             <Form.Control
               type='text'
@@ -72,8 +58,7 @@ function Login(props) {
             </Button>
           </>
         )}
-      </Jumbotron>
-    </Container>
+    </SoftwarePage>
   );
 }
 export default Login;
