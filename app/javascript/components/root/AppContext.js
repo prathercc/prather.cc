@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 
 const appSettings = {
-  bgColor: '#B6C0C2',
+  bgColor: '#b3b3ff',
   fgColorDetail: '#2E2929',
   fgColor: '#3E3E3E',
   textColor: '#FFFFFF',
