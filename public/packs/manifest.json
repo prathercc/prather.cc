@@ -1,0 +1,27 @@
+{
+  "application.js": "/packs/js/application-b67b5c2f57ca128cfbc2.js",
+  "application.js.map": "/packs/js/application-b67b5c2f57ca128cfbc2.js.map",
+  "entrypoints": {
+    "application": {
+      "js": [
+        "/packs/js/application-b67b5c2f57ca128cfbc2.js"
+      ],
+      "js.map": [
+        "/packs/js/application-b67b5c2f57ca128cfbc2.js.map"
+      ]
+    },
+    "index": {
+      "js": [
+        "/packs/js/index-ec6ab2ca1309cc5b416f.js"
+      ],
+      "js.map": [
+        "/packs/js/index-ec6ab2ca1309cc5b416f.js.map"
+      ]
+    }
+  },
+  "index.js": "/packs/js/index-ec6ab2ca1309cc5b416f.js",
+  "index.js.map": "/packs/js/index-ec6ab2ca1309cc5b416f.js.map",
+  "media/components/root/images/background.png": "/packs/media/components/root/images/background-e48e48eec685ef2e05d06262e6bb49ed.png",
+  "media/components/root/images/pratherccsplatABS1.png": "/packs/media/components/root/images/pratherccsplatABS1-667a00539cb104658ae246dd83a5aa7a.png",
+  "media/components/root/images/prathercctext.png": "/packs/media/components/root/images/prathercctext-06c09d44cc379a5ddee55c5ed90eac94.png"
+}
