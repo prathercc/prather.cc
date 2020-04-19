@@ -5,13 +5,14 @@ import Display from './components/Mainpage/Display/Display';
 import Footer from './components/Mainpage/Footer';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AppContext } from './AppContext';
-import background from './images/background.png';
+import background from './images/background.jpg';
 import Login from './components/Login/Login';
 import SoftwareApplication from './components/Software/SoftwareApplication/SoftwareApplication';
 import SoftwareTable from './components/Software/SoftwareTable/SoftwareTable';
 import NewSoftware from './components/Software/NewSoftware/NewSoftware';
 import NewFeature from './components/Software/NewSoftware/NewFeature';
 import { getSession } from './authService';
+import './components/Mainpage/Display/Display.css';
 
 function Root() {
   const appSettings = useContext(AppContext);
@@ -37,9 +38,11 @@ function Root() {
               minHeight: '100vh',
               textAlign: 'center',
               border: '1px solid transparent',
-              backgroundImage: `url(${background})`,
+              overflow: 'hidden',
+              position: 'relative'
             }}
           >
+            <div class='animation1' style={{position:'absolute', backgroundColor: bgColor, width:'100%', height:'100%', backgroundImage:`url(${background})`, opacity:0.70}}></div>
             <Switch>
               <Route exact path='/software/:name'>
                 <SoftwareApplication userData={userData} />

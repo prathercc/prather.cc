@@ -1,27 +1,28 @@
 {
-  "application.js": "/packs/js/application-b67b5c2f57ca128cfbc2.js",
-  "application.js.map": "/packs/js/application-b67b5c2f57ca128cfbc2.js.map",
+  "application.js": "/packs/js/application-90c09884af4280b2ddd6.js",
+  "application.js.map": "/packs/js/application-90c09884af4280b2ddd6.js.map",
   "entrypoints": {
     "application": {
       "js": [
-        "/packs/js/application-b67b5c2f57ca128cfbc2.js"
+        "/packs/js/application-90c09884af4280b2ddd6.js"
       ],
       "js.map": [
-        "/packs/js/application-b67b5c2f57ca128cfbc2.js.map"
+        "/packs/js/application-90c09884af4280b2ddd6.js.map"
       ]
     },
     "index": {
       "js": [
-        "/packs/js/index-ec6ab2ca1309cc5b416f.js"
+        "/packs/js/index-d7eb5af15a4a76ca1352.js"
       ],
       "js.map": [
-        "/packs/js/index-ec6ab2ca1309cc5b416f.js.map"
+        "/packs/js/index-d7eb5af15a4a76ca1352.js.map"
       ]
     }
   },
-  "index.js": "/packs/js/index-ec6ab2ca1309cc5b416f.js",
-  "index.js.map": "/packs/js/index-ec6ab2ca1309cc5b416f.js.map",
-  "media/components/root/images/background.png": "/packs/media/components/root/images/background-e48e48eec685ef2e05d06262e6bb49ed.png",
+  "index.js": "/packs/js/index-d7eb5af15a4a76ca1352.js",
+  "index.js.map": "/packs/js/index-d7eb5af15a4a76ca1352.js.map",
+  "media/components/root/images/background.jpg": "/packs/media/components/root/images/background-23aa0042dc0bdd9bc2bca2785f291c77.jpg",
+  "media/components/root/images/background.png": "/packs/media/components/root/images/background-4aa28a603ad9f14a53ab061a6f475051.png",
   "media/components/root/images/pratherccsplatABS1.png": "/packs/media/components/root/images/pratherccsplatABS1-667a00539cb104658ae246dd83a5aa7a.png",
   "media/components/root/images/prathercctext.png": "/packs/media/components/root/images/prathercctext-06c09d44cc379a5ddee55c5ed90eac94.png"
 }

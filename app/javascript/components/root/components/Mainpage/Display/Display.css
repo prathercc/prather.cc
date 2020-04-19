@@ -1,4 +1,22 @@
 @media (prefers-reduced-motion: no-preference) {
+  .animation1 {
+    background-repeat: repeat;
+    animation: animation1 infinite 50s linear;
+  }
+}
+@keyframes animation1 {
+  0% {
+    transform: scaleY(1)
+  }
+  50%{
+    transform: scaleY(1.25)
+  }
+  100% {
+    transform:scaleY(1)
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
   .App-splat-to-mobile {
     animation: App-splat-to-mobile infinite 5s linear;
   }
