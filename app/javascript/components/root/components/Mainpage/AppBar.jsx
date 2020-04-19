@@ -37,7 +37,6 @@ const DesktopView = () => {
         fontFamily: appbarFontStyle
       }}
       variant='dark'
-      fixed='top'
     >
       <Container style={{ textAlign: 'center' }}>
         <Nav>
@@ -45,11 +44,10 @@ const DesktopView = () => {
           <CustomNavLink disabled={true}> |</CustomNavLink>
           <CustomNavLink href='/software'>Software</CustomNavLink>
         </Nav>
-        <Navbar.Brand>
+        <Navbar.Brand style={{cursor:'default'}} onClick={()=>window.open('/login', '_self')}>
           <Navbar.Text
             style={{
               color: textColor,
-              cursor: 'default',
               fontSize: appbarFontSize
             }}
           >
@@ -81,14 +79,13 @@ const MobileView = () => {
         fontFamily: appbarFontStyle
       }}
       variant='dark'
-      fixed='top'
     >
       <Container style={{ alignItem: 'center' }}>
         <CustomNavDropDown>
           <Dropdown.Item href='/' onClick={()=>window.open('/','_self')}>Home</Dropdown.Item>
           <Dropdown.Item href='/' onClick={()=>window.open('/software','_self')}>Software</Dropdown.Item>
         </CustomNavDropDown>
-        <Navbar.Brand>
+        <Navbar.Brand onClick={()=>window.open('/login', '_self')}>
           <Navbar.Text
             style={{
               color: textColor,

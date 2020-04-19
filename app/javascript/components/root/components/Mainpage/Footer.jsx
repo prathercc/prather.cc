@@ -1,56 +1,19 @@
 import React, { useContext } from 'react';
-import { Navbar, Nav, Container, Row, Col } from 'react-bootstrap';
-import { Breakpoint } from 'react-socks';
+import { Navbar } from 'react-bootstrap';
 import { AppContext } from '../../AppContext';
 
-function Footer(props) {
-  return (
-    <>
-      <Breakpoint xlarge down>
-        <DesktopView titleObject={props.titleObject} />
-      </Breakpoint>
-    </>
-  );
-}
-
-const DesktopView = props => {
+function Footer() {
   const appSettings = useContext(AppContext);
-  const {
-    fgColorDetail,
-    textColor,
-    appbarFontSize,
-    appbarFontStyle
-  } = appSettings;
+  const { fgColorDetail } = appSettings;
   return (
     <Navbar
       style={{
         backgroundColor: fgColorDetail,
-        height: '15vh',
-        color: textColor,
-        fontFamily: appbarFontStyle,
-        fontSize: appbarFontSize
+        height: '5vh',
       }}
-
     >
-      <Nav>
-      </Nav>
-      <Container style={{textAlign:'center'}}>
-          <Row>
-            <Col>
-            <a style={{color:'white'}}href="https://github.com/prathercc" target="_blank" rel="noopener noreferrer">GitHub</a>
-            </Col>
-            <Col>
-            <a style={{color:'white'}}href="https://youtube.com/prathercc" target="_blank" rel="noopener noreferrer">Youtube</a>
-            </Col>
-          </Row>
-          <Row>
-          <Col>
-            <a style={{color:'white'}} href="/#" onClick={()=>window.open('/login','_self')}>Admin</a>
-            </Col>
-          </Row>
-        </Container>
     </Navbar>
   );
-};
+}
 
 export default Footer;

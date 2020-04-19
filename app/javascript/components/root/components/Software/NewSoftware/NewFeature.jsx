@@ -10,7 +10,7 @@ import {
 import { fetchSoftware } from '../../../softwareService';
 import { useParams } from 'react-router-dom';
 
-function NewFeature(props) {
+function NewFeature() {
   let { id, name } = useParams();
   const blankFeature = {
     title: '',
@@ -88,7 +88,7 @@ function NewFeature(props) {
             style={{ textAlign: 'center' }}
             size='sm'
             type='text'
-            placeholder='Description (html)'
+            placeholder='Description'
             as='textarea'
             rows='3'
             value={feature.description}
@@ -123,6 +123,8 @@ function NewFeature(props) {
             style={{ textAlign: 'center' }}
             size='sm'
             type='text'
+            as='textarea'
+            rows='3'
             placeholder='Content Description'
             value={feature.content_description}
             onChange={(e) =>

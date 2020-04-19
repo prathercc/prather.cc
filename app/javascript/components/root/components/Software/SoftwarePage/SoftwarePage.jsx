@@ -14,7 +14,7 @@ function SoftwarePage(props) {
         style={{
           backgroundColor: fgColor,
           fontFamily:fontStyle,
-          marginTop: '15vh',
+          marginTop: '10vh',
           opacity:'0',
           fontSize: softwareFontSize
         }}
