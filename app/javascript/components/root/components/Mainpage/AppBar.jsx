@@ -44,7 +44,7 @@ const DesktopView = () => {
           <CustomNavLink disabled={true}> |</CustomNavLink>
           <CustomNavLink href='/software'>Software</CustomNavLink>
         </Nav>
-        <Navbar.Brand style={{cursor:'default'}} onClick={()=>window.open('/login', '_self')}>
+        <Navbar.Brand style={{ cursor: 'default' }} onClick={() => window.open('/login', '_self')}>
           <Navbar.Text
             style={{
               color: textColor,
@@ -82,10 +82,10 @@ const MobileView = () => {
     >
       <Container style={{ alignItem: 'center' }}>
         <CustomNavDropDown>
-          <Dropdown.Item href='/' onClick={()=>window.open('/','_self')}>Home</Dropdown.Item>
-          <Dropdown.Item href='/' onClick={()=>window.open('/software','_self')}>Software</Dropdown.Item>
+          <Dropdown.Item href='/' onClick={() => window.open('/', '_self')}>Home</Dropdown.Item>
+          <Dropdown.Item href='/' onClick={() => window.open('/software', '_self')}>Software</Dropdown.Item>
         </CustomNavDropDown>
-        <Navbar.Brand onClick={()=>window.open('/login', '_self')}>
+        <Navbar.Brand onClick={() => window.open('/login', '_self')}>
           <Navbar.Text
             style={{
               color: textColor,
@@ -113,7 +113,7 @@ const CustomNavDropDown = props => {
       onMouseLeave={() => setActiveColor(textColor)}
     >
       <Dropdown>
-        <Dropdown.Toggle style={{color:activeColor}} as={Nav.Link}>Navigate</Dropdown.Toggle>
+        <Dropdown.Toggle style={{ color: activeColor }} as={Nav.Link}>Navigate</Dropdown.Toggle>
         <Dropdown.Menu>{props.children}</Dropdown.Menu>
       </Dropdown>
     </Nav>
@@ -125,16 +125,14 @@ const CustomNavLink = props => {
   const { textColor } = appSettings;
   const [activeColor, setActiveColor] = useState(textColor);
   return (
-    <Nav.Link
-      style={{ color: activeColor }}
-      disabled={props.disabled}
-      href='/#'
-      onClick={()=> window.open(props.href, '_self')}
-      onMouseEnter={() => setActiveColor('grey')}
+    <div
+      style={{ color: activeColor, padding: '5px' }}
+      onClick={() => window.open(props.href, '_self')}
+      onMouseEnter={() => props.disabled ? '' : setActiveColor('grey')}
       onMouseLeave={() => setActiveColor(textColor)}
     >
       {props.children}
-    </Nav.Link>
+    </div>
   );
 };
 
