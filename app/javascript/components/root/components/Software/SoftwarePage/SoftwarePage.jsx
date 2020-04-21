@@ -4,18 +4,18 @@ import { AppContext } from '../../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
 import './SoftwarePage.css';
 function SoftwarePage(props) {
-    const appSettings = useContext(AppContext);
-    const { fgColor, fontStyle, softwareFontSize } = appSettings;
-    const breakpoint = useCurrentBreakpointName();
+  const appSettings = useContext(AppContext);
+  const { fgColor, fontStyle, softwareFontSize } = appSettings;
+  const breakpoint = useCurrentBreakpointName();
   return (
-<Container style={{ width: breakpoint === 'xlarge' ? '50vw' : '' }}>
+    <Container style={{ width: breakpoint === 'xlarge' ? '50vw' : '' }}>
       <Jumbotron
         bg='dark'
         style={{
           backgroundColor: fgColor,
-          fontFamily:fontStyle,
-          marginTop: '10vh',
-          opacity:'0',
+          fontFamily: fontStyle,
+          marginTop: '5vh',
+          opacity: '0',
           fontSize: softwareFontSize
         }}
         className='Page-fade-in'

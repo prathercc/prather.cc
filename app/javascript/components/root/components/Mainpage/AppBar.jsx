@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { Navbar, Nav, Dropdown, Container } from 'react-bootstrap';
-import { Breakpoint, useCurrentBreakpointName } from 'react-socks';
+import { Navbar, Nav, Dropdown, Container, Image } from 'react-bootstrap';
+import { Breakpoint } from 'react-socks';
 import { AppContext } from '../../AppContext';
-import Logo from '../Logo/Logo';
+import appbarLogo from '../../images/appbarLogo.jpg';
 
 function AppBar() {
   return (
@@ -22,13 +22,8 @@ const DesktopView = () => {
   const {
     fgColorDetail,
     appbarFontStyle,
-    textColor,
     appbarFontSize
   } = appSettings;
-  const breakpoint = useCurrentBreakpointName();
-  const imageObj = {
-    splatWidth: breakpoint === 'xlarge' ? '4vw' : '6vw'
-  };
   return (
     <Navbar
       style={{
@@ -45,15 +40,7 @@ const DesktopView = () => {
           <CustomNavLink href='/software'>Software</CustomNavLink>
         </Nav>
         <Navbar.Brand style={{ cursor: 'default' }} onClick={() => window.open('/login', '_self')}>
-          <Navbar.Text
-            style={{
-              color: textColor,
-              fontSize: appbarFontSize
-            }}
-          >
-            prather.cc
-          </Navbar.Text>
-          <Logo imageObj={imageObj} />
+          <Image src={appbarLogo} />
         </Navbar.Brand>
       </Container>
     </Navbar>
@@ -65,12 +52,8 @@ const MobileView = () => {
   const {
     fgColorDetail,
     appbarFontStyle,
-    textColor,
     appbarFontSize
   } = appSettings;
-  const imageObj = {
-    splatWidth: '10vw'
-  };
   return (
     <Navbar
       style={{
@@ -86,16 +69,7 @@ const MobileView = () => {
           <Dropdown.Item href='/' onClick={() => window.open('/software', '_self')}>Software</Dropdown.Item>
         </CustomNavDropDown>
         <Navbar.Brand onClick={() => window.open('/login', '_self')}>
-          <Navbar.Text
-            style={{
-              color: textColor,
-              cursor: 'default',
-              fontSize: appbarFontSize
-            }}
-          >
-            prather.cc
-          </Navbar.Text>
-          <Logo imageObj={imageObj} />
+          <Image src={appbarLogo} />
         </Navbar.Brand>
       </Container>
     </Navbar>

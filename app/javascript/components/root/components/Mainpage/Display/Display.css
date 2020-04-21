@@ -1,26 +1,24 @@
-@media (prefers-reduced-motion: no-preference) {
   .animation1 {
     background-repeat: repeat;
-    animation: animation1 infinite 50s linear;
+    animation: animation1 infinite 20s linear;
   }
-}
+
 @keyframes animation1 {
   0% {
     transform: scaleY(1)
   }
   50%{
-    transform: scaleY(1.25)
+    transform: scaleY(1.1)
   }
   100% {
     transform:scaleY(1)
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
   .App-splat-to-mobile {
     animation: App-splat-to-mobile infinite 5s linear;
   }
-}
+
 @keyframes App-splat-to-mobile {
   0% {
     filter: grayscale(0%);
@@ -29,7 +27,7 @@
     filter: grayscale(25%);
   }
   50% {
-    filter: grayscale(75%);
+    filter: grayscale(100%);
   }
   75% {
     filter: grayscale(25%);
@@ -39,36 +37,3 @@
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo-large {
-    animation: App-logo-spin-large infinite 4s linear;
-  }
-}
-@keyframes App-logo-spin-large {
-  0% {
-    transform: translateY(-4vh);
-  }
-  50% {
-    transform: translateY(-3vh);
-  }
-  100% {
-    transform: translateY(-4vh);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo-small {
-    animation: App-logo-spin-small infinite 4s linear;
-  }
-}
-@keyframes App-logo-spin-small {
-  0% {
-    transform: translateY(-2vh);
-  }
-  50% {
-    transform: translateY(-1vh);
-  }
-  100% {
-    transform: translateY(-2vh);
-  }
-}
