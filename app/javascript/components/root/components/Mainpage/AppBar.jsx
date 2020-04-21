@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { Navbar, Nav, Dropdown, Container, Image } from 'react-bootstrap';
+import { Navbar, Nav, Dropdown, Container } from 'react-bootstrap';
 import { Breakpoint } from 'react-socks';
 import { AppContext } from '../../AppContext';
 import appbarLogo from '../../images/appbarLogo.jpg';
+import { SlowImage } from '../Utility/Utility';
 
 function AppBar() {
   return (
@@ -40,7 +41,7 @@ const DesktopView = () => {
           <CustomNavLink href='/software'>Software</CustomNavLink>
         </Nav>
         <Navbar.Brand style={{ cursor: 'default' }} onClick={() => window.open('/login', '_self')}>
-          <Image src={appbarLogo} />
+          <SlowImage src={appbarLogo} />
         </Navbar.Brand>
       </Container>
     </Navbar>
@@ -69,7 +70,7 @@ const MobileView = () => {
           <Dropdown.Item href='/' onClick={() => window.open('/software', '_self')}>Software</Dropdown.Item>
         </CustomNavDropDown>
         <Navbar.Brand onClick={() => window.open('/login', '_self')}>
-          <Image src={appbarLogo} />
+          <SlowImage src={appbarLogo} />
         </Navbar.Brand>
       </Container>
     </Navbar>

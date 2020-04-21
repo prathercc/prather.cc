@@ -1,12 +1,11 @@
 import React from 'react';
-import { Image } from 'react-bootstrap';
 import pratherccsplatBright from '../../images/pratherccsplatABS1.png';
+import {SlowImage} from '../Utility/Utility';
 
 function Logo(props) {
   const { splatWidth } = props;
   return (
-    <Image
-      roundedCircle
+    <SlowImage
       src={pratherccsplatBright}
       style={{ width: splatWidth }}
     />

@@ -1,16 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import {
-  Container,
-  Spinner,
-  Button,
-  Image,
-  Card,
-  Accordion,
-  Col,
-  Row,
-  ListGroup,
-  Alert
-} from 'react-bootstrap';
+import { Container, Spinner, Button, Card, Accordion, Col, Row, ListGroup, Alert } from 'react-bootstrap';
 import SoftwarePage from '../SoftwarePage/SoftwarePage';
 import SoftwareCompatibility from '../SoftwareCompatibility/SoftwareCompatibility';
 import SoftwareCode from '../SoftwareCode/SoftwareCode';
@@ -25,6 +14,7 @@ import { useCurrentBreakpointName } from 'react-socks';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
 import { incrementDownload } from '../../../downloadService';
 import * as RBI from 'react-bootstrap-icons';
+import { SlowImage } from '../../Utility/Utility';
 
 function SoftwareApplication(props) {
   const { userData } = props;
@@ -85,53 +75,53 @@ function SoftwareApplication(props) {
       {app === blankApp ? (
         <Spinner animation='border' />
       ) : (
-        <>
-          <MaintenanceAlert
-            applicationName={app.name}
-            maintained={!app.is_legacy}
-          />
-          <SoftwareTitle
-            titleObject={{
-              title: app.name,
-              description: app.description,
-              image: app.image_link,
-              imageWidth: { desktop: '30vw', mobile: '50vw' },
-              thumbnail: app.icon_link,
-              thumbnailWidth: { desktop: '3vw', mobile: '6vw' },
-            }}
-          />
-          <SoftwareCompatibility
-            app={app}
-            setMainDownloads={setDownloads}
-            compatibility={{ ...compatibility }}
-            userData={userData}
-          >
-            {downloads === null ? (
-              <Container>
-                <Spinner animation='border' />
-              </Container>
-            ) : downloads.length === 0 ? (
-              <p>N/A</p>
-            ) : (
-              downloads.map((download) => {
-                return (
-                  <SoftwareDownloadOption
-                    key={download.id}
-                    downloadLink={download.path}
-                    downloadName={download.file_name}
-                    type={download.os_type}
-                    downloadSize={download.file_size}
-                    downloads={download.download_count}
-                    id={download.id}
-                  />
-                );
-              })
-            )}
-          </SoftwareCompatibility>
+          <>
+            <MaintenanceAlert
+              applicationName={app.name}
+              maintained={!app.is_legacy}
+            />
+            <SoftwareTitle
+              titleObject={{
+                title: app.name,
+                description: app.description,
+                image: app.image_link,
+                imageWidth: { desktop: '30vw', mobile: '50vw' },
+                thumbnail: app.icon_link,
+                thumbnailWidth: { desktop: '3vw', mobile: '6vw' },
+              }}
+            />
+            <SoftwareCompatibility
+              app={app}
+              setMainDownloads={setDownloads}
+              compatibility={{ ...compatibility }}
+              userData={userData}
+            >
+              {downloads === null ? (
+                <Container>
+                  <Spinner animation='border' />
+                </Container>
+              ) : downloads.length === 0 ? (
+                <p>N/A</p>
+              ) : (
+                    downloads.map((download) => {
+                      return (
+                        <SoftwareDownloadOption
+                          key={download.id}
+                          downloadLink={download.path}
+                          downloadName={download.file_name}
+                          type={download.os_type}
+                          downloadSize={download.file_size}
+                          downloads={download.download_count}
+                          id={download.id}
+                        />
+                      );
+                    })
+                  )}
+            </SoftwareCompatibility>
 
-          <SoftwareCode repoLink={app.repo_link} />
-        </>
-      )}
+            <SoftwareCode repoLink={app.repo_link} />
+          </>
+        )}
 
       {userData ? (
         <Button
@@ -145,28 +135,28 @@ function SoftwareApplication(props) {
           Add Feature
         </Button>
       ) : (
-        ''
-      )}
+          ''
+        )}
 
       {features !== null
         ? features.map((feature) => {
-            return (
-              <SoftwareFeature
-                key={feature.id}
-                userData={userData}
-                descriptionObject={{
-                  image: feature.image_link,
-                  imageWidth: { desktop: '25vw', mobile: '50vw' },
-                  title: feature.title,
-                  description: feature.description,
-                  content_title: feature.content_title,
-                  content_description: feature.content_description,
-                  id: feature.id,
-                  application_name: feature.application_name,
-                }}
-              />
-            );
-          })
+          return (
+            <SoftwareFeature
+              key={feature.id}
+              userData={userData}
+              descriptionObject={{
+                image: feature.image_link,
+                imageWidth: { desktop: '25vw', mobile: '50vw' },
+                title: feature.title,
+                description: feature.description,
+                content_title: feature.content_title,
+                content_description: feature.content_description,
+                id: feature.id,
+                application_name: feature.application_name,
+              }}
+            />
+          );
+        })
         : ''}
     </SoftwarePage>
   );
@@ -220,7 +210,7 @@ const SoftwareFeature = (props) => {
             <Col>
               <Accordion.Collapse eventKey='0'>
                 <Card.Body>
-                  <Image
+                  <SlowImage
                     src={
                       descriptionObject.image !== undefined
                         ? descriptionObject.image
@@ -275,8 +265,8 @@ const SoftwareFeature = (props) => {
               Edit
             </Button>
           ) : (
-            ''
-          )}
+              ''
+            )}
         </Container>
       </Card>
     </Accordion>
@@ -345,7 +335,7 @@ const SoftwareDownloadOption = (props) => {
       <SoftwareModal
         title=''
         modalOpen={modalOpen}
-        handleModalClose={() => {}}
+        handleModalClose={() => { }}
         titleIcon={<Icon />}
         closable={false}
       >
@@ -355,6 +345,7 @@ const SoftwareDownloadOption = (props) => {
     </>
   );
 };
+
 
 const SoftwareTitle = (props) => {
   const appSettings = useContext(AppContext);
@@ -371,8 +362,7 @@ const SoftwareTitle = (props) => {
       }}
     >
       <Container>
-        <Image
-          rounded
+        <SlowImage
           src={titleObject.thumbnail}
           style={{
             width:
@@ -387,7 +377,7 @@ const SoftwareTitle = (props) => {
         <Card.Text
           dangerouslySetInnerHTML={{ __html: titleObject.description }}
         ></Card.Text>
-        <Card.Img
+        <SlowImage
           style={{
             width:
               breakpoint === 'xlarge'
@@ -419,15 +409,15 @@ const MaintenanceAlert = (props) => {
           {`${applicationName} is actively maintained!`}
         </Alert>
       ) : (
-        <Alert
-          variant='danger'
-          dismissible={false}
-          onClose={() => setAlertOpen(false)}
-          show={alertOpen}
-        >
-          {`${applicationName} is no longer maintained and will not receive updates!`}
-        </Alert>
-      )}
+          <Alert
+            variant='danger'
+            dismissible={false}
+            onClose={() => setAlertOpen(false)}
+            show={alertOpen}
+          >
+            {`${applicationName} is no longer maintained and will not receive updates!`}
+          </Alert>
+        )}
     </div>
   );
 }

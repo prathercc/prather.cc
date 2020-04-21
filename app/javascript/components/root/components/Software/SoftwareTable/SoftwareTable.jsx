@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Spinner, Badge, Image } from 'react-bootstrap';
+import { Table, Button, Spinner, Badge } from 'react-bootstrap';
 import SoftwarePage from '../SoftwarePage/SoftwarePage';
 import { fetchAllSoftware } from '../../../softwareService';
 import { useCurrentBreakpointName } from 'react-socks';
+import { SlowImage } from '../../Utility/Utility';
+
 function SoftwareTable(props) {
   const { userData } = props;
   const [software, setSoftware] = useState(null);
@@ -56,12 +58,12 @@ function SoftwareTable(props) {
               Add application
             </Button>
           ) : (
-            ''
-          )}
+              ''
+            )}
         </>
       ) : (
-        <Spinner animation='border' />
-      )}
+          <Spinner animation='border' />
+        )}
     </SoftwarePage>
   );
 }
@@ -81,16 +83,15 @@ const SoftwareSample = (props) => {
     <tr style={{ cursor: 'pointer' }}>
       <td onClick={() => window.open(`/software/${value.name}`, '_self')}>
         {' '}
-        <Image
-          rounded
+        <SlowImage
           src={value.icon_link}
           style={{
             width:
               breakpoint === 'xsmall'
                 ? '5vw'
                 : breakpoint === 'medium'
-                ? '4vw'
-                : '2vw',
+                  ? '4vw'
+                  : '2vw',
           }}
         />{' '}
         {value.name}
@@ -119,8 +120,8 @@ const SoftwareSample = (props) => {
           </Button>
         </td>
       ) : (
-        <td></td>
-      )}
+          <td></td>
+        )}
     </tr>
   );
 };
