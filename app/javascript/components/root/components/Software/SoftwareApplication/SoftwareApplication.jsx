@@ -18,7 +18,7 @@ import { fetchDownloads } from '../../../downloadService';
 import { fetchSoftware } from '../../../softwareService';
 import { useParams } from 'react-router-dom';
 import { fetchFeatures } from '../../../featureService';
-import './SoftwareFeature.css';
+import '../Software.css';
 import { Window } from 'react-bootstrap-icons';
 import { AppContext } from '../../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
@@ -177,6 +177,7 @@ const SoftwareFeature = (props) => {
   const { fgColorDetail, fgColor, iconSizing, textColor } = appSettings;
   const { userData, descriptionObject } = props;
   const [bgColor, setBgColor] = useState(fgColorDetail);
+  const [activeClass, setActiveClass] = useState('');
   return (
     <Accordion>
       <Card
@@ -193,10 +194,10 @@ const SoftwareFeature = (props) => {
             <Col>
               <Accordion.Toggle as={Card.Body} eventKey='0'>
                 <Card.Header
-                  onMouseEnter={() => setBgColor(fgColor)}
-                  onMouseLeave={() => setBgColor(fgColorDetail)}
+                  onMouseEnter={() => setActiveClass('Hover-glow')}
+                  onMouseLeave={() => setActiveClass('')}
                   style={{ cursor: 'pointer', backgroundColor: bgColor }}
-                  className={'Header-glow'}
+                  className={activeClass}
                 >
                   <Window style={{ color: textColor, fontSize: iconSizing }} />
 

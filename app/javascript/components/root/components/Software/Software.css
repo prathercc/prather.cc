@@ -5,12 +5,12 @@
   }
   @keyframes Hover-glow {
     0% {
-      opacity: 1;
+      background-color: #2E2929; box-shadow: 0 0 5px #2E2929;
     }
     50% {
-        opacity: 0.2;
+      background-color: #3E3E3E; box-shadow: 0 0 5px #3E3E3E;
     }
     100% {
-        opacity: 1
+      background-color: #2E2929; box-shadow: 0 0 5px #2E2929;
     }
   }

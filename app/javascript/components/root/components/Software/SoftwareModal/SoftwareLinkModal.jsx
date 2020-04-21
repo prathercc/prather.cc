@@ -8,7 +8,7 @@ import {
   FormControl
 } from 'react-bootstrap';
 import { AppContext } from '../../../AppContext';
-import './SoftwareLinkModal.css';
+import '../Software.css';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
 
 const SoftwareLinkModal = props => {

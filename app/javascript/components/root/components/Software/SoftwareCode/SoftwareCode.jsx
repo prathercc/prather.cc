@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 import { AppContext } from '../../../AppContext';
 import * as RBI from 'react-bootstrap-icons';
-import './SoftwareCode.css';
+import '../Software.css';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
 import SoftwareLinkModal from '../SoftwareModal/SoftwareLinkModal';
 
@@ -55,11 +55,9 @@ const CloneRepository = props => {
   const appSettings = useContext(AppContext);
   const {
     fgColorDetail,
-    fgColor,
     iconSizing,
     softwareMaintenanceFontSize
   } = appSettings;
-  const [activeColor, setActiveColor] = useState(fgColorDetail);
   const [activeClass, setActiveClass] = useState('');
   const { repoLink } = props;
   const [modalOpen, setModalOpen] = useState(false);
@@ -83,13 +81,11 @@ const CloneRepository = props => {
         <Row>
           <Col>
             <Card.Header
-              style={{ cursor: 'pointer', backgroundColor: activeColor }}
+              style={{ cursor: 'pointer', backgroundColor: fgColorDetail }}
               onMouseEnter={() => {
-                setActiveColor(fgColor);
                 setActiveClass('Hover-glow');
               }}
               onMouseLeave={() => {
-                setActiveColor(fgColorDetail);
                 setActiveClass('');
               }}
               className={activeClass}
