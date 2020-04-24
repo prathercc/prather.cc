@@ -7,14 +7,17 @@ import Logo from '../../Logo/Logo';
 function Display() {
   return (
     <header style={{ marginTop: '5vh' }}>
-      <Breakpoint medium down>
+      <Breakpoint small down>
         <PrathImage splatWidth='75vw' />
       </Breakpoint>
+      <Breakpoint medium only>
+        <PrathImage splatWidth='55vw' />
+      </Breakpoint>
       <Breakpoint large only>
-        <PrathImage splatWidth='50vw' />
+        <PrathImage splatWidth='45vw' />
       </Breakpoint>
       <Breakpoint xlarge up>
-        <PrathImage splatWidth='35vw' />
+        <PrathImage splatWidth='30vw' />
       </Breakpoint>
     </header>
   );
