@@ -5,7 +5,7 @@ import Display from './components/Mainpage/Display/Display';
 import Footer from './components/Mainpage/Footer';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AppContext } from './AppContext';
-import background from './images/background.jpg';
+import background from './images/background.png';
 import Login from './components/Login/Login';
 import SoftwareApplication from './components/Software/SoftwareApplication/SoftwareApplication';
 import SoftwareTable from './components/Software/SoftwareTable/SoftwareTable';

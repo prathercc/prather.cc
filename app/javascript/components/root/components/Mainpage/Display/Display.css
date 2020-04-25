@@ -1,6 +1,6 @@
   .animation1 {
     background-repeat: repeat;
-    animation: animation1 infinite 20s linear;
+    animation: animation1 infinite 35s linear ;
   }
 
 @keyframes animation1 {
@@ -8,7 +8,7 @@
     transform: scaleY(1)
   }
   50%{
-    transform: scaleY(1.1)
+    transform: scaleY(1.2)
   }
   100% {
     transform:scaleY(1)
