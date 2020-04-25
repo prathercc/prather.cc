@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import { AppContext } from '../../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
-import './SoftwarePage.css';
+
 function SoftwarePage(props) {
   const appSettings = useContext(AppContext);
   const { fgColor, fontStyle, softwareFontSize } = appSettings;
@@ -16,10 +16,9 @@ function SoftwarePage(props) {
           backgroundColor: fgColor,
           fontFamily: fontStyle,
           marginTop: '5vh',
-          opacity: '0',
+          opacity: '0.9',
           fontSize: softwareFontSize
         }}
-        className='Page-fade-in'
       >
         {props.children}
       </Jumbotron>
