@@ -172,10 +172,11 @@ function SoftwareApplication(props) {
 
 const SoftwareFeature = (props) => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, fgColor, iconSizing, textColor } = appSettings;
+  const { fgColorDetail, iconSizing, textColor } = appSettings;
   const { userData, descriptionObject } = props;
-  const [bgColor, setBgColor] = useState(fgColorDetail);
   const [activeClass, setActiveClass] = useState('');
+  const breakpoint = useCurrentBreakpointName();
+
   return (
     <Accordion>
       <Card
@@ -194,7 +195,7 @@ const SoftwareFeature = (props) => {
                 <Card.Header
                   onMouseEnter={() => setActiveClass('Hover-glow')}
                   onMouseLeave={() => setActiveClass('')}
-                  style={{ cursor: 'pointer', backgroundColor: bgColor }}
+                  style={{ cursor: 'pointer', backgroundColor: fgColorDetail }}
                   className={activeClass}
                 >
                   <Window style={{ color: textColor, fontSize: iconSizing }} />
@@ -230,7 +231,7 @@ const SoftwareFeature = (props) => {
                         : ''
                     }
                     style={{
-                      width: descriptionObject.imageWidth.desktop,
+                      width: breakpoint === 'xlarge' ? descriptionObject.imageWidth.desktop : descriptionObject.imageWidth.mobile,
                       cursor: 'pointer',
                     }}
                   />
@@ -291,7 +292,7 @@ const SoftwareDownloadOption = (props) => {
     id,
   } = props;
   const appSettings = useContext(AppContext);
-  const { iconSizing } = appSettings;
+  const { iconSizing, softwareFontSize } = appSettings;
   const [modalOpen, setModalOpen] = useState(false);
 
   const breakpoint = useCurrentBreakpointName();
@@ -315,7 +316,7 @@ const SoftwareDownloadOption = (props) => {
         <Col>
           <Button
             variant='outline-light'
-            style={{ marginTop: '1vh' }}
+            style={{ marginTop: '1vh', fontSize: softwareFontSize }}
             size={breakpoint === 'xsmall' ? 'sm' : 'md'}
             onClick={() => handleModalOpen()}
             block

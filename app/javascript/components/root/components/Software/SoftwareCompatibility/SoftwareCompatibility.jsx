@@ -116,6 +116,8 @@ const Download = (props) => {
     value === undefined ? blankDownload : value
   );
 
+  let disabledButton = download.file_name.length === 0 || download.os_type.length === 0 || download.file_size.length === 0  || download.path.length === 0;
+
   const handleDeleteDownload = async () => {
     await deleteDownload(download.id);
     reloadDownloads();
@@ -189,11 +191,11 @@ const Download = (props) => {
             </Col>
 
             {value === undefined ? (
-              <Button onClick={() => handleAddDownload()} variant='success'>
+              <Button disabled={disabledButton} onClick={() => handleAddDownload()} variant='success'>
                 Add
               </Button>
             ) : (
-                <Button onClick={() => handleEditDownload()} variant='success'>
+                <Button disabled={disabledButton} onClick={() => handleEditDownload()} variant='success'>
                   Save
                 </Button>
               )}
