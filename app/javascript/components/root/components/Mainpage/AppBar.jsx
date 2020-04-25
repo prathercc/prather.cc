@@ -5,8 +5,6 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Container from 'react-bootstrap/Container';
 import { Breakpoint } from 'react-socks';
 import { AppContext } from '../../AppContext';
-import appbarLogo from '../../images/appbarLogo.jpg';
-import { SlowImage } from '../Utility/Utility';
 
 function AppBar() {
   return (
@@ -43,9 +41,7 @@ const DesktopView = () => {
           <CustomNavLink disabled={true}> |</CustomNavLink>
           <CustomNavLink href='/software'>Software</CustomNavLink>
         </Nav>
-        <Navbar.Brand style={{ cursor: 'default' }} onClick={() => window.open('/login', '_self')}>
-          <SlowImage src={appbarLogo} />
-        </Navbar.Brand>
+        <CustomBrand appbarFontSize={appbarFontSize} />
       </Container>
     </Navbar>
   );
@@ -72,9 +68,7 @@ const MobileView = () => {
           <Dropdown.Item href='/' onClick={() => window.open('/', '_self')}>Home</Dropdown.Item>
           <Dropdown.Item href='/' onClick={() => window.open('/software', '_self')}>Software</Dropdown.Item>
         </CustomNavDropDown>
-        <Navbar.Brand onClick={() => window.open('/login', '_self')}>
-          <SlowImage src={appbarLogo} />
-        </Navbar.Brand>
+        <CustomBrand appbarFontSize={appbarFontSize} />
       </Container>
     </Navbar>
   );
@@ -104,7 +98,7 @@ const CustomNavLink = props => {
   const [activeColor, setActiveColor] = useState(textColor);
   return (
     <div
-      style={{ color: activeColor, padding: '5px' }}
+      style={{ color: activeColor, padding: '5px', cursor: props.disabled ? '' : 'pointer' }}
       onClick={() => window.open(props.href, '_self')}
       onMouseEnter={() => props.disabled ? '' : setActiveColor('grey')}
       onMouseLeave={() => setActiveColor(textColor)}
@@ -113,5 +107,16 @@ const CustomNavLink = props => {
     </div>
   );
 };
+
+const CustomBrand = props => {
+  const { appbarFontSize } = props;
+  return (
+    <Navbar.Brand style={{ cursor: 'default', opacity: 0.85, fontSize: appbarFontSize }} onClick={() => window.open('/login', '_self')}>
+      {'<'}
+      <div style={{ color: '#00ffaa', display: 'inline' }}>Prather.cc</div>
+      {' />'}
+    </Navbar.Brand>
+  )
+}
 
 export default AppBar;
