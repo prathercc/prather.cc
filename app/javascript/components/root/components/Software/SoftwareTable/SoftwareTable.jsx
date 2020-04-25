@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
@@ -7,11 +7,13 @@ import SoftwarePage from '../SoftwarePage/SoftwarePage';
 import { fetchAllSoftware } from '../../../softwareService';
 import { useCurrentBreakpointName } from 'react-socks';
 import { SlowImage } from '../../Utility/Utility';
+import { AppContext } from '../../../AppContext';
 
 function SoftwareTable(props) {
   const { userData } = props;
   const [software, setSoftware] = useState(null);
-
+  const appSettings = useContext(AppContext);
+  const { softwareFontSize } = appSettings;
   useEffect(() => {
     const loadSoftware = async () => {
       await fetchAllSoftware(setSoftware);
@@ -54,6 +56,7 @@ function SoftwareTable(props) {
           </Table>
           {userData ? (
             <Button
+              style={{ fontSize: softwareFontSize }}
               block
               variant='warning'
               onClick={() => window.open('/software/admin/new', '_self')}
@@ -74,6 +77,8 @@ function SoftwareTable(props) {
 const SoftwareSample = (props) => {
   const { value, userData } = props;
   const breakpoint = useCurrentBreakpointName();
+  const appSettings = useContext(AppContext);
+  const { softwareFontSize } = appSettings;
   const compatibility = {
     windows: value.windows,
     linux: value.linux,
@@ -112,6 +117,7 @@ const SoftwareSample = (props) => {
       {userData ? (
         <td>
           <Button
+            style={{ fontSize: softwareFontSize }}
             onClick={() =>
               window.open(`/software/admin/edit/${value.name}`, '_self')
             }

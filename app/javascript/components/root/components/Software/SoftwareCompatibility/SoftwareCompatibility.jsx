@@ -52,6 +52,8 @@ const EditDownloads = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [downloads, setDownloads] = useState(null);
   const [downloadsLoading, setDownloadsLoading] = useState(true);
+  const appSettings = useContext(AppContext);
+  const { softwareFontSize } = appSettings;
 
   const handleModalClose = async () => {
     setModalOpen(false);
@@ -72,7 +74,7 @@ const EditDownloads = (props) => {
 
   return (
     <>
-      <Button onClick={() => openAndLoadDownloads()} variant='warning' block>
+      <Button style={{fontSize: softwareFontSize}} onClick={() => openAndLoadDownloads()} variant='warning' block>
         Modify {app.name} Downloads
       </Button>
       <SoftwareModal
