@@ -29,6 +29,8 @@ function SoftwareApplication(props) {
   let { name } = useParams();
   const [downloads, setDownloads] = useState(null);
   const [features, setFeatures] = useState(null);
+  const appSettings = useContext(AppContext);
+  const { softwareFontSize } = appSettings;
   const blankApp = {
     android: false,
     description: '',
@@ -136,7 +138,7 @@ function SoftwareApplication(props) {
           onClick={() =>
             window.open(`/software/admin/feature/new/${app.name}`, '_self')
           }
-          style={{ marginTop: '1vh' }}
+          style={{ marginTop: '1vh', fontSize: softwareFontSize }}
           block
           variant='warning'
         >
@@ -172,7 +174,7 @@ function SoftwareApplication(props) {
 
 const SoftwareFeature = (props) => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, iconSizing, textColor } = appSettings;
+  const { fgColorDetail, iconSizing, textColor, softwareFontSize } = appSettings;
   const { userData, descriptionObject } = props;
   const [activeClass, setActiveClass] = useState('');
   const breakpoint = useCurrentBreakpointName();
@@ -262,6 +264,7 @@ const SoftwareFeature = (props) => {
           </Row>
           {userData ? (
             <Button
+            style={{fontSize: softwareFontSize}}
               onClick={() =>
                 window.open(
                   `/software/admin/feature/edit/${descriptionObject.application_name}/${descriptionObject.id}`,
@@ -315,15 +318,17 @@ const SoftwareDownloadOption = (props) => {
       <Row>
         <Col>
           <Button
-            variant='outline-light'
+            variant='dark'
             style={{ marginTop: '1vh', fontSize: softwareFontSize }}
             size={breakpoint === 'xsmall' ? 'sm' : 'md'}
             onClick={() => handleModalOpen()}
             block
           >
-            <div>{downloadName}</div>
-            <div>{`${downloadSize}`}</div>
-            <div>{`${type.charAt(0).toUpperCase() + type.slice(1)}`}</div>
+            <div style={{display:'inline'}}>{`${downloadName} `}</div>
+            <div style={{display:'inline', color:'yellow'}}>/// </div>
+            <div style={{display:'inline'}}>{`${downloadSize} `}</div>
+            <div style={{display:'inline', color:'yellow'}}>/// </div>
+            <div style={{display:'inline'}}>{`${type.charAt(0).toUpperCase() + type.slice(1)}`}</div>
             <div>{`${downloads} downloads`}</div>
           </Button>
         </Col>
@@ -403,7 +408,7 @@ const MaintenanceAlert = (props) => {
           onClose={() => setAlertOpen(false)}
           show={alertOpen}
         >
-          {`${applicationName} is actively maintained!`}
+          {`This application is actively maintained`}
         </Alert>
       ) : (
           <Alert
@@ -412,7 +417,7 @@ const MaintenanceAlert = (props) => {
             onClose={() => setAlertOpen(false)}
             show={alertOpen}
           >
-            {`${applicationName} is no longer maintained and will not receive updates!`}
+            {`This application is not currently receiving new updates`}
           </Alert>
         )}
     </div>
