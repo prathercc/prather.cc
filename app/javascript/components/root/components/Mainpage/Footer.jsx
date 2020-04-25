@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Navbar } from 'react-bootstrap';
+import Navbar from 'react-bootstrap/Navbar';
 import { AppContext } from '../../AppContext';
 
 function Footer() {

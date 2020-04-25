@@ -1,5 +1,15 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Container, Spinner, Button, Card, Accordion, Col, Row, ListGroup, Alert } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Spinner from 'react-bootstrap/Spinner';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Accordion from 'react-bootstrap/Accordion';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Alert from 'react-bootstrap/Alert';
+import Download from 'react-bootstrap-icons/dist/icons/download';
+import Window from 'react-bootstrap-icons/dist/icons/window';
 import SoftwarePage from '../SoftwarePage/SoftwarePage';
 import SoftwareCompatibility from '../SoftwareCompatibility/SoftwareCompatibility';
 import SoftwareCode from '../SoftwareCode/SoftwareCode';
@@ -8,12 +18,10 @@ import { fetchSoftware } from '../../../softwareService';
 import { useParams } from 'react-router-dom';
 import { fetchFeatures } from '../../../featureService';
 import '../Software.css';
-import { Window } from 'react-bootstrap-icons';
 import { AppContext } from '../../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
 import { incrementDownload } from '../../../downloadService';
-import * as RBI from 'react-bootstrap-icons';
 import { SlowImage } from '../../Utility/Utility';
 
 function SoftwareApplication(props) {
@@ -298,7 +306,7 @@ const SoftwareDownloadOption = (props) => {
   };
 
   const Icon = () => {
-    return <RBI.Download style={{ fontSize: iconSizing }} />;
+    return <Download style={{ fontSize: iconSizing }} />;
   };
 
   return (

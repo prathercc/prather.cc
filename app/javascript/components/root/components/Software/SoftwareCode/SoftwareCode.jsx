@@ -1,15 +1,15 @@
 import React, { useContext, useState, useRef } from 'react';
-import {
-  Card,
-  Container,
-  Col,
-  Row,
-  InputGroup,
-  Button,
-  FormControl
-} from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Button from 'react-bootstrap/Button';
+import FormControl from 'react-bootstrap/FormControl';
+import Code from 'react-bootstrap-icons/dist/icons/code';
+import Envelope from 'react-bootstrap-icons/dist/icons/envelope';
+import CloudDownload from 'react-bootstrap-icons/dist/icons/cloud-download';
 import { AppContext } from '../../../AppContext';
-import * as RBI from 'react-bootstrap-icons';
 import '../Software.css';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
 import SoftwareLinkModal from '../SoftwareModal/SoftwareLinkModal';
@@ -20,10 +20,10 @@ function SoftwareCode(props) {
   const { repoLink } = props;
 
   const VisitRepoIcon = () => {
-    return <RBI.Code style={{ fontSize: iconSizing }} />;
+    return <Code style={{ fontSize: iconSizing }} />;
   };
   const ViewOpenIssuesIcon = () => {
-    return <RBI.Envelope style={{ fontSize: iconSizing }} />;
+    return <Envelope style={{ fontSize: iconSizing }} />;
   };
 
   return (
@@ -72,7 +72,7 @@ const CloneRepository = props => {
   };
 
   const Icon = () => {
-    return <RBI.CloudDownload style={{ fontSize: iconSizing }} />;
+    return <CloudDownload style={{ fontSize: iconSizing }} />;
   };
 
   return (

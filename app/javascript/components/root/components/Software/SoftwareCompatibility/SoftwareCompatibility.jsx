@@ -1,7 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Card, Table, Button, Container, Spinner, Form, Row, Col, } from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Spinner from 'react-bootstrap/Spinner';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Check from 'react-bootstrap-icons/dist/icons/check';
+import X from 'react-bootstrap-icons/dist/icons/x';
 import { AppContext } from '../../../AppContext';
-import { Check, X } from 'react-bootstrap-icons';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
 import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../../../downloadService';
 

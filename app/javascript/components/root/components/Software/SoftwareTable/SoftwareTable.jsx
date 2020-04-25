@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Spinner, Badge } from 'react-bootstrap';
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+import Badge from 'react-bootstrap/Badge';
 import SoftwarePage from '../SoftwarePage/SoftwarePage';
 import { fetchAllSoftware } from '../../../softwareService';
 import { useCurrentBreakpointName } from 'react-socks';

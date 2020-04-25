@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Modal } from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal';
 import { AppContext } from '../../../AppContext';
 
 function SoftwareModal(props) {

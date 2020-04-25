@@ -42,7 +42,7 @@ function Root() {
               position: 'relative'
             }}
           >
-            <div className='animation1' style={{ position: 'absolute', backgroundColor: bgColor, width: '100%', height: '100%', backgroundImage: `url(${background})`, opacity: 0.70 }}></div>
+            <div className='animation1' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(${background})`, opacity: 0.70 }}></div>
             <Switch>
               <Route exact path='/software/:name'>
                 <SoftwareApplication userData={userData} />

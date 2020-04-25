@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Spinner } from 'react-bootstrap';
+import Spinner from 'react-bootstrap/Spinner';
 
 export const SlowImage = (props) => {
     const [isLoading, setIsLoading] = useState(true);

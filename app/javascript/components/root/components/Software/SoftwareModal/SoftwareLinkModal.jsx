@@ -1,12 +1,10 @@
 import React, { useContext, useState } from 'react';
-import {
-  Card,
-  Container,
-  Col,
-  Row,
-  Button,
-  FormControl
-} from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
+import FormControl from 'react-bootstrap/FormControl';
 import { AppContext } from '../../../AppContext';
 import '../Software.css';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';

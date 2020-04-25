@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import { authenticate, clearSession, getSession } from '../../authService';
 import SoftwarePage from '../Software/SoftwarePage/SoftwarePage';
 

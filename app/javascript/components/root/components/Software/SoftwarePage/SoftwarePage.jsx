@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { Container, Jumbotron } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 import { AppContext } from '../../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
 import './SoftwarePage.css';

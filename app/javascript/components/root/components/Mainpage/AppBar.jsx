@@ -1,5 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { Navbar, Nav, Dropdown, Container } from 'react-bootstrap';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import Dropdown from 'react-bootstrap/Dropdown';
+import Container from 'react-bootstrap/Container';
 import { Breakpoint } from 'react-socks';
 import { AppContext } from '../../AppContext';
 import appbarLogo from '../../images/appbarLogo.jpg';
