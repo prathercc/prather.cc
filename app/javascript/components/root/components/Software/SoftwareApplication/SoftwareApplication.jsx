@@ -291,7 +291,7 @@ const SoftwareDownloadOption = (props) => {
     id,
   } = props;
   const appSettings = useContext(AppContext);
-  const { softwareFontSize, iconSizing } = appSettings;
+  const { iconSizing } = appSettings;
   const [modalOpen, setModalOpen] = useState(false);
 
   const breakpoint = useCurrentBreakpointName();
@@ -314,28 +314,16 @@ const SoftwareDownloadOption = (props) => {
       <Row>
         <Col>
           <Button
-            variant='dark'
+            variant='outline-light'
             style={{ marginTop: '1vh' }}
-            size={breakpoint === 'xsmall' ? 'sm' : 'lg'}
+            size={breakpoint === 'xsmall' ? 'sm' : 'md'}
             onClick={() => handleModalOpen()}
             block
           >
-            <Container style={{ color: 'white' }}>
-              <Row>
-                <Col
-                  style={{
-                    fontSize: softwareFontSize,
-                  }}
-                >
-                  {downloadName}
-                </Col>
-                <Col>{type.charAt(0).toUpperCase() + type.slice(1)}_x64</Col>
-              </Row>
-              <Row>
-                <Col>{downloadSize}</Col>
-                <Col>{downloads} downloads</Col>
-              </Row>
-            </Container>
+            <div>{downloadName}</div>
+            <div>{`${downloadSize}`}</div>
+            <div>{`${type.charAt(0).toUpperCase() + type.slice(1)}`}</div>
+            <div>{`${downloads} downloads`}</div>
           </Button>
         </Col>
       </Row>

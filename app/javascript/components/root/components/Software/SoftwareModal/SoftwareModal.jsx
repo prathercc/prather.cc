@@ -9,7 +9,8 @@ function SoftwareModal(props) {
     fgColor,
     textColor,
     softwareFontSize,
-    softwareMaintenanceFontSize
+    softwareMaintenanceFontSize,
+    fontStyle
   } = appSettings;
 
   const {
@@ -22,7 +23,7 @@ function SoftwareModal(props) {
 
   return (
     <Modal
-      style={{ textAlign: 'center', userSelect:'none' }}
+      style={{ textAlign: 'center', userSelect:'none', fontFamily: fontStyle}}
       centered
       show={modalOpen}
       onHide={() => handleModalClose()}
