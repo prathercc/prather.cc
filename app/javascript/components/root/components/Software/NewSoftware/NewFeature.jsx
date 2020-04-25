@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import SoftwarePage from '../SoftwarePage/SoftwarePage';
@@ -10,9 +10,12 @@ import {
 } from '../../../featureService';
 import { fetchSoftware } from '../../../softwareService';
 import { useParams } from 'react-router-dom';
+import { AppContext } from '../../../AppContext';
 
 function NewFeature() {
   let { id, name } = useParams();
+  const appSettings = useContext(AppContext);
+  const { softwareFontSize } = appSettings;
   const blankFeature = {
     title: '',
     description: '',
@@ -49,15 +52,15 @@ function NewFeature() {
 
   const handleCreateFeature = async () => {
     await postFeature(feature);
-    window.open('/software', '_self');
+    window.open(`/software/${feature.application_name}`, '_self');
   };
   const handleEditFeature = async () => {
     await putFeature(feature);
-    window.open('/software', '_self');
+    window.open(`/software/${feature.application_name}`, '_self');
   };
   const handleDeleteFeature = async () => {
     await deleteFeature(feature.id);
-    window.open('/software', '_self');
+    window.open(`/software/${feature.application_name}`, '_self');
   };
   return (
     <SoftwarePage>
@@ -137,15 +140,16 @@ function NewFeature() {
 
       {id ? (
         <>
-          <Button onClick={() => handleEditFeature()} variant='warning' block>
+          <Button size='sm' style={{ fontSize: softwareFontSize }} onClick={() => handleEditFeature()} variant='warning' block>
             Save
           </Button>
-          <Button onClick={() => handleDeleteFeature()} variant='danger' block>
+          <Button size='sm' style={{ fontSize: softwareFontSize }} onClick={() => handleDeleteFeature()} variant='danger' block>
             Delete
           </Button>
         </>
       ) : (
           <Button
+            size='sm' style={{ fontSize: softwareFontSize }}
             disabled={feature.title.length === 0}
             onClick={() => handleCreateFeature()}
             variant='warning'
@@ -158,7 +162,7 @@ function NewFeature() {
         onClick={() =>
           window.open(`/software/${feature.application_name}`, '_self')
         }
-        variant='danger'
+        variant='light'
         block
       >
         Back

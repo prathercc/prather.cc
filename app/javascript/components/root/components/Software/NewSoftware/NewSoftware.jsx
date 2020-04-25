@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import SoftwarePage from '../SoftwarePage/SoftwarePage';
@@ -9,9 +9,12 @@ import {
   fetchSoftware,
 } from '../../../softwareService';
 import { useParams } from 'react-router-dom';
+import { AppContext } from '../../../AppContext';
 
 function NewSoftware(props) {
   let { name } = useParams();
+  const appSettings = useContext(AppContext);
+  const { softwareFontSize } = appSettings;
   const blankSoftware = {
     is_legacy: false,
     icon_link: '',
@@ -163,15 +166,15 @@ function NewSoftware(props) {
       />
       {name ? (
         <>
-          <Button onClick={() => handleEditSoftware()} variant='warning' block>
+          <Button size='sm' style={{fontSize: softwareFontSize}} onClick={() => handleEditSoftware()} variant='warning' block>
             Save
           </Button>
-          <Button onClick={() => handleDeleteSoftware()} variant='danger' block>
+          <Button size='sm' style={{fontSize: softwareFontSize}} onClick={() => handleDeleteSoftware()} variant='danger' block>
             Delete
           </Button>
         </>
       ) : (
-        <Button disabled={software.name.length === 0} onClick={() => handleCreateSoftware()} variant='warning' block>
+        <Button size='sm' style={{fontSize: softwareFontSize}} disabled={software.name.length === 0} onClick={() => handleCreateSoftware()} variant='warning' block>
           Create
         </Button>
       )}
