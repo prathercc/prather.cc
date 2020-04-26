@@ -8,7 +8,7 @@ import Logo from '../../Logo/Logo';
 
 function Display() {
   return (
-    <header style={{ marginTop: '5vh' }}>
+    <>
       <Breakpoint small down>
         <PrathImage splatWidth='75vw' />
       </Breakpoint>
@@ -21,7 +21,7 @@ function Display() {
       <Breakpoint xlarge up>
         <PrathImage splatWidth='30vw' />
       </Breakpoint>
-    </header>
+    </>
   );
 }
 
@@ -29,10 +29,10 @@ const PrathImage = props => {
   const { splatWidth } = props;
 
   return (
-    <Container className='App-splat-to-mobile' style={{opacity:0.85}}>
+    <Container className='App-splat-to-mobile' style={{ opacity: 0.85 }}>
       <Row>
         <Col>
-          <Logo splatWidth={splatWidth}/>
+          <Logo splatWidth={splatWidth} />
         </Col>
       </Row>
     </Container>

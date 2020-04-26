@@ -6,7 +6,7 @@ import Badge from 'react-bootstrap/Badge';
 import SoftwarePage from '../SoftwarePage/SoftwarePage';
 import { fetchAllSoftware } from '../../../softwareService';
 import { useCurrentBreakpointName } from 'react-socks';
-import { SlowImage } from '../../Utility/Utility';
+import { SlowImage, Separator } from '../../Utility/Utility';
 import { AppContext } from '../../../AppContext';
 
 function SoftwareTable(props) {
@@ -55,7 +55,9 @@ const CustomTable = props => {
   return (
     <div {...props}>
       <div style={{ fontSize: tableHeaderFontSize }}>
+        <Separator />
         {legacy ? 'Legacy Applications*' : 'Actively Maintained Applications'}
+        <Separator />
       </div>
       <Table
         striped

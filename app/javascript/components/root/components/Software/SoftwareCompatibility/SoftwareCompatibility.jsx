@@ -189,6 +189,7 @@ const Download = (props) => {
                 <option>Mac</option>
                 <option>Android</option>
                 <option>iOS</option>
+                <option>Resource</option>
               </Form.Control>
             </Col>
 
@@ -265,9 +266,8 @@ const CompatiblityResult = (props) => {
       {boolean ? (
         <Check
           style={{
-            color: 'green',
+            color: 'limegreen',
             fontSize: iconSizing,
-            filter: 'grayscale(0.5)',
           }}
         />
       ) : (
@@ -275,7 +275,6 @@ const CompatiblityResult = (props) => {
             style={{
               color: 'red',
               fontSize: iconSizing,
-              filter: 'grayscale(0.5)',
             }}
           />
         )}

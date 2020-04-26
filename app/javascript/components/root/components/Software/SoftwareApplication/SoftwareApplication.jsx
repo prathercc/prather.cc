@@ -236,13 +236,7 @@ const SoftwareFeature = (props) => {
                       cursor: 'pointer',
                     }}
                   />
-
                   <Container style={{ marginTop: '1vh' }}>
-                    <Row>
-                      <Col>
-                        <strong>{descriptionObject.content_title}</strong>
-                      </Col>
-                    </Row>
                     <ListGroup style={{ textAlign: 'left' }}>
                       <ListGroup.Item
                         style={{ cursor: 'default' }}
@@ -263,7 +257,7 @@ const SoftwareFeature = (props) => {
           </Row>
           {userData ? (
             <Button
-            style={{fontSize: softwareFontSize}}
+              style={{ fontSize: softwareFontSize }}
               onClick={() =>
                 window.open(
                   `/software/admin/feature/edit/${descriptionObject.application_name}/${descriptionObject.id}`,
@@ -323,11 +317,11 @@ const SoftwareDownloadOption = (props) => {
             onClick={() => handleModalOpen()}
             block
           >
-            <div style={{display:'inline'}}>{`${downloadName} `}</div>
+            <div style={{ display: 'inline' }}>{`${downloadName} `}</div>
             <Separator />
-            <div style={{display:'inline'}}>{`${downloadSize} `}</div>
+            <div style={{ display: 'inline' }}>{`${downloadSize} `}</div>
             <Separator />
-            <div style={{display:'inline'}}>{`${type.charAt(0).toUpperCase() + type.slice(1)}`}</div>
+            <div style={{ display: 'inline' }}>{`${type.charAt(0).toUpperCase() + type.slice(1)}`}</div>
             <div>{`${downloads} downloads`}</div>
           </Button>
         </Col>
@@ -373,11 +367,11 @@ const SoftwareTitle = (props) => {
           }}
         />
         <strong>{titleObject.title}</strong>
-      </Container>
-      <Card.Body>
         <Card.Text
           dangerouslySetInnerHTML={{ __html: titleObject.description }}
         ></Card.Text>
+      </Container>
+      <Card.Body>
         <SlowImage
           style={{
             width:
