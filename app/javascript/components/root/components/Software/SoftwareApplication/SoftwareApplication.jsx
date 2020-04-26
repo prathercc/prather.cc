@@ -87,7 +87,6 @@ function SoftwareApplication(props) {
       ) : (
           <>
             <MaintenanceAlert
-              applicationName={app.name}
               maintained={!app.is_legacy}
             />
             <SoftwareTitle
@@ -397,7 +396,7 @@ const SoftwareTitle = (props) => {
 const MaintenanceAlert = (props) => {
   const appSettings = useContext(AppContext);
   const { softwareMaintenanceFontSize } = appSettings;
-  const { applicationName, maintained = false } = props;
+  const { maintained = false } = props;
   const [alertOpen, setAlertOpen] = useState(true);
   return (
     <div style={{ fontSize: softwareMaintenanceFontSize }}>

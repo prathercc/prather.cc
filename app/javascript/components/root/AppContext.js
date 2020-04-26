@@ -12,6 +12,9 @@ const appSettings = {
   appbarFontStyle: 'Titillium Web',
   appbarFontSize: 'calc(5px + 2vmin)',
 
+  tableHeaderFontSize: 'calc(3.5px + 2vmin)',
+  tableNotesFontSize: 'calc(5px + 1vmin)',
+
   softwareFontSize: 'calc(1.5px + 2vmin)',
   softwareMaintenanceFontSize: 'calc(1.5px + 2vmin)'
 };
