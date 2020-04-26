@@ -1,26 +1,26 @@
 {
-  "application.js": "/packs/js/application-90c09884af4280b2ddd6.js",
-  "application.js.map": "/packs/js/application-90c09884af4280b2ddd6.js.map",
+  "application.js": "/packs/js/application-01e16e3c9de53a8071cd.js",
+  "application.js.map": "/packs/js/application-01e16e3c9de53a8071cd.js.map",
   "entrypoints": {
     "application": {
       "js": [
-        "/packs/js/application-90c09884af4280b2ddd6.js"
+        "/packs/js/application-01e16e3c9de53a8071cd.js"
       ],
       "js.map": [
-        "/packs/js/application-90c09884af4280b2ddd6.js.map"
+        "/packs/js/application-01e16e3c9de53a8071cd.js.map"
       ]
     },
     "index": {
       "js": [
-        "/packs/js/index-1655c78bc5aa7f0fa324.js"
+        "/packs/js/index-98ab4719bd9d0896df1b.js"
       ],
       "js.map": [
-        "/packs/js/index-1655c78bc5aa7f0fa324.js.map"
+        "/packs/js/index-98ab4719bd9d0896df1b.js.map"
       ]
     }
   },
-  "index.js": "/packs/js/index-1655c78bc5aa7f0fa324.js",
-  "index.js.map": "/packs/js/index-1655c78bc5aa7f0fa324.js.map",
+  "index.js": "/packs/js/index-98ab4719bd9d0896df1b.js",
+  "index.js.map": "/packs/js/index-98ab4719bd9d0896df1b.js.map",
   "media/components/root/images/background.png": "/packs/media/components/root/images/background-0be7aaaa047dfb9d89f60d809a55f002.png",
   "media/components/root/images/pratherccsplatABS1.png": "/packs/media/components/root/images/pratherccsplatABS1-667a00539cb104658ae246dd83a5aa7a.png"
 }
