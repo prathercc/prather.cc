@@ -12,3 +12,11 @@ export const SlowImage = (props) => {
         </>
     );
 };
+
+export const Separator = () => {
+    return (
+        <div style={{ display: 'inline', color: '#00ffaa', opacity: 0.85 }}>
+            {` .:!:. `}
+        </div>
+    )
+}
