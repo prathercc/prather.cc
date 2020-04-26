@@ -22,7 +22,7 @@ import { AppContext } from '../../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
 import { incrementDownload } from '../../../downloadService';
-import { SlowImage } from '../../Utility/Utility';
+import { SlowImage, Separator } from '../../Utility/Utility';
 
 function SoftwareApplication(props) {
   const { userData } = props;
@@ -94,7 +94,7 @@ function SoftwareApplication(props) {
                 title: app.name,
                 description: app.description,
                 image: app.image_link,
-                imageWidth: { desktop: '30vw', mobile: '50vw' },
+                imageWidth: { desktop: '25vw', mobile: '50vw' },
                 thumbnail: app.icon_link,
                 thumbnailWidth: { desktop: '3vw', mobile: '6vw' },
               }}
@@ -324,9 +324,9 @@ const SoftwareDownloadOption = (props) => {
             block
           >
             <div style={{display:'inline'}}>{`${downloadName} `}</div>
-            <div style={{display:'inline', color:'yellow'}}>/// </div>
+            <Separator />
             <div style={{display:'inline'}}>{`${downloadSize} `}</div>
-            <div style={{display:'inline', color:'yellow'}}>/// </div>
+            <Separator />
             <div style={{display:'inline'}}>{`${type.charAt(0).toUpperCase() + type.slice(1)}`}</div>
             <div>{`${downloads} downloads`}</div>
           </Button>

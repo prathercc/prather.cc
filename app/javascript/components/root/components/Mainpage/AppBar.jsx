@@ -5,6 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Container from 'react-bootstrap/Container';
 import { Breakpoint } from 'react-socks';
 import { AppContext } from '../../AppContext';
+import { Separator } from '../Utility/Utility';
 
 function AppBar() {
   return (
@@ -38,7 +39,7 @@ const DesktopView = () => {
       <Container style={{ textAlign: 'center' }}>
         <Nav>
           <CustomNavLink href='/'>Home</CustomNavLink>
-          <CustomNavLink disabled={true}> |</CustomNavLink>
+          <CustomNavLink disabled={true} />
           <CustomNavLink href='/software'>Software</CustomNavLink>
         </Nav>
         <CustomBrand appbarFontSize={appbarFontSize} />
@@ -103,7 +104,7 @@ const CustomNavLink = props => {
       onMouseEnter={() => props.disabled ? '' : setActiveColor('grey')}
       onMouseLeave={() => setActiveColor(textColor)}
     >
-      {props.children}
+      {props.disabled ? <Separator /> : props.children}
     </div>
   );
 };
@@ -111,9 +112,9 @@ const CustomNavLink = props => {
 const CustomBrand = props => {
   const { appbarFontSize } = props;
   return (
-    <Navbar.Brand style={{ cursor: 'default', opacity: 0.85, fontSize: appbarFontSize }} onClick={() => window.open('/login', '_self')}>
+    <Navbar.Brand style={{ cursor: 'default', fontSize: appbarFontSize }} onClick={() => window.open('/login', '_self')}>
       {'<'}
-      <div style={{ color: '#00ffaa', display: 'inline' }}>Prather.cc</div>
+      <div style={{ color: '#00ffaa', display: 'inline', opacity: 0.85 }}>Prather.cc</div>
       {' />'}
     </Navbar.Brand>
   )

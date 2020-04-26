@@ -16,7 +16,7 @@ const appSettings = {
   tableNotesFontSize: 'calc(5px + 1vmin)',
 
   softwareFontSize: 'calc(1.5px + 2vmin)',
-  softwareMaintenanceFontSize: 'calc(1.5px + 2vmin)'
+  softwareMaintenanceFontSize: 'calc(0.5px + 2vmin)'
 };
 
 export const AppContext = createContext(appSettings);
