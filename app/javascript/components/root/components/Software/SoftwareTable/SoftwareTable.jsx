@@ -13,7 +13,7 @@ function SoftwareTable(props) {
   const { userData } = props;
   const [software, setSoftware] = useState(null);
   const appSettings = useContext(AppContext);
-  const { softwareFontSize } = appSettings;
+  const { softwareFontSize, tableNotesFontSize } = appSettings;
   useEffect(() => {
     const loadSoftware = async () => {
       await fetchAllSoftware(setSoftware);
@@ -25,35 +25,8 @@ function SoftwareTable(props) {
     <SoftwarePage>
       {software ? (
         <>
-          <Table
-            striped
-            bordered
-            responsive
-            variant='dark'
-            hover
-            size='sm'
-            style={{ cursor: 'default' }}
-          >
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Language</th>
-                <th>Platform(s)</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {software.map((app) => {
-                return (
-                  <SoftwareSample
-                    key={app.id}
-                    value={app}
-                    userData={userData}
-                  />
-                );
-              })}
-            </tbody>
-          </Table>
+          <CustomTable userData={userData} software={software} legacy={false} />
+          <CustomTable style={{ marginTop: '2vh' }} userData={userData} software={software} legacy={true} />
           {userData ? (
             <Button
               style={{ fontSize: softwareFontSize }}
@@ -70,8 +43,52 @@ function SoftwareTable(props) {
       ) : (
           <Spinner animation='border' />
         )}
+      <div style={{ textAlign: 'left', marginTop: '4vh', fontSize: tableNotesFontSize }}>*Legacy Applications are not currently receiving new updates/features.</div>
     </SoftwarePage>
   );
+}
+
+const CustomTable = props => {
+  const { userData, software, legacy } = props;
+  const appSettings = useContext(AppContext);
+  const { tableHeaderFontSize } = appSettings;
+  return (
+    <div {...props}>
+      <div style={{ fontSize: tableHeaderFontSize }}>
+        {legacy ? 'Legacy Applications*' : 'Actively Maintained Applications'}
+      </div>
+      <Table
+        striped
+        bordered
+        responsive
+        variant='dark'
+        hover
+        size='sm'
+        style={{ cursor: 'default' }}
+      >
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Language</th>
+            <th>Platform(s)</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {software.filter(app => app.is_legacy === legacy).map((app) => {
+            return (
+              <SoftwareSample
+                key={app.id}
+                value={app}
+                userData={userData}
+              />
+            );
+          })}
+        </tbody>
+      </Table>
+
+    </div>
+  )
 }
 
 const SoftwareSample = (props) => {
