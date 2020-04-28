@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
+import Card from 'react-bootstrap/Card';
+import { AppContext } from '../../AppContext';
 
 export const SlowImage = (props) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -18,5 +20,22 @@ export const Separator = () => {
         <div style={{ display: 'inline', color: '#00ffaa', opacity: 0.85 }}>
             {` .:!:. `}
         </div>
+    )
+}
+
+export const DetailCard = props => {
+    const { style = {} } = props;
+    const appSettings = useContext(AppContext);
+    const { softwareFontSize, fgColorDetail } = appSettings;
+    return (
+        <Card
+            border='secondary'
+            style={{
+                ...style, backgroundColor: fgColorDetail,
+                fontSize: softwareFontSize,
+                alignItems: 'center',
+            }}>
+            {props.children}
+        </Card>
     )
 }
