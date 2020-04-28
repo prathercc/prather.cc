@@ -13,6 +13,7 @@ import { AppContext } from '../../../AppContext';
 import '../Software.css';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
 import SoftwareLinkModal from '../SoftwareModal/SoftwareLinkModal';
+import { DetailCard } from '../../Utility/Utility';
 
 function SoftwareCode(props) {
   const appSettings = useContext(AppContext);
@@ -27,16 +28,9 @@ function SoftwareCode(props) {
   };
 
   return (
-    <Card
-      style={{
-        backgroundColor: fgColorDetail,
-        fontSize: softwareFontSize,
-        alignItems: 'center',
-        marginTop: '5vh',
-        outline: '1px solid gray'
-      }}
-    >
+    <DetailCard style={{ marginTop: '5vh' }}>
       <SoftwareLinkModal
+        style={{ marginTop: '1vh' }}
         link={`${repoLink}`}
         title='View Project Repository'
         icon={<VisitRepoIcon />}
@@ -46,8 +40,8 @@ function SoftwareCode(props) {
         title='View Open Issues'
         icon={<ViewOpenIssuesIcon />}
       />
-      <CloneRepository repoLink={repoLink} />
-    </Card>
+      <CloneRepository style={{ marginBottom: '1vh' }} repoLink={repoLink} />
+    </DetailCard>
   );
 }
 
@@ -77,7 +71,7 @@ const CloneRepository = props => {
 
   return (
     <>
-      <Container>
+      <Container {...props}>
         <Row>
           <Col>
             <Card.Header

@@ -12,6 +12,7 @@ import X from 'react-bootstrap-icons/dist/icons/x';
 import { AppContext } from '../../../AppContext';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
 import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../../../downloadService';
+import { DetailCard } from '../../Utility/Utility';
 
 function SoftwareCompatibility(props) {
   const appSettings = useContext(AppContext);
@@ -19,14 +20,8 @@ function SoftwareCompatibility(props) {
   const { compatibility, app, setMainDownloads, userData } = props;
 
   return (
-    <Card
-      style={{
-        backgroundColor: fgColorDetail,
-        alignItems: 'center',
-        marginTop: '5vh',
-        outline: '1px solid gray',
-      }}
-    >
+    <DetailCard
+      style={{ marginTop: '5vh' }}>
       <Card.Body>
         <strong>System Compatibility</strong>
         <CompatibilityTable compatibility={compatibility} />
@@ -43,7 +38,7 @@ function SoftwareCompatibility(props) {
           {props.children ? props.children : <p>N/A</p>}
         </Container>
       </Card.Body>
-    </Card>
+    </DetailCard>
   );
 }
 
@@ -74,7 +69,7 @@ const EditDownloads = (props) => {
 
   return (
     <>
-      <Button style={{fontSize: softwareFontSize}} onClick={() => openAndLoadDownloads()} variant='warning' block>
+      <Button style={{ fontSize: softwareFontSize }} onClick={() => openAndLoadDownloads()} variant='warning' block>
         Modify {app.name} Downloads
       </Button>
       <SoftwareModal
@@ -118,7 +113,7 @@ const Download = (props) => {
     value === undefined ? blankDownload : value
   );
 
-  let disabledButton = download.file_name.length === 0 || download.os_type.length === 0 || download.file_size.length === 0  || download.path.length === 0;
+  let disabledButton = download.file_name.length === 0 || download.os_type.length === 0 || download.file_size.length === 0 || download.path.length === 0;
 
   const handleDeleteDownload = async () => {
     await deleteDownload(download.id);

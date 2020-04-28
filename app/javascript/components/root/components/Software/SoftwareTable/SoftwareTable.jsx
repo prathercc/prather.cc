@@ -6,7 +6,7 @@ import Badge from 'react-bootstrap/Badge';
 import SoftwarePage from '../SoftwarePage/SoftwarePage';
 import { fetchAllSoftware } from '../../../softwareService';
 import { useCurrentBreakpointName } from 'react-socks';
-import { SlowImage, Separator } from '../../Utility/Utility';
+import { SlowImage, Separator, DetailCard } from '../../Utility/Utility';
 import { AppContext } from '../../../AppContext';
 
 function SoftwareTable(props) {
@@ -23,10 +23,11 @@ function SoftwareTable(props) {
 
   return (
     <SoftwarePage>
+      
       {software ? (
         <>
-          <CustomTable userData={userData} software={software} legacy={false} />
-          <CustomTable style={{ marginTop: '2vh' }} userData={userData} software={software} legacy={true} />
+          <DetailCard style={{marginBottom:'2vh'}}><CustomTable userData={userData} software={software} legacy={false} /></DetailCard>
+          <DetailCard><CustomTable style={{ marginTop: '2vh' }} userData={userData} software={software} legacy={true} /></DetailCard>
           {userData ? (
             <Button
               style={{ fontSize: softwareFontSize }}

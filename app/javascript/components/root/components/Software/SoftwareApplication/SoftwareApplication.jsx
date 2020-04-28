@@ -22,7 +22,7 @@ import { AppContext } from '../../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
 import { incrementDownload } from '../../../downloadService';
-import { SlowImage, Separator } from '../../Utility/Utility';
+import { SlowImage, Separator, DetailCard } from '../../Utility/Utility';
 
 function SoftwareApplication(props) {
   const { userData } = props;
@@ -180,15 +180,7 @@ const SoftwareFeature = (props) => {
 
   return (
     <Accordion>
-      <Card
-        style={{
-          backgroundColor: fgColorDetail,
-          alignItems: 'center',
-          marginTop: '5vh',
-          flexDirection: 'row',
-          outline: '1px solid gray',
-        }}
-      >
+      <DetailCard style={{marginTop: '5vh'}}>
         <Container>
           <Row>
             <Col>
@@ -273,7 +265,7 @@ const SoftwareFeature = (props) => {
               ''
             )}
         </Container>
-      </Card>
+      </DetailCard>
     </Accordion>
   );
 };
@@ -349,13 +341,7 @@ const SoftwareTitle = (props) => {
   const breakpoint = useCurrentBreakpointName();
 
   return (
-    <Card
-      style={{
-        backgroundColor: fgColorDetail,
-        alignItems: 'center',
-        outline: '1px solid gray',
-      }}
-    >
+    <DetailCard>
       <Container>
         <SlowImage
           src={titleObject.thumbnail}
@@ -383,7 +369,7 @@ const SoftwareTitle = (props) => {
           src={titleObject.image}
         />
       </Card.Body>
-    </Card>
+    </DetailCard>
   );
 };
 
