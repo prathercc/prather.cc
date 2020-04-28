@@ -23,7 +23,7 @@ const SoftwareLinkModal = props => {
 
   return (
     <>
-      <Container>
+      <Container {...props}>
         <Row>
           <Col>
             <Card.Header
