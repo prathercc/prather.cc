@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import { AppContext } from '../../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
+import Card from 'react-bootstrap/Card';
 
 function SoftwarePage(props) {
   const appSettings = useContext(AppContext);
@@ -11,7 +12,8 @@ function SoftwarePage(props) {
   return (
     <Container style={{ width: breakpoint === 'xlarge' ? '50vw' : '' }}>
       <Jumbotron
-        bg='dark'
+        as={Card}
+        border='secondary'
         style={{
           backgroundColor: fgColor,
           fontFamily: fontStyle,
