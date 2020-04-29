@@ -1,16 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import SoftwarePage from '../SoftwarePage/SoftwarePage';
-import {
-  postFeature,
-  putFeature,
-  deleteFeature,
-  fetchFeature,
-} from '../../../featureService';
+import { postFeature, putFeature, deleteFeature, fetchFeature } from '../../../featureService';
 import { fetchSoftware } from '../../../softwareService';
 import { useParams } from 'react-router-dom';
 import { AppContext } from '../../../AppContext';
+import { StandardPage } from '../../Utility/Utility';
 
 function NewFeature() {
   let { id, name } = useParams();
@@ -63,7 +58,7 @@ function NewFeature() {
     window.open(`/software/${feature.application_name}`, '_self');
   };
   return (
-    <SoftwarePage>
+    <StandardPage>
       <Form>
         <Form.Group>
           <Form.Text>Application Name</Form.Text>
@@ -167,7 +162,7 @@ function NewFeature() {
       >
         Back
       </Button>
-    </SoftwarePage>
+    </StandardPage>
   );
 }
 

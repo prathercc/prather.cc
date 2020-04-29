@@ -1,15 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import SoftwarePage from '../SoftwarePage/SoftwarePage';
-import {
-  postSoftware,
-  putSoftware,
-  deleteSoftware,
-  fetchSoftware,
-} from '../../../softwareService';
+import { postSoftware, putSoftware, deleteSoftware, fetchSoftware } from '../../../softwareService';
 import { useParams } from 'react-router-dom';
 import { AppContext } from '../../../AppContext';
+import { StandardPage } from '../../Utility/Utility';
 
 function NewSoftware(props) {
   let { name } = useParams();
@@ -53,10 +48,10 @@ function NewSoftware(props) {
     window.open('/software', '_self');
   };
   return (
-    <SoftwarePage>
+    <StandardPage>
       <Form.Text>Name</Form.Text>
       <Form.Control
-      style={{ textAlign: 'center' }}
+        style={{ textAlign: 'center' }}
         size='sm'
         type='text'
         disabled={name}
@@ -66,7 +61,7 @@ function NewSoftware(props) {
       />
       <Form.Text>Icon Image Link</Form.Text>
       <Form.Control
-      style={{ textAlign: 'center' }}
+        style={{ textAlign: 'center' }}
         size='sm'
         type='text'
         placeholder='Icon Image Link'
@@ -77,7 +72,7 @@ function NewSoftware(props) {
       />
       <Form.Text>Image Link</Form.Text>
       <Form.Control
-      style={{ textAlign: 'center' }}
+        style={{ textAlign: 'center' }}
         size='sm'
         type='text'
         placeholder='Image Link'
@@ -88,7 +83,7 @@ function NewSoftware(props) {
       />
       <Form.Text>Description</Form.Text>
       <Form.Control
-      style={{ textAlign: 'center' }}
+        style={{ textAlign: 'center' }}
         size='sm'
         type='text'
         placeholder='Description (html)'
@@ -101,7 +96,7 @@ function NewSoftware(props) {
       />
       <Form.Text>Repository Link</Form.Text>
       <Form.Control
-      style={{ textAlign: 'center' }}
+        style={{ textAlign: 'center' }}
         size='sm'
         type='text'
         placeholder='Repository Link'
@@ -112,7 +107,7 @@ function NewSoftware(props) {
       />
       <Form.Text>Languages</Form.Text>
       <Form.Control
-      style={{ textAlign: 'center' }}
+        style={{ textAlign: 'center' }}
         size='sm'
         type='text'
         placeholder='Languages'
@@ -166,19 +161,19 @@ function NewSoftware(props) {
       />
       {name ? (
         <>
-          <Button size='sm' style={{fontSize: softwareFontSize}} onClick={() => handleEditSoftware()} variant='warning' block>
+          <Button size='sm' style={{ fontSize: softwareFontSize }} onClick={() => handleEditSoftware()} variant='warning' block>
             Save
           </Button>
-          <Button size='sm' style={{fontSize: softwareFontSize}} onClick={() => handleDeleteSoftware()} variant='danger' block>
+          <Button size='sm' style={{ fontSize: softwareFontSize }} onClick={() => handleDeleteSoftware()} variant='danger' block>
             Delete
           </Button>
         </>
       ) : (
-        <Button size='sm' style={{fontSize: softwareFontSize}} disabled={software.name.length === 0} onClick={() => handleCreateSoftware()} variant='warning' block>
-          Create
-        </Button>
-      )}
-    </SoftwarePage>
+          <Button size='sm' style={{ fontSize: softwareFontSize }} disabled={software.name.length === 0} onClick={() => handleCreateSoftware()} variant='warning' block>
+            Create
+          </Button>
+        )}
+    </StandardPage>
   );
 }
 

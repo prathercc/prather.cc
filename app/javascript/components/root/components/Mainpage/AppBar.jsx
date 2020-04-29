@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Container from 'react-bootstrap/Container';
 import { Breakpoint } from 'react-socks';
 import { AppContext } from '../../AppContext';
-import { Separator } from '../Utility/Utility';
+import { StandardSeparator } from '../Utility/Utility';
 
 function AppBar() {
   return (
@@ -104,7 +104,7 @@ const CustomNavLink = props => {
       onMouseEnter={() => props.disabled ? '' : setActiveColor('grey')}
       onMouseLeave={() => setActiveColor(textColor)}
     >
-      {props.disabled ? <Separator /> : props.children}
+      {props.disabled ? <StandardSeparator /> : props.children}
     </div>
   );
 };

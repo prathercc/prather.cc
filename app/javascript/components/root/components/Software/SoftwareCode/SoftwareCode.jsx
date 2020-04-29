@@ -13,11 +13,11 @@ import { AppContext } from '../../../AppContext';
 import '../Software.css';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
 import SoftwareLinkModal from '../SoftwareModal/SoftwareLinkModal';
-import { DetailCard } from '../../Utility/Utility';
+import { StandardCard } from '../../Utility/Utility';
 
 function SoftwareCode(props) {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, iconSizing, softwareFontSize } = appSettings;
+  const { iconSizing } = appSettings;
   const { repoLink } = props;
 
   const VisitRepoIcon = () => {
@@ -28,7 +28,7 @@ function SoftwareCode(props) {
   };
 
   return (
-    <DetailCard style={{ marginTop: '5vh' }}>
+    <StandardCard style={{ marginTop: '5vh' }}>
       <SoftwareLinkModal
         style={{ marginTop: '1vh' }}
         link={`${repoLink}`}
@@ -41,17 +41,13 @@ function SoftwareCode(props) {
         icon={<ViewOpenIssuesIcon />}
       />
       <CloneRepository style={{ marginBottom: '1vh' }} repoLink={repoLink} />
-    </DetailCard>
+    </StandardCard>
   );
 }
 
 const CloneRepository = props => {
   const appSettings = useContext(AppContext);
-  const {
-    fgColorDetail,
-    iconSizing,
-    softwareMaintenanceFontSize
-  } = appSettings;
+  const { fgColorDetail, iconSizing, softwareMaintenanceFontSize } = appSettings;
   const [activeClass, setActiveClass] = useState('');
   const { repoLink } = props;
   const [modalOpen, setModalOpen] = useState(false);
@@ -71,7 +67,7 @@ const CloneRepository = props => {
 
   return (
     <>
-      <Container {...props}>
+      <Container style={{ ...props.style }}>
         <Row>
           <Col>
             <Card.Header

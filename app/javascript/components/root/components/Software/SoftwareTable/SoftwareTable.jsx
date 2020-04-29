@@ -3,10 +3,9 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Badge from 'react-bootstrap/Badge';
-import SoftwarePage from '../SoftwarePage/SoftwarePage';
 import { fetchAllSoftware } from '../../../softwareService';
 import { useCurrentBreakpointName } from 'react-socks';
-import { SlowImage, Separator, DetailCard } from '../../Utility/Utility';
+import { StandardImage, StandardSeparator, StandardCard, StandardPage } from '../../Utility/Utility';
 import { AppContext } from '../../../AppContext';
 
 function SoftwareTable(props) {
@@ -22,12 +21,12 @@ function SoftwareTable(props) {
   }, []);
 
   return (
-    <SoftwarePage>
-      
+    <StandardPage>
+
       {software ? (
         <>
-          <DetailCard style={{marginBottom:'2vh'}}><CustomTable userData={userData} software={software} legacy={false} /></DetailCard>
-          <DetailCard><CustomTable style={{ marginTop: '2vh' }} userData={userData} software={software} legacy={true} /></DetailCard>
+          <StandardCard style={{ marginBottom: '2vh' }}><CustomTable userData={userData} software={software} legacy={false} /></StandardCard>
+          <StandardCard><CustomTable style={{ marginTop: '2vh' }} userData={userData} software={software} legacy={true} /></StandardCard>
           {userData ? (
             <Button
               style={{ fontSize: softwareFontSize }}
@@ -45,7 +44,7 @@ function SoftwareTable(props) {
           <Spinner animation='border' />
         )}
       <div style={{ textAlign: 'left', marginTop: '4vh', fontSize: tableNotesFontSize }}>*Legacy Applications are not currently receiving new updates/features.</div>
-    </SoftwarePage>
+    </StandardPage>
   );
 }
 
@@ -54,11 +53,11 @@ const CustomTable = props => {
   const appSettings = useContext(AppContext);
   const { tableHeaderFontSize } = appSettings;
   return (
-    <div {...props}>
+    <div style={{ ...props.style, width: '95%' }}>
       <div style={{ fontSize: tableHeaderFontSize }}>
-        <Separator />
+        <StandardSeparator />
         {legacy ? 'Legacy Applications*' : 'Actively Maintained Applications'}
-        <Separator />
+        <StandardSeparator />
       </div>
       <Table
         striped
@@ -111,7 +110,7 @@ const SoftwareSample = (props) => {
     <tr style={{ cursor: 'pointer' }}>
       <td onClick={() => window.open(`/software/${value.name}`, '_self')}>
         {' '}
-        <SlowImage
+        <StandardImage
           src={value.icon_link}
           style={{
             width:

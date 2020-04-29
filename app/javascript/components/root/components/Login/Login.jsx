@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { authenticate, clearSession, getSession } from '../../authService';
-import SoftwarePage from '../Software/SoftwarePage/SoftwarePage';
+import {StandardPage} from '../Utility/Utility';
 
 function Login() {
   const [userData, setUserData] = useState(null);
@@ -27,7 +27,7 @@ function Login() {
   }, []);
 
   return (
-    <SoftwarePage>
+    <StandardPage>
       {userData ? (
         <Button onClick={() => signOut()} variant='warning'>
           Sign Out
@@ -59,7 +59,7 @@ function Login() {
             </Button>
           </>
         )}
-    </SoftwarePage>
+    </StandardPage>
   );
 }
 export default Login;

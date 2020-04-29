@@ -12,7 +12,7 @@ import X from 'react-bootstrap-icons/dist/icons/x';
 import { AppContext } from '../../../AppContext';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
 import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../../../downloadService';
-import { DetailCard } from '../../Utility/Utility';
+import { StandardCard } from '../../Utility/Utility';
 
 function SoftwareCompatibility(props) {
   const appSettings = useContext(AppContext);
@@ -20,7 +20,7 @@ function SoftwareCompatibility(props) {
   const { compatibility, app, setMainDownloads, userData } = props;
 
   return (
-    <DetailCard
+    <StandardCard
       style={{ marginTop: '5vh' }}>
       <Card.Body>
         <strong>System Compatibility</strong>
@@ -38,7 +38,7 @@ function SoftwareCompatibility(props) {
           {props.children ? props.children : <p>N/A</p>}
         </Container>
       </Card.Body>
-    </DetailCard>
+    </StandardCard>
   );
 }
 
@@ -226,7 +226,6 @@ const CompatibilityTable = (props) => {
       variant='dark'
       striped
       bordered
-      hover
       responsive
       style={{ width: '35vw', marginTop: '2vh' }}
     >

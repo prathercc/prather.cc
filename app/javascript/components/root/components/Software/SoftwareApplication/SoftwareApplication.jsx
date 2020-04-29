@@ -10,7 +10,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Alert from 'react-bootstrap/Alert';
 import Download from 'react-bootstrap-icons/dist/icons/download';
 import Window from 'react-bootstrap-icons/dist/icons/window';
-import SoftwarePage from '../SoftwarePage/SoftwarePage';
 import SoftwareCompatibility from '../SoftwareCompatibility/SoftwareCompatibility';
 import SoftwareCode from '../SoftwareCode/SoftwareCode';
 import { fetchDownloads } from '../../../downloadService';
@@ -22,7 +21,7 @@ import { AppContext } from '../../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
 import SoftwareModal from '../SoftwareModal/SoftwareModal';
 import { incrementDownload } from '../../../downloadService';
-import { SlowImage, Separator, DetailCard } from '../../Utility/Utility';
+import { StandardImage, StandardSeparator, StandardCard, StandardPage } from '../../Utility/Utility';
 
 function SoftwareApplication(props) {
   const { userData } = props;
@@ -81,7 +80,7 @@ function SoftwareApplication(props) {
   };
 
   return (
-    <SoftwarePage>
+    <StandardPage>
       {app === blankApp ? (
         <Spinner animation='border' />
       ) : (
@@ -167,7 +166,7 @@ function SoftwareApplication(props) {
           );
         })
         : ''}
-    </SoftwarePage>
+    </StandardPage>
   );
 }
 
@@ -180,7 +179,7 @@ const SoftwareFeature = (props) => {
 
   return (
     <Accordion>
-      <DetailCard style={{marginTop: '5vh'}}>
+      <StandardCard style={{ marginTop: '5vh' }}>
         <Container>
           <Row>
             <Col>
@@ -212,7 +211,7 @@ const SoftwareFeature = (props) => {
             <Col>
               <Accordion.Collapse eventKey='0'>
                 <Card.Body>
-                  <SlowImage
+                  <StandardImage
                     src={
                       descriptionObject.image !== undefined
                         ? descriptionObject.image
@@ -265,7 +264,7 @@ const SoftwareFeature = (props) => {
               ''
             )}
         </Container>
-      </DetailCard>
+      </StandardCard>
     </Accordion>
   );
 };
@@ -310,9 +309,9 @@ const SoftwareDownloadOption = (props) => {
             block
           >
             <div style={{ display: 'inline' }}>{`${downloadName} `}</div>
-            <Separator />
+            <StandardSeparator />
             <div style={{ display: 'inline' }}>{`${downloadSize} `}</div>
-            <Separator />
+            <StandardSeparator />
             <div style={{ display: 'inline' }}>{`${type.charAt(0).toUpperCase() + type.slice(1)}`}</div>
             <div>{`${downloads} downloads`}</div>
           </Button>
@@ -341,9 +340,9 @@ const SoftwareTitle = (props) => {
   const breakpoint = useCurrentBreakpointName();
 
   return (
-    <DetailCard>
+    <StandardCard>
       <Container>
-        <SlowImage
+        <StandardImage
           src={titleObject.thumbnail}
           style={{
             width:
@@ -358,7 +357,7 @@ const SoftwareTitle = (props) => {
         ></Card.Text>
       </Container>
       <Card.Body>
-        <SlowImage
+        <StandardImage
           style={{
             width:
               breakpoint === 'xlarge'
@@ -369,7 +368,7 @@ const SoftwareTitle = (props) => {
           src={titleObject.image}
         />
       </Card.Body>
-    </DetailCard>
+    </StandardCard>
   );
 };
 

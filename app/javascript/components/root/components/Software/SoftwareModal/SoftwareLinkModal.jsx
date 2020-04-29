@@ -23,7 +23,7 @@ const SoftwareLinkModal = props => {
 
   return (
     <>
-      <Container {...props}>
+      <Container style={{ ...props.style }}>
         <Row>
           <Col>
             <Card.Header
@@ -68,8 +68,8 @@ const SoftwareLinkModal = props => {
             window.open(`${link}`);
           }}
           variant='outline-light'
-          style={{ fontSize: softwareMaintenanceFontSize, marginTop:'2vh' }}
-          
+          style={{ fontSize: softwareMaintenanceFontSize, marginTop: '2vh' }}
+
         >
           Continue
         </Button>
