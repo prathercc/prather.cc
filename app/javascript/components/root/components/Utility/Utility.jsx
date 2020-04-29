@@ -47,9 +47,8 @@ export const StandardPage = props => {
     const appSettings = useContext(AppContext);
     const { fgColor, fontStyle, softwareFontSize } = appSettings;
     const breakpoint = useCurrentBreakpointName();
-    let breakCheck = breakpoint === 'xlarge' || breakpoint === 'large';
     return (
-        <Container style={{ width: breakCheck ? '50vw' : '' }}>
+        <Container style={{ width: breakpoint === 'xlarge' ? '50vw' : '' }}>
             <Jumbotron
                 as={Card}
                 border='secondary'
