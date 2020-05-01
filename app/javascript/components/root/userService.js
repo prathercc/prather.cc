@@ -1,7 +1,7 @@
 const host = `${window.location.origin}`;
 
-export const getSession = async (setUserData) => {
-  const response = await fetch(`${host}/api/v1/sessions`);
+export const getUsers = async (setUserData) => {
+  const response = await fetch(`${host}/api/v1/user`);
   response
     .json()
     .then((resp) => {
@@ -10,8 +10,8 @@ export const getSession = async (setUserData) => {
     .catch((err) => console.log(err));
 };
 
-export const authenticate = async (user, setUserData) => {
-  const response = await fetch(`${host}/api/v1/sessions`, {
+export const createUser = async (user) => {
+  const response = await fetch(`${host}/api/v1/user`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -20,20 +20,18 @@ export const authenticate = async (user, setUserData) => {
   });
   response
     .json()
-    .then((resp) => {
-      setUserData(resp.data);
+    .then(() => {
     })
     .catch((err) => console.log(err));
 };
 
-export const clearSession = async (setUserData, id) => {
-  const response = await fetch(`${host}/api/v1/sessions/${id}`, {
+export const deleteUser = async (id) => {
+  const response = await fetch(`${host}/api/v1/user/${id}`, {
     method: 'DELETE',
   });
   response
     .json()
     .then(() => {
-      setUserData(null);
     })
     .catch((err) => console.log(err));
 };
