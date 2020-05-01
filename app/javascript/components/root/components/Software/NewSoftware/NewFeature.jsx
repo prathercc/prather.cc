@@ -5,7 +5,7 @@ import { postFeature, putFeature, deleteFeature, fetchFeature } from '../../../f
 import { fetchSoftware } from '../../../softwareService';
 import { useParams } from 'react-router-dom';
 import { AppContext } from '../../../AppContext';
-import { StandardPage } from '../../Utility/Utility';
+import { StandardPage, StandardCard } from '../../Utility/Utility';
 
 function NewFeature() {
   let { id, name } = useParams();
@@ -58,8 +58,8 @@ function NewFeature() {
   };
   return (
     <StandardPage>
-      <Form>
-        <Form.Group>
+      <StandardCard>
+        <Form.Group style={{ width: '65%' }}>
           <Form.Text>Application Name</Form.Text>
           <Form.Control
             style={{ textAlign: 'center' }}
@@ -118,7 +118,7 @@ function NewFeature() {
           />
           <Form.Text>Content Description</Form.Text>
           <Form.Control
-            style={{ textAlign: 'center' }}
+            style={{ textAlign: 'center', marginBottom: '1vh' }}
             size='sm'
             type='text'
             as='textarea'
@@ -129,38 +129,39 @@ function NewFeature() {
               setFeature({ ...feature, content_description: e.target.value })
             }
           />
-        </Form.Group>
-      </Form>
 
-      {id ? (
-        <>
-          <Button size='sm' style={{ fontSize: softwareFontSize }} onClick={() => handleEditFeature()} variant='warning' block>
-            Save
+
+          {id ? (
+            <>
+              <Button size='sm' style={{ fontSize: softwareFontSize }} onClick={() => handleEditFeature()} variant='warning' block>
+                Save
           </Button>
-          <Button size='sm' style={{ fontSize: softwareFontSize }} onClick={() => handleDeleteFeature()} variant='danger' block>
-            Delete
+              <Button size='sm' style={{ fontSize: softwareFontSize }} onClick={() => handleDeleteFeature()} variant='danger' block>
+                Delete
           </Button>
-        </>
-      ) : (
+            </>
+          ) : (
+              <Button
+                size='sm' style={{ fontSize: softwareFontSize }}
+                disabled={feature.title.length === 0}
+                onClick={() => handleCreateFeature()}
+                variant='warning'
+                block
+              >
+                Create
+              </Button>
+            )}
           <Button
-            size='sm' style={{ fontSize: softwareFontSize }}
-            disabled={feature.title.length === 0}
-            onClick={() => handleCreateFeature()}
-            variant='warning'
+            onClick={() =>
+              window.open(`/software/${feature.application_name}`, '_self')
+            }
+            variant='light'
             block
           >
-            Create
-          </Button>
-        )}
-      <Button
-        onClick={() =>
-          window.open(`/software/${feature.application_name}`, '_self')
-        }
-        variant='light'
-        block
-      >
-        Back
+            Back
       </Button>
+        </Form.Group>
+      </StandardCard>
     </StandardPage>
   );
 }
