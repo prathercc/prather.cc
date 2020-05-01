@@ -39,31 +39,34 @@ function Login() {
         </>
 
       ) : (
-          <>
-            <Form.Control
-              type='text'
-              placeholder='Email'
-              onChange={(e) =>
-                setCredentials({ ...credentials, email: e.target.value })
-              }
-            />
-            <Form.Control
-              style={{ marginTop: '1vh' }}
-              type='password'
-              placeholder='Password'
-              onChange={(e) =>
-                setCredentials({ ...credentials, password: e.target.value })
-              }
-            />
+          <StandardCard>
+            <Form.Group style={{ width: '40%', marginTop: '1vh' }}>
+              <Form.Label>Sign In:</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder='Email'
+                onChange={(e) =>
+                  setCredentials({ ...credentials, email: e.target.value })
+                }
+              />
+              <Form.Control
+                style={{ marginTop: '1vh' }}
+                type='password'
+                placeholder='Password'
+                onChange={(e) =>
+                  setCredentials({ ...credentials, password: e.target.value })
+                }
+              />
 
-            <Button
-              onClick={() => authenticateUser()}
-              style={{ marginTop: '1vh' }}
-              variant='warning'
-            >
-              Sign In
+              <Button
+                onClick={() => authenticateUser()}
+                style={{ marginTop: '1vh' }}
+                variant='warning'
+              >
+                Sign In
             </Button>
-          </>
+            </Form.Group>
+          </StandardCard>
         )}
     </StandardPage>
   );
@@ -85,47 +88,45 @@ const AddUser = ({ userData }) => {
   }
 
   return (
-    <>
-      <StandardCard style={{ marginTop: '2vh' }}>
-        <Form.Group style={{ width: '40%' }}>
-          <Form.Label>Create New User:</Form.Label>
-          <Form.Control
-            value={newUser.email}
-            type='text'
-            placeholder='Email'
-            onChange={(e) =>
-              setNewUser({ ...newUser, email: e.target.value })
-            }
-          />
-          <Form.Control
-            value={newUser.password}
-            style={{ marginTop: '1vh' }}
-            type='password'
-            placeholder='Password'
-            onChange={(e) =>
-              setNewUser({ ...newUser, password: e.target.value })
-            }
-          />
-          <Form.Control
-            value={newUser.password2}
-            style={{ marginTop: '1vh' }}
-            type='password'
-            placeholder='Password Again'
-            onChange={(e) =>
-              setNewUser({ ...newUser, password2: e.target.value })
-            }
-          />
-          <Button
-            onClick={() => handleCreateNewUser()}
-            style={{ marginTop: '1vh', marginBottom: '1vh' }}
-            variant='warning'
-            disabled={!buttonEnabled}
-          >
-            Create New User
+    <StandardCard style={{ marginTop: '2vh' }}>
+      <Form.Group style={{ width: '40%' }}>
+        <Form.Label>Create New User:</Form.Label>
+        <Form.Control
+          value={newUser.email}
+          type='text'
+          placeholder='Email'
+          onChange={(e) =>
+            setNewUser({ ...newUser, email: e.target.value })
+          }
+        />
+        <Form.Control
+          value={newUser.password}
+          style={{ marginTop: '1vh' }}
+          type='password'
+          placeholder='Password'
+          onChange={(e) =>
+            setNewUser({ ...newUser, password: e.target.value })
+          }
+        />
+        <Form.Control
+          value={newUser.password2}
+          style={{ marginTop: '1vh' }}
+          type='password'
+          placeholder='Password Again'
+          onChange={(e) =>
+            setNewUser({ ...newUser, password2: e.target.value })
+          }
+        />
+        <Button
+          onClick={() => handleCreateNewUser()}
+          style={{ marginTop: '1vh', marginBottom: '1vh' }}
+          variant='warning'
+          disabled={!buttonEnabled}
+        >
+          Create New User
         </Button>
-        </Form.Group>
-      </StandardCard>
-    </>
+      </Form.Group>
+    </StandardCard>
   )
 }
 
@@ -148,32 +149,30 @@ const DeleteUser = ({ userData }) => {
   const buttonDisabled = (selectedUser.length === 0) || (userData.id.toString() === selectedUser);
 
   return (
-    <>
-      <StandardCard style={{ marginTop: '2vh' }}>
-        <Form.Group style={{ width: '40%' }}>
-          <Form.Label>Delete User:</Form.Label>
-          <Form.Control as="select" value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
-            <option></option>
-            {
-              users.map(user => {
-                return (
-                  <option key={user.id} value={user.id}>{user.email}</option>
-                )
-              })
-            }
-          </Form.Control>
-        </Form.Group>
+    <StandardCard style={{ marginTop: '2vh' }}>
+      <Form.Group style={{ width: '40%' }}>
+        <Form.Label>Delete User:</Form.Label>
+        <Form.Control as="select" value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
+          <option></option>
+          {
+            users.map(user => {
+              return (
+                <option key={user.id} value={user.id}>{user.email}</option>
+              )
+            })
+          }
+        </Form.Control>
+      </Form.Group>
 
-        <Button
-          onClick={() => handleDeleteUser()}
-          style={{ marginTop: '1vh', marginBottom: '1vh' }}
-          variant='danger'
-          disabled={buttonDisabled}
-        >
-          Delete User
+      <Button
+        onClick={() => handleDeleteUser()}
+        style={{ marginTop: '1vh', marginBottom: '1vh' }}
+        variant='danger'
+        disabled={buttonDisabled}
+      >
+        Delete User
         </Button>
-      </StandardCard>
-    </>
+    </StandardCard>
   )
 }
 
