@@ -39,7 +39,6 @@ function NewFeature() {
   }, []);
 
   useEffect(() => {
-    console.log(app);
     if (app !== null) {
       setFeature({ ...feature, software_id: app.id })
     }

@@ -25,8 +25,8 @@ function SoftwareTable(props) {
 
       {software ? (
         <>
-          <StandardCard style={{ marginBottom: '2vh' }}><CustomTable userData={userData} software={software} legacy={false} /></StandardCard>
-          <StandardCard><CustomTable style={{ marginTop: '2vh' }} userData={userData} software={software} legacy={true} /></StandardCard>
+          <StandardCard style={{ marginBottom: '2vh' }}><CustomTable style={{ marginTop: '1vh' }} userData={userData} software={software} legacy={false} /></StandardCard>
+          <StandardCard><CustomTable style={{ marginTop: '1vh' }} userData={userData} software={software} legacy={true} /></StandardCard>
           {userData ? (
             <Button
               style={{ fontSize: softwareFontSize }}
@@ -54,7 +54,7 @@ const CustomTable = props => {
   const { tableHeaderFontSize } = appSettings;
   return (
     <div style={{ ...props.style, width: '95%' }}>
-      <div style={{ fontSize: tableHeaderFontSize }}>
+      <div style={{ fontSize: tableHeaderFontSize, marginBottom: '1vh' }}>
         <StandardSeparator />
         {legacy ? 'Legacy Applications*' : 'Actively Maintained Applications'}
         <StandardSeparator />
