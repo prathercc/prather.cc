@@ -22,7 +22,7 @@ function SoftwareCompatibility(props) {
   return (
     <StandardCard
       style={{ marginTop: '5vh' }}>
-      <Card.Body>
+      <Card.Body style={{width:'90%'}}>
         <strong>System Compatibility</strong>
         <CompatibilityTable compatibility={compatibility} />
         {userData ? (
@@ -227,7 +227,8 @@ const CompatibilityTable = (props) => {
       striped
       bordered
       responsive
-      style={{ width: '35vw', marginTop: '2vh' }}
+      size='sm'
+      style={{ marginTop: '2vh' }}
     >
       <thead>
         <tr>
