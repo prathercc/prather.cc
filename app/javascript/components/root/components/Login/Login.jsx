@@ -28,7 +28,7 @@ function Login() {
   }, []);
 
   return (
-    <StandardPage>
+    <StandardPage title='Admin Panel'>
       {userData ? (
         <>
           <Button onClick={() => signOut()} variant='warning'>

@@ -5,7 +5,7 @@ import { postFeature, putFeature, deleteFeature, fetchFeature } from '../../../f
 import { fetchSoftware } from '../../../softwareService';
 import { useParams } from 'react-router-dom';
 import { AppContext } from '../../../AppContext';
-import { StandardPage, StandardCard } from '../../Utility/Utility';
+import { StandardPage, StandardCard, StandardSeparator } from '../../Utility/Utility';
 
 function NewFeature() {
   let { id, name } = useParams();
@@ -57,7 +57,7 @@ function NewFeature() {
     window.open(`/software/${feature.application_name}`, '_self');
   };
   return (
-    <StandardPage>
+  <StandardPage title={!id ? 'Add Feature' : 'Modify Feature'}>
       <StandardCard>
         <Form.Group style={{ width: '65%' }}>
           <Form.Text>Application Name</Form.Text>

@@ -18,25 +18,35 @@ export const StandardImage = (props) => {
     );
 };
 
-export const StandardSeparator = () => {
+export const StandardSeparator = (props) => {
+    const { variant = 1 } = props;
     return (
-        <div style={{ display: 'inline', color: '#00ffaa', opacity: 0.85 }}>
-            {` .:!:. `}
-        </div>
+        <>
+            {
+                variant === 1 ?
+                    <div onClick={props.onClick} style={{ ...props.style, display: 'inline', color: '#4fc9c9', opacity: 1 }}> <em>.:!:.</em> </div>
+                    : variant === 2 ?
+                        <div style={{ ...props.style, color: '#4fc9c9', display: 'inline', opacity: 1 }}><em> | </em></div>
+                        : ''
+            }
+        </>
     )
 }
 
 export const StandardCard = props => {
-    const { style = {} } = props;
+    const { header = false } = props;
     const appSettings = useContext(AppContext);
     const { softwareFontSize, fgColorDetail } = appSettings;
     return (
         <Card
-            border='secondary'
+            border={header ? '' : 'secondary'}
             style={{
-                ...style, backgroundColor: fgColorDetail,
+                ...props.style,
+                backgroundColor: fgColorDetail,
                 fontSize: softwareFontSize,
                 alignItems: 'center',
+                borderColor: '#4fc9c9',
+                opacity: header ? 1 : 1
             }}>
             {props.children}
         </Card>
@@ -44,8 +54,9 @@ export const StandardCard = props => {
 }
 
 export const StandardPage = props => {
+    const { title = 'Default Title' } = props;
     const appSettings = useContext(AppContext);
-    const { fgColor, fontStyle, softwareFontSize } = appSettings;
+    const { fgColor, fontStyle, softwareFontSize, standardPageTitleFontSize } = appSettings;
     const breakpoint = useCurrentBreakpointName();
     return (
         <Container style={{ width: breakpoint === 'xlarge' ? '50vw' : breakpoint === 'large' ? '75vw' : breakpoint === 'medium' ? '85vw' : '' }}>
@@ -60,7 +71,11 @@ export const StandardPage = props => {
                     fontSize: softwareFontSize
                 }}
             >
+                <div style={{ fontSize: standardPageTitleFontSize }}>{title}</div>
+                <StandardCard header style={{ marginBottom: '2vh' }}></StandardCard>
                 {props.children}
+                <StandardCard header style={{ marginTop: '2vh', marginBottom: '1vh' }}></StandardCard>
+                <StandardSeparator style={{ fontSize: standardPageTitleFontSize }} onClick={() => window.scrollTo(0, 0)} />
             </Jumbotron>
         </Container>
     );

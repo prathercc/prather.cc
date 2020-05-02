@@ -9,7 +9,6 @@ import Row from 'react-bootstrap/Row';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Alert from 'react-bootstrap/Alert';
 import Download from 'react-bootstrap-icons/dist/icons/download';
-import Window from 'react-bootstrap-icons/dist/icons/window';
 import SoftwareCompatibility from '../SoftwareCompatibility/SoftwareCompatibility';
 import SoftwareCode from '../SoftwareCode/SoftwareCode';
 import { fetchDownloads } from '../../../downloadService';
@@ -80,7 +79,7 @@ function SoftwareApplication(props) {
   };
 
   return (
-    <StandardPage>
+    <StandardPage title={<>Software <StandardSeparator variant={2} /> {app.name}</>}>
       {app === blankApp ? (
         <Spinner animation='border' />
       ) : (
@@ -172,7 +171,7 @@ function SoftwareApplication(props) {
 
 const SoftwareFeature = (props) => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, iconSizing, textColor, softwareFontSize } = appSettings;
+  const { fgColorDetail, softwareFontSize } = appSettings;
   const { userData, descriptionObject } = props;
   const [activeClass, setActiveClass] = useState('');
   const breakpoint = useCurrentBreakpointName();
@@ -190,8 +189,6 @@ const SoftwareFeature = (props) => {
                   style={{ cursor: 'pointer', backgroundColor: fgColorDetail }}
                   className={activeClass}
                 >
-                  <Window style={{ color: textColor, fontSize: iconSizing }} />
-
                   <Container>
                     <Row>
                       <Col>

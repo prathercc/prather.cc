@@ -21,7 +21,7 @@ function SoftwareTable(props) {
   }, []);
 
   return (
-    <StandardPage>
+    <StandardPage title='Software'>
 
       {software ? (
         <>
@@ -55,9 +55,7 @@ const CustomTable = props => {
   return (
     <div style={{ ...props.style, width: '95%' }}>
       <div style={{ fontSize: tableHeaderFontSize, marginBottom: '1vh' }}>
-        <StandardSeparator />
         {legacy ? 'Legacy Applications*' : 'Actively Maintained Applications'}
-        <StandardSeparator />
       </div>
       <Table
         striped

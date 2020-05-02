@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { postSoftware, putSoftware, deleteSoftware, fetchSoftware } from '../../../softwareService';
 import { useParams } from 'react-router-dom';
 import { AppContext } from '../../../AppContext';
-import { StandardPage, StandardCard } from '../../Utility/Utility';
+import { StandardPage, StandardCard, StandardSeparator } from '../../Utility/Utility';
 
 function NewSoftware(props) {
   let { name } = useParams();
@@ -48,7 +48,7 @@ function NewSoftware(props) {
     window.open('/software', '_self');
   };
   return (
-    <StandardPage>
+    <StandardPage title={!name ? 'Add Software' : 'Modify Software'}>
       <StandardCard>
         <Form.Group style={{ width: '65%' }}>
           <Form.Text>Name</Form.Text>
