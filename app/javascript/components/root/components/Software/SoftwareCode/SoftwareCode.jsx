@@ -28,7 +28,7 @@ function SoftwareCode(props) {
   };
 
   return (
-    <StandardCard title='' style={{ marginTop: '5vh' }}>
+    <StandardCard title='' style={{ marginTop: '2vh' }}>
       <SoftwareLinkModal
         style={{ marginTop: '1vh' }}
         link={`${repoLink}`}

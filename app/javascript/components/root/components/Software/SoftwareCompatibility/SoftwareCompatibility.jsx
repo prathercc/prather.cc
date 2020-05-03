@@ -18,7 +18,7 @@ function SoftwareCompatibility(props) {
   const { compatibility, app, setMainDownloads, userData } = props;
 
   return (
-    <StandardCard title='System Compatibility' style={{ marginTop: '5vh' }}>
+    <StandardCard title='System Compatibility' style={{ marginTop: '2vh' }}>
       <Card.Body style={{width:'90%'}}>
         <CompatibilityTable compatibility={compatibility} />
         {userData ? (

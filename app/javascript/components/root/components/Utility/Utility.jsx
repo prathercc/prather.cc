@@ -77,7 +77,7 @@ export const StandardPage = props => {
                 <StandardCard title='' style={{ marginBottom: '2vh' }}></StandardCard>
                 {props.children}
                 <StandardCard title='' style={{ marginTop: '2vh', marginBottom: '1vh' }}></StandardCard>
-                <StandardSeparator style={{ fontSize: standardPageTitleFontSize }} onClick={() => window.scrollTo(0, 0)} />
+                <StandardSeparator style={{ fontSize: standardPageTitleFontSize, cursor:'pointer' }} onClick={() => window.scrollTo(0, 0)} />
             </Jumbotron>
         </Container>
     );

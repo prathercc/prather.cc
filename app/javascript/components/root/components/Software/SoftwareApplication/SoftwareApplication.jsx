@@ -84,9 +84,9 @@ function SoftwareApplication(props) {
         <Spinner animation='border' />
       ) : (
           <>
-            {/* <MaintenanceAlert
+            <MaintenanceAlert
               maintained={!app.is_legacy}
-            /> */}
+            />
             <SoftwareTitle
               titleObject={{
                 title: app.name,
@@ -146,9 +146,10 @@ function SoftwareApplication(props) {
         )}
 
       {features !== null
-        ? features.map((feature) => {
+        ? features.map((feature, index) => {
           return (
             <SoftwareFeature
+              index={index}
               key={feature.id}
               userData={userData}
               descriptionObject={{
@@ -171,98 +172,60 @@ function SoftwareApplication(props) {
 
 const SoftwareFeature = (props) => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, softwareFontSize } = appSettings;
-  const { userData, descriptionObject } = props;
-  const [activeClass, setActiveClass] = useState('');
+  const { softwareFontSize } = appSettings;
+  const { userData, descriptionObject, index } = props;
   const breakpoint = useCurrentBreakpointName();
 
-  return (
-    <Accordion>
-      <StandardCard title='' style={{ marginTop: '5vh' }}>
-        <Container>
-          <Row>
-            <Col>
-              <Accordion.Toggle as={Card.Body} eventKey='0'>
-                <Card.Header
-                  onMouseEnter={() => setActiveClass('Hover-glow')}
-                  onMouseLeave={() => setActiveClass('')}
-                  style={{ cursor: 'pointer', backgroundColor: fgColorDetail }}
-                  className={activeClass}
-                >
-                  <Container>
-                    <Row>
-                      <Col>
-                        <strong>{descriptionObject.title}</strong>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col>{descriptionObject.description}</Col>
-                    </Row>
-                  </Container>
-                </Card.Header>
-              </Accordion.Toggle>
-            </Col>
-          </Row>
+  const cardTitle = <Container>
+    <Row>
+      <Col>
+        {`Feature #${index + 1}`}
+      </Col>
+    </Row>
+    <Row>
+      <Col>
+        {descriptionObject.title}
+      </Col>
+    </Row>
+    <Row>
+      <Col>
+        {descriptionObject.description}
+      </Col>
+    </Row>
+  </Container>;
 
-          <Row>
-            <Col>
-              <Accordion.Collapse eventKey='0'>
-                <Card.Body>
-                  <StandardImage
-                    src={
-                      descriptionObject.image !== undefined
-                        ? descriptionObject.image
-                        : ''
-                    }
-                    onClick={() =>
-                      descriptionObject.image !== undefined
-                        ? window.open(descriptionObject.image)
-                        : ''
-                    }
-                    style={{
-                      width: breakpoint === 'xlarge' ? descriptionObject.imageWidth.desktop : descriptionObject.imageWidth.mobile,
-                      cursor: 'pointer',
-                    }}
-                  />
-                  <Container style={{ marginTop: '1vh' }}>
-                    <ListGroup style={{ textAlign: 'left' }}>
-                      <ListGroup.Item
-                        style={{ cursor: 'default' }}
-                        action
-                        variant='dark'
-                      >
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: descriptionObject.content_description,
-                          }}
-                        ></div>
-                      </ListGroup.Item>
-                    </ListGroup>
-                  </Container>
-                </Card.Body>
-              </Accordion.Collapse>
-            </Col>
-          </Row>
-          {userData ? (
+  return (
+    <StandardCard title={cardTitle} style={{ marginTop: '2vh' }}>
+      <StandardCard title='' style={{ marginTop: '1vh', marginBottom: '3vh', width: '80%' }} />
+      <StandardImage
+        src={descriptionObject.image || ''}
+        onClick={() =>
+          descriptionObject.image ? window.open(descriptionObject.image)
+            : ''
+        }
+        style={{ width: breakpoint === 'xlarge' ? descriptionObject.imageWidth.desktop : descriptionObject.imageWidth.mobile }}
+      />
+      <StandardCard title='' style={{ marginTop: '3vh', marginBottom: '1vh', width: '80%' }} />
+      <div
+      style={{textAlign:'left'}}
+        dangerouslySetInnerHTML={{
+          __html: descriptionObject.content_description,
+        }}
+      />
+      {
+        userData ?
+          (
             <Button
               style={{ fontSize: softwareFontSize }}
               onClick={() =>
-                window.open(
-                  `/software/admin/feature/edit/${descriptionObject.application_name}/${descriptionObject.id}`,
-                  '_self'
-                )
+                window.open(`/software/admin/feature/edit/${descriptionObject.application_name}/${descriptionObject.id}`, '_self')
               }
               block
               variant='warning'
-            >
-              Edit
-            </Button>
-          ) : (
-              ''
-            )}
-        </Container>
-      </StandardCard>
-    </Accordion>
+            > Edit </Button>)
+          : ('')
+      }
+    </StandardCard>
   );
 };
 
@@ -365,15 +328,15 @@ const MaintenanceAlert = (props) => {
   const [alertOpen, setAlertOpen] = useState(true);
   return (
     <div style={{ fontSize: softwareMaintenanceFontSize }}>
-      {maintained ? (
-        <Alert
-          variant='success'
-          dismissible={false}
-          onClose={() => setAlertOpen(false)}
-          show={alertOpen}
-        >
-          {`This application is actively maintained`}
-        </Alert>
+      {maintained ? ( ''
+        // <Alert
+        //   variant='success'
+        //   dismissible={false}
+        //   onClose={() => setAlertOpen(false)}
+        //   show={alertOpen}
+        // >
+        //   {`This application is actively maintained`}
+        // </Alert>
       ) : (
           <Alert
             variant='danger'
