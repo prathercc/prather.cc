@@ -5,7 +5,7 @@ import { postFeature, putFeature, deleteFeature, fetchFeature } from '../../../f
 import { fetchSoftware } from '../../../softwareService';
 import { useParams } from 'react-router-dom';
 import { AppContext } from '../../../AppContext';
-import { StandardPage, StandardCard, StandardSeparator } from '../../Utility/Utility';
+import { StandardPage, StandardCard } from '../../Utility/Utility';
 
 function NewFeature() {
   let { id, name } = useParams();
@@ -15,7 +15,6 @@ function NewFeature() {
     title: '',
     description: '',
     image_link: '',
-    content_title: '',
     content_description: '',
     application_name: name,
     software_id: ''
@@ -103,17 +102,6 @@ function NewFeature() {
             value={feature.image_link}
             onChange={(e) =>
               setFeature({ ...feature, image_link: e.target.value })
-            }
-          />
-          <Form.Text>Content Title</Form.Text>
-          <Form.Control
-            style={{ textAlign: 'center' }}
-            size='sm'
-            type='text'
-            placeholder='Content Title'
-            value={feature.content_title}
-            onChange={(e) =>
-              setFeature({ ...feature, content_title: e.target.value })
             }
           />
           <Form.Text>Content Description</Form.Text>
