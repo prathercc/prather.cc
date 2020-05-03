@@ -26,7 +26,9 @@ export const StandardSeparator = (props) => {
                 variant === 1 ?
                     <div onClick={props.onClick} style={{ ...props.style, display: 'inline', color: '#4fc9c9', opacity: 1 }}> <em>.:!:.</em> </div>
                     : variant === 2 ?
-                        <div style={{ ...props.style, color: '#4fc9c9', display: 'inline', opacity: 1 }}><em> | </em></div>
+                        <div style={{ ...props.style, color: '#4fc9c9', display: 'inline', opacity: 1 }}><em> /// </em></div>
+                        : variant === 3 ?
+                        <div style={{ ...props.style, color: '#4fc9c9', display: 'inline', opacity: 1 }}><em> - </em></div>
                         : ''
             }
         </>
@@ -34,20 +36,20 @@ export const StandardSeparator = (props) => {
 }
 
 export const StandardCard = props => {
-    const { header = false } = props;
+    const {title = 'Default Title'} = props;
     const appSettings = useContext(AppContext);
-    const { softwareFontSize, fgColorDetail } = appSettings;
+    const { softwareFontSize, fgColorDetail, standardCardTitleFontSize } = appSettings;
     return (
         <Card
-            border={header ? '' : 'secondary'}
+            border='secondary'
             style={{
                 ...props.style,
                 backgroundColor: fgColorDetail,
                 fontSize: softwareFontSize,
                 alignItems: 'center',
-                borderColor: '#4fc9c9',
-                opacity: header ? 1 : 1
+                borderColor: '#4fc9c9'
             }}>
+                <div style={{fontSize: standardCardTitleFontSize}}>{title}</div>
             {props.children}
         </Card>
     )
@@ -71,10 +73,10 @@ export const StandardPage = props => {
                     fontSize: softwareFontSize
                 }}
             >
-                <div style={{ fontSize: standardPageTitleFontSize }}>{title}</div>
-                <StandardCard header style={{ marginBottom: '2vh' }}></StandardCard>
+                <div style={{ fontSize: standardPageTitleFontSize }}><StandardSeparator variant={3} />{title}<StandardSeparator variant={3} /></div>
+                <StandardCard title='' style={{ marginBottom: '2vh' }}></StandardCard>
                 {props.children}
-                <StandardCard header style={{ marginTop: '2vh', marginBottom: '1vh' }}></StandardCard>
+                <StandardCard title='' style={{ marginTop: '2vh', marginBottom: '1vh' }}></StandardCard>
                 <StandardSeparator style={{ fontSize: standardPageTitleFontSize }} onClick={() => window.scrollTo(0, 0)} />
             </Jumbotron>
         </Container>
