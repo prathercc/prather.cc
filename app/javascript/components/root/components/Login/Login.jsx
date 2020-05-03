@@ -39,9 +39,8 @@ function Login() {
         </>
 
       ) : (
-          <StandardCard>
+          <StandardCard title='Sign In'>
             <Form.Group style={{ width: '40%', marginTop: '1vh' }}>
-              <Form.Label>Sign In:</Form.Label>
               <Form.Control
                 type='text'
                 placeholder='Email'
@@ -88,9 +87,8 @@ const AddUser = ({ userData }) => {
   }
 
   return (
-    <StandardCard style={{ marginTop: '2vh' }}>
+    <StandardCard title='Create New User' style={{ marginTop: '2vh' }}>
       <Form.Group style={{ width: '40%' }}>
-        <Form.Label>Create New User:</Form.Label>
         <Form.Control
           value={newUser.email}
           type='text'
@@ -149,9 +147,8 @@ const DeleteUser = ({ userData }) => {
   const buttonDisabled = (selectedUser.length === 0) || (userData.id.toString() === selectedUser);
 
   return (
-    <StandardCard style={{ marginTop: '2vh' }}>
+    <StandardCard title='Delete User' style={{ marginTop: '2vh' }}>
       <Form.Group style={{ width: '40%' }}>
-        <Form.Label>Delete User:</Form.Label>
         <Form.Control as="select" value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
           <option></option>
           {

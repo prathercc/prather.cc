@@ -15,15 +15,11 @@ import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../..
 import { StandardCard } from '../../Utility/Utility';
 
 function SoftwareCompatibility(props) {
-  const appSettings = useContext(AppContext);
-  const { fgColorDetail } = appSettings;
   const { compatibility, app, setMainDownloads, userData } = props;
 
   return (
-    <StandardCard
-      style={{ marginTop: '5vh' }}>
+    <StandardCard title='System Compatibility' style={{ marginTop: '5vh' }}>
       <Card.Body style={{width:'90%'}}>
-        <strong>System Compatibility</strong>
         <CompatibilityTable compatibility={compatibility} />
         {userData ? (
           <EditDownloads
@@ -33,10 +29,10 @@ function SoftwareCompatibility(props) {
         ) : (
             ''
           )}
-        <Container>
+        {/* <Container>
           <strong>Download(s)</strong>
           {props.children ? props.children : <p>N/A</p>}
-        </Container>
+        </Container> */}
       </Card.Body>
     </StandardCard>
   );
@@ -228,7 +224,7 @@ const CompatibilityTable = (props) => {
       bordered
       responsive
       size='sm'
-      style={{ marginTop: '2vh' }}
+      style={{ marginTop: '2vh', width:'80%', margin:'auto' }}
     >
       <thead>
         <tr>

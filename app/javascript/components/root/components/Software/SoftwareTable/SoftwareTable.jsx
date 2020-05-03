@@ -21,12 +21,12 @@ function SoftwareTable(props) {
   }, []);
 
   return (
-    <StandardPage title='Software'>
+    <StandardPage title='Software Panel'>
 
       {software ? (
         <>
-          <StandardCard style={{ marginBottom: '2vh' }}><CustomTable style={{ marginTop: '1vh' }} userData={userData} software={software} legacy={false} /></StandardCard>
-          <StandardCard><CustomTable style={{ marginTop: '1vh' }} userData={userData} software={software} legacy={true} /></StandardCard>
+          <StandardCard title='Actively Maintained Applications' style={{ marginBottom: '2vh' }}><CustomTable style={{ marginTop: '1vh' }} userData={userData} software={software} legacy={false} /></StandardCard>
+          <StandardCard title='Legacy Applications*'><CustomTable style={{ marginTop: '1vh' }} userData={userData} software={software} legacy={true} /></StandardCard>
           {userData ? (
             <Button
               style={{ fontSize: softwareFontSize }}
@@ -55,7 +55,6 @@ const CustomTable = props => {
   return (
     <div style={{ ...props.style, width: '95%' }}>
       <div style={{ fontSize: tableHeaderFontSize, marginBottom: '1vh' }}>
-        {legacy ? 'Legacy Applications*' : 'Actively Maintained Applications'}
       </div>
       <Table
         striped
@@ -107,18 +106,12 @@ const SoftwareSample = (props) => {
   return (
     <tr style={{ cursor: 'pointer' }}>
       <td onClick={() => window.open(`/software/${value.name}`, '_self')}>
-        {' '}
         <StandardImage
           src={value.icon_link}
           style={{
-            width:
-              breakpoint === 'xsmall'
-                ? '5vw'
-                : breakpoint === 'medium'
-                  ? '4vw'
-                  : '2vw',
-          }}
-        />{' '}
+            width: breakpoint === 'xsmall' ? '5vw'
+              : breakpoint === 'medium' ? '4vw' : '2vw'
+          }} />
         {value.name}
       </td>
       <td onClick={() => window.open(`/software/${value.name}`, '_self')}>

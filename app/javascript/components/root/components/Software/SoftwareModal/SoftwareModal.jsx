@@ -23,7 +23,7 @@ function SoftwareModal(props) {
 
   return (
     <Modal
-      style={{ textAlign: 'center', userSelect:'none', fontFamily: fontStyle}}
+      style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle, opacity: 0.9 }}
       centered
       show={modalOpen}
       onHide={() => handleModalClose()}

@@ -79,14 +79,14 @@ function SoftwareApplication(props) {
   };
 
   return (
-    <StandardPage title={<>Software <StandardSeparator variant={2} /> {app.name}</>}>
+    <StandardPage title={<>Software Panel <StandardSeparator variant={2} /> {app.name}</>}>
       {app === blankApp ? (
         <Spinner animation='border' />
       ) : (
           <>
-            <MaintenanceAlert
+            {/* <MaintenanceAlert
               maintained={!app.is_legacy}
-            />
+            /> */}
             <SoftwareTitle
               titleObject={{
                 title: app.name,
@@ -178,7 +178,7 @@ const SoftwareFeature = (props) => {
 
   return (
     <Accordion>
-      <StandardCard style={{ marginTop: '5vh' }}>
+      <StandardCard title='' style={{ marginTop: '5vh' }}>
         <Container>
           <Row>
             <Col>
@@ -331,24 +331,13 @@ const SoftwareDownloadOption = (props) => {
 
 
 const SoftwareTitle = (props) => {
-  const appSettings = useContext(AppContext);
-  const { fgColorDetail } = appSettings;
   const { titleObject } = props;
   const breakpoint = useCurrentBreakpointName();
+  const cardTitle = <><StandardImage src={titleObject.thumbnail} style={{ width: '15%' }} />{titleObject.title}</>
 
   return (
-    <StandardCard>
+    <StandardCard title={cardTitle}>
       <Container>
-        <StandardImage
-          src={titleObject.thumbnail}
-          style={{
-            width:
-              breakpoint === 'xlarge'
-                ? titleObject.thumbnailWidth.desktop
-                : titleObject.thumbnailWidth.mobile,
-          }}
-        />
-        <strong>{titleObject.title}</strong>
         <Card.Text
           dangerouslySetInnerHTML={{ __html: titleObject.description }}
         ></Card.Text>
