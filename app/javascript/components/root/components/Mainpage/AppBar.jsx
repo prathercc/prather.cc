@@ -114,7 +114,7 @@ const CustomBrand = props => {
   return (
     <Navbar.Brand style={{ cursor: 'default', fontSize: appbarFontSize }} onClick={() => window.open('/login', '_self')}>
       {'<'}
-      <div style={{ color: '#00ffaa', display: 'inline', opacity: 0.85 }}>Prather.cc</div>
+      <div style={{ color: '#4fc9c9', display: 'inline' }}>Prather.cc</div>
       {' />'}
     </Navbar.Brand>
   )
