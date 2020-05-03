@@ -3,7 +3,7 @@ import { createContext } from 'react';
 const appSettings = {
   bgColor: '#b3b3ff',
   fgColorDetail: '#2E2929',
-  fgColor: '#3E3E3E',
+  fgColor: '#333333',
   textColor: '#FFFFFF',
   fontStyle: 'Titillium Web',
   iconSizing: '3vw',
