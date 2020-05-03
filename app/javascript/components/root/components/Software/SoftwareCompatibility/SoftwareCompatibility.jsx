@@ -16,10 +16,12 @@ import { StandardCard } from '../../Utility/Utility';
 
 function SoftwareCompatibility(props) {
   const { compatibility, app, setMainDownloads, userData } = props;
+  const appsettings = useContext(AppContext);
+  const { standardCardTitleFontSize } = appsettings;
 
   return (
     <StandardCard title='System Compatibility' style={{ marginTop: '2vh' }}>
-      <Card.Body style={{width:'90%'}}>
+      <Card.Body style={{ width: '90%' }}>
         <CompatibilityTable compatibility={compatibility} />
         {userData ? (
           <EditDownloads
@@ -29,10 +31,10 @@ function SoftwareCompatibility(props) {
         ) : (
             ''
           )}
-        {/* <Container>
-          <strong>Download(s)</strong>
+        <Container style={{ marginTop: '2vh' }}>
+          <div style={{ fontSize: standardCardTitleFontSize }}>Download(s)</div>
           {props.children ? props.children : <p>N/A</p>}
-        </Container> */}
+        </Container>
       </Card.Body>
     </StandardCard>
   );
@@ -224,7 +226,7 @@ const CompatibilityTable = (props) => {
       bordered
       responsive
       size='sm'
-      style={{ marginTop: '2vh', width:'80%', margin:'auto' }}
+      style={{ marginTop: '2vh', width: '95%', margin: 'auto' }}
     >
       <thead>
         <tr>

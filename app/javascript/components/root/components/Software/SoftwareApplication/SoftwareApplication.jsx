@@ -3,10 +3,8 @@ import Container from 'react-bootstrap/Container';
 import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import Accordion from 'react-bootstrap/Accordion';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import ListGroup from 'react-bootstrap/ListGroup';
 import Alert from 'react-bootstrap/Alert';
 import Download from 'react-bootstrap-icons/dist/icons/download';
 import SoftwareCompatibility from '../SoftwareCompatibility/SoftwareCompatibility';
@@ -179,11 +177,6 @@ const SoftwareFeature = (props) => {
   const cardTitle = <Container>
     <Row>
       <Col>
-        {`Feature #${index + 1}`}
-      </Col>
-    </Row>
-    <Row>
-      <Col>
         {descriptionObject.title}
       </Col>
     </Row>
@@ -207,7 +200,7 @@ const SoftwareFeature = (props) => {
       />
       <StandardCard title='' style={{ marginTop: '3vh', marginBottom: '1vh', width: '80%' }} />
       <div
-      style={{textAlign:'left'}}
+        style={{ textAlign: 'left' }}
         dangerouslySetInnerHTML={{
           __html: descriptionObject.content_description,
         }}
@@ -328,25 +321,20 @@ const MaintenanceAlert = (props) => {
   const [alertOpen, setAlertOpen] = useState(true);
   return (
     <div style={{ fontSize: softwareMaintenanceFontSize }}>
-      {maintained ? ( ''
-        // <Alert
-        //   variant='success'
-        //   dismissible={false}
-        //   onClose={() => setAlertOpen(false)}
-        //   show={alertOpen}
-        // >
-        //   {`This application is actively maintained`}
-        // </Alert>
-      ) : (
-          <Alert
-            variant='danger'
-            dismissible={false}
-            onClose={() => setAlertOpen(false)}
-            show={alertOpen}
-          >
-            {`This application is not currently receiving new updates`}
-          </Alert>
-        )}
+      {
+        maintained
+          ? ('') :
+          (
+            <Alert
+              variant='danger'
+              dismissible={false}
+              onClose={() => setAlertOpen(false)}
+              show={alertOpen}
+            >
+              {`This application is not currently receiving new updates`}
+            </Alert>
+          )
+      }
     </div>
   );
 }
