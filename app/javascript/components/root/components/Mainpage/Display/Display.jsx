@@ -29,7 +29,7 @@ const PrathImage = props => {
   const { splatWidth } = props;
 
   return (
-    <Container className='App-splat-to-mobile' style={{ opacity: 0.85 }}>
+    <Container className='App-splat-to-mobile' style={{ opacity: .9 }}>
       <Row>
         <Col>
           <Logo splatWidth={splatWidth} />

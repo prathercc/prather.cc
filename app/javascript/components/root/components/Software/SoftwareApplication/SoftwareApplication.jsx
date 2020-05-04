@@ -77,7 +77,7 @@ function SoftwareApplication(props) {
   };
 
   return (
-    <StandardPage title={<>Software Panel <StandardSeparator variant={2} /> {app.name}</>}>
+    <StandardPage title={<>Application View</>}>
       {app === blankApp ? (
         <Spinner animation='border' />
       ) : (
@@ -174,31 +174,29 @@ const SoftwareFeature = (props) => {
   const { userData, descriptionObject, index } = props;
   const breakpoint = useCurrentBreakpointName();
 
-  const cardTitle = <Container>
-    <Row>
-      <Col>
-        {descriptionObject.title}
-      </Col>
-    </Row>
-    <Row>
-      <Col>
-        {descriptionObject.description}
-      </Col>
-    </Row>
-  </Container>;
+  const cardTitle =
+    <Container style={{ marginTop: '2vh', marginBottom: '1vh' }}>
+      <Row>
+        <Col>
+          {descriptionObject.title}
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          {descriptionObject.description}
+        </Col>
+      </Row>
+    </Container>;
 
   return (
     <StandardCard title={cardTitle} style={{ marginTop: '2vh' }}>
-      <StandardCard title='' style={{ marginTop: '1vh', marginBottom: '3vh', width: '80%' }} />
       <StandardImage
         src={descriptionObject.image || ''}
-        onClick={() =>
-          descriptionObject.image ? window.open(descriptionObject.image)
-            : ''
-        }
-        style={{ width: breakpoint === 'xlarge' ? descriptionObject.imageWidth.desktop : descriptionObject.imageWidth.mobile }}
+        onClick={() => descriptionObject.image ? window.open(descriptionObject.image) : ''}
+        style={{ width: breakpoint === 'xlarge' ? descriptionObject.imageWidth.desktop : descriptionObject.imageWidth.mobile, marginTop: '2vh', cursor: 'pointer' }}
       />
-      <StandardCard title='' style={{ marginTop: '3vh', marginBottom: '1vh', width: '80%' }} />
+      <div style={{ marginTop: '1vh', color: 'grey' }}>(Click image to enlarge)</div>
+      <StandardCard title='' style={{ marginTop: '1vh', marginBottom: '1vh', width: '80%' }} />
       <div
         style={{ textAlign: 'left' }}
         dangerouslySetInnerHTML={{
@@ -289,7 +287,7 @@ const SoftwareDownloadOption = (props) => {
 const SoftwareTitle = (props) => {
   const { titleObject } = props;
   const breakpoint = useCurrentBreakpointName();
-  const cardTitle = <><StandardImage src={titleObject.thumbnail} style={{ width: '15%' }} />{titleObject.title}</>
+  const cardTitle = <><StandardImage src={titleObject.thumbnail} style={{ width: breakpoint === 'xlarge' ? titleObject.thumbnailWidth.desktop : titleObject.thumbnailWidth.mobile }} />{titleObject.title}</>
 
   return (
     <StandardCard title={cardTitle}>
@@ -318,24 +316,10 @@ const MaintenanceAlert = (props) => {
   const appSettings = useContext(AppContext);
   const { softwareMaintenanceFontSize } = appSettings;
   const { maintained = false } = props;
-  const [alertOpen, setAlertOpen] = useState(true);
   return (
-    <div style={{ fontSize: softwareMaintenanceFontSize }}>
-      {
-        maintained
-          ? ('') :
-          (
-            <Alert
-              variant='danger'
-              dismissible={false}
-              onClose={() => setAlertOpen(false)}
-              show={alertOpen}
-            >
-              {`This application is not currently receiving new updates`}
-            </Alert>
-          )
-      }
-    </div>
+    <Alert variant='danger' dismissible={false} show={true} style={{ fontSize: softwareMaintenanceFontSize, display: maintained ? 'none' : '' }} >
+      This application is not currently receiving new updates
+    </Alert>
   );
 }
 

@@ -28,7 +28,7 @@ export const StandardSeparator = (props) => {
                     : variant === 2 ?
                         <div style={{ ...props.style, color: '#4fc9c9', display: 'inline', opacity: 1 }}><em> /// </em></div>
                         : variant === 3 ?
-                        <div style={{ ...props.style, color: '#4fc9c9', display: 'inline', opacity: 1 }}><em> - </em></div>
+                        <div style={{ ...props.style, color: '#4fc9c9', display: 'inline', opacity: 1 }}><em> # </em></div>
                         : ''
             }
         </>
@@ -61,14 +61,14 @@ export const StandardPage = props => {
     const { fgColor, fontStyle, softwareFontSize, standardPageTitleFontSize } = appSettings;
     const breakpoint = useCurrentBreakpointName();
     return (
-        <Container style={{ width: breakpoint === 'xlarge' ? '50vw' : breakpoint === 'large' ? '75vw' : breakpoint === 'medium' ? '85vw' : '' }}>
+        <Container style={{ width: breakpoint === 'xlarge' ? '55vw' : breakpoint === 'large' ? '75vw' : breakpoint === 'medium' ? '85vw' : '' }}>
             <Jumbotron
                 as={Card}
                 border='secondary'
                 style={{
                     backgroundColor: fgColor,
                     fontFamily: fontStyle,
-                    marginTop: '5vh',
+                    marginTop: '2vh',
                     opacity: '0.9',
                     fontSize: softwareFontSize
                 }}
