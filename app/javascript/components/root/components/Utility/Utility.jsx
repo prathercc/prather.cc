@@ -3,6 +3,8 @@ import Spinner from 'react-bootstrap/Spinner';
 import Card from 'react-bootstrap/Card';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { AppContext } from '../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
 
@@ -77,7 +79,18 @@ export const StandardPage = props => {
                 <StandardCard title='' style={{ marginBottom: '2vh' }}></StandardCard>
                 {props.children}
                 <StandardCard title='' style={{ marginTop: '2vh', marginBottom: '1vh' }}></StandardCard>
-                <StandardSeparator style={{ fontSize: standardPageTitleFontSize, cursor:'pointer' }} onClick={() => window.scrollTo(0, 0)} />
+                <Container style={{ cursor:'pointer', width: '30%' }} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+                    <Row>
+                        <Col>
+                        <StandardSeparator style={{ fontSize: standardPageTitleFontSize }} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                        Back to top
+                        </Col>
+                    </Row>
+                </Container>
             </Jumbotron>
         </Container>
     );

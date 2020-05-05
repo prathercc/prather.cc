@@ -190,10 +190,11 @@ const SoftwareFeature = (props) => {
 
   return (
     <StandardCard title={cardTitle} style={{ marginTop: '2vh' }}>
+      <div style={{ color: 'grey' }}>Feature #{index + 1}</div>
       <StandardImage
         src={descriptionObject.image || ''}
         onClick={() => descriptionObject.image ? window.open(descriptionObject.image) : ''}
-        style={{ width: breakpoint === 'xlarge' ? descriptionObject.imageWidth.desktop : descriptionObject.imageWidth.mobile, marginTop: '2vh', cursor: 'pointer' }}
+        style={{ width: breakpoint === 'xlarge' ? descriptionObject.imageWidth.desktop : descriptionObject.imageWidth.mobile, marginTop: '1vh', cursor: 'pointer' }}
       />
       <div style={{ marginTop: '1vh', color: 'grey' }}>(Click image to enlarge)</div>
       <StandardCard title='' style={{ marginTop: '1vh', marginBottom: '1vh', width: '80%' }} />

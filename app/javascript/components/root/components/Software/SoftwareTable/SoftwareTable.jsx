@@ -5,14 +5,14 @@ import Spinner from 'react-bootstrap/Spinner';
 import Badge from 'react-bootstrap/Badge';
 import { fetchAllSoftware } from '../../../softwareService';
 import { useCurrentBreakpointName } from 'react-socks';
-import { StandardImage, StandardSeparator, StandardCard, StandardPage } from '../../Utility/Utility';
+import { StandardImage, StandardCard, StandardPage } from '../../Utility/Utility';
 import { AppContext } from '../../../AppContext';
 
 function SoftwareTable(props) {
   const { userData } = props;
   const [software, setSoftware] = useState(null);
   const appSettings = useContext(AppContext);
-  const { softwareFontSize, tableNotesFontSize } = appSettings;
+  const { softwareFontSize, tableNotesFontSize, standardCardTitleFontSize } = appSettings;
   useEffect(() => {
     const loadSoftware = async () => {
       await fetchAllSoftware(setSoftware);
@@ -22,11 +22,14 @@ function SoftwareTable(props) {
 
   return (
     <StandardPage title='Software Panel'>
-
       {software ? (
         <>
-          <StandardCard title='Actively Maintained Applications' style={{ marginBottom: '2vh' }}><CustomTable style={{ marginTop: '1vh' }} userData={userData} software={software} legacy={false} /></StandardCard>
-          <StandardCard title='Legacy Applications*'><CustomTable style={{ marginTop: '1vh' }} userData={userData} software={software} legacy={true} /></StandardCard>
+          <StandardCard title='Maintained Applications'>
+            <CustomTable userData={userData} software={software} legacy={false} />
+            <StandardCard style={{ width: '100%', marginTop: '1vh', marginBottom: '1vh' }} title='' />
+            <div style={{ fontSize: standardCardTitleFontSize }}>Legacy Applications*</div>
+            <CustomTable style={{marginBottom: '1vh'}} userData={userData} software={software} legacy={true} />
+          </StandardCard>
           {userData ? (
             <Button
               style={{ fontSize: softwareFontSize }}
