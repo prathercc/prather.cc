@@ -57,7 +57,7 @@ function NewFeature() {
   };
   return (
   <StandardPage title={!id ? 'Add Feature' : 'Modify Feature'}>
-      <StandardCard>
+      <StandardCard title=''>
         <Form.Group style={{ width: '65%' }}>
           <Form.Text>Application Name</Form.Text>
           <Form.Control

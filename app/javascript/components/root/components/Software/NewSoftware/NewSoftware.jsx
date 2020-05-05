@@ -49,7 +49,7 @@ function NewSoftware(props) {
   };
   return (
     <StandardPage title={!name ? 'Add Software' : 'Modify Software'}>
-      <StandardCard>
+      <StandardCard title=''>
         <Form.Group style={{ width: '65%' }}>
           <Form.Text>Name</Form.Text>
           <Form.Control
