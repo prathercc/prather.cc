@@ -75,7 +75,7 @@ export const StandardPage = props => {
                     fontSize: softwareFontSize
                 }}
             >
-                <div style={{ fontSize: standardPageTitleFontSize }}><StandardSeparator variant={3} />{title}<StandardSeparator variant={3} /></div>
+                <div style={{ fontSize: standardPageTitleFontSize }}>{title}</div>
                 <StandardCard title='' style={{ marginBottom: '2vh' }}></StandardCard>
                 {props.children}
                 <StandardCard title='' style={{ marginTop: '2vh', marginBottom: '1vh' }}></StandardCard>
