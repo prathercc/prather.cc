@@ -33,7 +33,6 @@ function SoftwareApplication(props) {
     icon_link: '',
     id: '',
     image_link: '',
-    ios: false,
     is_legacy: false,
     languages: '',
     linux: false,
@@ -73,7 +72,6 @@ function SoftwareApplication(props) {
     linux: app.linux,
     mac: app.mac,
     android: app.android,
-    ios: app.ios,
   };
 
   return (
@@ -106,7 +104,7 @@ function SoftwareApplication(props) {
                   <Spinner animation='border' />
                 </Container>
               ) : downloads.length === 0 ? (
-                <p>N/A</p>
+                ''
               ) : (
                     downloads.map((download) => {
                       return (
@@ -191,12 +189,13 @@ const SoftwareFeature = (props) => {
   return (
     <StandardCard title={cardTitle} style={{ marginTop: '2vh' }}>
       <div style={{ color: 'grey' }}>Feature #{index + 1}</div>
+      <StandardCard title='' style={{ marginTop: '1vh', marginBottom: '1vh', width: '80%' }} />
       <StandardImage
         src={descriptionObject.image || ''}
         onClick={() => descriptionObject.image ? window.open(descriptionObject.image) : ''}
         style={{ width: breakpoint === 'xlarge' ? descriptionObject.imageWidth.desktop : descriptionObject.imageWidth.mobile, marginTop: '1vh', cursor: 'pointer' }}
       />
-      <div style={{ marginTop: '1vh', color: 'grey' }}>(Click image to enlarge)</div>
+      <div style={{ marginTop: '1vh', color: 'grey' }}>{breakpoint === 'xsmall' ? 'Tap' : 'Click'} image to enlarge</div>
       <StandardCard title='' style={{ marginTop: '1vh', marginBottom: '1vh', width: '80%' }} />
       <div
         style={{ textAlign: 'left' }}
