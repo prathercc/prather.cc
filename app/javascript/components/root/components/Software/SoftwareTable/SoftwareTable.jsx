@@ -28,7 +28,7 @@ function SoftwareTable(props) {
             <CustomTable userData={userData} software={software} legacy={false} />
             <StandardCard style={{ width: '100%', marginTop: '1vh', marginBottom: '1vh' }} title='' />
             <div style={{ fontSize: standardCardTitleFontSize }}>Legacy Applications*</div>
-            <CustomTable style={{marginBottom: '1vh'}} userData={userData} software={software} legacy={true} />
+            <CustomTable style={{ marginBottom: '1vh' }} userData={userData} software={software} legacy={true} />
           </StandardCard>
           {userData ? (
             <Button
@@ -102,8 +102,7 @@ const SoftwareSample = (props) => {
     windows: value.windows,
     linux: value.linux,
     mac: value.mac,
-    android: value.android,
-    ios: value.ios,
+    android: value.android
   };
 
   return (
@@ -123,9 +122,8 @@ const SoftwareSample = (props) => {
       <td onClick={() => window.open(`/software/${value.name}`, '_self')}>
         {compatibility.windows ? <Badge variant='light'>Windows</Badge> : ''}{' '}
         {compatibility.linux ? <Badge variant='warning'>Linux</Badge> : ''}{' '}
-        {compatibility.mac ? <Badge variant='danger'>Mac</Badge> : ''}{' '}
-        {compatibility.android ? <Badge variant='info'>Android</Badge> : ''}{' '}
-        {compatibility.ios ? <Badge variant='success'>iOS</Badge> : ''}
+        {compatibility.mac ? <Badge variant='info'>Mac</Badge> : ''}{' '}
+        {compatibility.android ? <Badge variant='danger'>Android</Badge> : ''}{' '}
       </td>
       {userData ? (
         <td>

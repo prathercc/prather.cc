@@ -20,7 +20,7 @@ function SoftwareCompatibility(props) {
   const { standardCardTitleFontSize } = appsettings;
 
   return (
-    <StandardCard title='System Compatibility' style={{ marginTop: '2vh' }}>
+    <StandardCard title='Available Platforms' style={{ marginTop: '2vh' }}>
       <Card.Body style={{ width: '90%' }}>
         <CompatibilityTable compatibility={compatibility} />
         {userData ? (
@@ -31,10 +31,15 @@ function SoftwareCompatibility(props) {
         ) : (
             ''
           )}
-        <Container style={{ marginTop: '2vh' }}>
-          <div style={{ fontSize: standardCardTitleFontSize }}>Download(s)</div>
-          {props.children ? props.children : <p>N/A</p>}
-        </Container>
+        {
+          props.children ?
+            <Container style={{ marginTop: '1vh' }}>
+              <div style={{ fontSize: standardCardTitleFontSize }}>Download(s):</div>
+              {props.children}
+            </Container>
+            : ''
+        }
+
       </Card.Body>
     </StandardCard>
   );
@@ -181,7 +186,6 @@ const Download = (props) => {
                 <option>Linux</option>
                 <option>Mac</option>
                 <option>Android</option>
-                <option>iOS</option>
                 <option>Resource</option>
               </Form.Control>
             </Col>
@@ -215,8 +219,7 @@ const CompatibilityTable = (props) => {
       windows: false,
       linux: false,
       mac: false,
-      android: false,
-      ios: false,
+      android: false
     },
   } = props;
   return (
@@ -234,7 +237,6 @@ const CompatibilityTable = (props) => {
           <th>Linux</th>
           <th>Mac</th>
           <th>Android</th>
-          <th>iOS</th>
         </tr>
       </thead>
       <tbody>
@@ -243,7 +245,6 @@ const CompatibilityTable = (props) => {
           <CompatiblityResult boolean={compatibility.linux} />
           <CompatiblityResult boolean={compatibility.mac} />
           <CompatiblityResult boolean={compatibility.android} />
-          <CompatiblityResult boolean={compatibility.ios} />
         </tr>
       </tbody>
     </Table>

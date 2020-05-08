@@ -4,9 +4,9 @@ import Form from 'react-bootstrap/Form';
 import { postSoftware, putSoftware, deleteSoftware, fetchSoftware } from '../../../softwareService';
 import { useParams } from 'react-router-dom';
 import { AppContext } from '../../../AppContext';
-import { StandardPage, StandardCard, StandardSeparator } from '../../Utility/Utility';
+import { StandardPage, StandardCard } from '../../Utility/Utility';
 
-function NewSoftware(props) {
+function NewSoftware() {
   let { name } = useParams();
   const appSettings = useContext(AppContext);
   const { softwareFontSize } = appSettings;
@@ -20,7 +20,6 @@ function NewSoftware(props) {
     linux: false,
     mac: false,
     android: false,
-    ios: false,
     repo_link: '',
     languages: '',
   };
@@ -125,9 +124,11 @@ function NewSoftware(props) {
             onChange={() =>
               setSoftware({ ...software, is_legacy: !software.is_legacy })
             }
+            style={{ marginBottom: '2vh', marginTop: '1vh' }}
           />
-      Compatibility:
-      <Form.Check
+          <strong style={{ marginBottom: '1vh' }}>System Compatibility:</strong>
+
+          <Form.Check
             type='checkbox'
             label='Windows'
             checked={software.windows}
@@ -154,13 +155,7 @@ function NewSoftware(props) {
             onChange={() =>
               setSoftware({ ...software, android: !software.android })
             }
-          />
-          <Form.Check
-            type='checkbox'
-            label='iOS'
-            checked={software.ios}
-            onChange={() => setSoftware({ ...software, ios: !software.ios })}
-            style={{ marginBottom: '1vh' }}
+            style={{ marginBottom: '2vh' }}
           />
           {name ? (
             <>
