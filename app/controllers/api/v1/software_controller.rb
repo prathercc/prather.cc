@@ -5,7 +5,7 @@ module Api
     class SoftwareController < ApplicationController
       def index
         app_name = params[:application_name]
-        softwares = Software.all
+        softwares = Software.all.sort_by(&:name)
         if !app_name.nil?
           filtered_softwares = []
 
