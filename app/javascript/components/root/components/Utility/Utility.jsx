@@ -13,7 +13,7 @@ export const StandardImage = (props) => {
     return (
         <>
             {
-                isLoading ? <Spinner size='sm' animation='border' /> : ''
+                isLoading && <Spinner size='sm' animation='border' />
             }
             <img {...props} style={{ ...props.style, display: isLoading ? 'none' : '' }} onLoad={() => setIsLoading(false)} />
         </>
@@ -25,20 +25,17 @@ export const StandardSeparator = (props) => {
     return (
         <>
             {
-                variant === 1 ?
-                    <div onClick={props.onClick} style={{ ...props.style, display: 'inline', color: '#4fc9c9', opacity: 1 }}> <em>.:!:.</em> </div>
-                    : variant === 2 ?
-                        <div style={{ ...props.style, color: '#4fc9c9', display: 'inline', opacity: 1 }}><em> /// </em></div>
-                        : variant === 3 ?
-                        <div style={{ ...props.style, color: '#4fc9c9', display: 'inline', opacity: 1 }}><em> # </em></div>
-                        : ''
+                variant === 1 && <div onClick={props.onClick} style={{ ...props.style, display: 'inline', color: '#4fc9c9', opacity: 1 }}> <em>.:!:.</em> </div>
+            }
+            {
+                variant === 2 && <div style={{ ...props.style, color: '#4fc9c9', display: 'inline', opacity: 1 }}> - </div>
             }
         </>
     )
 }
 
 export const StandardCard = props => {
-    const {title = 'Default Title'} = props;
+    const { title = 'Default Title' } = props;
     const appSettings = useContext(AppContext);
     const { softwareFontSize, fgColorDetail, standardCardTitleFontSize } = appSettings;
     return (
@@ -51,7 +48,7 @@ export const StandardCard = props => {
                 alignItems: 'center',
                 borderColor: '#4fc9c9'
             }}>
-                <div style={{fontSize: standardCardTitleFontSize}}>{title}</div>
+            <div style={{ fontSize: standardCardTitleFontSize }}>{title}</div>
             {props.children}
         </Card>
     )
@@ -63,7 +60,7 @@ export const StandardPage = props => {
     const { fgColor, fontStyle, softwareFontSize, standardPageTitleFontSize } = appSettings;
     const breakpoint = useCurrentBreakpointName();
     return (
-        <Container style={{ width: breakpoint === 'xlarge' ? '55vw' : breakpoint === 'large' ? '75vw' : breakpoint === 'medium' ? '85vw' : '' }}>
+        <Container style={{ width: breakpoint === 'xlarge' ? '50vw' : breakpoint === 'large' ? '75vw' : breakpoint === 'medium' ? '85vw' : '' }}>
             <Jumbotron
                 as={Card}
                 border='secondary'
@@ -75,19 +72,22 @@ export const StandardPage = props => {
                     fontSize: softwareFontSize
                 }}
             >
-                <div style={{ fontSize: standardPageTitleFontSize }}>{title}</div>
-                <StandardCard title='' style={{ marginBottom: '2vh' }}></StandardCard>
+                <StandardCard title='' />
+                <div style={{ fontSize: standardPageTitleFontSize }}>
+                    <StandardSeparator variant={2} style={{ fontSize: standardPageTitleFontSize }} /> {title} <StandardSeparator variant={2} style={{ fontSize: standardPageTitleFontSize }} />
+                </div>
+                <StandardCard title='' style={{ marginBottom: '3vh' }} />
                 {props.children}
-                <StandardCard title='' style={{ marginTop: '2vh', marginBottom: '1vh' }}></StandardCard>
-                <Container style={{ cursor:'pointer', width: '30%' }} onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+                <StandardCard title='' style={{ marginTop: '2vh', marginBottom: '1vh' }} />
+                <Container style={{ cursor: 'pointer', width: '30%' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                     <Row>
                         <Col>
-                        <StandardSeparator style={{ fontSize: standardPageTitleFontSize }} />
+                            <StandardSeparator style={{ fontSize: standardPageTitleFontSize }} />
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                        Back to top
+                            Back to top
                         </Col>
                     </Row>
                 </Container>
