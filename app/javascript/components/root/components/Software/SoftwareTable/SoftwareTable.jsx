@@ -12,7 +12,7 @@ function SoftwareTable(props) {
   const { userData } = props;
   const [software, setSoftware] = useState(null);
   const appSettings = useContext(AppContext);
-  const { softwareFontSize, tableNotesFontSize, standardCardTitleFontSize } = appSettings;
+  const { softwareFontSize, standardCardTitleFontSize } = appSettings;
   useEffect(() => {
     const loadSoftware = async () => {
       await fetchAllSoftware(setSoftware);
@@ -22,31 +22,30 @@ function SoftwareTable(props) {
 
   return (
     <StandardPage title='Software Panel'>
-      {software ? (
+      {
+        software &&
         <>
           <StandardCard title='Maintained Applications'>
             <CustomTable userData={userData} software={software} legacy={false} />
             <StandardCard style={{ width: '100%', marginTop: '1vh', marginBottom: '1vh' }} title='' />
-            <div style={{ fontSize: standardCardTitleFontSize }}>Legacy Applications*</div>
+            <div style={{ fontSize: standardCardTitleFontSize }}>Legacy Applications</div>
             <CustomTable style={{ marginBottom: '1vh' }} userData={userData} software={software} legacy={true} />
           </StandardCard>
-          {userData ? (
-            <Button
+          {
+            userData && <Button
               style={{ fontSize: softwareFontSize }}
               block
               variant='warning'
               onClick={() => window.open('/software/admin/new', '_self')}
             >
               Add application
-            </Button>
-          ) : (
-              ''
-            )}
+              </Button>
+          }
         </>
-      ) : (
-          <Spinner animation='border' />
-        )}
-      <div style={{ textAlign: 'left', marginTop: '4vh', fontSize: tableNotesFontSize }}>*Legacy Applications are not currently receiving new updates/features.</div>
+      }
+      {
+        !software && <Spinner animation='border' />
+      }
     </StandardPage>
   );
 }
@@ -88,7 +87,6 @@ const CustomTable = props => {
           })}
         </tbody>
       </Table>
-
     </div>
   )
 }
@@ -120,10 +118,10 @@ const SoftwareSample = (props) => {
         {value.languages}
       </td>
       <td onClick={() => window.open(`/software/${value.name}`, '_self')}>
-        {compatibility.windows ? <Badge variant='light'>Windows</Badge> : ''}{' '}
-        {compatibility.linux ? <Badge variant='warning'>Linux</Badge> : ''}{' '}
-        {compatibility.mac ? <Badge variant='info'>Mac</Badge> : ''}{' '}
-        {compatibility.android ? <Badge variant='danger'>Android</Badge> : ''}{' '}
+        {compatibility.windows && <Badge variant='light'>Windows</Badge>}{' '}
+        {compatibility.linux && <Badge variant='warning'>Linux</Badge>}{' '}
+        {compatibility.mac && <Badge variant='info'>Mac</Badge>}{' '}
+        {compatibility.android && <Badge variant='danger'>Android</Badge>}{' '}
       </td>
       {userData ? (
         <td>
