@@ -28,9 +28,8 @@ function SoftwareCode(props) {
   };
 
   return (
-    <StandardCard title='' style={{ marginTop: '2vh' }}>
+    <StandardCard style={{ marginTop: '2vh' }}>
       <SoftwareLinkModal
-        style={{ marginTop: '1vh' }}
         link={`${repoLink}`}
         title='View Project Repository'
         icon={<VisitRepoIcon />}
@@ -40,7 +39,7 @@ function SoftwareCode(props) {
         title='View Open Issues'
         icon={<ViewOpenIssuesIcon />}
       />
-      <CloneRepository style={{ marginBottom: '1vh' }} repoLink={repoLink} />
+      <CloneRepository repoLink={repoLink} />
     </StandardCard>
   );
 }

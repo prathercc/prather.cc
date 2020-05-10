@@ -229,7 +229,7 @@ const CompatibilityTable = (props) => {
       bordered
       responsive
       size='sm'
-      style={{ marginTop: '2vh', width: '95%', margin: 'auto' }}
+      style={{ width: '100%' }}
     >
       <thead>
         <tr>

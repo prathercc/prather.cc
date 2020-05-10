@@ -27,7 +27,6 @@ function SoftwareTable(props) {
         <>
           <StandardCard title='Maintained Applications'>
             <CustomTable userData={userData} software={software} legacy={false} />
-            <StandardCard style={{ width: '100%', marginTop: '1vh', marginBottom: '1vh' }} title='' />
             <div style={{ fontSize: standardCardTitleFontSize }}>Legacy Applications</div>
             <CustomTable style={{ marginBottom: '1vh' }} userData={userData} software={software} legacy={true} />
           </StandardCard>

@@ -173,7 +173,7 @@ const SoftwareFeature = (props) => {
   const breakpoint = useCurrentBreakpointName();
 
   const cardTitle =
-    <Container style={{ marginTop: '2vh', marginBottom: '1vh' }}>
+    <Container style={{ marginBottom: '1vh' }}>
       <Row>
         <Col>
           {descriptionObject.title}
@@ -189,14 +189,13 @@ const SoftwareFeature = (props) => {
   return (
     <StandardCard title={cardTitle} style={{ marginTop: '2vh' }}>
       <div style={{ color: 'grey' }}>Feature #{index + 1}</div>
-      <StandardCard title='' style={{ marginTop: '1vh', marginBottom: '1vh', width: '80%' }} />
+      <StandardCard divider style={{ marginTop: '1vh', marginBottom: '1vh', width: '80%' }} />
       <StandardImage
         src={descriptionObject.image || ''}
         onClick={() => descriptionObject.image ? window.open(descriptionObject.image) : ''}
         style={{ width: breakpoint === 'xlarge' ? descriptionObject.imageWidth.desktop : descriptionObject.imageWidth.mobile, marginTop: '1vh', cursor: 'pointer' }}
       />
-      <div style={{ marginTop: '1vh', color: 'grey' }}>{breakpoint === 'xsmall' ? 'Tap' : 'Click'} image to enlarge</div>
-      <StandardCard title='' style={{ marginTop: '1vh', marginBottom: '1vh', width: '80%' }} />
+      <StandardCard divider style={{ marginTop: '2vh', marginBottom: '1vh', width: '80%' }} />
       <div
         style={{ textAlign: 'left' }}
         dangerouslySetInnerHTML={{
