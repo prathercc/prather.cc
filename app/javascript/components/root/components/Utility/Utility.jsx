@@ -3,8 +3,6 @@ import Spinner from 'react-bootstrap/Spinner';
 import Card from 'react-bootstrap/Card';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import { AppContext } from '../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
 
@@ -35,7 +33,7 @@ export const StandardSeparator = (props) => {
 }
 
 export const StandardCard = props => {
-    const { title = 'Default Title' } = props;
+    const { title = '', divider = false } = props;
     const appSettings = useContext(AppContext);
     const { softwareFontSize, fgColorDetail, standardCardTitleFontSize } = appSettings;
     return (
@@ -46,7 +44,9 @@ export const StandardCard = props => {
                 backgroundColor: fgColorDetail,
                 fontSize: softwareFontSize,
                 alignItems: 'center',
-                borderColor: '#4fc9c9'
+                borderColor: '#4fc9c9',
+                paddingTop: !divider && '1vh',
+                paddingBottom: !divider && '1vh'
             }}>
             <div style={{ fontSize: standardCardTitleFontSize }}>{title}</div>
             {props.children}
@@ -55,7 +55,7 @@ export const StandardCard = props => {
 }
 
 export const StandardPage = props => {
-    const { title = 'Default Title' } = props;
+    const { title = '' } = props;
     const appSettings = useContext(AppContext);
     const { fgColor, fontStyle, softwareFontSize, standardPageTitleFontSize } = appSettings;
     const breakpoint = useCurrentBreakpointName();
@@ -69,28 +69,16 @@ export const StandardPage = props => {
                     fontFamily: fontStyle,
                     marginTop: '2vh',
                     opacity: '0.9',
-                    fontSize: softwareFontSize
+                    fontSize: softwareFontSize,
+                    paddingTop: '3vh',
+                    paddingBottom:'5vh'
                 }}
             >
-                <StandardCard title='' />
                 <div style={{ fontSize: standardPageTitleFontSize }}>
                     <StandardSeparator variant={2} style={{ fontSize: standardPageTitleFontSize }} /> {title} <StandardSeparator variant={2} style={{ fontSize: standardPageTitleFontSize }} />
                 </div>
-                <StandardCard title='' style={{ marginBottom: '3vh' }} />
+                <StandardCard divider style={{ margin: 'auto', marginBottom: '3vh', width: '50%' }} />
                 {props.children}
-                <StandardCard title='' style={{ marginTop: '2vh', marginBottom: '1vh' }} />
-                <Container style={{ cursor: 'pointer', width: '30%' }} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                    <Row>
-                        <Col>
-                            <StandardSeparator style={{ fontSize: standardPageTitleFontSize }} />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            Back to top
-                        </Col>
-                    </Row>
-                </Container>
             </Jumbotron>
         </Container>
     );
