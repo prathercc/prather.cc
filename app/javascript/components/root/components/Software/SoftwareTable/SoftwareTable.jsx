@@ -27,8 +27,10 @@ function SoftwareTable(props) {
         <>
           <StandardCard title='Maintained Applications'>
             <CustomTable userData={userData} software={software} legacy={false} />
-            <div style={{ fontSize: standardCardTitleFontSize }}>Legacy Applications</div>
-            <CustomTable style={{ marginBottom: '1vh' }} userData={userData} software={software} legacy={true} />
+          </StandardCard>
+
+          <StandardCard title='Legacy Applications' style={{ marginTop: '2vh' }}>
+          <CustomTable userData={userData} software={software} legacy={true} />
           </StandardCard>
           {
             userData && <Button

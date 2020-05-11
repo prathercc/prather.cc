@@ -188,7 +188,7 @@ const SoftwareFeature = (props) => {
 
   return (
     <StandardCard title={cardTitle} style={{ marginTop: '2vh' }}>
-      <div style={{ color: 'grey' }}>Feature #{index + 1}</div>
+      <div style={{ color: 'rgb(79, 201, 201, 0.8)' }}>Feature #{index + 1}</div>
       <StandardCard divider style={{ marginTop: '1vh', marginBottom: '1vh', width: '80%' }} />
       <StandardImage
         src={descriptionObject.image || ''}

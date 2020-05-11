@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from 'react';
 import AppBar from './components/Mainpage/AppBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Display from './components/Mainpage/Display/Display';
-import Footer from './components/Mainpage/Footer';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AppContext } from './AppContext';
 import background from './images/background.png';
@@ -35,7 +34,7 @@ function Root() {
             style={{
               backgroundColor: bgColor,
               color: textColor,
-              minHeight: '100vh',
+              minHeight: '95vh',
               textAlign: 'center',
               border: '1px solid transparent',
               overflow: 'hidden',
@@ -74,10 +73,10 @@ function Root() {
               </Route>
             </Switch>
           </div>
-          <Footer />
         </Router>
       </AppContext.Provider>
     </div>
   );
 }
+
 export default Root;

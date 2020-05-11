@@ -36,7 +36,7 @@ const DesktopView = () => {
       }}
       variant='dark'
     >
-      <Container style={{ textAlign: 'center' }}>
+      <Container style={{ textAlign: 'center', height: '4vh' }}>
         <Nav>
           <CustomNavLink href='/'>Home</CustomNavLink>
           <CustomNavLink disabled={true} />
@@ -64,7 +64,7 @@ const MobileView = () => {
       }}
       variant='dark'
     >
-      <Container style={{ alignItem: 'center' }}>
+      <Container style={{ alignItem: 'center', height: '4vh' }}>
         <CustomNavDropDown>
           <Dropdown.Item href='/' onClick={() => window.open('/', '_self')}>Home</Dropdown.Item>
           <Dropdown.Item href='/' onClick={() => window.open('/software', '_self')}>Software</Dropdown.Item>

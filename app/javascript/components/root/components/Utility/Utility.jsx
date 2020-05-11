@@ -26,7 +26,7 @@ export const StandardSeparator = (props) => {
                 variant === 1 && <div onClick={props.onClick} style={{ ...props.style, display: 'inline', color: '#4fc9c9', opacity: 1 }}> <em>.:!:.</em> </div>
             }
             {
-                variant === 2 && <div style={{ ...props.style, color: '#4fc9c9', display: 'inline', opacity: 1 }}> - </div>
+                variant === 2 && <div style={{ ...props.style, color: 'rgb(79, 201, 201, 0.8)', display: 'inline', opacity: 1 }}> - </div>
             }
         </>
     )
@@ -38,15 +38,15 @@ export const StandardCard = props => {
     const { softwareFontSize, fgColorDetail, standardCardTitleFontSize } = appSettings;
     return (
         <Card
-            border='secondary'
             style={{
                 ...props.style,
                 backgroundColor: fgColorDetail,
                 fontSize: softwareFontSize,
                 alignItems: 'center',
-                borderColor: '#4fc9c9',
+                borderColor: !divider ? 'rgb(79, 201, 201, 0.4)' : 'rgb(79, 201, 201, 0.65)',
                 paddingTop: !divider && '1vh',
-                paddingBottom: !divider && '1vh'
+                paddingBottom: !divider && '1vh',
+
             }}>
             <div style={{ fontSize: standardCardTitleFontSize }}>{title}</div>
             {props.children}
@@ -63,7 +63,6 @@ export const StandardPage = props => {
         <Container style={{ width: breakpoint === 'xlarge' ? '50vw' : breakpoint === 'large' ? '75vw' : breakpoint === 'medium' ? '85vw' : '' }}>
             <Jumbotron
                 as={Card}
-                border='secondary'
                 style={{
                     backgroundColor: fgColor,
                     fontFamily: fontStyle,
@@ -71,13 +70,14 @@ export const StandardPage = props => {
                     opacity: '0.9',
                     fontSize: softwareFontSize,
                     paddingTop: '3vh',
-                    paddingBottom:'5vh'
+                    paddingBottom: '5vh',
+                    borderColor: 'rgb(79, 201, 201, 0.3)'
                 }}
             >
                 <div style={{ fontSize: standardPageTitleFontSize }}>
                     <StandardSeparator variant={2} style={{ fontSize: standardPageTitleFontSize }} /> {title} <StandardSeparator variant={2} style={{ fontSize: standardPageTitleFontSize }} />
                 </div>
-                <StandardCard divider style={{ margin: 'auto', marginBottom: '3vh', width: '50%' }} />
+                <StandardCard divider style={{ margin: 'auto', marginBottom: '3vh', width: '65%' }} />
                 {props.children}
             </Jumbotron>
         </Container>
