@@ -12,6 +12,7 @@ import NewSoftware from './components/Software/NewSoftware/NewSoftware';
 import NewFeature from './components/Software/NewSoftware/NewFeature';
 import { getSession } from './authService';
 import './components/Mainpage/Display/Display.css';
+import './components/style.css';
 
 function Root() {
   const appSettings = useContext(AppContext);
