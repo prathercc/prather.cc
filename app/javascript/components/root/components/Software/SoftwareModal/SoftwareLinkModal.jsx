@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import FormControl from 'react-bootstrap/FormControl';
 import { AppContext } from '../../../AppContext';
 import '../Software.css';
-import SoftwareModal from '../SoftwareModal/SoftwareModal';
+import { StandardModal } from '../../Utility/Utility';
 
 const SoftwareLinkModal = props => {
   const appSettings = useContext(AppContext);
@@ -46,7 +46,7 @@ const SoftwareLinkModal = props => {
           </Col>
         </Row>
       </Container>
-      <SoftwareModal
+      <StandardModal
         title={title}
         modalOpen={modalOpen}
         handleModalClose={handleModalClose}
@@ -73,7 +73,7 @@ const SoftwareLinkModal = props => {
         >
           Continue
         </Button>
-      </SoftwareModal>
+      </StandardModal>
     </>
   );
 };

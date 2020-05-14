@@ -5,6 +5,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import Container from 'react-bootstrap/Container';
 import { AppContext } from '../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
+import Modal from 'react-bootstrap/Modal';
 
 export const StandardImage = (props) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -82,4 +83,44 @@ export const StandardPage = props => {
             </Jumbotron>
         </Container>
     );
+}
+
+export const StandardModal = ({ modalOpen, title, handleModalClose, titleIcon, closable = true, children }) => {
+    const { fgColorDetail, fgColor, textColor, softwareFontSize, softwareMaintenanceFontSize, fontStyle } = useContext(AppContext);
+    return (
+        <Modal
+            style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle, opacity: 0.9 }}
+            centered
+            show={modalOpen}
+            onHide={() => handleModalClose()}
+            size='xl'
+        >
+            <Modal.Header
+                style={{
+                    backgroundColor: fgColor,
+                    color: textColor,
+                    outline: '1px solid gray'
+                }}
+                closeButton={closable}
+            >
+                <Modal.Title
+                    style={{
+                        fontSize: softwareFontSize
+                    }}
+                >
+                    {titleIcon} {title}
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body
+                style={{
+                    backgroundColor: fgColorDetail,
+                    color: textColor,
+                    outline: '1px solid gray',
+                    fontSize: softwareMaintenanceFontSize
+                }}
+            >
+                {children}
+            </Modal.Body>
+        </Modal>
+    )
 }

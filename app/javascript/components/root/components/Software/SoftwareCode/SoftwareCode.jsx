@@ -11,9 +11,8 @@ import Envelope from 'react-bootstrap-icons/dist/icons/envelope';
 import CloudDownload from 'react-bootstrap-icons/dist/icons/cloud-download';
 import { AppContext } from '../../../AppContext';
 import '../Software.css';
-import SoftwareModal from '../SoftwareModal/SoftwareModal';
 import SoftwareLinkModal from '../SoftwareModal/SoftwareLinkModal';
-import { StandardCard } from '../../Utility/Utility';
+import { StandardCard, StandardModal } from '../../Utility/Utility';
 
 function SoftwareCode(props) {
   const appSettings = useContext(AppContext);
@@ -85,7 +84,7 @@ const CloneRepository = props => {
           </Col>
         </Row>
       </Container>
-      <SoftwareModal
+      <StandardModal
         title='Clone Repository'
         modalOpen={modalOpen}
         handleModalClose={handleModalClose}
@@ -120,7 +119,7 @@ const CloneRepository = props => {
         >
           {buttonText}
         </Button>
-      </SoftwareModal>
+      </StandardModal>
     </>
   );
 };

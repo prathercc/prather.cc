@@ -10,9 +10,8 @@ import Col from 'react-bootstrap/Col';
 import Check from 'react-bootstrap-icons/dist/icons/check';
 import X from 'react-bootstrap-icons/dist/icons/x';
 import { AppContext } from '../../../AppContext';
-import SoftwareModal from '../SoftwareModal/SoftwareModal';
 import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../../../downloadService';
-import { StandardCard } from '../../Utility/Utility';
+import { StandardCard, StandardModal } from '../../Utility/Utility';
 
 function SoftwareCompatibility(props) {
   const { compatibility, app, setMainDownloads, userData } = props;
@@ -75,7 +74,7 @@ const EditDownloads = (props) => {
       <Button style={{ fontSize: softwareFontSize }} onClick={() => openAndLoadDownloads()} variant='warning' block>
         Modify {app.name} Downloads
       </Button>
-      <SoftwareModal
+      <StandardModal
         title='Modify Downloads'
         modalOpen={modalOpen}
         handleModalClose={handleModalClose}
@@ -95,7 +94,7 @@ const EditDownloads = (props) => {
             })
           )}
         <Download app={app} reloadDownloads={openAndLoadDownloads} />
-      </SoftwareModal>
+      </StandardModal>
     </>
   );
 };
