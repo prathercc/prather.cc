@@ -93,24 +93,27 @@ export const StandardModal = ({ modalOpen, title, handleModalClose, titleIcon, c
             centered
             show={modalOpen}
             onHide={() => handleModalClose()}
-            size='xl'
+            size='lg'
         >
-            <Modal.Header
-                style={{
-                    backgroundColor: fgColor,
-                    color: textColor,
-                    outline: '1px solid gray'
-                }}
-                closeButton={closable}
-            >
-                <Modal.Title
+            {
+                closable && <Modal.Header
                     style={{
-                        fontSize: softwareFontSize
+                        backgroundColor: fgColor,
+                        color: textColor,
+                        outline: '1px solid gray'
                     }}
+                    closeButton={closable}
                 >
-                    {titleIcon} {title}
-                </Modal.Title>
-            </Modal.Header>
+                    <Modal.Title
+                        style={{
+                            fontSize: softwareFontSize
+                        }}
+                    >
+                        {titleIcon} {title}
+                    </Modal.Title>
+                </Modal.Header>
+            }
+
             <Modal.Body
                 style={{
                     backgroundColor: fgColorDetail,
