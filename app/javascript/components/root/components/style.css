@@ -1,0 +1,29 @@
+.defaultMouseOver {
+    color: white !important;
+    transition: color 0.2s ease-in-out;
+}
+
+.defaultMouseOver:hover {
+    color: #4fc9c9 !important;
+}
+.defaultImageNudge {
+    animation: shake infinite 0.5s linear ;
+    border: solid 1px rgb(79, 201, 201, 0.4);
+    transition: border 0.2s ease-in-out;
+}
+.defaultImageNudge:hover {
+    border: solid 1px #4fc9c9;
+
+}
+
+@keyframes shake {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(0.25deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}

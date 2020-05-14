@@ -16,9 +16,8 @@ import { fetchFeatures } from '../../../featureService';
 import '../Software.css';
 import { AppContext } from '../../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
-import SoftwareModal from '../SoftwareModal/SoftwareModal';
 import { incrementDownload } from '../../../downloadService';
-import { StandardImage, StandardSeparator, StandardCard, StandardPage } from '../../Utility/Utility';
+import { StandardImage, StandardSeparator, StandardCard, StandardPage, StandardModal } from '../../Utility/Utility';
 
 function SoftwareApplication(props) {
   const { userData } = props;
@@ -191,6 +190,7 @@ const SoftwareFeature = (props) => {
       <div style={{ color: 'rgb(79, 201, 201, 0.8)' }}>Feature #{index + 1}</div>
       <StandardCard divider style={{ marginTop: '1vh', marginBottom: '1vh', width: '80%' }} />
       <StandardImage
+        className='defaultImageNudge'
         src={descriptionObject.image || ''}
         onClick={() => descriptionObject.image ? window.open(descriptionObject.image) : ''}
         style={{ width: breakpoint === 'xlarge' ? descriptionObject.imageWidth.desktop : descriptionObject.imageWidth.mobile, marginTop: '1vh', cursor: 'pointer' }}
@@ -268,7 +268,7 @@ const SoftwareDownloadOption = (props) => {
         </Col>
       </Row>
 
-      <SoftwareModal
+      <StandardModal
         title=''
         modalOpen={modalOpen}
         handleModalClose={() => { }}
@@ -277,7 +277,7 @@ const SoftwareDownloadOption = (props) => {
       >
         <p>Starting download for {downloadName}...</p>
         <Spinner animation='border' />
-      </SoftwareModal>
+      </StandardModal>
     </>
   );
 };
@@ -297,7 +297,9 @@ const SoftwareTitle = (props) => {
       </Container>
       <Card.Body>
         <StandardImage
+          className='defaultImageNudge'
           style={{
+            cursor: 'pointer',
             width:
               breakpoint === 'xlarge'
                 ? titleObject.imageWidth.desktop

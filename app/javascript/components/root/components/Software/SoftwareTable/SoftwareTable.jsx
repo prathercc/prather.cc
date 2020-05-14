@@ -105,7 +105,7 @@ const SoftwareSample = (props) => {
   };
 
   return (
-    <tr style={{ cursor: 'pointer' }}>
+    <tr className='defaultMouseOver' style={{ cursor: 'pointer' }}>
       <td onClick={() => window.open(`/software/${value.name}`, '_self')}>
         <StandardImage
           src={value.icon_link}

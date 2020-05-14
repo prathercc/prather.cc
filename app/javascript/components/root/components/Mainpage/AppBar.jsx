@@ -94,15 +94,11 @@ const CustomNavDropDown = props => {
 };
 
 const CustomNavLink = props => {
-  const appSettings = useContext(AppContext);
-  const { textColor } = appSettings;
-  const [activeColor, setActiveColor] = useState(textColor);
   return (
     <div
-      style={{ color: activeColor, padding: '5px', cursor: props.disabled ? '' : 'pointer' }}
+      className='defaultMouseOver'
+      style={{ color: 'white', padding: '5px', cursor: props.disabled ? '' : 'pointer' }}
       onClick={() => window.open(props.href, '_self')}
-      onMouseEnter={() => props.disabled ? '' : setActiveColor('grey')}
-      onMouseLeave={() => setActiveColor(textColor)}
     >
       {props.disabled ? <StandardSeparator /> : props.children}
     </div>
