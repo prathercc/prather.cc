@@ -14,7 +14,7 @@ export const StandardImage = (props) => {
             {
                 isLoading && <Spinner size='sm' animation='border' />
             }
-            <img {...props} style={{ ...props.style, display: isLoading ? 'none' : '' }} onLoad={() => setIsLoading(false)} />
+            <img {...props} style={{ ...props.style, display: isLoading ? 'none' : '', maxWidth: '410px' }} onLoad={() => setIsLoading(false)} />
         </>
     );
 };
@@ -47,7 +47,7 @@ export const StandardCard = props => {
                 borderColor: !divider ? 'rgb(79, 201, 201, 0.4)' : 'rgb(79, 201, 201, 0.65)',
                 paddingTop: !divider && '1vh',
                 paddingBottom: !divider && '1vh',
-
+                maxWidth: '724px'
             }}>
             <div style={{ fontSize: standardCardTitleFontSize }}>{title}</div>
             {props.children}
@@ -72,7 +72,8 @@ export const StandardPage = props => {
                     fontSize: softwareFontSize,
                     paddingTop: '3vh',
                     paddingBottom: '5vh',
-                    borderColor: 'rgb(79, 201, 201, 0.3)'
+                    borderColor: 'rgb(79, 201, 201, 0.3)',
+                    maxWidth: '790px'
                 }}
             >
                 <div style={{ fontSize: standardPageTitleFontSize }}>
