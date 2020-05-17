@@ -19,49 +19,40 @@ export const StandardImage = (props) => {
     );
 };
 
-export const StandardSeparator = (props) => {
-    const { variant = 1 } = props;
+export const StandardSeparator = ({ style, onClick }) => {
     return (
-        <>
-            {
-                variant === 1 && <div onClick={props.onClick} style={{ ...props.style, display: 'inline', color: '#4fc9c9', opacity: 1 }}> <em>.:!:.</em> </div>
-            }
-            {
-                variant === 2 && <div style={{ ...props.style, color: 'rgb(79, 201, 201, 0.8)', display: 'inline', opacity: 1 }}> - </div>
-            }
-        </>
+        <div onClick={onClick} style={{ ...style, display: 'inline', color: getThemeColor() }}> <em>.:!:.</em> </div>
     )
 }
 
-export const StandardCard = props => {
-    const { title = '', divider = false } = props;
+export const StandardCard = ({ title = '', divider = false, style, children }) => {
     const appSettings = useContext(AppContext);
     const { softwareFontSize, fgColorDetail, standardCardTitleFontSize } = appSettings;
     return (
         <Card
             style={{
-                ...props.style,
+                ...style,
                 backgroundColor: fgColorDetail,
                 fontSize: softwareFontSize,
                 alignItems: 'center',
-                borderColor: !divider ? 'rgb(79, 201, 201, 0.4)' : 'rgb(79, 201, 201, 0.65)',
+                borderColor: !divider ? getThemeColor(0.4) : getThemeColor(0.65),
                 paddingTop: !divider && '1vh',
                 paddingBottom: !divider && '1vh',
                 maxWidth: '724px'
             }}>
             <div style={{ fontSize: standardCardTitleFontSize }}>{title}</div>
-            {props.children}
+            {children}
         </Card>
     )
 }
 
-export const StandardPage = props => {
-    const { title = '' } = props;
+export const StandardPage = ({ title = '', children }) => {
     const appSettings = useContext(AppContext);
     const { fgColor, fontStyle, softwareFontSize, standardPageTitleFontSize } = appSettings;
     const breakpoint = useCurrentBreakpointName();
+    const containerLogic = breakpoint === 'xlarge' ? '50vw' : breakpoint === 'large' ? '75vw' : breakpoint === 'medium' ? '85vw' : '';
     return (
-        <Container style={{ width: breakpoint === 'xlarge' ? '50vw' : breakpoint === 'large' ? '75vw' : breakpoint === 'medium' ? '85vw' : '' }}>
+        <Container style={{ width: containerLogic }}>
             <Jumbotron
                 as={Card}
                 style={{
@@ -72,22 +63,22 @@ export const StandardPage = props => {
                     fontSize: softwareFontSize,
                     paddingTop: '3vh',
                     paddingBottom: '5vh',
-                    borderColor: 'rgb(79, 201, 201, 0.3)',
+                    borderColor: getThemeColor(0.3),
                     maxWidth: '790px'
                 }}
             >
                 <div style={{ fontSize: standardPageTitleFontSize }}>
-                    <StandardSeparator variant={2} style={{ fontSize: standardPageTitleFontSize }} /> {title} <StandardSeparator variant={2} style={{ fontSize: standardPageTitleFontSize }} />
+                    {title}
                 </div>
                 <StandardCard divider style={{ margin: 'auto', marginBottom: '3vh', width: '65%' }} />
-                {props.children}
+                {children}
             </Jumbotron>
         </Container>
     );
 }
 
-export const StandardModal = ({ modalOpen, title, handleModalClose, titleIcon, closable = true, children }) => {
-    const { fgColorDetail, fgColor, textColor, softwareFontSize, softwareMaintenanceFontSize, fontStyle } = useContext(AppContext);
+export const StandardModal = ({ modalOpen, handleModalClose, children }) => {
+    const { fgColorDetail, textColor, softwareMaintenanceFontSize, fontStyle } = useContext(AppContext);
     return (
         <Modal
             style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle, opacity: 0.9 }}
@@ -96,35 +87,20 @@ export const StandardModal = ({ modalOpen, title, handleModalClose, titleIcon, c
             onHide={() => handleModalClose()}
             size='lg'
         >
-            {
-                closable && <Modal.Header
-                    style={{
-                        backgroundColor: fgColor,
-                        color: textColor,
-                        outline: '1px solid gray'
-                    }}
-                    closeButton={closable}
-                >
-                    <Modal.Title
-                        style={{
-                            fontSize: softwareFontSize
-                        }}
-                    >
-                        {titleIcon} {title}
-                    </Modal.Title>
-                </Modal.Header>
-            }
-
             <Modal.Body
                 style={{
                     backgroundColor: fgColorDetail,
                     color: textColor,
-                    outline: '1px solid gray',
-                    fontSize: softwareMaintenanceFontSize
+                    outline: `1px solid ${getThemeColor(0.5)}`,
+                    fontSize: softwareMaintenanceFontSize,
                 }}
             >
                 {children}
             </Modal.Body>
         </Modal>
     )
+}
+
+export const getThemeColor = (opacity = 1) => {
+    return `rgb(79, 201, 201, ${opacity})`;
 }

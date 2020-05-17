@@ -17,13 +17,14 @@ import '../Software.css';
 import { AppContext } from '../../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
 import { incrementDownload } from '../../../downloadService';
-import { StandardImage, StandardSeparator, StandardCard, StandardPage, StandardModal } from '../../Utility/Utility';
+import { StandardImage, StandardSeparator, StandardCard, StandardPage, StandardModal, getThemeColor } from '../../Utility/Utility';
 
 function SoftwareApplication(props) {
   const { userData } = props;
   let { name } = useParams();
   const [downloads, setDownloads] = useState(null);
   const [features, setFeatures] = useState(null);
+  const [imageModalObj, setImageModalObj] = useState({ open: false, imageLink: '' });
   const appSettings = useContext(AppContext);
   const { softwareFontSize } = appSettings;
   const blankApp = {
@@ -74,7 +75,7 @@ function SoftwareApplication(props) {
   };
 
   return (
-    <StandardPage title={<>Application View</>}>
+    <StandardPage title={app.name}>
       {app === blankApp ? (
         <Spinner animation='border' />
       ) : (
@@ -88,9 +89,8 @@ function SoftwareApplication(props) {
                 description: app.description,
                 image: app.image_link,
                 imageWidth: { desktop: '25vw', mobile: '50vw' },
-                thumbnail: app.icon_link,
-                thumbnailWidth: { desktop: '3vw', mobile: '6vw' },
               }}
+              setImageModalObj={setImageModalObj}
             />
             <SoftwareCompatibility
               app={app}
@@ -144,6 +144,7 @@ function SoftwareApplication(props) {
         ? features.map((feature, index) => {
           return (
             <SoftwareFeature
+              setImageModalObj={setImageModalObj}
               index={index}
               key={feature.id}
               userData={userData}
@@ -161,14 +162,24 @@ function SoftwareApplication(props) {
           );
         })
         : ''}
+      <ImageModal modalOpen={imageModalObj.open} handleModalClose={() => setImageModalObj({ ...imageModalObj, open: false })} imageLink={imageModalObj.imageLink} />
     </StandardPage>
   );
 }
 
-const SoftwareFeature = (props) => {
+const ImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
+  return (
+    <StandardModal modalOpen={modalOpen} handleModalClose={handleModalClose}>
+      <div className='defaultMouseOver' style={{ cursor: 'pointer' }} onClick={() => window.open(imageLink)}>View Raw Image</div>
+      <StandardCard style={{ width: '25%', margin: 'auto' }} divider />
+      <img src={imageLink} style={{ maxWidth: '85%', marginTop: '2vh' }} />
+    </StandardModal>
+  )
+}
+
+const SoftwareFeature = ({ userData, descriptionObject, index, setImageModalObj }) => {
   const appSettings = useContext(AppContext);
   const { softwareFontSize } = appSettings;
-  const { userData, descriptionObject, index } = props;
   const breakpoint = useCurrentBreakpointName();
 
   const cardTitle =
@@ -183,55 +194,40 @@ const SoftwareFeature = (props) => {
           {descriptionObject.description}
         </Col>
       </Row>
+      <Row>
+        <Col>
+          <div style={{ color: getThemeColor(0.8), fontSize: softwareFontSize }}>Feature #{index + 1}</div>
+        </Col>
+      </Row>
     </Container>;
 
   return (
     <StandardCard title={cardTitle} style={{ marginTop: '2vh' }}>
-      <div style={{ color: 'rgb(79, 201, 201, 0.8)' }}>Feature #{index + 1}</div>
-      <StandardCard divider style={{ marginTop: '1vh', marginBottom: '1vh', width: '80%' }} />
+      <StandardCard divider style={{ width: '65%', marginBottom: '2vh' }} />
       <StandardImage
         className='defaultImageNudge'
-        src={descriptionObject.image || ''}
-        onClick={() => descriptionObject.image ? window.open(descriptionObject.image) : ''}
-        style={{ width: breakpoint === 'xlarge' ? descriptionObject.imageWidth.desktop : descriptionObject.imageWidth.mobile, marginTop: '1vh', cursor: 'pointer' }}
+        src={descriptionObject.image}
+        onClick={() => setImageModalObj({ open: true, imageLink: descriptionObject.image })}
+        style={{ width: breakpoint === 'xlarge' ? descriptionObject.imageWidth.desktop : descriptionObject.imageWidth.mobile, cursor: 'pointer', marginBottom: '1vh' }}
       />
-      <StandardCard divider style={{ marginTop: '2vh', marginBottom: '1vh', width: '80%' }} />
-      <div
-        style={{ textAlign: 'left' }}
-        dangerouslySetInnerHTML={{
-          __html: descriptionObject.content_description,
-        }}
-      />
+      <div style={{ textAlign: 'left' }} dangerouslySetInnerHTML={{ __html: descriptionObject.content_description }} />
       {
         userData ?
           (
-            <Button
-              style={{ fontSize: softwareFontSize }}
+            <Button style={{ fontSize: softwareFontSize }} block variant='warning'
               onClick={() =>
                 window.open(`/software/admin/feature/edit/${descriptionObject.application_name}/${descriptionObject.id}`, '_self')
-              }
-              block
-              variant='warning'
-            > Edit </Button>)
+              }> Edit </Button>)
           : ('')
       }
     </StandardCard>
   );
 };
 
-const SoftwareDownloadOption = (props) => {
-  const {
-    downloadName,
-    downloadLink,
-    type,
-    downloadSize,
-    downloads,
-    id,
-  } = props;
+const SoftwareDownloadOption = ({ downloadName, downloadLink, type, downloadSize, downloads, id }) => {
   const appSettings = useContext(AppContext);
   const { iconSizing, softwareFontSize } = appSettings;
   const [modalOpen, setModalOpen] = useState(false);
-
   const breakpoint = useCurrentBreakpointName();
 
   const handleModalOpen = async () => {
@@ -268,13 +264,7 @@ const SoftwareDownloadOption = (props) => {
         </Col>
       </Row>
 
-      <StandardModal
-        title=''
-        modalOpen={modalOpen}
-        handleModalClose={() => { }}
-        titleIcon={<Icon />}
-        closable={false}
-      >
+      <StandardModal title='' modalOpen={modalOpen} handleModalClose={() => { }} titleIcon={<Icon />} closable={false}>
         <p>Starting download for {downloadName}...</p>
         <Spinner animation='border' />
       </StandardModal>
@@ -283,13 +273,11 @@ const SoftwareDownloadOption = (props) => {
 };
 
 
-const SoftwareTitle = (props) => {
-  const { titleObject } = props;
+const SoftwareTitle = ({ titleObject, setImageModalObj }) => {
   const breakpoint = useCurrentBreakpointName();
-  const cardTitle = <><StandardImage src={titleObject.thumbnail} style={{ width: breakpoint === 'xlarge' ? titleObject.thumbnailWidth.desktop : titleObject.thumbnailWidth.mobile }} />{titleObject.title}</>
 
   return (
-    <StandardCard title={cardTitle}>
+    <StandardCard>
       <Container>
         <Card.Text
           dangerouslySetInnerHTML={{ __html: titleObject.description }}
@@ -305,6 +293,7 @@ const SoftwareTitle = (props) => {
                 ? titleObject.imageWidth.desktop
                 : titleObject.imageWidth.mobile,
           }}
+          onClick={() => setImageModalObj({ open: true, imageLink: titleObject.image })}
           variant='top'
           src={titleObject.image}
         />
@@ -313,10 +302,10 @@ const SoftwareTitle = (props) => {
   );
 };
 
-const MaintenanceAlert = (props) => {
+const MaintenanceAlert = ({ maintained = false }) => {
   const appSettings = useContext(AppContext);
   const { softwareMaintenanceFontSize } = appSettings;
-  const { maintained = false } = props;
+
   return (
     <Alert variant='danger' dismissible={false} show={true} style={{ fontSize: softwareMaintenanceFontSize, display: maintained ? 'none' : '' }} >
       This application is not currently receiving new updates
