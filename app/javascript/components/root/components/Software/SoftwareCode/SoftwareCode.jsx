@@ -1,53 +1,45 @@
 import React, { useContext, useState, useRef } from 'react';
-import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import FormControl from 'react-bootstrap/FormControl';
-import Code from 'react-bootstrap-icons/dist/icons/code';
-import Envelope from 'react-bootstrap-icons/dist/icons/envelope';
-import CloudDownload from 'react-bootstrap-icons/dist/icons/cloud-download';
 import { AppContext } from '../../../AppContext';
 import '../Software.css';
-import SoftwareLinkModal from '../SoftwareModal/SoftwareLinkModal';
-import { StandardCard, StandardModal } from '../../Utility/Utility';
+import { StandardCard, StandardModal, LinkModal } from '../../Utility/Utility';
 
 function SoftwareCode(props) {
-  const appSettings = useContext(AppContext);
-  const { iconSizing } = appSettings;
   const { repoLink } = props;
-
-  const VisitRepoIcon = () => {
-    return <Code style={{ fontSize: iconSizing }} />;
-  };
-  const ViewOpenIssuesIcon = () => {
-    return <Envelope style={{ fontSize: iconSizing }} />;
-  };
-
   return (
-    <StandardCard style={{ marginTop: '2vh' }}>
-      <SoftwareLinkModal
-        link={`${repoLink}`}
-        title='View Project Repository'
-        icon={<VisitRepoIcon />}
-      />
-      <SoftwareLinkModal
-        link={`${repoLink}/issues`}
-        title='View Open Issues'
-        icon={<ViewOpenIssuesIcon />}
-      />
+    <>
+      <ViewRepo repoLink={repoLink} />
+      <ViewIssues repoLink={repoLink} />
       <CloneRepository repoLink={repoLink} />
-    </StandardCard>
+    </>
   );
 }
 
-const CloneRepository = props => {
+const ViewRepo = ({ style, repoLink }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  return (
+    <>
+      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title='View Project Repository' style={{ ...style, marginTop: '2vh', cursor: 'pointer' }} />
+      <LinkModal modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)} link={repoLink} />
+    </>
+  );
+}
+
+const ViewIssues = ({ style, repoLink }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  return (
+    <>
+      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title='View Open Issues' style={{ ...style, marginTop: '0.5vh', cursor: 'pointer' }} />
+      <LinkModal modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)} link={`${repoLink}/issues`} />
+    </>
+  );
+}
+
+const CloneRepository = ({ repoLink, style }) => {
   const appSettings = useContext(AppContext);
-  const { fgColorDetail, iconSizing, softwareMaintenanceFontSize } = appSettings;
-  const [activeClass, setActiveClass] = useState('');
-  const { repoLink } = props;
+  const { softwareMaintenanceFontSize, softwareFontSize } = appSettings;
   const [modalOpen, setModalOpen] = useState(false);
   const [buttonText, setButtonText] = useState('Copy to Clipboard');
   const [buttonEnabled, setButtonEnabled] = useState(true);
@@ -59,37 +51,14 @@ const CloneRepository = props => {
     setButtonEnabled(true);
   };
 
-  const Icon = () => {
-    return <CloudDownload style={{ fontSize: iconSizing }} />;
-  };
-
   return (
     <>
-      <Container style={{ ...props.style }}>
-        <Row>
-          <Col>
-            <Card.Header
-              style={{ cursor: 'pointer', backgroundColor: fgColorDetail }}
-              onMouseEnter={() => {
-                setActiveClass('Hover-glow');
-              }}
-              onMouseLeave={() => {
-                setActiveClass('');
-              }}
-              className={activeClass}
-              onClick={() => setModalOpen(true)}
-            >
-              <Icon /> Clone Repository
-            </Card.Header>
-          </Col>
-        </Row>
-      </Container>
+      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title='Clone Repository' style={{ ...style, marginTop: '0.5vh', cursor: 'pointer' }} />
       <StandardModal
-        title='Clone Repository'
         modalOpen={modalOpen}
         handleModalClose={handleModalClose}
-        titleIcon={<Icon />}
       >
+        <div style={{ fontSize: softwareFontSize }}>Clone project with Git</div>
         <InputGroup style={{ marginTop: '2vh' }}>
           <FormControl
             readOnly

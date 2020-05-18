@@ -6,6 +6,8 @@ import Container from 'react-bootstrap/Container';
 import { AppContext } from '../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
 import Modal from 'react-bootstrap/Modal';
+import FormControl from 'react-bootstrap/FormControl';
+import Button from 'react-bootstrap/Button';
 
 export const StandardImage = (props) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -25,11 +27,13 @@ export const StandardSeparator = ({ style, onClick }) => {
     )
 }
 
-export const StandardCard = ({ title = '', divider = false, style, children }) => {
+export const StandardCard = ({ title = '', divider = false, style, children, className, onClick }) => {
     const appSettings = useContext(AppContext);
     const { softwareFontSize, fgColorDetail, standardCardTitleFontSize } = appSettings;
     return (
         <Card
+            onClick={onClick}
+            className={className}
             style={{
                 ...style,
                 backgroundColor: fgColorDetail,
@@ -78,13 +82,13 @@ export const StandardPage = ({ title = '', children }) => {
 }
 
 export const StandardModal = ({ modalOpen, handleModalClose, children }) => {
-    const { fgColorDetail, textColor, softwareMaintenanceFontSize, fontStyle } = useContext(AppContext);
+    const { fgColorDetail, textColor, softwareMaintenanceFontSize, fontStyle, fgColor } = useContext(AppContext);
     return (
         <Modal
             style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle, opacity: 0.9 }}
             centered
             show={modalOpen}
-            onHide={() => handleModalClose()}
+            onHide={handleModalClose}
             size='lg'
         >
             <Modal.Body
@@ -98,6 +102,38 @@ export const StandardModal = ({ modalOpen, handleModalClose, children }) => {
                 {children}
             </Modal.Body>
         </Modal>
+    )
+}
+
+export const LinkModal = ({ link, handleModalClose, modalOpen }) => {
+    const { softwareMaintenanceFontSize } = useContext(AppContext);
+    return (
+        <StandardModal
+            modalOpen={modalOpen}
+            handleModalClose={handleModalClose}
+        >
+            <p>You are about to leave <strong>prather.cc</strong> and navigate to:</p>
+            <FormControl
+                style={{
+                    cursor: 'text',
+                    textAlign: 'center',
+                    fontSize: softwareMaintenanceFontSize
+                }}
+                disabled
+                value={`${link}`}
+            />
+            <Button
+                onClick={() => {
+                    handleModalClose();
+                    window.open(`${link}`);
+                }}
+                variant='outline-light'
+                style={{ fontSize: softwareMaintenanceFontSize, marginTop: '2vh' }}
+
+            >
+                Continue
+        </Button>
+        </StandardModal>
     )
 }
 
