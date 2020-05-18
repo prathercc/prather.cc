@@ -92,6 +92,7 @@ function SoftwareApplication(props) {
               }}
               setImageModalObj={setImageModalObj}
             />
+            <SoftwareCode repoLink={app.repo_link} />
             <SoftwareCompatibility
               app={app}
               setMainDownloads={setDownloads}
@@ -121,7 +122,7 @@ function SoftwareApplication(props) {
                   )}
             </SoftwareCompatibility>
 
-            <SoftwareCode repoLink={app.repo_link} />
+
           </>
         )}
 
