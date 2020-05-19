@@ -56,7 +56,7 @@ export const StandardPage = ({ title = '', children }) => {
     const breakpoint = useCurrentBreakpointName();
     const containerLogic = breakpoint === 'xlarge' ? '50vw' : breakpoint === 'large' ? '75vw' : breakpoint === 'medium' ? '85vw' : '';
     return (
-        <Container style={{ width: containerLogic }}>
+        <Container style={{ width: containerLogic, maxWidth: '790px' }}>
             <Jumbotron
                 as={Card}
                 style={{
@@ -67,8 +67,7 @@ export const StandardPage = ({ title = '', children }) => {
                     fontSize: softwareFontSize,
                     paddingTop: '3vh',
                     paddingBottom: '5vh',
-                    borderColor: getThemeColor(0.3),
-                    maxWidth: '790px'
+                    borderColor: getThemeColor(0.3)
                 }}
             >
                 <div style={{ fontSize: standardPageTitleFontSize }}>

@@ -250,24 +250,23 @@ const CompatibilityTable = (props) => {
   );
 };
 
-const CompatiblityResult = (props) => {
-  const appSettings = useContext(AppContext);
-  const { iconSizing } = appSettings;
-  const { boolean } = props;
+const CompatiblityResult = ({ boolean }) => {
+  const iconSize = '3vw';
+
   return (
     <td>
       {boolean ? (
         <Check
           style={{
             color: 'limegreen',
-            fontSize: iconSizing,
+            fontSize: iconSize,
           }}
         />
       ) : (
           <X
             style={{
               color: 'red',
-              fontSize: iconSizing,
+              fontSize: iconSize,
             }}
           />
         )}
