@@ -92,14 +92,13 @@ function SoftwareApplication(props) {
               }}
               setImageModalObj={setImageModalObj}
             />
-            <SoftwareCode repoLink={app.repo_link} />
             <SoftwareCompatibility
               app={app}
               setMainDownloads={setDownloads}
               compatibility={{ ...compatibility }}
               userData={userData}
             >
-              {downloads === null ? (
+              {/* {downloads === null ? (
                 <Container>
                   <Spinner animation='border' />
                 </Container>
@@ -119,9 +118,9 @@ function SoftwareApplication(props) {
                         />
                       );
                     })
-                  )}
+                  )} */}
             </SoftwareCompatibility>
-
+            <SoftwareCode repoLink={app.repo_link} />
 
           </>
         )}
@@ -169,10 +168,10 @@ function SoftwareApplication(props) {
 }
 
 const ImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
+  const RawButton = <Button variant='light' style={{ marginTop: '1vh' }} onClick={() => window.open(imageLink)}>View Raw Image</Button>
+
   return (
-    <StandardModal modalOpen={modalOpen} handleModalClose={handleModalClose}>
-      <div className='defaultMouseOver' style={{ cursor: 'pointer' }} onClick={() => window.open(imageLink)}>View Raw Image</div>
-      <StandardCard style={{ width: '25%', margin: 'auto' }} divider />
+    <StandardModal buttons={RawButton} modalOpen={modalOpen} handleModalClose={handleModalClose}>
       <img src={imageLink} style={{ maxWidth: '85%', marginTop: '2vh' }} />
     </StandardModal>
   )
@@ -204,14 +203,13 @@ const SoftwareFeature = ({ userData, descriptionObject, index, setImageModalObj 
 
   return (
     <StandardCard title={cardTitle} style={{ marginTop: '2vh' }}>
-      <StandardCard divider style={{ width: '65%', marginBottom: '2vh' }} />
       <StandardImage
         className='defaultImageNudge'
         src={descriptionObject.image}
         onClick={() => setImageModalObj({ open: true, imageLink: descriptionObject.image })}
         style={{ width: breakpoint === 'xlarge' ? descriptionObject.imageWidth.desktop : descriptionObject.imageWidth.mobile, cursor: 'pointer', marginBottom: '1vh' }}
       />
-      <div style={{ textAlign: 'left' }} dangerouslySetInnerHTML={{ __html: descriptionObject.content_description }} />
+      <div style={{ textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: descriptionObject.content_description }} />
       {
         userData ?
           (

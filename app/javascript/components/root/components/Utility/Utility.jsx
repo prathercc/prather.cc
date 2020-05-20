@@ -80,8 +80,8 @@ export const StandardPage = ({ title = '', children }) => {
     );
 }
 
-export const StandardModal = ({ modalOpen, handleModalClose, children }) => {
-    const { fgColorDetail, textColor, softwareMaintenanceFontSize, fontStyle, fgColor } = useContext(AppContext);
+export const StandardModal = ({ modalOpen, handleModalClose, children, buttons }) => {
+    const { fgColorDetail, textColor, softwareMaintenanceFontSize, fontStyle } = useContext(AppContext);
     return (
         <Modal
             style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle, opacity: 0.9 }}
@@ -99,6 +99,10 @@ export const StandardModal = ({ modalOpen, handleModalClose, children }) => {
                 }}
             >
                 {children}
+                <Modal.Footer style={{ padding: 0, marginTop: '1vh', border: 'none' }}>
+                    {buttons}
+                    <Button onClick={handleModalClose} variant='outline-light' style={{ marginTop: '1vh' }}> Cancel</Button>
+                </Modal.Footer>
             </Modal.Body>
         </Modal>
     )
@@ -106,10 +110,18 @@ export const StandardModal = ({ modalOpen, handleModalClose, children }) => {
 
 export const LinkModal = ({ link, handleModalClose, modalOpen }) => {
     const { softwareMaintenanceFontSize } = useContext(AppContext);
+    const ContinueButton =
+        <Button
+            onClick={() => { handleModalClose(); window.open(`${link}`); }}
+            variant='light'
+            style={{ marginTop: '1vh' }}>
+            Continue
+        </Button>
     return (
         <StandardModal
             modalOpen={modalOpen}
             handleModalClose={handleModalClose}
+            buttons={ContinueButton}
         >
             <p>You are about to leave <strong>prather.cc</strong> and navigate to:</p>
             <FormControl
@@ -121,17 +133,6 @@ export const LinkModal = ({ link, handleModalClose, modalOpen }) => {
                 disabled
                 value={`${link}`}
             />
-            <Button
-                onClick={() => {
-                    handleModalClose();
-                    window.open(`${link}`);
-                }}
-                variant='outline-light'
-                style={{ fontSize: softwareMaintenanceFontSize, marginTop: '2vh' }}
-
-            >
-                Continue
-        </Button>
         </StandardModal>
     )
 }

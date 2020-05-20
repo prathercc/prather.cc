@@ -79,12 +79,30 @@ const CloneRepository = ({ repoLink, style, iconSize }) => {
     setButtonEnabled(true);
   };
 
+  const CopyButton = <Button
+    disabled={!buttonEnabled}
+    onClick={() => {
+      textAreaRef.current.select();
+      document.execCommand('copy');
+      setButtonText('Copied!');
+      setButtonEnabled(false);
+    }}
+    variant='light'
+    style={{
+      marginTop: '1vh',
+      cursor: buttonEnabled ? 'pointer' : 'default'
+    }}
+  >
+    {buttonText}
+  </Button>;
+
   return (
     <>
       <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title={<><Icon /> <div>Clone Repository</div></>} style={{ ...style, cursor: 'pointer', minHeight: '65px' }} />
       <StandardModal
         modalOpen={modalOpen}
         handleModalClose={handleModalClose}
+        buttons={CopyButton}
       >
         <div style={{ fontSize: softwareFontSize }}>Clone project with Git</div>
         <InputGroup style={{ marginTop: '2vh' }}>
@@ -99,23 +117,7 @@ const CloneRepository = ({ repoLink, style, iconSize }) => {
             value={`${repoLink}.git`}
           />
         </InputGroup>
-        <Button
-          disabled={!buttonEnabled}
-          onClick={() => {
-            textAreaRef.current.select();
-            document.execCommand('copy');
-            setButtonText('Copied!');
-            setButtonEnabled(false);
-          }}
-          variant='outline-light'
-          style={{
-            fontSize: softwareMaintenanceFontSize,
-            marginTop: '2vh',
-            cursor: buttonEnabled ? 'pointer' : 'default'
-          }}
-        >
-          {buttonText}
-        </Button>
+
       </StandardModal>
     </>
   );
