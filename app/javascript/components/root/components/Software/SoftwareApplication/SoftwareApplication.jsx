@@ -6,7 +6,6 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Alert from 'react-bootstrap/Alert';
-import Download from 'react-bootstrap-icons/dist/icons/download';
 import SoftwareCompatibility from '../SoftwareCompatibility/SoftwareCompatibility';
 import SoftwareCode from '../SoftwareCode/SoftwareCode';
 import { fetchDownloads } from '../../../downloadService';
@@ -16,8 +15,7 @@ import { fetchFeatures } from '../../../featureService';
 import '../Software.css';
 import { AppContext } from '../../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
-import { incrementDownload } from '../../../downloadService';
-import { StandardImage, StandardSeparator, StandardCard, StandardPage, StandardModal, getThemeColor } from '../../Utility/Utility';
+import { StandardImage, StandardCard, StandardPage, StandardModal, getThemeColor } from '../../Utility/Utility';
 
 function SoftwareApplication(props) {
   const { userData } = props;
@@ -97,29 +95,9 @@ function SoftwareApplication(props) {
               setMainDownloads={setDownloads}
               compatibility={{ ...compatibility }}
               userData={userData}
-            >
-              {/* {downloads === null ? (
-                <Container>
-                  <Spinner animation='border' />
-                </Container>
-              ) : downloads.length === 0 ? (
-                ''
-              ) : (
-                    downloads.map((download) => {
-                      return (
-                        <SoftwareDownloadOption
-                          key={download.id}
-                          downloadLink={download.path}
-                          downloadName={download.file_name}
-                          type={download.os_type}
-                          downloadSize={download.file_size}
-                          downloads={download.download_count}
-                          id={download.id}
-                        />
-                      );
-                    })
-                  )} */}
-            </SoftwareCompatibility>
+              downloads={downloads}
+            />
+
             <SoftwareCode repoLink={app.repo_link} />
 
           </>
@@ -223,55 +201,6 @@ const SoftwareFeature = ({ userData, descriptionObject, index, setImageModalObj 
     </StandardCard>
   );
 };
-
-const SoftwareDownloadOption = ({ downloadName, downloadLink, type, downloadSize, downloads, id }) => {
-  const appSettings = useContext(AppContext);
-  const { iconSizing, softwareFontSize } = appSettings;
-  const [modalOpen, setModalOpen] = useState(false);
-  const breakpoint = useCurrentBreakpointName();
-
-  const handleModalOpen = async () => {
-    await incrementDownload(id);
-    setModalOpen(true);
-    window.setTimeout(() => {
-      window.open(downloadLink);
-      setModalOpen(false);
-    }, 3000);
-  };
-
-  const Icon = () => {
-    return <Download style={{ fontSize: iconSizing }} />;
-  };
-
-  return (
-    <>
-      <Row>
-        <Col>
-          <Button
-            variant='dark'
-            style={{ marginTop: '1vh', fontSize: softwareFontSize }}
-            size={breakpoint === 'xsmall' ? 'sm' : 'md'}
-            onClick={() => handleModalOpen()}
-            block
-          >
-            <div style={{ display: 'inline' }}>{`${downloadName} `}</div>
-            <StandardSeparator />
-            <div style={{ display: 'inline' }}>{`${downloadSize} `}</div>
-            <StandardSeparator />
-            <div style={{ display: 'inline' }}>{`${type.charAt(0).toUpperCase() + type.slice(1)}`}</div>
-            <div>{`${downloads} downloads`}</div>
-          </Button>
-        </Col>
-      </Row>
-
-      <StandardModal title='' modalOpen={modalOpen} handleModalClose={() => { }} titleIcon={<Icon />} closable={false}>
-        <p>Starting download for {downloadName}...</p>
-        <Spinner animation='border' />
-      </StandardModal>
-    </>
-  );
-};
-
 
 const SoftwareTitle = ({ titleObject, setImageModalObj }) => {
   const breakpoint = useCurrentBreakpointName();

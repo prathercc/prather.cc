@@ -10,14 +10,12 @@ import Col from 'react-bootstrap/Col';
 import Check from 'react-bootstrap-icons/dist/icons/check';
 import X from 'react-bootstrap-icons/dist/icons/x';
 import { AppContext } from '../../../AppContext';
-import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../../../downloadService';
-import { StandardCard, StandardModal } from '../../Utility/Utility';
+import { fetchDownloads, postDownload, putDownload, deleteDownload, incrementDownload } from '../../../downloadService';
+import { StandardCard, StandardModal, StandardSeparator } from '../../Utility/Utility';
+import { useCurrentBreakpointName } from 'react-socks';
 
 function SoftwareCompatibility(props) {
-  const { compatibility, app, setMainDownloads, userData } = props;
-  const appsettings = useContext(AppContext);
-  const { standardCardTitleFontSize } = appsettings;
-
+  const { compatibility, app, setMainDownloads, userData, downloads } = props;
   return (
     <StandardCard title='Available Platforms' style={{ marginTop: '2vh' }}>
       <Card.Body style={{ width: '90%' }}>
@@ -30,19 +28,81 @@ function SoftwareCompatibility(props) {
         ) : (
             ''
           )}
-        {
-          props.children ?
-            <Container style={{ marginTop: '1vh' }}>
-              <div style={{ fontSize: standardCardTitleFontSize }}>Download(s):</div>
-              {props.children}
-            </Container>
-            : ''
-        }
+
+        {downloads === null ? (
+          <Container>
+            <Spinner animation='border' />
+          </Container>
+        ) : downloads.length === 0 ? (
+          ''
+        ) : (
+              downloads.map((download) => {
+                return (
+                  <SoftwareDownloadOption
+                    key={download.id}
+                    downloadLink={download.path}
+                    downloadName={download.file_name}
+                    type={download.os_type}
+                    downloadSize={download.file_size}
+                    downloads={download.download_count}
+                    id={download.id}
+                  />
+                );
+              })
+            )}
 
       </Card.Body>
     </StandardCard>
   );
 }
+
+const SoftwareDownloadOption = ({ downloadName, downloadLink, type, downloadSize, downloads, id }) => {
+  const appSettings = useContext(AppContext);
+  const { iconSizing, softwareFontSize } = appSettings;
+  const [modalOpen, setModalOpen] = useState(false);
+  const breakpoint = useCurrentBreakpointName();
+
+  const handleModalOpen = async () => {
+    await incrementDownload(id);
+    setModalOpen(true);
+    window.setTimeout(() => {
+      window.open(downloadLink);
+      setModalOpen(false);
+    }, 3000);
+  };
+
+  const Icon = () => {
+    return <Download style={{ fontSize: iconSizing }} />;
+  };
+
+  return (
+    <>
+      <Row>
+        <Col>
+          <Button
+            variant='dark'
+            style={{ marginTop: '1vh', fontSize: softwareFontSize }}
+            size={breakpoint === 'xsmall' ? 'sm' : 'md'}
+            onClick={() => handleModalOpen()}
+            block
+          >
+            <div style={{ display: 'inline' }}>{`${downloadName} `}</div>
+            <StandardSeparator />
+            <div style={{ display: 'inline' }}>{`${downloadSize} `}</div>
+            <StandardSeparator />
+            <div style={{ display: 'inline' }}>{`${type.charAt(0).toUpperCase() + type.slice(1)}`}</div>
+            <div>{`${downloads} downloads`}</div>
+          </Button>
+        </Col>
+      </Row>
+
+      <StandardModal canCancel={false} title='' modalOpen={modalOpen} handleModalClose={() => { }} titleIcon={<Icon />} closable={false}>
+        <p>Starting download for {downloadName}...</p>
+        <Spinner animation='border' />
+      </StandardModal>
+    </>
+  );
+};
 
 const EditDownloads = (props) => {
   const { app, setMainDownloads } = props;
