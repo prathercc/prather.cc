@@ -35,9 +35,8 @@ function Root() {
             style={{
               backgroundColor: bgColor,
               color: textColor,
-              minHeight: '95vh',
+              minHeight: '100vh',
               textAlign: 'center',
-              border: '1px solid transparent',
               overflow: 'hidden',
               position: 'relative'
             }}

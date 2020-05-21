@@ -63,7 +63,7 @@ export const StandardPage = ({ title = '', children }) => {
                     backgroundColor: fgColor,
                     fontFamily: fontStyle,
                     marginTop: '2vh',
-                    opacity: '0.9',
+                    opacity: '0.95',
                     fontSize: softwareFontSize,
                     paddingTop: '3vh',
                     paddingBottom: '5vh',
@@ -81,7 +81,7 @@ export const StandardPage = ({ title = '', children }) => {
 }
 
 export const StandardModal = ({ modalOpen, handleModalClose, children, buttons }) => {
-    const { fgColorDetail, textColor, softwareMaintenanceFontSize, fontStyle } = useContext(AppContext);
+    const { fgColorDetail, textColor, softwareMaintenanceFontSize, fontStyle, softwareFontSize } = useContext(AppContext);
     return (
         <Modal
             style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle, opacity: 0.9 }}
@@ -101,7 +101,7 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons }
                 {children}
                 <Modal.Footer style={{ padding: 0, marginTop: '1vh', border: 'none' }}>
                     {buttons}
-                    <Button onClick={handleModalClose} variant='outline-light' style={{ marginTop: '1vh' }}> Cancel</Button>
+                    <Button onClick={handleModalClose} variant='outline-light' style={{ marginTop: '1vh', fontSize: softwareFontSize }}> Cancel</Button>
                 </Modal.Footer>
             </Modal.Body>
         </Modal>
@@ -109,12 +109,12 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons }
 }
 
 export const LinkModal = ({ link, handleModalClose, modalOpen }) => {
-    const { softwareMaintenanceFontSize } = useContext(AppContext);
+    const { softwareMaintenanceFontSize, softwareFontSize } = useContext(AppContext);
     const ContinueButton =
         <Button
             onClick={() => { handleModalClose(); window.open(`${link}`); }}
             variant='light'
-            style={{ marginTop: '1vh' }}>
+            style={{ marginTop: '1vh', fontSize: softwareFontSize }}>
             Continue
         </Button>
     return (

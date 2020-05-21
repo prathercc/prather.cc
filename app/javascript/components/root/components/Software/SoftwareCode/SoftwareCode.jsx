@@ -42,7 +42,7 @@ const ViewRepo = ({ style, repoLink, iconSize }) => {
   };
   return (
     <>
-      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title={<><Icon /> <div>Project Repository</div></>} style={{ ...style, cursor: 'pointer', minHeight: '65px' }} />
+      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title={<><Icon /> <div>Project Repository</div></>} style={{ ...style, cursor: 'pointer', minHeight: '58px' }} />
       <LinkModal modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)} link={repoLink} />
     </>
   );
@@ -55,7 +55,7 @@ const ViewIssues = ({ style, repoLink, iconSize }) => {
   };
   return (
     <>
-      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title={<><Icon /> <div>Open Issues</div></>} style={{ ...style, cursor: 'pointer', minHeight: '65px' }} />
+      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title={<><Icon /> <div>Open Issues</div></>} style={{ ...style, cursor: 'pointer', minHeight: '58px' }} />
       <LinkModal modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)} link={`${repoLink}/issues`} />
     </>
   );
@@ -90,7 +90,8 @@ const CloneRepository = ({ repoLink, style, iconSize }) => {
     variant='light'
     style={{
       marginTop: '1vh',
-      cursor: buttonEnabled ? 'pointer' : 'default'
+      cursor: buttonEnabled ? 'pointer' : 'default',
+      fontSize: softwareFontSize
     }}
   >
     {buttonText}
@@ -98,7 +99,7 @@ const CloneRepository = ({ repoLink, style, iconSize }) => {
 
   return (
     <>
-      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title={<><Icon /> <div>Clone Repository</div></>} style={{ ...style, cursor: 'pointer', minHeight: '65px' }} />
+      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title={<><Icon /> <div>Clone Repository</div></>} style={{ ...style, cursor: 'pointer', minHeight: '58px' }} />
       <StandardModal
         modalOpen={modalOpen}
         handleModalClose={handleModalClose}

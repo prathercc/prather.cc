@@ -168,8 +168,9 @@ function SoftwareApplication(props) {
 }
 
 const ImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
-  const RawButton = <Button variant='light' style={{ marginTop: '1vh' }} onClick={() => window.open(imageLink)}>View Raw Image</Button>
-
+  const appSettings = useContext(AppContext);
+  const { softwareFontSize } = appSettings;
+  const RawButton = <Button variant='light' style={{ marginTop: '1vh', fontSize: softwareFontSize }} onClick={() => window.open(imageLink)}>View Raw Image</Button>
   return (
     <StandardModal buttons={RawButton} modalOpen={modalOpen} handleModalClose={handleModalClose}>
       <img src={imageLink} style={{ maxWidth: '85%', marginTop: '2vh' }} />
