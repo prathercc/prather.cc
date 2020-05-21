@@ -1,17 +1,17 @@
   .animation1 {
     background-repeat: repeat;
-    animation: animation1 infinite 75s linear ;
+    animation: animation1 infinite 145s linear ;
   }
 
 @keyframes animation1 {
   0% {
-    transform: scaleY(1) perspective(1px)
+    transform: scaleX(1) perspective(1px)
   }
   50%{
-    transform: scaleY(1.2) perspective(1px)
+    transform: scaleX(1.5) perspective(1px)
   }
   100% {
-    transform:scaleY(1) perspective(1px)
+    transform:scaleX(1) perspective(1px)
   }
 }
 
