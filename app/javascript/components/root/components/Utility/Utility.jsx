@@ -80,7 +80,7 @@ export const StandardPage = ({ title = '', children }) => {
     );
 }
 
-export const StandardModal = ({ modalOpen, handleModalClose, children, buttons }) => {
+export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, canCancel = true }) => {
     const { fgColorDetail, textColor, softwareMaintenanceFontSize, fontStyle, softwareFontSize } = useContext(AppContext);
     return (
         <Modal
@@ -101,7 +101,7 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons }
                 {children}
                 <Modal.Footer style={{ padding: 0, marginTop: '1vh', border: 'none' }}>
                     {buttons}
-                    <Button onClick={handleModalClose} variant='outline-light' style={{ marginTop: '1vh', fontSize: softwareFontSize }}> Cancel</Button>
+                    <Button disabled={!canCancel} onClick={handleModalClose} variant='outline-light' style={{ marginTop: '1vh', fontSize: softwareFontSize }}> Cancel</Button>
                 </Modal.Footer>
             </Modal.Body>
         </Modal>

@@ -1,16 +1,11 @@
-import React, { useContext, useState, useRef } from 'react';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Button from 'react-bootstrap/Button';
-import FormControl from 'react-bootstrap/FormControl';
+import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { AppContext } from '../../../AppContext';
 import '../Software.css';
-import { StandardCard, StandardModal, LinkModal } from '../../Utility/Utility';
-import Alarm from 'react-bootstrap-icons/dist/icons/alarm';
-import Archive from 'react-bootstrap-icons/dist/icons/archive';
-import Bag from 'react-bootstrap-icons/dist/icons/bag';
+import { StandardCard, LinkModal } from '../../Utility/Utility';
+import Alarm from 'react-bootstrap-icons/dist/icons/exclamation-diamond';
+import CodeSlash from 'react-bootstrap-icons/dist/icons/code-slash';
 import { useCurrentBreakpointName } from 'react-socks';
 
 function SoftwareCode(props) {
@@ -35,7 +30,7 @@ function SoftwareCode(props) {
 const ViewRepo = ({ style, repoLink, iconSize }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const Icon = () => {
-    return <Archive style={{ fontSize: iconSize }} />;
+    return <CodeSlash style={{ fontSize: iconSize }} />;
   };
   return (
     <>
