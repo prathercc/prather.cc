@@ -17,7 +17,7 @@ function SoftwareCode(props) {
   const { repoLink } = props;
   const breakpoint = useCurrentBreakpointName();
 
-  const iconSize = breakpoint === 'xsmall' ? '5vw' : breakpoint === 'large' ? '2.5vw' : breakpoint === 'medium' ? '3.5vw' : breakpoint === 'small' ? '4.5vw' : '1.5vw';
+  const iconSize = breakpoint === 'xsmall' ? '7vw' : breakpoint === 'large' ? '4.5vw' : breakpoint === 'medium' ? '5.5vw' : breakpoint === 'small' ? '6.5vw' : '3vw';
   return (
     <Container style={{ marginTop: '2vh' }}>
       <Row>
@@ -26,9 +26,6 @@ function SoftwareCode(props) {
         </Col>
         <Col>
           <ViewIssues repoLink={repoLink} iconSize={iconSize} />
-        </Col>
-        <Col>
-          <CloneRepository repoLink={repoLink} iconSize={iconSize} />
         </Col>
       </Row>
     </Container>
@@ -42,7 +39,7 @@ const ViewRepo = ({ style, repoLink, iconSize }) => {
   };
   return (
     <>
-      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title={<><Icon /> <div>Project Repository</div></>} style={{ ...style, cursor: 'pointer', minHeight: '58px' }} />
+      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title={<><Icon /> <div style={{ paddingTop: '5px' }}>Project Repository</div></>} style={{ ...style, cursor: 'pointer', minHeight: '71px' }} />
       <LinkModal modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)} link={repoLink} />
     </>
   );
@@ -55,73 +52,10 @@ const ViewIssues = ({ style, repoLink, iconSize }) => {
   };
   return (
     <>
-      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title={<><Icon /> <div>Open Issues</div></>} style={{ ...style, cursor: 'pointer', minHeight: '58px' }} />
+      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title={<><Icon /> <div style={{ paddingTop: '5px' }}>Open Issues</div></>} style={{ ...style, cursor: 'pointer', minHeight: '71px' }} />
       <LinkModal modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)} link={`${repoLink}/issues`} />
     </>
   );
 }
-
-const CloneRepository = ({ repoLink, style, iconSize }) => {
-  const appSettings = useContext(AppContext);
-  const { softwareMaintenanceFontSize, softwareFontSize } = appSettings;
-  const [modalOpen, setModalOpen] = useState(false);
-  const [buttonText, setButtonText] = useState('Copy to Clipboard');
-  const [buttonEnabled, setButtonEnabled] = useState(true);
-  const textAreaRef = useRef(null);
-
-  const Icon = () => {
-    return <Bag style={{ fontSize: iconSize }} />;
-  };
-
-  const handleModalClose = () => {
-    setModalOpen(false);
-    setButtonText('Copy to Clipboard');
-    setButtonEnabled(true);
-  };
-
-  const CopyButton = <Button
-    disabled={!buttonEnabled}
-    onClick={() => {
-      textAreaRef.current.select();
-      document.execCommand('copy');
-      setButtonText('Copied!');
-      setButtonEnabled(false);
-    }}
-    variant='light'
-    style={{
-      marginTop: '1vh',
-      cursor: buttonEnabled ? 'pointer' : 'default',
-      fontSize: softwareFontSize
-    }}
-  >
-    {buttonText}
-  </Button>;
-
-  return (
-    <>
-      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title={<><Icon /> <div>Clone Repository</div></>} style={{ ...style, cursor: 'pointer', minHeight: '58px' }} />
-      <StandardModal
-        modalOpen={modalOpen}
-        handleModalClose={handleModalClose}
-        buttons={CopyButton}
-      >
-        <div style={{ fontSize: softwareFontSize }}>Clone project with Git</div>
-        <InputGroup style={{ marginTop: '2vh' }}>
-          <FormControl
-            readOnly
-            style={{
-              cursor: 'text',
-              textAlign: 'center',
-              fontSize: softwareMaintenanceFontSize
-            }}
-            ref={textAreaRef}
-            value={`${repoLink}.git`}
-          />
-        </InputGroup>
-
-      </StandardModal>
-    </>
-  );
-};
 
 export default SoftwareCode;

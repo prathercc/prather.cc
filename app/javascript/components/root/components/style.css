@@ -13,3 +13,11 @@
 .defaultImageNudge:hover {
     border: solid 1px #4fc9c9;
 }
+
+.brandMouseOver {
+    color: #4fc9c9 !important;
+    transition: color 0.2s ease-in-out;
+}
+.brandMouseOver:hover {
+    color: white !important;
+}

@@ -12,15 +12,15 @@
     },
     "index": {
       "js": [
-        "/packs/js/index-35f8f6a5dc0e855bfcd4.js"
+        "/packs/js/index-0660cf02800def918621.js"
       ],
       "js.map": [
-        "/packs/js/index-35f8f6a5dc0e855bfcd4.js.map"
+        "/packs/js/index-0660cf02800def918621.js.map"
       ]
     }
   },
-  "index.js": "/packs/js/index-35f8f6a5dc0e855bfcd4.js",
-  "index.js.map": "/packs/js/index-35f8f6a5dc0e855bfcd4.js.map",
+  "index.js": "/packs/js/index-0660cf02800def918621.js",
+  "index.js.map": "/packs/js/index-0660cf02800def918621.js.map",
   "media/components/root/images/background.png": "/packs/media/components/root/images/background-0ffc5841eeff5437918be6555cb38d12.png",
   "media/components/root/images/pratherccsplatABS1.png": "/packs/media/components/root/images/pratherccsplatABS1-667a00539cb104658ae246dd83a5aa7a.png"
 }

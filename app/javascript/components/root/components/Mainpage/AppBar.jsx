@@ -5,7 +5,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Container from 'react-bootstrap/Container';
 import { Breakpoint } from 'react-socks';
 import { AppContext } from '../../AppContext';
-import { StandardSeparator } from '../Utility/Utility';
+import { StandardSeparator, getThemeColor } from '../Utility/Utility';
 
 function AppBar() {
   return (
@@ -108,10 +108,8 @@ const CustomNavLink = props => {
 const CustomBrand = props => {
   const { appbarFontSize } = props;
   return (
-    <Navbar.Brand style={{ cursor: 'default', fontSize: appbarFontSize }} onClick={() => window.open('/login', '_self')}>
-      {'<'}
-      <div style={{ color: '#4fc9c9', display: 'inline' }}>Prather.cc</div>
-      {' />'}
+    <Navbar.Brand style={{ fontSize: appbarFontSize }} onClick={() => window.open('/login', '_self')}>
+      <div className='brandMouseOver' style={{ color: getThemeColor(1), cursor: 'pointer' }}>Prather.cc</div>
     </Navbar.Brand>
   )
 }
