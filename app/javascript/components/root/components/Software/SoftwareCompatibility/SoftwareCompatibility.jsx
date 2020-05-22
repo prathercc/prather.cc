@@ -11,8 +11,7 @@ import Check from 'react-bootstrap-icons/dist/icons/check';
 import X from 'react-bootstrap-icons/dist/icons/x';
 import { AppContext } from '../../../AppContext';
 import { fetchDownloads, postDownload, putDownload, deleteDownload, incrementDownload } from '../../../downloadService';
-import { StandardCard, StandardModal, StandardSeparator } from '../../Utility/Utility';
-import { useCurrentBreakpointName } from 'react-socks';
+import { StandardCard, StandardModal, StandardSeparator, getThemeColor } from '../../Utility/Utility';
 
 function SoftwareCompatibility(props) {
   const { compatibility, app, setMainDownloads, userData, downloads } = props;
@@ -20,37 +19,21 @@ function SoftwareCompatibility(props) {
     <StandardCard title='Available Platforms' style={{ marginTop: '2vh' }}>
       <Card.Body style={{ width: '90%' }}>
         <CompatibilityTable compatibility={compatibility} />
-        {userData ? (
-          <EditDownloads
-            app={app}
-            setMainDownloads={setMainDownloads}
-          />
-        ) : (
-            ''
-          )}
-
-        {downloads === null ? (
-          <Container>
-            <Spinner animation='border' />
-          </Container>
-        ) : downloads.length === 0 ? (
-          ''
-        ) : (
-              downloads.map((download) => {
-                return (
-                  <SoftwareDownloadOption
-                    key={download.id}
-                    downloadLink={download.path}
-                    downloadName={download.file_name}
-                    type={download.os_type}
-                    downloadSize={download.file_size}
-                    downloads={download.download_count}
-                    id={download.id}
-                  />
-                );
-              })
-            )}
-
+        {userData && <EditDownloads app={app} setMainDownloads={setMainDownloads} />}
+        {!downloads && <Spinner animation='border' />}
+        {downloads?.length > 0 && downloads.map((download) => {
+          return (
+            <SoftwareDownloadOption
+              key={download.id}
+              downloadLink={download.path}
+              downloadName={download.file_name}
+              type={download.os_type}
+              downloadSize={download.file_size}
+              downloads={download.download_count}
+              id={download.id}
+            />
+          );
+        })}
       </Card.Body>
     </StandardCard>
   );
@@ -58,9 +41,8 @@ function SoftwareCompatibility(props) {
 
 const SoftwareDownloadOption = ({ downloadName, downloadLink, type, downloadSize, downloads, id }) => {
   const appSettings = useContext(AppContext);
-  const { iconSizing, softwareFontSize } = appSettings;
+  const { softwareFontSize } = appSettings;
   const [modalOpen, setModalOpen] = useState(false);
-  const breakpoint = useCurrentBreakpointName();
 
   const handleModalOpen = async () => {
     await incrementDownload(id);
@@ -71,34 +53,18 @@ const SoftwareDownloadOption = ({ downloadName, downloadLink, type, downloadSize
     }, 3000);
   };
 
-  const Icon = () => {
-    return <Download style={{ fontSize: iconSizing }} />;
-  };
-
   return (
     <>
       <Row>
         <Col>
-          <Button
-            variant='dark'
-            style={{ marginTop: '1vh', fontSize: softwareFontSize }}
-            size={breakpoint === 'xsmall' ? 'sm' : 'md'}
-            onClick={() => handleModalOpen()}
-            block
-          >
-            <div style={{ display: 'inline' }}>{`${downloadName} `}</div>
-            <StandardSeparator />
-            <div style={{ display: 'inline' }}>{`${downloadSize} `}</div>
-            <StandardSeparator />
-            <div style={{ display: 'inline' }}>{`${type.charAt(0).toUpperCase() + type.slice(1)}`}</div>
-            <div>{`${downloads} downloads`}</div>
-          </Button>
+          <div onClick={handleModalOpen} style={{ outline: `1px solid ${getThemeColor(0.1)}`, marginBottom: '5px', cursor: 'pointer', fontSize: softwareFontSize }} className='defaultMouseOver'>
+            {downloadName} <StandardSeparator /> {downloadSize} <StandardSeparator /> {`${type.charAt(0).toUpperCase() + type.slice(1)}`}
+          </div>
         </Col>
       </Row>
-
-      <StandardModal canCancel={false} title='' modalOpen={modalOpen} handleModalClose={() => { }} titleIcon={<Icon />} closable={false}>
-        <p>Starting download for {downloadName}...</p>
-        <Spinner animation='border' />
+      <StandardModal canCancel={false} title='' modalOpen={modalOpen} handleModalClose={() => { }} closable={false}>
+        [DL-{downloads + 1}]: Starting download for {downloadName}...
+        <div style={{ marginTop: '1vh' }}><Spinner animation='border' /></div>
       </StandardModal>
     </>
   );
@@ -139,20 +105,17 @@ const EditDownloads = (props) => {
         modalOpen={modalOpen}
         handleModalClose={handleModalClose}
       >
-        {downloadsLoading ? (
-          <Spinner animation='border' />
-        ) : (
-            downloads.map((download) => {
-              return (
-                <Download
-                  key={download.id}
-                  value={download}
-                  app={app}
-                  reloadDownloads={openAndLoadDownloads}
-                />
-              );
-            })
-          )}
+        {downloadsLoading && <Spinner animation='border' />}
+        {!downloadsLoading && downloads.map((download) => {
+          return (
+            <Download
+              key={download.id}
+              value={download}
+              app={app}
+              reloadDownloads={openAndLoadDownloads}
+            />
+          );
+        })}
         <Download app={app} reloadDownloads={openAndLoadDownloads} />
       </StandardModal>
     </>
@@ -315,21 +278,18 @@ const CompatiblityResult = ({ boolean }) => {
 
   return (
     <td>
-      {boolean ? (
-        <Check
-          style={{
-            color: 'limegreen',
-            fontSize: iconSize,
-          }}
-        />
-      ) : (
-          <X
-            style={{
-              color: 'red',
-              fontSize: iconSize,
-            }}
-          />
-        )}
+      {boolean && <Check
+        style={{
+          color: 'limegreen',
+          fontSize: iconSize,
+        }}
+      />}
+      {!boolean && <X
+        style={{
+          color: 'red',
+          fontSize: iconSize,
+        }}
+      />}
     </td>
   );
 };

@@ -101,7 +101,7 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
                 {children}
                 <Modal.Footer style={{ padding: 0, marginTop: '1vh', border: 'none' }}>
                     {buttons}
-                    <Button disabled={!canCancel} onClick={handleModalClose} variant='outline-light' style={{ marginTop: '1vh', fontSize: softwareFontSize }}> Cancel</Button>
+                    <Button disabled={!canCancel} onClick={handleModalClose} variant='light' style={{ marginTop: '1vh', fontSize: softwareFontSize }}> Cancel</Button>
                 </Modal.Footer>
             </Modal.Body>
         </Modal>
@@ -113,7 +113,7 @@ export const LinkModal = ({ link, handleModalClose, modalOpen }) => {
     const ContinueButton =
         <Button
             onClick={() => { handleModalClose(); window.open(`${link}`); }}
-            variant='light'
+            variant='outline-light'
             style={{ marginTop: '1vh', fontSize: softwareFontSize }}>
             Continue
         </Button>
