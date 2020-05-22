@@ -13,11 +13,10 @@ import { AppContext } from '../../../AppContext';
 import { fetchDownloads, postDownload, putDownload, deleteDownload, incrementDownload } from '../../../downloadService';
 import { StandardCard, StandardModal, StandardSeparator, getThemeColor } from '../../Utility/Utility';
 
-function SoftwareCompatibility(props) {
-  const { compatibility, app, setMainDownloads, userData, downloads } = props;
+function SoftwareCompatibility({ compatibility, app, setMainDownloads, userData, downloads, style }) {
   return (
-    <StandardCard title='Available Platforms' style={{ marginTop: '2vh' }}>
-      <Card.Body style={{ width: '90%' }}>
+    <StandardCard title='Available Platforms' style={{ ...style }}>
+      <Card.Body style={{ width: '90%', padding: '1vh' }}>
         <CompatibilityTable compatibility={compatibility} />
         {userData && <EditDownloads app={app} setMainDownloads={setMainDownloads} />}
         {!downloads && <Spinner animation='border' />}
@@ -44,27 +43,30 @@ const SoftwareDownloadOption = ({ downloadName, downloadLink, type, downloadSize
   const { softwareFontSize } = appSettings;
   const [modalOpen, setModalOpen] = useState(false);
 
-  const handleModalOpen = async () => {
+  const handleDownload = async () => {
     await incrementDownload(id);
-    setModalOpen(true);
-    window.setTimeout(() => {
-      window.open(downloadLink);
-      setModalOpen(false);
-    }, 3000);
+    window.open(downloadLink);
+    setModalOpen(false);
   };
+  const DownloadButton = <Button onClick={handleDownload} variant='outline-light' style={{ marginTop: '1vh', fontSize: softwareFontSize }}>Download</Button>
 
   return (
     <>
       <Row>
         <Col>
-          <div onClick={handleModalOpen} style={{ outline: `1px solid ${getThemeColor(0.1)}`, marginBottom: '5px', cursor: 'pointer', fontSize: softwareFontSize }} className='defaultMouseOver'>
-            {downloadName} <StandardSeparator /> {downloadSize} <StandardSeparator /> {`${type.charAt(0).toUpperCase() + type.slice(1)}`}
+          <div onClick={() => setModalOpen(true)} style={{ outline: `1px dotted ${getThemeColor(0.1)}`, marginBottom: '5px', cursor: 'pointer', fontSize: softwareFontSize }} className='defaultMouseOver'>
+            {downloadName} <StandardSeparator /> {`${type.charAt(0).toUpperCase() + type.slice(1)}`}
           </div>
         </Col>
       </Row>
-      <StandardModal canCancel={false} title='' modalOpen={modalOpen} handleModalClose={() => { }} closable={false}>
-        [DL-{downloads + 1}]: Starting download for {downloadName}...
-        <div style={{ marginTop: '1vh' }}><Spinner animation='border' /></div>
+      <StandardModal buttons={DownloadButton} title='' modalOpen={modalOpen} handleModalClose={() => { setModalOpen(false) }} closable={false}>
+        <div style={{ display: 'inline' }}>File Name: </div><div style={{ display: 'inline', color: getThemeColor(1) }}>{downloadName}</div>
+        <div />
+        <div style={{ display: 'inline' }}>File Size: </div><div style={{ display: 'inline', color: getThemeColor(1) }}>{downloadSize}</div>
+        <div />
+        <div style={{ display: 'inline' }}>Downloads: </div><div style={{ display: 'inline', color: getThemeColor(1) }}>{downloads}</div>
+        <div />
+        <div style={{ marginTop: '1vh', color: getThemeColor(1) }}>{downloadLink}</div>
       </StandardModal>
     </>
   );
@@ -251,7 +253,7 @@ const CompatibilityTable = (props) => {
       bordered
       responsive
       size='sm'
-      style={{ width: '100%' }}
+      style={{ width: '100%', marginBottom: '1vh' }}
     >
       <thead>
         <tr>

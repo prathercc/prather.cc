@@ -85,12 +85,12 @@ function SoftwareApplication(props) {
               titleObject={{
                 title: app.name,
                 description: app.description,
-                image: app.image_link,
-                imageWidth: { desktop: '25vw', mobile: '50vw' },
+                image: app.image_link
               }}
               setImageModalObj={setImageModalObj}
             />
             <SoftwareCompatibility
+              style={{ marginTop: '2vh' }}
               app={app}
               setMainDownloads={setDownloads}
               compatibility={{ ...compatibility }}
@@ -122,13 +122,13 @@ function SoftwareApplication(props) {
         ? features.map((feature, index) => {
           return (
             <SoftwareFeature
+              style={{ marginTop: '2vh' }}
               setImageModalObj={setImageModalObj}
               index={index}
               key={feature.id}
               userData={userData}
               descriptionObject={{
                 image: feature.image_link,
-                imageWidth: { desktop: '25vw', mobile: '50vw' },
                 title: feature.title,
                 description: feature.description,
                 content_title: feature.content_title,
@@ -156,13 +156,13 @@ const ImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
   )
 }
 
-const SoftwareFeature = ({ userData, descriptionObject, index, setImageModalObj }) => {
+const SoftwareFeature = ({ userData, descriptionObject, index, setImageModalObj, style, desktop = '25vw', mobile = '50vw' }) => {
   const appSettings = useContext(AppContext);
   const { softwareFontSize } = appSettings;
   const breakpoint = useCurrentBreakpointName();
 
   const cardTitle =
-    <Container style={{ marginBottom: '1vh' }}>
+    <Container>
       <Row>
         <Col>
           {descriptionObject.title}
@@ -181,46 +181,43 @@ const SoftwareFeature = ({ userData, descriptionObject, index, setImageModalObj 
     </Container>;
 
   return (
-    <StandardCard title={cardTitle} style={{ marginTop: '2vh' }}>
-      <StandardImage
-        className='defaultImageNudge'
-        src={descriptionObject.image}
-        onClick={() => setImageModalObj({ open: true, imageLink: descriptionObject.image })}
-        style={{ width: breakpoint === 'xlarge' ? descriptionObject.imageWidth.desktop : descriptionObject.imageWidth.mobile, cursor: 'pointer', marginBottom: '1vh' }}
-      />
-      <div style={{ textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: descriptionObject.content_description }} />
-      {
-        userData ?
-          (
-            <Button style={{ fontSize: softwareFontSize }} block variant='warning'
-              onClick={() =>
-                window.open(`/software/admin/feature/edit/${descriptionObject.application_name}/${descriptionObject.id}`, '_self')
-              }> Edit </Button>)
-          : ('')
-      }
+    <StandardCard title={cardTitle} style={{ ...style }}>
+      <Card.Body style={{ width: '90%', padding: '1vh' }}>
+        <StandardImage
+          className='defaultImageNudge'
+          src={descriptionObject.image}
+          onClick={() => setImageModalObj({ open: true, imageLink: descriptionObject.image })}
+          style={{ width: breakpoint === 'xlarge' ? desktop : mobile, cursor: 'pointer', marginBottom: '1vh' }}
+        />
+        <div style={{ textAlign: 'left', margin: 'auto' }} dangerouslySetInnerHTML={{ __html: descriptionObject.content_description }} />
+        {
+          userData ?
+            (
+              <Button style={{ fontSize: softwareFontSize }} block variant='warning'
+                onClick={() =>
+                  window.open(`/software/admin/feature/edit/${descriptionObject.application_name}/${descriptionObject.id}`, '_self')
+                }> Edit </Button>)
+            : ('')
+        }
+      </Card.Body>
     </StandardCard>
   );
 };
 
-const SoftwareTitle = ({ titleObject, setImageModalObj }) => {
+const SoftwareTitle = ({ titleObject, setImageModalObj, desktop = '25vw', mobile = '50vw' }) => {
   const breakpoint = useCurrentBreakpointName();
-
   return (
     <StandardCard>
-      <Container>
-        <Card.Text
-          dangerouslySetInnerHTML={{ __html: titleObject.description }}
-        ></Card.Text>
-      </Container>
-      <Card.Body>
+      <Card.Body style={{ paddingTop: 0, paddingBottom: '1vh' }}>
+        <div style={{ marginBottom: '1vh' }} dangerouslySetInnerHTML={{ __html: titleObject.description }} />
         <StandardImage
           className='defaultImageNudge'
           style={{
             cursor: 'pointer',
             width:
               breakpoint === 'xlarge'
-                ? titleObject.imageWidth.desktop
-                : titleObject.imageWidth.mobile,
+                ? desktop
+                : mobile,
           }}
           onClick={() => setImageModalObj({ open: true, imageLink: titleObject.image })}
           variant='top'

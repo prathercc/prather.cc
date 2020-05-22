@@ -34,7 +34,7 @@ const ViewRepo = ({ style, repoLink, iconSize }) => {
   };
   return (
     <>
-      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title={<><Icon /> <div style={{ paddingTop: '5px' }}>Project Repository</div></>} style={{ ...style, cursor: 'pointer', minHeight: '71px' }} />
+      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title={<><Icon /> <div style={{ paddingTop: '5px' }}>Project Repository</div></>} style={{ ...style, cursor: 'pointer', minHeight: '58px' }} />
       <LinkModal modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)} link={repoLink} />
     </>
   );
@@ -47,7 +47,7 @@ const ViewIssues = ({ style, repoLink, iconSize }) => {
   };
   return (
     <>
-      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title={<><Icon /> <div style={{ paddingTop: '5px' }}>Open Issues</div></>} style={{ ...style, cursor: 'pointer', minHeight: '71px' }} />
+      <StandardCard onClick={() => setModalOpen(true)} className='defaultMouseOver' title={<><Icon /> <div style={{ paddingTop: '5px' }}>Open Issues</div></>} style={{ ...style, cursor: 'pointer', minHeight: '58px' }} />
       <LinkModal modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)} link={`${repoLink}/issues`} />
     </>
   );
