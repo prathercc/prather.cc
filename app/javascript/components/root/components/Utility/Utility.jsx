@@ -39,7 +39,7 @@ export const StandardCard = ({ title = '', divider = false, style, children, cla
                 backgroundColor: fgColorDetail,
                 fontSize: softwareFontSize,
                 alignItems: 'center',
-                borderColor: !divider ? getThemeColor(0.4) : getThemeColor(0.65),
+                borderColor: !divider ? getThemeColor(0.3) : getThemeColor(0.65),
                 paddingTop: !divider && '1vh',
                 paddingBottom: !divider && '1vh',
                 maxWidth: '724px'
@@ -123,7 +123,7 @@ export const LinkModal = ({ link, handleModalClose, modalOpen }) => {
             handleModalClose={handleModalClose}
             buttons={ContinueButton}
         >
-            <p>You are about to leave <strong>prather.cc</strong> and navigate to:</p>
+            <p>You are about to leave <strong style={{color: getThemeColor(1)}}>Prather.cc</strong> and navigate to:</p>
             <FormControl
                 style={{
                     cursor: 'text',

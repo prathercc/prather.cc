@@ -7,6 +7,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import FormControl from 'react-bootstrap/FormControl';
 import Check from 'react-bootstrap-icons/dist/icons/check';
 import X from 'react-bootstrap-icons/dist/icons/x';
 import { AppContext } from '../../../AppContext';
@@ -40,7 +41,7 @@ function SoftwareCompatibility({ compatibility, app, setMainDownloads, userData,
 
 const SoftwareDownloadOption = ({ downloadName, downloadLink, type, downloadSize, downloads, id }) => {
   const appSettings = useContext(AppContext);
-  const { softwareFontSize } = appSettings;
+  const { softwareFontSize, softwareMaintenanceFontSize } = appSettings;
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleDownload = async () => {
@@ -54,7 +55,7 @@ const SoftwareDownloadOption = ({ downloadName, downloadLink, type, downloadSize
     <>
       <Row>
         <Col>
-          <div onClick={() => setModalOpen(true)} style={{ outline: `1px dotted ${getThemeColor(0.1)}`, marginBottom: '5px', cursor: 'pointer', fontSize: softwareFontSize }} className='defaultMouseOver'>
+          <div onClick={() => setModalOpen(true)} style={{ marginBottom: '5px', cursor: 'pointer', fontSize: softwareFontSize }} className='defaultMouseOver'>
             {downloadName} <StandardSeparator /> {`${type.charAt(0).toUpperCase() + type.slice(1)}`}
           </div>
         </Col>
@@ -65,8 +66,16 @@ const SoftwareDownloadOption = ({ downloadName, downloadLink, type, downloadSize
         <div style={{ display: 'inline' }}>File Size: </div><div style={{ display: 'inline', color: getThemeColor(1) }}>{downloadSize}</div>
         <div />
         <div style={{ display: 'inline' }}>Downloads: </div><div style={{ display: 'inline', color: getThemeColor(1) }}>{downloads}</div>
-        <div />
-        <div style={{ marginTop: '1vh', color: getThemeColor(1) }}>{downloadLink}</div>
+        <FormControl
+          style={{
+            cursor: 'text',
+            textAlign: 'center',
+            fontSize: softwareMaintenanceFontSize,
+            marginTop: '1vh'
+          }}
+          disabled
+          value={`${downloadLink}`}
+        />
       </StandardModal>
     </>
   );
