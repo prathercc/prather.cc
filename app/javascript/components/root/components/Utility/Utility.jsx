@@ -6,7 +6,6 @@ import Container from 'react-bootstrap/Container';
 import { AppContext } from '../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
 import Modal from 'react-bootstrap/Modal';
-import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 
 export const StandardImage = (props) => {
@@ -16,7 +15,7 @@ export const StandardImage = (props) => {
             {
                 isLoading && <Spinner size='sm' animation='border' />
             }
-            <img {...props} style={{ ...props.style, display: isLoading ? 'none' : '', maxWidth: '410px' }} onLoad={() => setIsLoading(false)} />
+            <img {...props} style={{ ...props.style, display: isLoading ? 'none' : '', maxWidth: '350px' }} onLoad={() => setIsLoading(false)} />
         </>
     );
 };
@@ -84,7 +83,7 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
     const { fgColorDetail, textColor, softwareMaintenanceFontSize, fontStyle, softwareFontSize } = useContext(AppContext);
     return (
         <Modal
-            style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle, opacity: 0.9 }}
+            style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle, opacity: 0.9, overflow: 'inherit' }}
             centered
             show={modalOpen}
             onHide={handleModalClose}
@@ -123,16 +122,8 @@ export const LinkModal = ({ link, handleModalClose, modalOpen }) => {
             handleModalClose={handleModalClose}
             buttons={ContinueButton}
         >
-            <p>You are about to leave <strong style={{color: getThemeColor(1)}}>Prather.cc</strong> and navigate to:</p>
-            <FormControl
-                style={{
-                    cursor: 'text',
-                    textAlign: 'center',
-                    fontSize: softwareMaintenanceFontSize
-                }}
-                disabled
-                value={`${link}`}
-            />
+            <p>You are about to leave <strong style={{ color: getThemeColor(1) }}>Prather.cc</strong> and navigate to:</p>
+            <div style={{ color: getThemeColor(1) }}>{link}</div>
         </StandardModal>
     )
 }

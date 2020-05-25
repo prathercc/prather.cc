@@ -7,7 +7,6 @@ import Spinner from 'react-bootstrap/Spinner';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import FormControl from 'react-bootstrap/FormControl';
 import Check from 'react-bootstrap-icons/dist/icons/check';
 import X from 'react-bootstrap-icons/dist/icons/x';
 import { AppContext } from '../../../AppContext';
@@ -66,16 +65,8 @@ const SoftwareDownloadOption = ({ downloadName, downloadLink, type, downloadSize
         <div style={{ display: 'inline' }}>File Size: </div><div style={{ display: 'inline', color: getThemeColor(1) }}>{downloadSize}</div>
         <div />
         <div style={{ display: 'inline' }}>Downloads: </div><div style={{ display: 'inline', color: getThemeColor(1) }}>{downloads}</div>
-        <FormControl
-          style={{
-            cursor: 'text',
-            textAlign: 'center',
-            fontSize: softwareMaintenanceFontSize,
-            marginTop: '1vh'
-          }}
-          disabled
-          value={`${downloadLink}`}
-        />
+        <div />
+        <div style={{ display: 'inline', color: getThemeColor(1) }}>{downloadLink}</div>
       </StandardModal>
     </>
   );
