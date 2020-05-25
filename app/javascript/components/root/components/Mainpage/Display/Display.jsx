@@ -3,36 +3,26 @@ import './Display.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Breakpoint } from 'react-socks';
-import Logo from '../../Logo/Logo';
+import { useCurrentBreakpointName } from 'react-socks';
+import pratherccsplatBright from '../../../images/pratherccsplatABS1.png';
 
 function Display() {
   return (
     <>
-      <Breakpoint small down>
-        <PrathImage splatWidth='75vw' />
-      </Breakpoint>
-      <Breakpoint medium only>
-        <PrathImage splatWidth='55vw' />
-      </Breakpoint>
-      <Breakpoint large only>
-        <PrathImage splatWidth='45vw' />
-      </Breakpoint>
-      <Breakpoint xlarge up>
-        <PrathImage splatWidth='25vw' />
-      </Breakpoint>
+      <PrathImage />
     </>
   );
 }
 
 const PrathImage = props => {
-  const { splatWidth } = props;
+  const breakpoint = useCurrentBreakpointName();
+  const widthLogic = breakpoint === 'xlarge' ? '25vw' : breakpoint === 'large' ? '45vw' : breakpoint === 'medium' ? '55vw' : '75vw';
 
   return (
     <Container className='App-splat-to-mobile' style={{ opacity: .85 }}>
       <Row>
         <Col>
-          <Logo splatWidth={splatWidth} />
+          <img src={pratherccsplatBright} style={{ width: widthLogic, maxWidth: '375px' }} />
         </Col>
       </Row>
     </Container>

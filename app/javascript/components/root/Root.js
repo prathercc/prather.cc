@@ -16,7 +16,7 @@ import './components/style.css';
 
 function Root() {
   const appSettings = useContext(AppContext);
-  const { bgColor, textColor } = appSettings;
+  const { bgColor, textColor, fgColorDetail } = appSettings;
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -33,12 +33,12 @@ function Root() {
           <AppBar />
           <div
             style={{
-              backgroundColor: bgColor,
+              backgroundColor: fgColorDetail,
               color: textColor,
-              minHeight: '100vh',
               textAlign: 'center',
               overflow: 'hidden',
-              position: 'relative'
+              position: 'relative',
+              minHeight: '94.3vh'
             }}
           >
             <div className='animation1' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(${background})`, opacity: 1 }}></div>

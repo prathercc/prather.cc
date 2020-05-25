@@ -1,42 +1,36 @@
   .animation1 {
     background-repeat: repeat;
-    animation: animation1 infinite 1050s both ;
+    animation: animation1 infinite 250s linear ;
   }
 
 @keyframes animation1 {
   0% {
-    transform: scale(7.5,3) perspective(1px) rotate(-140deg);
-    filter: grayscale(0.3)
+    transform: scale(4.5,2) perspective(1px) rotate(135deg);
+    filter: grayscale(0.5)
   }
   50%{
-    transform: scale(7.5,3) perspective(1px) rotate(320deg);
+    transform: scale(4.5,2) perspective(1px) rotate(240deg);
     filter: grayscale(0.5)
   }
   100% {
-    transform:scale(7.5,3) perspective(1px) rotate(-140deg);
-    filter: grayscale(0.3)
+    transform:scale(4.5,2) perspective(1px) rotate(135deg);
+    filter: grayscale(0.5)
   }
 }
 
   .App-splat-to-mobile {
-    animation: App-splat-to-mobile infinite 50s linear;
+    animation: App-splat-to-mobile infinite 5s linear;
   }
 
 @keyframes App-splat-to-mobile {
   0% {
-    filter: grayscale(0%);
-  }
-  25% {
-    filter: grayscale(25%);
+    filter: grayscale(0.5);
   }
   50% {
-    filter: grayscale(100%);
-  }
-  75% {
-    filter: grayscale(25%);
+    filter: grayscale(.9);
   }
   100% {
-    filter: grayscale(0%);
+    filter: grayscale(0.6);
   }
 }
 
