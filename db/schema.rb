@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_08_003822) do
+ActiveRecord::Schema.define(version: 2020_05_25_010127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,6 @@ ActiveRecord::Schema.define(version: 2020_05_08_003822) do
     t.boolean "linux"
     t.boolean "mac"
     t.boolean "android"
-    t.boolean "ios"
     t.string "repo_link"
     t.string "languages"
     t.datetime "created_at", precision: 6, null: false
