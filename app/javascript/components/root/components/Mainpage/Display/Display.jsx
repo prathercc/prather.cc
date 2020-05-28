@@ -14,7 +14,7 @@ function Display() {
   );
 }
 
-const PrathImage = props => {
+const PrathImage = () => {
   const breakpoint = useCurrentBreakpointName();
   const widthLogic = breakpoint === 'xlarge' ? '25vw' : breakpoint === 'large' ? '45vw' : breakpoint === 'medium' ? '55vw' : '75vw';
 

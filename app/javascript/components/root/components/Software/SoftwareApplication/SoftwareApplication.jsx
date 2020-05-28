@@ -98,7 +98,7 @@ function SoftwareApplication(props) {
               downloads={downloads}
             />
 
-            <SoftwareCode repoLink={app.repo_link} />
+            <SoftwareCode style={{ marginTop: '2vh' }} repoLink={app.repo_link} />
 
           </>
         )}

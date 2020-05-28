@@ -1,6 +1,6 @@
   .animation1 {
     background-repeat: repeat;
-    animation: animation1 infinite 250s linear ;
+    animation: animation1 infinite 350s linear ;
   }
 
 @keyframes animation1 {

@@ -83,7 +83,7 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
     const { fgColorDetail, textColor, softwareMaintenanceFontSize, fontStyle, softwareFontSize } = useContext(AppContext);
     return (
         <Modal
-            style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle, opacity: 0.9, overflow: 'inherit' }}
+            style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle, opacity: 0.95, overflow: 'inherit' }}
             centered
             show={modalOpen}
             onHide={handleModalClose}
