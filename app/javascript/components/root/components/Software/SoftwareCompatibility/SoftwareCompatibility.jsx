@@ -12,15 +12,33 @@ import X from 'react-bootstrap-icons/dist/icons/x';
 import { AppContext } from '../../../AppContext';
 import { fetchDownloads, postDownload, putDownload, deleteDownload, incrementDownload } from '../../../downloadService';
 import { StandardCard, StandardModal, StandardSeparator, getThemeColor } from '../../Utility/Utility';
+import { useCurrentBreakpointName } from 'react-socks';
 
 function SoftwareCompatibility({ compatibility, app, setMainDownloads, userData, downloads, style }) {
+  const [activeOs, setActiveOs] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [filteredDownloads, setFilteredDownloads] = useState([]);
+
+  useEffect(() => {
+    setModalOpen(activeOs ? true : false);
+    if (activeOs) {
+      let osDownloads = downloads?.filter(x => x.os_type === activeOs);
+      setFilteredDownloads(osDownloads.length !== 0 ? downloads.filter(x => x.os_type === 'Resource' || x.os_type === activeOs) : []);
+    }
+  }, [activeOs]);
+
   return (
-    <StandardCard title='Available Platforms' style={{ ...style }}>
-      <Card.Body style={{ width: '90%', padding: '1vh' }}>
-        <CompatibilityTable compatibility={compatibility} />
-        {userData && <EditDownloads app={app} setMainDownloads={setMainDownloads} />}
-        {!downloads && <Spinner animation='border' />}
-        {downloads?.length > 0 && downloads.map((download) => {
+    <>
+      <StandardCard style={{ ...style }}>
+        <Card.Body style={{ width: '90%', padding: '1vh' }}>
+          <CompatibilityTable setActiveOs={setActiveOs} style={{ marginBottom: '1vh' }} compatibility={compatibility} />
+          {userData && <EditDownloads app={app} setMainDownloads={setMainDownloads} />}
+          {!downloads && <Spinner animation='border' />}
+        </Card.Body>
+      </StandardCard>
+      <StandardModal modalOpen={modalOpen} handleModalClose={() => setActiveOs(null)}>
+        <div style={{ marginBottom: '2vh' }}>Available Downloads: </div>
+        {filteredDownloads.length > 0 && filteredDownloads.map((download) => {
           return (
             <SoftwareDownloadOption
               key={download.id}
@@ -33,8 +51,11 @@ function SoftwareCompatibility({ compatibility, app, setMainDownloads, userData,
             />
           );
         })}
-      </Card.Body>
-    </StandardCard>
+        {
+          filteredDownloads?.length < 1 && 'Not found :('
+        }
+      </StandardModal>
+    </>
   );
 }
 
@@ -237,49 +258,40 @@ const Download = (props) => {
   );
 };
 
-const CompatibilityTable = (props) => {
-  const {
-    compatibility = {
-      windows: false,
-      linux: false,
-      mac: false,
-      android: false
-    },
-  } = props;
+const CompatibilityTable = ({ compatibility = { windows: false, linux: false, mac: false, android: false }, style, setActiveOs }) => {
+  const colStyling = { cursor: 'pointer', marginLeft: '1px', paddingLeft: 0, paddingRight: 0, paddingTop: '1px', paddingBottom: '5px' }
+  const appSettings = useContext(AppContext);
+  const { standardCardTitleFontSize } = appSettings;
   return (
-    <Table
-      variant='dark'
-      striped
-      bordered
-      responsive
-      size='sm'
-      style={{ width: '100%', marginBottom: '1vh' }}
-    >
-      <thead>
-        <tr>
-          <th>Windows</th>
-          <th>Linux</th>
-          <th>Mac</th>
-          <th>Android</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
+    <Container style={{ ...style, margin: 0, fontSize: standardCardTitleFontSize }}>
+      <Row>
+        <Col className='defaultMouseOver' onClick={() => setActiveOs('Windows')} style={{ ...colStyling }}>
           <CompatiblityResult boolean={compatibility.windows} />
+          <div>Windows</div>
+        </Col>
+        <Col className='defaultMouseOver' onClick={() => setActiveOs('Linux')} style={{ ...colStyling }}>
           <CompatiblityResult boolean={compatibility.linux} />
+          <div>Linux</div>
+        </Col>
+        <Col className='defaultMouseOver' onClick={() => setActiveOs('Mac')} style={{ ...colStyling }}>
           <CompatiblityResult boolean={compatibility.mac} />
+          <div>Mac</div>
+        </Col>
+        <Col className='defaultMouseOver' onClick={() => setActiveOs('Android')} style={{ ...colStyling }}>
           <CompatiblityResult boolean={compatibility.android} />
-        </tr>
-      </tbody>
-    </Table>
+          <div>Android</div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
 const CompatiblityResult = ({ boolean }) => {
-  const iconSize = '3vw';
+  const breakpoint = useCurrentBreakpointName();
+  const iconSize = breakpoint === 'xsmall' ? '7vw' : breakpoint === 'large' ? '4.5vw' : breakpoint === 'medium' ? '5.5vw' : breakpoint === 'small' ? '6.5vw' : '3vw';
 
   return (
-    <td>
+    <>
       {boolean && <Check
         style={{
           color: 'limegreen',
@@ -292,7 +304,7 @@ const CompatiblityResult = ({ boolean }) => {
           fontSize: iconSize,
         }}
       />}
-    </td>
+    </>
   );
 };
 
