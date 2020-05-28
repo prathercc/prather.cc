@@ -12,7 +12,7 @@ function SoftwareCode({ repoLink, style }) {
   const breakpoint = useCurrentBreakpointName();
   const iconSize = breakpoint === 'xsmall' ? '7vw' : breakpoint === 'large' ? '4.5vw' : breakpoint === 'medium' ? '5.5vw' : breakpoint === 'small' ? '6.5vw' : '3vw';
   return (
-    <Container fluid style={{ margin: 0, padding: 0 }}>
+    <Container fluid style={{ margin: 0, padding: 0, ...style }}>
       <Row>
         <Col>
           <ViewRepo repoLink={repoLink} iconSize={iconSize} />
