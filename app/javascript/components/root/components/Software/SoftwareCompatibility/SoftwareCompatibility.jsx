@@ -30,11 +30,9 @@ function SoftwareCompatibility({ compatibility, app, setMainDownloads, userData,
   return (
     <>
       <StandardCard style={{ ...style }}>
-        <Card.Body style={{ width: '90%', padding: '1vh' }}>
-          <CompatibilityTable setActiveOs={setActiveOs} style={{ marginBottom: '1vh' }} compatibility={compatibility} />
+          <CompatibilityTable setActiveOs={setActiveOs} compatibility={compatibility} />
           {userData && <EditDownloads app={app} setMainDownloads={setMainDownloads} />}
           {!downloads && <Spinner animation='border' />}
-        </Card.Body>
       </StandardCard>
       <StandardModal modalOpen={modalOpen} handleModalClose={() => setActiveOs(null)}>
         <div style={{ marginBottom: '2vh' }}>Available Downloads: </div>
