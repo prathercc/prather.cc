@@ -22,7 +22,7 @@ export const StandardImage = (props) => {
 
 export const StandardSeparator = ({ style, onClick }) => {
     return (
-        <div onClick={onClick} style={{ ...style, display: 'inline', color: getThemeColor() }}> <em>.:!:.</em> </div>
+        <div onClick={onClick} style={{ ...style, display: 'inline', color: getThemeColor() }}> <em>/</em> </div>
     )
 }
 
@@ -55,13 +55,12 @@ export const StandardPage = ({ title = '', children }) => {
     const breakpoint = useCurrentBreakpointName();
     const containerLogic = breakpoint === 'xlarge' ? '50vw' : breakpoint === 'large' ? '75vw' : breakpoint === 'medium' ? '85vw' : '';
     return (
-        <Container style={{ width: containerLogic, maxWidth: '790px' }}>
+        <Container style={{ width: containerLogic, maxWidth: '790px', marginTop: '2vh' }}>
             <Jumbotron
                 as={Card}
                 style={{
                     backgroundColor: fgColor,
                     fontFamily: fontStyle,
-                    marginTop: '2vh',
                     opacity: '0.95',
                     fontSize: softwareFontSize,
                     paddingTop: '3vh',
@@ -72,7 +71,7 @@ export const StandardPage = ({ title = '', children }) => {
                 <div style={{ fontSize: standardPageTitleFontSize }}>
                     {title}
                 </div>
-                <StandardCard divider style={{ margin: 'auto', marginBottom: '3vh', width: '65%' }} />
+                <StandardCard divider style={{ margin: 'auto', marginBottom: '3vh', width: '65%', display: title ? '' : 'none' }} />
                 {children}
             </Jumbotron>
         </Container>

@@ -16,14 +16,14 @@ function Display() {
   return (
     <>
       <PrathImage />
-      <StandardPage title='Quick Links'>
+      <StandardPage>
         <Container>
           <Row>
-            <Col style={{ padding: '15px' }}>
+            <Col>
               <MediaCard logo={GitHubMark} link='https://github.com/prathercc' />
               11 Public Repositories
             </Col>
-            <Col style={{ padding: '15px' }}>
+            <Col>
               <MediaCard logo={YouTubeMark} link='https://youtube.com/prathercc' />
               0 Videos
             </Col>
