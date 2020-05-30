@@ -38,7 +38,7 @@ export const StandardCard = ({ title = '', divider = false, style, children, cla
                 backgroundColor: fgColorDetail,
                 fontSize: softwareFontSize,
                 alignItems: 'center',
-                borderColor: !divider ? getThemeColor(0.3) : getThemeColor(0.65),
+                borderColor: !divider ? getThemeColor(0) : getThemeColor(0.65),
                 paddingTop: !divider && '1vh',
                 paddingBottom: !divider && '1vh',
                 maxWidth: '724px'
@@ -130,4 +130,14 @@ export const LinkModal = ({ link, handleModalClose, modalOpen }) => {
 
 export const getThemeColor = (opacity = 1) => {
     return `rgb(79, 201, 201, ${opacity})`;
+}
+
+export const getIconSizing = () => {
+    const breakpoint = useCurrentBreakpointName();
+    return breakpoint === 'xsmall' ? '7vw' : breakpoint === 'large' ? '4.5vw' : breakpoint === 'medium' ? '5.5vw' : breakpoint === 'small' ? '6.5vw' : '3vw';
+}
+
+export const getLogoSizing = () => {
+    const breakpoint = useCurrentBreakpointName();
+    return breakpoint === 'xsmall' ? '15vw' : breakpoint === 'large' ? '12.5vw' : breakpoint === 'medium' ? '13.5vw' : breakpoint === 'small' ? '14.5vw' : '8vw';
 }

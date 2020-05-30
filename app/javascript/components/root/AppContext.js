@@ -2,13 +2,13 @@ import { createContext } from 'react';
 
 const appSettings = {
   bgColor: '#b3b3ff',
-  fgColorDetail: '#2E2929',
+  fgColorDetail: '#262626',
   fgColor: '#333333',
   textColor: '#FFFFFF',
   fontStyle: 'Titillium Web',
   iconSizing: '3vw',
   iconSizingSmall: '3vw',
-
+  
   appbarFontStyle: 'Titillium Web',
   appbarFontSize: 'calc(5px + 2vmin)',
 
