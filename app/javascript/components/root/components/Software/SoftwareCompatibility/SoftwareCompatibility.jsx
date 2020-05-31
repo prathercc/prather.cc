@@ -1,6 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-import Card from 'react-bootstrap/Card';
-import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Spinner from 'react-bootstrap/Spinner';
@@ -11,7 +9,7 @@ import Check from 'react-bootstrap-icons/dist/icons/check';
 import X from 'react-bootstrap-icons/dist/icons/x';
 import { AppContext } from '../../../AppContext';
 import { fetchDownloads, postDownload, putDownload, deleteDownload, incrementDownload } from '../../../downloadService';
-import { StandardCard, StandardModal, StandardSeparator, getThemeColor } from '../../Utility/Utility';
+import { StandardCard, StandardModal, getThemeColor } from '../../Utility/Utility';
 import { useCurrentBreakpointName } from 'react-socks';
 
 function SoftwareCompatibility({ compatibility, app, setMainDownloads, userData, downloads, style }) {
@@ -29,14 +27,12 @@ function SoftwareCompatibility({ compatibility, app, setMainDownloads, userData,
 
   return (
     <>
-      <StandardCard style={{ ...style }}>
-          <CompatibilityTable setActiveOs={setActiveOs} compatibility={compatibility} />
-          {userData && <EditDownloads app={app} setMainDownloads={setMainDownloads} />}
-          {!downloads && <Spinner animation='border' />}
-      </StandardCard>
+      <CompatibilityTable style={{ ...style }} setActiveOs={setActiveOs} compatibility={compatibility} />
+      {userData && <EditDownloads style={{ marginTop: '1vh' }} app={app} setMainDownloads={setMainDownloads} />}
+      {!downloads && <Spinner animation='border' />}
       <StandardModal modalOpen={modalOpen} handleModalClose={() => setActiveOs(null)}>
         <div style={{ marginBottom: '2vh' }}>Available Downloads: </div>
-        {filteredDownloads.length > 0 && filteredDownloads.map((download) => {
+        {filteredDownloads.length > 0 && filteredDownloads.map((download, index) => {
           return (
             <SoftwareDownloadOption
               key={download.id}
@@ -46,6 +42,7 @@ function SoftwareCompatibility({ compatibility, app, setMainDownloads, userData,
               downloadSize={download.file_size}
               downloads={download.download_count}
               id={download.id}
+              index={index}
             />
           );
         })}
@@ -57,9 +54,9 @@ function SoftwareCompatibility({ compatibility, app, setMainDownloads, userData,
   );
 }
 
-const SoftwareDownloadOption = ({ downloadName, downloadLink, type, downloadSize, downloads, id }) => {
+const SoftwareDownloadOption = ({ downloadName, downloadLink, downloadSize, downloads, id, index }) => {
   const appSettings = useContext(AppContext);
-  const { softwareFontSize, softwareMaintenanceFontSize } = appSettings;
+  const { softwareFontSize, standardCardTitleFontSize } = appSettings;
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleDownload = async () => {
@@ -73,26 +70,24 @@ const SoftwareDownloadOption = ({ downloadName, downloadLink, type, downloadSize
     <>
       <Row>
         <Col>
-          <div onClick={() => setModalOpen(true)} style={{ marginBottom: '5px', cursor: 'pointer', fontSize: softwareFontSize }} className='defaultMouseOver'>
-            {downloadName} <StandardSeparator /> {`${type.charAt(0).toUpperCase() + type.slice(1)}`}
+          <div style={{ display: 'inline', color: getThemeColor(1) }}>[{index + 1}]: </div>
+          <div onClick={() => setModalOpen(true)} style={{ marginBottom: '5px', cursor: 'pointer', fontSize: standardCardTitleFontSize, display: 'inline' }} className='defaultMouseOver'>
+            {downloadName}
           </div>
         </Col>
       </Row>
       <StandardModal buttons={DownloadButton} title='' modalOpen={modalOpen} handleModalClose={() => { setModalOpen(false) }} closable={false}>
-        <div style={{ display: 'inline' }}>File Name: </div><div style={{ display: 'inline', color: getThemeColor(1) }}>{downloadName}</div>
+        <div style={{ display: 'inline', color: getThemeColor(1) }}>File Name: </div><div style={{ display: 'inline' }}>{downloadName}</div>
         <div />
-        <div style={{ display: 'inline' }}>File Size: </div><div style={{ display: 'inline', color: getThemeColor(1) }}>{downloadSize}</div>
+        <div style={{ display: 'inline', color: getThemeColor(1) }}>File Size: </div><div style={{ display: 'inline' }}>{downloadSize}</div>
         <div />
-        <div style={{ display: 'inline' }}>Downloads: </div><div style={{ display: 'inline', color: getThemeColor(1) }}>{downloads}</div>
-        <div />
-        <div style={{ display: 'inline', color: getThemeColor(1) }}>{downloadLink}</div>
+        <div style={{ display: 'inline', color: getThemeColor(1) }}>Downloads: </div><div style={{ display: 'inline' }}>{downloads}</div>
       </StandardModal>
     </>
   );
 };
 
-const EditDownloads = (props) => {
-  const { app, setMainDownloads } = props;
+const EditDownloads = ({ app, setMainDownloads, style }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [downloads, setDownloads] = useState(null);
   const [downloadsLoading, setDownloadsLoading] = useState(true);
@@ -118,7 +113,7 @@ const EditDownloads = (props) => {
 
   return (
     <>
-      <Button style={{ fontSize: softwareFontSize }} onClick={() => openAndLoadDownloads()} variant='warning' block>
+      <Button style={{ ...style, fontSize: softwareFontSize }} onClick={() => openAndLoadDownloads()} variant='warning' block>
         Modify {app.name} Downloads
       </Button>
       <StandardModal
@@ -143,23 +138,10 @@ const EditDownloads = (props) => {
   );
 };
 
-const Download = (props) => {
-  const { value, app, reloadDownloads } = props;
-  const blankDownload = {
-    application_name: app.name,
-    file_name: '',
-    file_size: '',
-    os_type: '',
-    path: '',
-    download_count: 0,
-    software_id: app.id
-  };
+const Download = ({ value, app, reloadDownloads, blankDownload = { application_name: app.name, file_name: '', file_size: '', os_type: '', path: '', download_count: 0, software_id: app.id } }) => {
+  const [download, setDownload] = useState(value ? blankDownload : value);
 
-  const [download, setDownload] = useState(
-    value === undefined ? blankDownload : value
-  );
-
-  let disabledButton = download.file_name.length === 0 || download.os_type.length === 0 || download.file_size.length === 0 || download.path.length === 0;
+  let disabledButton = download?.file_name?.length === 0 || download?.os_type?.length === 0 || download?.file_size?.length === 0 || download?.path?.length === 0;
 
   const handleDeleteDownload = async () => {
     await deleteDownload(download.id);
@@ -179,7 +161,7 @@ const Download = (props) => {
 
   return (
     <>
-      <Form style={{ marginTop: '2vh' }}>
+      <Form>
         <Container>
           <Row>
             <Col>
@@ -188,9 +170,7 @@ const Download = (props) => {
                 type='text'
                 placeholder='Name'
                 value={download.file_name}
-                onChange={(e) =>
-                  setDownload({ ...download, file_name: e.target.value })
-                }
+                onChange={(e) => setDownload({ ...download, file_name: e.target.value })}
               />
             </Col>
             <Col>
@@ -199,9 +179,7 @@ const Download = (props) => {
                 type='text'
                 placeholder='Size'
                 value={download.file_size}
-                onChange={(e) =>
-                  setDownload({ ...download, file_size: e.target.value })
-                }
+                onChange={(e) => setDownload({ ...download, file_size: e.target.value })}
               />
             </Col>
             <Col>
@@ -210,16 +188,12 @@ const Download = (props) => {
                 type='text'
                 placeholder='Path'
                 value={download.path}
-                onChange={(e) =>
-                  setDownload({ ...download, path: e.target.value })
-                }
+                onChange={(e) => setDownload({ ...download, path: e.target.value })}
               />
             </Col>
             <Col>
               <Form.Control
-                onChange={(e) =>
-                  setDownload({ ...download, os_type: e.target.value })
-                }
+                onChange={(e) => setDownload({ ...download, os_type: e.target.value })}
                 size='sm'
                 as='select'
                 value={download.os_type}
@@ -232,23 +206,15 @@ const Download = (props) => {
                 <option>Resource</option>
               </Form.Control>
             </Col>
-
-            {value === undefined ? (
-              <Button disabled={disabledButton} onClick={() => handleAddDownload()} variant='success'>
-                Add
-              </Button>
-            ) : (
-                <Button disabled={disabledButton} onClick={() => handleEditDownload()} variant='success'>
-                  Save
-                </Button>
-              )}
-            {value === undefined ? (
-              ''
-            ) : (
-                <Button onClick={() => handleDeleteDownload()} variant='danger'>
-                  Delete
-                </Button>
-              )}
+            {
+              value && <Button disabled={disabledButton} onClick={() => handleAddDownload()} variant='success'>Add</Button>
+            }
+            {
+              !value && <Button disabled={disabledButton} onClick={() => handleEditDownload()} variant='success'>Save</Button>
+            }
+            {
+              value && <Button onClick={() => handleDeleteDownload()} variant='danger'>Delete</Button>
+            }
           </Row>
         </Container>
       </Form>
@@ -257,27 +223,34 @@ const Download = (props) => {
 };
 
 const CompatibilityTable = ({ compatibility = { windows: false, linux: false, mac: false, android: false }, style, setActiveOs }) => {
-  const colStyling = { cursor: 'pointer', marginLeft: '1px', paddingLeft: 0, paddingRight: 0, paddingTop: '1px', paddingBottom: '5px' }
   const appSettings = useContext(AppContext);
   const { standardCardTitleFontSize } = appSettings;
   return (
-    <Container style={{ ...style, margin: 0, fontSize: standardCardTitleFontSize }}>
+    <Container fluid style={{ fontSize: standardCardTitleFontSize, ...style, padding: 0 }}>
       <Row>
-        <Col className='defaultMouseOver' onClick={() => setActiveOs('Windows')} style={{ ...colStyling }}>
-          <CompatiblityResult boolean={compatibility.windows} />
-          <div>Windows</div>
+        <Col onClick={() => setActiveOs('Windows')}>
+          <StandardCard className='defaultImageNudge' style={{ cursor: 'pointer' }}>
+            <CompatiblityResult boolean={compatibility.windows} />
+            <div>Windows</div>
+          </StandardCard>
         </Col>
-        <Col className='defaultMouseOver' onClick={() => setActiveOs('Linux')} style={{ ...colStyling }}>
-          <CompatiblityResult boolean={compatibility.linux} />
-          <div>Linux</div>
+        <Col onClick={() => setActiveOs('Linux')}>
+          <StandardCard className='defaultImageNudge' style={{ cursor: 'pointer' }}>
+            <CompatiblityResult boolean={compatibility.linux} />
+            <div>Linux</div>
+          </StandardCard>
         </Col>
-        <Col className='defaultMouseOver' onClick={() => setActiveOs('Mac')} style={{ ...colStyling }}>
-          <CompatiblityResult boolean={compatibility.mac} />
-          <div>Mac</div>
+        <Col onClick={() => setActiveOs('Mac')}>
+          <StandardCard className='defaultImageNudge' style={{ cursor: 'pointer' }}>
+            <CompatiblityResult boolean={compatibility.mac} />
+            <div>Mac</div>
+          </StandardCard>
         </Col>
-        <Col className='defaultMouseOver' onClick={() => setActiveOs('Android')} style={{ ...colStyling }}>
-          <CompatiblityResult boolean={compatibility.android} />
-          <div>Android</div>
+        <Col onClick={() => setActiveOs('Android')}>
+          <StandardCard className='defaultImageNudge' style={{ cursor: 'pointer' }}>
+            <CompatiblityResult boolean={compatibility.android} />
+            <div>Android</div>
+          </StandardCard>
         </Col>
       </Row>
     </Container>
@@ -290,18 +263,8 @@ const CompatiblityResult = ({ boolean }) => {
 
   return (
     <>
-      {boolean && <Check
-        style={{
-          color: 'limegreen',
-          fontSize: iconSize,
-        }}
-      />}
-      {!boolean && <X
-        style={{
-          color: 'red',
-          fontSize: iconSize,
-        }}
-      />}
+      {boolean && <Check style={{ fontSize: iconSize, color: 'rgb(0, 204, 0, 0.8)' }} />}
+      {!boolean && <X style={{ fontSize: iconSize, color: 'rgb(255, 0, 0, 0.8)' }} />}
     </>
   );
 };
