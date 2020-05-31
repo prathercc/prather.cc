@@ -38,7 +38,7 @@ export const StandardCard = ({ title = '', divider = false, style, children, cla
                 backgroundColor: fgColorDetail,
                 fontSize: softwareFontSize,
                 alignItems: 'center',
-                borderColor: !divider ? getThemeColor(0) : getThemeColor(0.65),
+                borderColor: !divider ? '' : getThemeColor(0.65),
                 paddingTop: !divider && '1vh',
                 paddingBottom: !divider && '1vh',
                 maxWidth: '724px'
@@ -107,7 +107,7 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
 }
 
 export const LinkModal = ({ link, handleModalClose, modalOpen }) => {
-    const { softwareMaintenanceFontSize, softwareFontSize } = useContext(AppContext);
+    const { softwareFontSize } = useContext(AppContext);
     const ContinueButton =
         <Button
             onClick={() => { handleModalClose(); window.open(`${link}`); }}
