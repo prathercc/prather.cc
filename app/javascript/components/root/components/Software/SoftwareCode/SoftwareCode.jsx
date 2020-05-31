@@ -3,32 +3,29 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../Software.css';
-import { StandardCard, LinkModal, getThemeColor } from '../../Utility/Utility';
+import { StandardCard, LinkModal, getThemeColor, getIconSizing } from '../../Utility/Utility';
 import Alarm from 'react-bootstrap-icons/dist/icons/exclamation-diamond';
 import CodeSlash from 'react-bootstrap-icons/dist/icons/code-slash';
-import { useCurrentBreakpointName } from 'react-socks';
 
 function SoftwareCode({ repoLink, style }) {
-  const breakpoint = useCurrentBreakpointName();
-  const iconSize = breakpoint === 'xsmall' ? '7vw' : breakpoint === 'large' ? '4.5vw' : breakpoint === 'medium' ? '5.5vw' : breakpoint === 'small' ? '6.5vw' : '3vw';
   return (
     <Container fluid style={{ margin: 0, padding: 0, ...style }}>
       <Row>
         <Col>
-          <ViewRepo repoLink={repoLink} iconSize={iconSize} />
+          <ViewRepo repoLink={repoLink} />
         </Col>
         <Col>
-          <ViewIssues repoLink={repoLink} iconSize={iconSize} />
+          <ViewIssues repoLink={repoLink} />
         </Col>
       </Row>
     </Container>
   );
 }
 
-const ViewRepo = ({ style, repoLink, iconSize }) => {
+const ViewRepo = ({ style, repoLink }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const Icon = () => {
-    return <CodeSlash style={{ fontSize: iconSize, color: getThemeColor(0.8) }} />;
+    return <CodeSlash style={{ fontSize: getIconSizing(), color: getThemeColor(0.8) }} />;
   };
   return (
     <>
@@ -38,10 +35,10 @@ const ViewRepo = ({ style, repoLink, iconSize }) => {
   );
 }
 
-const ViewIssues = ({ style, repoLink, iconSize }) => {
+const ViewIssues = ({ style, repoLink }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const Icon = () => {
-    return <Alarm style={{ fontSize: iconSize, color: getThemeColor(0.8) }} />;
+    return <Alarm style={{ fontSize: getIconSizing(), color: getThemeColor(0.8) }} />;
   };
   return (
     <>

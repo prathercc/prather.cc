@@ -9,8 +9,7 @@ import Check from 'react-bootstrap-icons/dist/icons/check';
 import X from 'react-bootstrap-icons/dist/icons/x';
 import { AppContext } from '../../../AppContext';
 import { fetchDownloads, postDownload, putDownload, deleteDownload, incrementDownload } from '../../../downloadService';
-import { StandardCard, StandardModal, getThemeColor } from '../../Utility/Utility';
-import { useCurrentBreakpointName } from 'react-socks';
+import { StandardCard, StandardModal, getThemeColor, getIconSizing } from '../../Utility/Utility';
 
 function SoftwareCompatibility({ compatibility, app, setMainDownloads, userData, downloads, style }) {
   const [activeOs, setActiveOs] = useState(null);
@@ -258,13 +257,10 @@ const CompatibilityTable = ({ compatibility = { windows: false, linux: false, ma
 };
 
 const CompatiblityResult = ({ boolean }) => {
-  const breakpoint = useCurrentBreakpointName();
-  const iconSize = breakpoint === 'xsmall' ? '7vw' : breakpoint === 'large' ? '4.5vw' : breakpoint === 'medium' ? '5.5vw' : breakpoint === 'small' ? '6.5vw' : '3vw';
-
   return (
     <>
-      {boolean && <Check style={{ fontSize: iconSize, color: 'rgb(0, 204, 0, 0.8)' }} />}
-      {!boolean && <X style={{ fontSize: iconSize, color: 'rgb(255, 0, 0, 0.8)' }} />}
+      {boolean && <Check style={{ fontSize: getIconSizing(), color: 'rgb(0, 204, 0, 0.8)' }} />}
+      {!boolean && <X style={{ fontSize: getIconSizing(), color: 'rgb(255, 0, 0, 0.8)' }} />}
     </>
   );
 };

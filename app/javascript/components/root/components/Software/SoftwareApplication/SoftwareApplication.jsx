@@ -74,53 +74,44 @@ function SoftwareApplication(props) {
 
   return (
     <StandardPage title={app.name}>
-      {app === blankApp ? (
-        <Spinner animation='border' />
-      ) : (
-          <>
-            <MaintenanceAlert
-              maintained={!app.is_legacy}
-            />
-            <SoftwareTitle
-              titleObject={{
-                title: app.name,
-                description: app.description,
-                image: app.image_link
-              }}
-              setImageModalObj={setImageModalObj}
-            />
-            <SoftwareCode style={{ marginTop: '2vh' }} repoLink={app.repo_link} />
-            <SoftwareCompatibility
-              style={{ marginTop: '2vh' }}
-              app={app}
-              setMainDownloads={setDownloads}
-              compatibility={{ ...compatibility }}
-              userData={userData}
-              downloads={downloads}
-            />
+      {app === blankApp && <Spinner style={{ margin: 'auto' }} animation='border' />}
+      {
+        app !== blankApp && <>
+          <MaintenanceAlert
+            maintained={!app.is_legacy}
+          />
+          <SoftwareTitle
+            titleObject={{
+              title: app.name,
+              description: app.description,
+              image: app.image_link
+            }}
+            setImageModalObj={setImageModalObj}
+          />
+          <SoftwareCode style={{ marginTop: '2vh' }} repoLink={app.repo_link} />
+          <SoftwareCompatibility
+            style={{ marginTop: '2vh' }}
+            app={app}
+            setMainDownloads={setDownloads}
+            compatibility={{ ...compatibility }}
+            userData={userData}
+            downloads={downloads}
+          />
+        </>
+      }
 
-
-
-          </>
-        )}
-
-      {userData ? (
-        <Button
-          onClick={() =>
-            window.open(`/software/admin/feature/new/${app.name}`, '_self')
-          }
+      {
+        userData && <Button
+          onClick={() => window.open(`/software/admin/feature/new/${app.name}`, '_self')}
           style={{ marginTop: '1vh', fontSize: softwareFontSize }}
           block
           variant='warning'
         >
           Add Feature
         </Button>
-      ) : (
-          ''
-        )}
-
-      {features !== null
-        ? features.map((feature, index) => {
+      }
+      {
+        features && features.map((feature, index) => {
           return (
             <SoftwareFeature
               style={{ marginTop: '2vh' }}
@@ -140,7 +131,7 @@ function SoftwareApplication(props) {
             />
           );
         })
-        : ''}
+      }
       <ImageModal modalOpen={imageModalObj.open} handleModalClose={() => setImageModalObj({ ...imageModalObj, open: false })} imageLink={imageModalObj.imageLink} />
     </StandardPage>
   );
@@ -192,13 +183,9 @@ const SoftwareFeature = ({ userData, descriptionObject, index, setImageModalObj,
         />
         <div style={{ textAlign: 'left', margin: 'auto' }} dangerouslySetInnerHTML={{ __html: descriptionObject.content_description }} />
         {
-          userData ?
-            (
-              <Button style={{ fontSize: softwareFontSize }} block variant='warning'
-                onClick={() =>
-                  window.open(`/software/admin/feature/edit/${descriptionObject.application_name}/${descriptionObject.id}`, '_self')
-                }> Edit </Button>)
-            : ('')
+          userData && <Button style={{ fontSize: softwareFontSize }} block variant='warning'
+            onClick={() => window.open(`/software/admin/feature/edit/${descriptionObject.application_name}/${descriptionObject.id}`, '_self')}>
+            Edit </Button>
         }
       </Card.Body>
     </StandardCard>
