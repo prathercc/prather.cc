@@ -26,7 +26,7 @@ export const StandardSeparator = ({ style, onClick }) => {
     )
 }
 
-export const StandardCard = ({ title = '', divider = false, style, children, className, onClick }) => {
+export const StandardCard = ({ title = '',  style, children, className, onClick }) => {
     const appSettings = useContext(AppContext);
     const { softwareFontSize, fgColorDetail, standardCardTitleFontSize } = appSettings;
     return (
@@ -38,13 +38,27 @@ export const StandardCard = ({ title = '', divider = false, style, children, cla
                 backgroundColor: fgColorDetail,
                 fontSize: softwareFontSize,
                 alignItems: 'center',
-                borderColor: !divider ? '' : getThemeColor(0.65),
-                paddingTop: !divider && '1vh',
-                paddingBottom: !divider && '1vh',
+                paddingTop: '1vh',
+                paddingBottom: '1vh',
                 maxWidth: '724px'
             }}>
             <div style={{ fontSize: standardCardTitleFontSize }}>{title}</div>
             {children}
+        </Card>
+    )
+}
+
+const StandardCardHeader = () => {
+    return (
+        <Card
+            style={{
+                borderColor: getThemeColor(1),
+                maxWidth: '724px',
+                margin: 'auto',
+                marginBottom: '3vh',
+                width: '65%',
+                opacity:'0.65'
+            }}>
         </Card>
     )
 }
@@ -71,7 +85,7 @@ export const StandardPage = ({ title = '', children }) => {
                 <div style={{ fontSize: standardPageTitleFontSize }}>
                     {title}
                 </div>
-                <StandardCard divider style={{ margin: 'auto', marginBottom: '3vh', width: '65%', display: title ? '' : 'none' }} />
+                <StandardCardHeader />
                 {children}
             </Jumbotron>
         </Container>

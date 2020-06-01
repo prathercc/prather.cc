@@ -3,16 +3,20 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import Badge from 'react-bootstrap/Badge';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 import { fetchAllSoftware } from '../../../softwareService';
 import { useCurrentBreakpointName } from 'react-socks';
-import { StandardImage, StandardCard, StandardPage } from '../../Utility/Utility';
+import { StandardImage, StandardCard, StandardPage, getThemeColor } from '../../Utility/Utility';
 import { AppContext } from '../../../AppContext';
 
-function SoftwareTable(props) {
-  const { userData } = props;
+function SoftwareTable({ userData }) {
   const [software, setSoftware] = useState(null);
+  const [filteredSoftware, setFilteredSoftware] = useState([]);
+  const [softwareType, setSoftwareType] = useState('Active');
   const appSettings = useContext(AppContext);
-  const { softwareFontSize, standardCardTitleFontSize } = appSettings;
+  const { softwareFontSize } = appSettings;
   useEffect(() => {
     const loadSoftware = async () => {
       await fetchAllSoftware(setSoftware);
@@ -20,29 +24,49 @@ function SoftwareTable(props) {
     loadSoftware();
   }, []);
 
+  useEffect(() => {
+    const sortActiveSoftware = () => {
+      let res = software?.filter(x => x.is_legacy === false);
+      setFilteredSoftware(res);
+    }
+    const sortInactiveSoftware = () => {
+      let res = software?.filter(x => x.is_legacy === true);
+      setFilteredSoftware(res);
+    }
+    const sortAllSoftware = () => {
+      setFilteredSoftware(software);
+    }
+    if (softwareType === 'Active') {
+      sortActiveSoftware();
+    }
+    else if (softwareType === 'Inactive') {
+      sortInactiveSoftware();
+    }
+    else {
+      sortAllSoftware();
+    }
+  }, [softwareType, software])
+
   return (
     <StandardPage title='Software Panel'>
       {
         software &&
         <>
-          <StandardCard title='Maintained Applications'>
-            <CustomTable userData={userData} software={software} legacy={false} />
+          <SoftwareSwitcher setSoftwareType={setSoftwareType} softwareType={softwareType} />
+          <StandardCard style={{ marginTop: '1vh' }} title={`${softwareType} Applications`}>
+            <CustomTable software={filteredSoftware} userData={userData} />
           </StandardCard>
-
-          <StandardCard title='Legacy Applications' style={{ marginTop: '2vh' }}>
-          <CustomTable userData={userData} software={software} legacy={true} />
-          </StandardCard>
-          {
-            userData && <Button
-              style={{ fontSize: softwareFontSize }}
-              block
-              variant='warning'
-              onClick={() => window.open('/software/admin/new', '_self')}
-            >
-              Add application
-              </Button>
-          }
         </>
+      }
+      {
+        userData && <Button
+          style={{ fontSize: softwareFontSize, marginTop: '1vh' }}
+          block
+          variant='warning'
+          onClick={() => window.open('/software/admin/new', '_self')}
+        >
+          Add application
+              </Button>
       }
       {
         !software && <Spinner animation='border' />
@@ -51,14 +75,36 @@ function SoftwareTable(props) {
   );
 }
 
-const CustomTable = props => {
-  const { userData, software, legacy } = props;
-  const appSettings = useContext(AppContext);
-  const { tableHeaderFontSize } = appSettings;
+const SoftwareSwitcher = ({ setSoftwareType, softwareType }) => {
+
   return (
-    <div style={{ ...props.style, width: '95%' }}>
-      <div style={{ fontSize: tableHeaderFontSize, marginBottom: '1vh' }}>
-      </div>
+    <>
+      <Container>
+        <Row>
+          <Col>
+            <StandardCard onClick={() => setSoftwareType('Active')} className='defaultImageNudge' style={{ cursor: 'pointer', border: softwareType === 'Active' && `solid ${getThemeColor(1)} 1px` }}>
+              Active
+            </StandardCard>
+          </Col>
+          <Col>
+            <StandardCard onClick={() => setSoftwareType('Inactive')} className='defaultImageNudge' style={{ cursor: 'pointer', border: softwareType === 'Inactive' && `solid ${getThemeColor(1)} 1px` }}>
+              Inactive
+            </StandardCard>
+          </Col>
+          <Col>
+            <StandardCard onClick={() => setSoftwareType('All')} className='defaultImageNudge' style={{ cursor: 'pointer', border: softwareType === 'All' && `solid ${getThemeColor(1)} 1px` }}>
+              All
+            </StandardCard>
+          </Col>
+        </Row>
+      </Container>
+    </>
+  )
+}
+
+const CustomTable = ({ software, userData, style }) => {
+  return (
+    <div style={{ ...style, width: '95%' }}>
       <Table
         striped
         bordered
@@ -66,7 +112,7 @@ const CustomTable = props => {
         variant='dark'
         hover
         size='sm'
-        style={{ cursor: 'default' }}
+        style={{ cursor: 'default', marginTop: '1vh' }}
       >
         <thead>
           <tr>
@@ -77,7 +123,7 @@ const CustomTable = props => {
           </tr>
         </thead>
         <tbody>
-          {software.filter(app => app.is_legacy === legacy).map((app) => {
+          {software?.map((app) => {
             return (
               <SoftwareSample
                 key={app.id}
