@@ -21,3 +21,8 @@
 .brandMouseOver:hover {
     color: white !important;
 }
+
+ul {
+    text-align: left;
+    list-style-position: inside;
+}
