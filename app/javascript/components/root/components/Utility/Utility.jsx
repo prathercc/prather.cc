@@ -13,12 +13,37 @@ export const StandardImage = (props) => {
     return (
         <>
             {
-                isLoading && <Spinner size='sm' animation='border' />
+                isLoading && <StandardSpinner />
             }
-            <img {...props} style={{ ...props.style, display: isLoading ? 'none' : '', maxWidth: '350px' }} onLoad={() => setIsLoading(false)} />
+            <img {...props} style={{ ...props.style, display: isLoading ? 'none' : '' }} onLoad={() => setIsLoading(false)} onError={() => setIsLoading(true)} />
         </>
     );
 };
+
+export const StandardButton = ({ onClick, style, children, isActive = true }) => {
+    const appSettings = useContext(AppContext);
+    const { softwareFontSize } = appSettings;
+    return (
+        <Card
+            onClick={isActive ? onClick : () => { }}
+            className='defaultButton'
+            style={{
+                margin: 'auto',
+                ...style,
+                fontSize: softwareFontSize,
+                alignItems: 'center',
+                cursor: isActive || 'not-allowed'
+            }}>
+            {children}
+        </Card>
+    )
+}
+
+export const StandardSpinner = () => {
+    return (
+        <Spinner style={{ margin: 'auto', fontSize: '15vw', color: getThemeColor(0.1) }} animation='border' />
+    )
+}
 
 export const StandardSeparator = ({ style, onClick }) => {
     return (
@@ -26,7 +51,7 @@ export const StandardSeparator = ({ style, onClick }) => {
     )
 }
 
-export const StandardCard = ({ title = '',  style, children, className, onClick }) => {
+export const StandardCard = ({ title = '', style, children, className, onClick }) => {
     const appSettings = useContext(AppContext);
     const { softwareFontSize, fgColorDetail, standardCardTitleFontSize } = appSettings;
     return (
@@ -34,13 +59,11 @@ export const StandardCard = ({ title = '',  style, children, className, onClick 
             onClick={onClick}
             className={className}
             style={{
+                margin: 'auto',
                 ...style,
                 backgroundColor: fgColorDetail,
                 fontSize: softwareFontSize,
                 alignItems: 'center',
-                paddingTop: '1vh',
-                paddingBottom: '1vh',
-                maxWidth: '724px'
             }}>
             <div style={{ fontSize: standardCardTitleFontSize }}>{title}</div>
             {children}
@@ -52,24 +75,21 @@ const StandardCardHeader = () => {
     return (
         <Card
             style={{
-                borderColor: getThemeColor(1),
-                maxWidth: '724px',
+                borderColor: getThemeColor(0.8),
                 margin: 'auto',
                 marginBottom: '3vh',
                 width: '65%',
-                opacity:'0.65'
+                opacity: '0.65'
             }}>
         </Card>
     )
 }
 
-export const StandardPage = ({ title = '', children }) => {
+export const StandardPage = ({ title = '', children, style }) => {
     const appSettings = useContext(AppContext);
     const { fgColor, fontStyle, softwareFontSize, standardPageTitleFontSize } = appSettings;
-    const breakpoint = useCurrentBreakpointName();
-    const containerLogic = breakpoint === 'xlarge' ? '50vw' : breakpoint === 'large' ? '75vw' : breakpoint === 'medium' ? '85vw' : '';
     return (
-        <Container style={{ width: containerLogic, maxWidth: '790px', marginTop: '2vh' }}>
+        <Container style={{ minWidth: '85%', ...style }}>
             <Jumbotron
                 as={Card}
                 style={{
@@ -92,8 +112,8 @@ export const StandardPage = ({ title = '', children }) => {
     );
 }
 
-export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, canCancel = true }) => {
-    const { fgColorDetail, textColor, softwareMaintenanceFontSize, fontStyle, softwareFontSize } = useContext(AppContext);
+export const StandardModal = ({ modalOpen, handleModalClose, children, buttons }) => {
+    const { fgColorDetail, textColor, softwareMaintenanceFontSize, fontStyle } = useContext(AppContext);
     return (
         <Modal
             style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle, opacity: 0.95, overflow: 'inherit' }}
@@ -106,14 +126,14 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
                 style={{
                     backgroundColor: fgColorDetail,
                     color: textColor,
-                    outline: `1px solid ${getThemeColor(0.5)}`,
+                    outline: `1px solid ${getThemeColor(0.3)}`,
                     fontSize: softwareMaintenanceFontSize,
                 }}
             >
                 {children}
                 <Modal.Footer style={{ padding: 0, marginTop: '1vh', border: 'none' }}>
                     {buttons}
-                    <Button disabled={!canCancel} onClick={handleModalClose} variant='light' style={{ marginTop: '1vh', fontSize: softwareFontSize }}> Cancel</Button>
+                    <StandardButton onClick={handleModalClose} style={{ minWidth: '25%' }}> Cancel</StandardButton>
                 </Modal.Footer>
             </Modal.Body>
         </Modal>
@@ -121,14 +141,12 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
 }
 
 export const LinkModal = ({ link, handleModalClose, modalOpen }) => {
-    const { softwareFontSize } = useContext(AppContext);
     const ContinueButton =
-        <Button
+        <StandardButton
             onClick={() => { handleModalClose(); window.open(`${link}`); }}
-            variant='outline-light'
-            style={{ marginTop: '1vh', fontSize: softwareFontSize }}>
+            style={{ minWidth: '25%' }}>
             Continue
-        </Button>
+        </StandardButton>
     return (
         <StandardModal
             modalOpen={modalOpen}

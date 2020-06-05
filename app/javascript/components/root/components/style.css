@@ -7,11 +7,21 @@
     color: #4fc9c9 !important;
 }
 .defaultImageNudge {
-    border: solid 1px rgb(79, 201, 201, 0.3);
-    transition: border 0.2s ease-in-out;
+    outline: solid 1px rgb(79, 201, 201, 0.3);
+    transition: outline 0.2s ease-in-out;
 }
 .defaultImageNudge:hover {
-    border: solid 1px #4fc9c9;
+    outline: solid 1px #4fc9c9;
+}
+
+.defaultButton {
+    color: white;
+    background-color: rgb(79, 201, 201, 0.1) !important;
+    transition: background-color 0.2s ease-in-out;
+}
+.defaultButton:hover {
+    cursor:pointer;
+    background-color: rgb(79, 201, 201, 0.4) !important;
 }
 
 .brandMouseOver {

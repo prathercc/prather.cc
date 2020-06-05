@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
 import Col from 'react-bootstrap/Col';
@@ -13,30 +12,14 @@ import { useParams } from 'react-router-dom';
 import { fetchFeatures } from '../../../featureService';
 import '../Software.css';
 import { AppContext } from '../../../AppContext';
-import { StandardImage, StandardCard, StandardPage, StandardModal, getThemeColor, StandardSpinner } from '../../Utility/Utility';
+import { StandardImage, StandardCard, StandardPage, StandardModal, getThemeColor, StandardSpinner, StandardButton } from '../../Utility/Utility';
 
-function SoftwareApplication(props) {
-  const { userData } = props;
-  let { name } = useParams();
-  const [activeView, setActiveView] = useState('Features');
+function SoftwareApplication({ userData, name }) {
+  let { name: paramName } = useParams();
   const [downloads, setDownloads] = useState(null);
   const [features, setFeatures] = useState(null);
   const [imageModalObj, setImageModalObj] = useState({ open: false, imageLink: '' });
-  const blankApp = {
-    android: false,
-    description: '',
-    icon_link: '',
-    id: '',
-    image_link: '',
-    is_legacy: false,
-    languages: '',
-    linux: false,
-    mac: false,
-    name: '',
-    repo_link: '',
-    windows: false,
-  };
-  const [app, setApp] = useState(blankApp);
+  const [app, setApp] = useState(null);
 
   useEffect(() => {
     const fetch = async () => {
@@ -45,7 +28,7 @@ function SoftwareApplication(props) {
     const featureFetch = async () => {
       await fetchFeatures(app.id, setFeatures);
     };
-    if (app !== blankApp) {
+    if (app !== null) {
       fetch();
       featureFetch();
     }
@@ -55,50 +38,46 @@ function SoftwareApplication(props) {
     const fetch = async (val) => {
       await fetchSoftware(val, setApp);
     };
-    if (props.name) {
-      fetch(props.name);
-    } else {
+    if (name) {
       fetch(name);
+    } else {
+      fetch(paramName);
     }
   }, []);
 
-  const compatibility = {
-    windows: app.windows,
-    linux: app.linux,
-    mac: app.mac,
-    android: app.android,
-  };
-
   return (
-    <StandardPage title={`Application View - ${app.name}`}>
-      <ViewSwitcher style={{ marginBottom: '5vh' }} setActiveView={setActiveView} activeView={activeView} app={app} >
-        <Tab.Pane eventKey='Information'>
-          <SoftwareTitle
-            titleObject={{ title: app.name, description: app.description, image: app.image_link }}
-            setImageModalObj={setImageModalObj}
-            style={{ marginTop: '1vh' }}
-          />
-        </Tab.Pane>
-        <Tab.Pane eventKey='Repository'>
-          <SoftwareCode style={{ marginTop: '2vh' }} repoLink={app.repo_link} />
-        </Tab.Pane>
-        <Tab.Pane eventKey='Downloads'>
-          <SoftwareCompatibility
-            style={{ marginTop: '2vh' }}
-            app={app}
-            setMainDownloads={setDownloads}
-            compatibility={{ ...compatibility }}
-            userData={userData}
-            downloads={downloads}
-          />
-        </Tab.Pane>
-        <Tab.Pane eventKey='Video Demo'>
-          Video demo not currently configured!
-        </Tab.Pane>
-        <Tab.Pane eventKey='Features'>
-          <FeaturesBox style={{ marginTop: '2vh' }} setImageModalObj={setImageModalObj} features={features} userData={userData} app={app} />
-        </Tab.Pane>
-      </ViewSwitcher>
+    <StandardPage style={{ marginTop: '8vh' }} title={app && app.name}>
+      {!app && <StandardSpinner />}
+      {
+        app && <ViewSwitcher app={app} >
+          <Tab.Pane eventKey='Information'>
+            <SoftwareTitle
+              app={app}
+              setImageModalObj={setImageModalObj}
+              style={{ marginTop: '1vh' }}
+            />
+          </Tab.Pane>
+          <Tab.Pane eventKey='Repository'>
+            <SoftwareCode style={{ marginTop: '2vh' }} app={app} />
+          </Tab.Pane>
+          <Tab.Pane eventKey='Downloads'>
+            <SoftwareCompatibility
+              style={{ marginTop: '2vh' }}
+              app={app}
+              setMainDownloads={setDownloads}
+              userData={userData}
+              downloads={downloads}
+            />
+          </Tab.Pane>
+          <Tab.Pane eventKey='VideoDemo'>
+            Video demo not currently configured!
+          </Tab.Pane>
+          <Tab.Pane eventKey='Features'>
+            <FeaturesBox style={{ marginTop: '2vh' }} setImageModalObj={setImageModalObj} features={features} userData={userData} app={app} />
+          </Tab.Pane>
+        </ViewSwitcher>
+      }
+
       <ImageModal modalOpen={imageModalObj.open} handleModalClose={() => setImageModalObj({ ...imageModalObj, open: false })} imageLink={imageModalObj.imageLink} />
     </StandardPage>
   );
@@ -114,10 +93,14 @@ const FeaturesBox = ({ features, setImageModalObj, userData, style, app }) => {
       <Container>
         <Row style={{ maxWidth: '75%', margin: 'auto', marginTop: '1vh', marginBottom: '1vh' }}>
           <Col>
-            <StandardCard style={{ color: !leftButtonActive && 'gray', minWidth: '25%' }} className={leftButtonActive && 'defaultImageNudge'} onClick={() => leftButtonActive && setActiveFeature(activeFeature - 1)}>Previous</StandardCard>
+            <StandardButton isActive={leftButtonActive} style={{ minWidth: '25%' }} onClick={() => setActiveFeature(activeFeature - 1)}>
+              Previous
+            </StandardButton>
           </Col>
           <Col >
-            <StandardCard style={{ color: !rightButtonActive && 'gray', minWidth: '25%' }} className={rightButtonActive && 'defaultImageNudge'} onClick={() => rightButtonActive && setActiveFeature(activeFeature + 1)}>Next</StandardCard>
+            <StandardButton isActive={rightButtonActive} style={{ minWidth: '25%' }} onClick={() => setActiveFeature(activeFeature + 1)}>
+              Next
+            </StandardButton>
           </Col>
         </Row>
       </Container>
@@ -143,40 +126,47 @@ const FeaturesBox = ({ features, setImageModalObj, userData, style, app }) => {
         />
       }
       {
-        userData && <Button
+        userData && <StandardButton
           onClick={() => window.open(`/software/admin/feature/new/${app.name}`, '_self')}
           style={{ marginTop: '1vh' }}
-          block
-          variant='warning'
         >
           Add Feature
-        </Button>
+        </StandardButton>
       }
     </div>
   )
 }
 
 const ViewSwitcher = ({ style, children }) => {
+  const BlankKeys = { Information: false, Repository: false, Downloads: false, 'Video Demo': false, Features: false }
+  const [activeKey, setActiveKey] = useState({ ...BlankKeys, Information: true });
+
+  const CustomLink = ({ keyBool, keyText, displayText }) => {
+    return (
+      <Nav.Link className={keyBool || 'defaultMouseOver'} style={keyBool ? { backgroundColor: getThemeColor(1), color: 'black' } : {}} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{displayText}</Nav.Link>
+    )
+  }
+
   return (
     <Tab.Container style={{ ...style }} defaultActiveKey={'Information'}>
       <Row>
         <Col sm={3}>
           <StandardCard>
-            <Nav style={{ minWidth: '100%' }} variant="pills" className="flex-column">
+            <Nav style={{ minWidth: '100%' }} variant='pills' className='flex-column'>
               <Nav.Item>
-                <Nav.Link eventKey="Information">Information</Nav.Link>
+                <CustomLink keyBool={activeKey.Information} keyText='Information' displayText='Information' />
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="Repository">Repository</Nav.Link>
+                <CustomLink keyBool={activeKey.Repository} keyText='Repository' displayText='Repository' />
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="Downloads">Downloads</Nav.Link>
+                <CustomLink keyBool={activeKey.Downloads} keyText='Downloads' displayText='Downloads' />
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="Video Demo">Video Demo</Nav.Link>
+                <CustomLink keyBool={activeKey.VideoDemo} keyText='VideoDemo' displayText='Video Demo' />
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link eventKey="Features">Features</Nav.Link>
+                <CustomLink keyBool={activeKey.Features} keyText='Features' displayText='Features' />
               </Nav.Item>
             </Nav>
           </StandardCard>
@@ -193,12 +183,10 @@ const ViewSwitcher = ({ style, children }) => {
 }
 
 const ImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
-  const appSettings = useContext(AppContext);
-  const { softwareFontSize } = appSettings;
-  const RawButton = <Button variant='outline-light' style={{ marginTop: '1vh', fontSize: softwareFontSize }} onClick={() => window.open(imageLink)}>View Raw Image</Button>
+  const RawButton = <StandardButton style={{ minWidth: '25%' }} onClick={() => window.open(imageLink)}>View Raw Image</StandardButton>
   return (
     <StandardModal buttons={RawButton} modalOpen={modalOpen} handleModalClose={handleModalClose}>
-      <img src={imageLink} style={{ maxWidth: '85%', marginTop: '2vh' }} />
+      <StandardImage src={imageLink} style={{ maxWidth: '85%' }} />
     </StandardModal>
   )
 }
@@ -243,45 +231,47 @@ const SoftwareFeature = ({ userData, descriptionObject, index, setImageModalObj,
           {NavButtons}
         </Col>
       </Row>
-      <Row>
-        <Col style={{ display: 'flex' }}>
-          <div style={{ margin: 'auto' }}>
-            {cardTitle}
-          </div>
-        </Col>
-      </Row>
-      <Row style={{ marginTop: '1vh' }}>
-        <Col>
-          <div style={{ margin: 'auto' }} dangerouslySetInnerHTML={{ __html: descriptionObject.content_description }} />
-        </Col>
-      </Row>
-
+      <StandardCard style={{ marginTop: '1vh' }}>
+        <Row>
+          <Col style={{ display: 'flex' }}>
+            <div style={{ margin: 'auto' }}>
+              {cardTitle}
+            </div>
+          </Col>
+        </Row>
+        <Row style={{ marginTop: '1vh' }}>
+          <Col>
+            <div dangerouslySetInnerHTML={{ __html: descriptionObject.content_description }} />
+          </Col>
+        </Row>
+      </StandardCard>
       {
-        userData && <Button style={{ fontSize: softwareFontSize }} block variant='warning'
+        userData &&
+        <StandardButton style={{ marginTop: '1vh' }}
           onClick={() => window.open(`/software/admin/feature/edit/${descriptionObject.application_name}/${descriptionObject.id}`, '_self')}>
-          Edit </Button>
+          Edit </StandardButton>
       }
     </Container>
   );
 };
 
-const SoftwareTitle = ({ titleObject, setImageModalObj, style }) => {
+const SoftwareTitle = ({ setImageModalObj, style, app: { image_link, description } }) => {
   return (
     <>
       <StandardImage
         className='defaultImageNudge'
         style={{
           cursor: 'pointer',
-          maxWidth: '85%',
+          maxWidth: '65%',
           margin: 'auto',
           marginBottom: '3vh',
           ...style
         }}
-        onClick={() => setImageModalObj({ open: true, imageLink: titleObject.image })}
+        onClick={() => setImageModalObj({ open: true, imageLink: image_link })}
         variant='top'
-        src={titleObject.image}
+        src={image_link}
       />
-      <div style={{ margin: 'auto', maxWidth: '85%' }} dangerouslySetInnerHTML={{ __html: titleObject.description }} />
+      <div style={{ margin: 'auto', maxWidth: '85%' }} dangerouslySetInnerHTML={{ __html: description }} />
     </>
   );
 };
