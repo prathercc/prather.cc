@@ -5,12 +5,11 @@ import { postFeature, putFeature, deleteFeature, fetchFeature } from '../../../f
 import { fetchSoftware } from '../../../softwareService';
 import { useParams } from 'react-router-dom';
 import { AppContext } from '../../../AppContext';
-import { StandardPage, StandardCard } from '../../Utility/Utility';
+import { StandardPage, StandardCard, StandardButton, StandardTextField } from '../../Utility/Utility';
 
 function NewFeature() {
   let { id, name } = useParams();
   const appSettings = useContext(AppContext);
-  const { softwareFontSize } = appSettings;
   const blankFeature = {
     title: '',
     description: '',
@@ -56,98 +55,22 @@ function NewFeature() {
     window.open(`/software/${feature.application_name}`, '_self');
   };
   return (
-  <StandardPage title={!id ? 'Add Feature' : 'Modify Feature'}>
-      <StandardCard title=''>
-        <Form.Group style={{ width: '65%' }}>
-          <Form.Text>Application Name</Form.Text>
-          <Form.Control
-            style={{ textAlign: 'center' }}
-            size='sm'
-            type='text'
-            placeholder='Application Name'
-            disabled
-            value={feature.application_name}
-            onChange={(e) =>
-              setFeature({ ...feature, application_name: e.target.value })
-            }
-          />
-          <Form.Text>Title</Form.Text>
-          <Form.Control
-            style={{ textAlign: 'center' }}
-            size='sm'
-            type='text'
-            placeholder='Title'
-            value={feature.title}
-            onChange={(e) => setFeature({ ...feature, title: e.target.value })}
-          />
-          <Form.Text>Description</Form.Text>
-          <Form.Control
-            style={{ textAlign: 'center' }}
-            size='sm'
-            type='text'
-            placeholder='Description'
-            as='textarea'
-            rows='3'
-            value={feature.description}
-            onChange={(e) =>
-              setFeature({ ...feature, description: e.target.value })
-            }
-          />
-          <Form.Text>Image Link</Form.Text>
-          <Form.Control
-            style={{ textAlign: 'center' }}
-            size='sm'
-            type='text'
-            placeholder='Image Link'
-            value={feature.image_link}
-            onChange={(e) =>
-              setFeature({ ...feature, image_link: e.target.value })
-            }
-          />
-          <Form.Text>Content Description</Form.Text>
-          <Form.Control
-            style={{ textAlign: 'center', marginBottom: '1vh' }}
-            size='sm'
-            type='text'
-            as='textarea'
-            rows='3'
-            placeholder='Content Description'
-            value={feature.content_description}
-            onChange={(e) =>
-              setFeature({ ...feature, content_description: e.target.value })
-            }
-          />
-
-
-          {id ? (
+    <StandardPage title={'Feature Panel'}>
+      <StandardCard title={!id ? 'Add Feature' : 'Modify Feature'} style={{ minWidth: '100%' }}>
+        <Form.Group style={{ width: '45%' }}>
+          <StandardTextField value={feature.application_name} isActive={false} label='Application Name' onChange={(e) => setFeature({ ...feature, application_name: e.target.value })} />
+          <StandardTextField value={feature.title} label='Title' onChange={(e) => setFeature({ ...feature, title: e.target.value })} />
+          <StandardTextField rows={2} value={feature.description} label='Description' onChange={(e) => setFeature({ ...feature, description: e.target.value })} />
+          <StandardTextField value={feature.image_link} label='Image Link' onChange={(e) => setFeature({ ...feature, image_link: e.target.value })} />
+          <StandardTextField rows={8} value={feature.content_description} label='Content Description' onChange={(e) => setFeature({ ...feature, content_description: e.target.value })} />
+          {id &&
             <>
-              <Button size='sm' style={{ fontSize: softwareFontSize }} onClick={() => handleEditFeature()} variant='warning' block>
-                Save
-          </Button>
-              <Button size='sm' style={{ fontSize: softwareFontSize }} onClick={() => handleDeleteFeature()} variant='danger' block>
-                Delete
-          </Button>
+              <StandardButton style={{ marginTop: '1vh' }} onClick={() => handleEditFeature()}>Save</StandardButton>
+              <StandardButton style={{ marginTop: '1vh' }} onClick={() => handleDeleteFeature()}>Delete</StandardButton>
             </>
-          ) : (
-              <Button
-                size='sm' style={{ fontSize: softwareFontSize }}
-                disabled={feature.title.length === 0}
-                onClick={() => handleCreateFeature()}
-                variant='warning'
-                block
-              >
-                Create
-              </Button>
-            )}
-          <Button
-            onClick={() =>
-              window.open(`/software/${feature.application_name}`, '_self')
-            }
-            variant='light'
-            block
-          >
-            Back
-      </Button>
+          }
+          {!id && <StandardButton style={{ marginTop: '1vh' }} isActive={feature.title.length > 0} onClick={() => handleCreateFeature()}>Create</StandardButton>}
+          <StandardButton style={{ marginTop: '1vh' }} onClick={() => window.open(`/software/${feature.application_name}`, '_self')}>Back</StandardButton>
         </Form.Group>
       </StandardCard>
     </StandardPage>
