@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { authenticate, clearSession, getSession } from '../../authService';
-import { StandardPage, StandardCard, StandardButton } from '../Utility/Utility';
+import { StandardPage, StandardCard, StandardButton, StandardTextField, StandardDropDown } from '../Utility/Utility';
 import { getUsers, createUser, deleteUser } from '../../userService';
 
 function Login() {
@@ -27,44 +27,23 @@ function Login() {
   }, []);
 
   return (
-    <StandardPage style={{ marginTop: '8vh' }} title='Admin Panel'>
-      {userData ? (
+    <StandardPage title='Admin Panel'>
+      {userData &&
         <>
-          <StandardButton style={{ minWidth: '25%' }} onClick={() => signOut()}>
-            Sign Out
-          </StandardButton>
+          <StandardButton style={{ minWidth: '25%' }} onClick={() => signOut()}>Sign Out</StandardButton>
           <AddUser userData={userData} />
           <DeleteUser userData={userData} />
         </>
-
-      ) : (
-          <StandardCard style={{ minWidth: '100%' }} title='Sign In'>
-            <Form.Group style={{ marginTop: '1vh', minWidth: '40%' }}>
-              <Form.Control
-                type='text'
-                placeholder='Email'
-                onChange={(e) =>
-                  setCredentials({ ...credentials, email: e.target.value })
-                }
-              />
-              <Form.Control
-                style={{ marginTop: '1vh' }}
-                type='password'
-                placeholder='Password'
-                onChange={(e) =>
-                  setCredentials({ ...credentials, password: e.target.value })
-                }
-              />
-
-              <StandardButton
-                style={{ marginTop: '1vh' }}
-                onClick={() => authenticateUser()}
-              >
-                Sign In
-            </StandardButton>
-            </Form.Group>
-          </StandardCard>
-        )}
+      }
+      {!userData &&
+        <StandardCard style={{ minWidth: '100%' }}>
+          <Form.Group style={{ marginTop: '1vh', minWidth: '40%' }}>
+            <StandardTextField value={credentials.email} label='Email' onChange={(e) => setCredentials({ ...credentials, email: e.target.value })} />
+            <StandardTextField isPassword value={credentials.password} label='Password' onChange={(e) => setCredentials({ ...credentials, password: e.target.value })} />
+            <StandardButton style={{ marginTop: '1vh' }} onClick={() => authenticateUser()}>Sign In</StandardButton>
+          </Form.Group>
+        </StandardCard>
+      }
     </StandardPage>
   );
 }
@@ -83,43 +62,14 @@ const AddUser = ({ userData }) => {
     await createUser(newUser);
     window.open('/login', '_self');
   }
-
+  
   return (
     <StandardCard title='Create New User' style={{ marginTop: '2vh', minWidth: '100%' }}>
       <Form.Group style={{ width: '40%' }}>
-        <Form.Control
-          value={newUser.email}
-          type='text'
-          placeholder='Email'
-          onChange={(e) =>
-            setNewUser({ ...newUser, email: e.target.value })
-          }
-        />
-        <Form.Control
-          value={newUser.password}
-          style={{ marginTop: '1vh' }}
-          type='password'
-          placeholder='Password'
-          onChange={(e) =>
-            setNewUser({ ...newUser, password: e.target.value })
-          }
-        />
-        <Form.Control
-          value={newUser.password2}
-          style={{ marginTop: '1vh' }}
-          type='password'
-          placeholder='Password Again'
-          onChange={(e) =>
-            setNewUser({ ...newUser, password2: e.target.value })
-          }
-        />
-        <StandardButton
-          style={{ marginTop: '1vh' }}
-          onClick={() => handleCreateNewUser()}
-          isActive={buttonEnabled}
-        >
-          Create New User
-        </StandardButton>
+        <StandardTextField value={newUser.email} label='Email' onChange={(e) => setNewUser({ ...newUser, email: e.target.value })} />
+        <StandardTextField isPassword value={newUser.password} label='Password' onChange={(e) => setNewUser({ ...newUser, password: e.target.value })} />
+        <StandardTextField isPassword value={newUser.password2} label='Password Again' onChange={(e) => setNewUser({ ...newUser, password2: e.target.value })} />
+        <StandardButton style={{ marginTop: '1vh' }} onClick={() => handleCreateNewUser()} isActive={buttonEnabled}>Create New User</StandardButton>
       </Form.Group>
     </StandardCard>
   )
@@ -127,7 +77,8 @@ const AddUser = ({ userData }) => {
 
 const DeleteUser = ({ userData }) => {
   const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState('');
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState('Make a selection');
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -136,33 +87,28 @@ const DeleteUser = ({ userData }) => {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    const filterUsers = () => {
+      let x = users.map(user => { return ({ id: user.id, name: user.email }) });
+      setFilteredUsers(x);
+    };
+    if (users?.length > 0) {
+      filterUsers();
+    }
+  }, [users]);
+
   const handleDeleteUser = async () => {
     await deleteUser(selectedUser);
     window.open('/login', '_self');
   };
 
-  const buttonDisabled = (selectedUser.length === 0) || (userData.id.toString() === selectedUser);
+  const buttonDisabled = (selectedUser === 'Make a selection') || (userData.id.toString() === selectedUser);
 
   return (
     <StandardCard title='Delete User' style={{ marginTop: '2vh', minWidth: '100%' }}>
       <Form.Group style={{ minWidth: '40%' }}>
-        <Form.Control as="select" value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
-          <option></option>
-          {
-            users.map(user => {
-              return (
-                <option key={user.id} value={user.id}>{user.email}</option>
-              )
-            })
-          }
-        </Form.Control>
-        <StandardButton
-          style={{ marginTop: '1vh' }}
-          onClick={() => handleDeleteUser()}
-          isActive={!buttonDisabled}
-        >
-          Delete User
-        </StandardButton>
+        <StandardDropDown value={selectedUser} label='Existing Users' data={filteredUsers} onChange={(e) => setSelectedUser(e.target.value)} />
+        <StandardButton style={{ marginTop: '1vh' }} onClick={() => handleDeleteUser()} isActive={!buttonDisabled}>Delete User</StandardButton>
       </Form.Group>
     </StandardCard>
   )

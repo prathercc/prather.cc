@@ -6,7 +6,49 @@ import Container from 'react-bootstrap/Container';
 import { AppContext } from '../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+
+export const StandardDropDown = ({ onChange, label, isActive = true, style, data, value }) => {
+    return (
+        <div style={{ ...style }}>
+            <Form.Text style={{ textAlign: 'left' }}>{label}</Form.Text>
+            <Form.Control
+                style={{ cursor: isActive ? 'default' : 'not-allowed', textAlign: 'left' }}
+                disabled={!isActive}
+                as="select"
+                value={value}
+                onChange={onChange}>
+                <option>Make a selection</option>
+                {
+                    data.map(x => {
+                        return (
+                            <option key={x.id} value={x.id}>{x.name}</option>
+                        )
+                    })
+                }
+            </Form.Control>
+        </div>
+    );
+};
+
+export const StandardTextField = ({ onChange, label, isActive = true, value, rows = 1, isPassword, style }) => {
+    return (
+        <div style={{ ...style }}>
+            <Form.Text style={{ textAlign: 'left' }}>{label}</Form.Text>
+            <Form.Control
+                style={{ textAlign: 'left', cursor: isActive ? 'text' : 'not-allowed' }}
+                size='sm'
+                type={isPassword ? 'password' : 'text'}
+                placeholder={label}
+                disabled={!isActive}
+                value={value}
+                onChange={onChange}
+                as={rows > 1 ? 'textarea' : 'input'}
+                rows={rows}
+            />
+        </div>
+    );
+};
 
 export const StandardImage = (props) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -22,7 +64,7 @@ export const StandardImage = (props) => {
 
 export const StandardButton = ({ onClick, style, children, isActive = true }) => {
     const appSettings = useContext(AppContext);
-    const { softwareFontSize } = appSettings;
+    const { standardCardTitleFontSize } = appSettings;
     return (
         <Card
             onClick={isActive ? onClick : () => { }}
@@ -30,7 +72,7 @@ export const StandardButton = ({ onClick, style, children, isActive = true }) =>
             style={{
                 margin: 'auto',
                 ...style,
-                fontSize: softwareFontSize,
+                fontSize: standardCardTitleFontSize,
                 alignItems: 'center',
                 cursor: isActive || 'not-allowed'
             }}>
@@ -99,7 +141,8 @@ export const StandardPage = ({ title = '', children, style }) => {
                     fontSize: softwareFontSize,
                     paddingTop: '3vh',
                     paddingBottom: '5vh',
-                    borderColor: getThemeColor(0.3)
+                    borderColor: getThemeColor(0.3),
+                    marginTop: '8vh'
                 }}
             >
                 <div style={{ fontSize: standardPageTitleFontSize }}>
