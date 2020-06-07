@@ -3,10 +3,29 @@ import Spinner from 'react-bootstrap/Spinner';
 import Card from 'react-bootstrap/Card';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { AppContext } from '../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+
+export const StandardCheckBox = ({ label, value, onChange, style }) => {
+    return (
+        <Container style={{ maxWidth: 'max-content', ...style }} onClick={onChange}>
+            <Row>
+                <Col>
+                    <Form.Check
+                        type='checkbox'
+                        checked={value}
+                        style={{ display: 'inline' }}
+                    />
+                    <div style={{ display: 'inline' }}> {label}</div>
+                </Col>
+            </Row>
+        </Container>
+    )
+}
 
 export const StandardDropDown = ({ onChange, label, isActive = true, style, data, value }) => {
     return (
@@ -159,6 +178,7 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons }
     const { fgColorDetail, textColor, softwareMaintenanceFontSize, fontStyle } = useContext(AppContext);
     return (
         <Modal
+            scrollable
             style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle, opacity: 0.95, overflow: 'inherit' }}
             centered
             show={modalOpen}
