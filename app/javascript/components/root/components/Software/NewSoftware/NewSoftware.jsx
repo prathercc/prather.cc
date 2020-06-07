@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { postSoftware, putSoftware, deleteSoftware, fetchSoftware } from '../../../softwareService';
 import { useParams } from 'react-router-dom';
 import { AppContext } from '../../../AppContext';
-import { StandardPage, StandardCard } from '../../Utility/Utility';
+import { StandardPage, StandardCard, StandardTextField, StandardCheckBox } from '../../Utility/Utility';
 
 function NewSoftware() {
   let { name } = useParams();
@@ -47,116 +47,20 @@ function NewSoftware() {
     window.open('/software', '_self');
   };
   return (
-    <StandardPage title={!name ? 'Add Software' : 'Modify Software'}>
-      <StandardCard title=''>
-        <Form.Group style={{ width: '65%' }}>
-          <Form.Text>Name</Form.Text>
-          <Form.Control
-            style={{ textAlign: 'center' }}
-            size='sm'
-            type='text'
-            disabled={name}
-            placeholder='Name'
-            value={software.name}
-            onChange={(e) => setSoftware({ ...software, name: e.target.value })}
-          />
-          <Form.Text>Icon Image Link</Form.Text>
-          <Form.Control
-            style={{ textAlign: 'center' }}
-            size='sm'
-            type='text'
-            placeholder='Icon Image Link'
-            value={software.icon_link}
-            onChange={(e) =>
-              setSoftware({ ...software, icon_link: e.target.value })
-            }
-          />
-          <Form.Text>Image Link</Form.Text>
-          <Form.Control
-            style={{ textAlign: 'center' }}
-            size='sm'
-            type='text'
-            placeholder='Image Link'
-            value={software.image_link}
-            onChange={(e) =>
-              setSoftware({ ...software, image_link: e.target.value })
-            }
-          />
-          <Form.Text>Description</Form.Text>
-          <Form.Control
-            style={{ textAlign: 'center' }}
-            size='sm'
-            type='text'
-            placeholder='Description (html)'
-            as='textarea'
-            rows='3'
-            value={software.description}
-            onChange={(e) =>
-              setSoftware({ ...software, description: e.target.value })
-            }
-          />
-          <Form.Text>Repository Link</Form.Text>
-          <Form.Control
-            style={{ textAlign: 'center' }}
-            size='sm'
-            type='text'
-            placeholder='Repository Link'
-            value={software.repo_link}
-            onChange={(e) =>
-              setSoftware({ ...software, repo_link: e.target.value })
-            }
-          />
-          <Form.Text>Languages</Form.Text>
-          <Form.Control
-            style={{ textAlign: 'center' }}
-            size='sm'
-            type='text'
-            placeholder='Languages'
-            value={software.languages}
-            onChange={(e) =>
-              setSoftware({ ...software, languages: e.target.value })
-            }
-          />
-          <Form.Check
-            type='checkbox'
-            label='Is this legacy software?'
-            checked={software.is_legacy}
-            onChange={() =>
-              setSoftware({ ...software, is_legacy: !software.is_legacy })
-            }
-            style={{ marginBottom: '2vh', marginTop: '1vh' }}
-          />
-          <strong style={{ marginBottom: '1vh' }}>System Compatibility:</strong>
-
-          <Form.Check
-            type='checkbox'
-            label='Windows'
-            checked={software.windows}
-            onChange={() =>
-              setSoftware({ ...software, windows: !software.windows })
-            }
-          />
-          <Form.Check
-            type='checkbox'
-            label='Linux'
-            checked={software.linux}
-            onChange={() => setSoftware({ ...software, linux: !software.linux })}
-          />
-          <Form.Check
-            type='checkbox'
-            label='Mac'
-            checked={software.mac}
-            onChange={() => setSoftware({ ...software, mac: !software.mac })}
-          />
-          <Form.Check
-            type='checkbox'
-            label='Android'
-            checked={software.android}
-            onChange={() =>
-              setSoftware({ ...software, android: !software.android })
-            }
-            style={{ marginBottom: '2vh' }}
-          />
+    <StandardPage title='Software Modification Panel'>
+      <StandardCard style={{ minWidth: '100%' }} title={!name ? 'Add Software' : 'Modify Software'}>
+        <Form.Group style={{ width: '45%' }}>
+          <StandardTextField value={software.name} isActive={!name} label='Name' onChange={(e) => setSoftware({ ...software, name: e.target.value })} />
+          <StandardTextField value={software.icon_link} label='Icon Image Link' onChange={(e) => setSoftware({ ...software, icon_link: e.target.value })} />
+          <StandardTextField value={software.image_link} label='Image Link' onChange={(e) => setSoftware({ ...software, image_link: e.target.value })} />
+          <StandardTextField value={software.description} rows={4} label='Description' onChange={(e) => setSoftware({ ...software, description: e.target.value })} />
+          <StandardTextField value={software.repo_link} label='Repository Link' onChange={(e) => setSoftware({ ...software, repo_link: e.target.value })} />
+          <StandardTextField value={software.languages} label='Languages' onChange={(e) => setSoftware({ ...software, languages: e.target.value })} />
+          <StandardCheckBox label='Is this legacy software?' value={software.is_legacy} onChange={() => setSoftware({ ...software, is_legacy: !software.is_legacy })} />
+          <StandardCheckBox label='Windows' value={software.is_legacy} onChange={() => setSoftware({ ...software, windows: !software.windows })} />
+          <StandardCheckBox label='Linux' value={software.linux} onChange={() => setSoftware({ ...software, linux: !software.linux })} />
+          <StandardCheckBox label='Mac' value={software.mac} onChange={() => setSoftware({ ...software, mac: !software.mac })} />
+          <StandardCheckBox label='Android' value={software.android} onChange={() => setSoftware({ ...software, android: !software.android })} />
           {name ? (
             <>
               <Button size='sm' style={{ fontSize: softwareFontSize }} onClick={() => handleEditSoftware()} variant='warning' block>

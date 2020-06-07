@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { postFeature, putFeature, deleteFeature, fetchFeature } from '../../../featureService';
 import { fetchSoftware } from '../../../softwareService';
@@ -9,7 +8,6 @@ import { StandardPage, StandardCard, StandardButton, StandardTextField } from '.
 
 function NewFeature() {
   let { id, name } = useParams();
-  const appSettings = useContext(AppContext);
   const blankFeature = {
     title: '',
     description: '',
