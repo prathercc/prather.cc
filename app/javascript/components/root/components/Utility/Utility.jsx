@@ -10,6 +10,15 @@ import { useCurrentBreakpointName } from 'react-socks';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
+export const StandardImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
+    const RawButton = <StandardButton style={{ minWidth: '25%' }} onClick={() => window.open(imageLink)}>View Raw Image</StandardButton>
+    return (
+      <StandardModal buttons={RawButton} modalOpen={modalOpen} handleModalClose={handleModalClose}>
+        <StandardImage src={imageLink} style={{ maxWidth: '85%' }} />
+      </StandardModal>
+    )
+  }
+
 export const StandardCheckBox = ({ label, value, onChange, style }) => {
     return (
         <Container style={{ maxWidth: 'max-content', ...style }} onClick={onChange}>
@@ -132,7 +141,7 @@ export const StandardCard = ({ title = '', style, children, className, onClick }
     )
 }
 
-const StandardCardHeader = () => {
+export const StandardCardHeader = () => {
     return (
         <Card
             style={{
@@ -195,8 +204,17 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons }
             >
                 {children}
                 <Modal.Footer style={{ padding: 0, marginTop: '1vh', border: 'none' }}>
-                    {buttons}
-                    <StandardButton onClick={handleModalClose} style={{ minWidth: '25%' }}> Cancel</StandardButton>
+                    <Container>
+                        <Row>
+                            <Col>
+                                {buttons}
+                            </Col>
+                            <Col>
+                                <StandardButton onClick={handleModalClose} style={{ minWidth: '25%' }}> Cancel</StandardButton>
+                            </Col>
+                        </Row>
+                    </Container>
+
                 </Modal.Footer>
             </Modal.Body>
         </Modal>

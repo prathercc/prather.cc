@@ -30,9 +30,9 @@ function Login() {
     <StandardPage title='Admin Panel'>
       {userData &&
         <>
-          <StandardButton style={{ minWidth: '25%' }} onClick={() => signOut()}>Sign Out</StandardButton>
           <AddUser userData={userData} />
-          <DeleteUser userData={userData} />
+          <DeleteUser style={{ marginTop: '1vh' }} userData={userData} />
+          <StandardButton style={{ minWidth: '25%', marginTop: '1vh' }} onClick={() => signOut()}>Sign Out</StandardButton>
         </>
       }
       {!userData &&
@@ -48,7 +48,7 @@ function Login() {
   );
 }
 
-const AddUser = ({ userData }) => {
+const AddUser = ({ userData, style }) => {
 
   const [newUser, setNewUser] = useState({
     email: '',
@@ -62,9 +62,9 @@ const AddUser = ({ userData }) => {
     await createUser(newUser);
     window.open('/login', '_self');
   }
-  
+
   return (
-    <StandardCard title='Create New User' style={{ marginTop: '2vh', minWidth: '100%' }}>
+    <StandardCard title='Create New User' style={{ ...style, minWidth: '100%' }}>
       <Form.Group style={{ width: '40%' }}>
         <StandardTextField value={newUser.email} label='Email' onChange={(e) => setNewUser({ ...newUser, email: e.target.value })} />
         <StandardTextField isPassword value={newUser.password} label='Password' onChange={(e) => setNewUser({ ...newUser, password: e.target.value })} />
@@ -75,7 +75,7 @@ const AddUser = ({ userData }) => {
   )
 }
 
-const DeleteUser = ({ userData }) => {
+const DeleteUser = ({ userData, style }) => {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState('Make a selection');
@@ -105,7 +105,7 @@ const DeleteUser = ({ userData }) => {
   const buttonDisabled = (selectedUser === 'Make a selection') || (userData.id.toString() === selectedUser);
 
   return (
-    <StandardCard title='Delete User' style={{ marginTop: '2vh', minWidth: '100%' }}>
+    <StandardCard title='Delete User' style={{ ...style, minWidth: '100%' }}>
       <Form.Group style={{ minWidth: '40%' }}>
         <StandardDropDown value={selectedUser} label='Existing Users' data={filteredUsers} onChange={(e) => setSelectedUser(e.target.value)} />
         <StandardButton style={{ marginTop: '1vh' }} onClick={() => handleDeleteUser()} isActive={!buttonDisabled}>Delete User</StandardButton>
