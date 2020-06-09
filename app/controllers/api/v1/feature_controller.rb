@@ -76,7 +76,7 @@ module Api
           end
 
       def feature_params
-        params.require(:feature).permit(:title, :description, :image_link, :content_title, :content_description, :application_name, :software_id)
+        params.require(:feature).permit(:title, :description, :image_link, :content_description, :application_name, :software_id)
       end
 end
 end

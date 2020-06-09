@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_25_010127) do
+ActiveRecord::Schema.define(version: 2020_06_08_140542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "downloads", force: :cascade do |t|
     t.string "path"
-    t.integer "download_count"
     t.string "application_name"
     t.string "os_type"
     t.string "file_name"
@@ -25,6 +24,7 @@ ActiveRecord::Schema.define(version: 2020_05_25_010127) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "software_id", null: false
+    t.text "download_description"
     t.index ["software_id"], name: "index_downloads_on_software_id"
   end
 

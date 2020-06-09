@@ -43,18 +43,6 @@ export const putDownload = async (download) => {
 
 };
 
-export const incrementDownload = async (id) => {
-  const response = await fetch(`${host}/api/v1/download/${id}?dl=true`, {
-    method: 'PUT'
-  });
-  response
-    .json()
-    .then((resp) => {
-    })
-    .catch((err) => console.log(err));
-
-};
-
 export const deleteDownload = async (downloadId) => {
   const response = await fetch(`${host}/api/v1/download/${downloadId}`, {
     method: 'DELETE',

@@ -53,12 +53,7 @@ module Api
       end
 
       def update
-        download_param = params[:dl]
-        if download_param
-          download = Download.find(params[:id])
-          download.download_count = download.download_count + 1
-          download.save
-        elsif current_user
+        if current_user
           download = Download.find(params[:id])
           if download.update(download_params)
             render json: {
@@ -80,7 +75,7 @@ module Api
       end
 
       def download_params
-        params.require(:download).permit(:os_type, :application_name, :path, :file_name, :file_size, :download_count, :software_id)
+        params.require(:download).permit(:os_type, :application_name, :path, :file_name, :file_size, :software_id, :download_description)
       end
     end
   end
