@@ -13,11 +13,11 @@ import Form from 'react-bootstrap/Form';
 export const StandardImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
     const RawButton = <StandardButton style={{ minWidth: '25%' }} onClick={() => window.open(imageLink)}>View Raw Image</StandardButton>
     return (
-      <StandardModal buttons={RawButton} modalOpen={modalOpen} handleModalClose={handleModalClose}>
-        <StandardImage src={imageLink} style={{ maxWidth: '85%' }} />
-      </StandardModal>
+        <StandardModal buttons={RawButton} modalOpen={modalOpen} handleModalClose={handleModalClose}>
+            <StandardImage src={imageLink} style={{ maxWidth: '85%' }} />
+        </StandardModal>
     )
-  }
+}
 
 export const StandardCheckBox = ({ label, value, onChange, style }) => {
     return (
@@ -147,7 +147,7 @@ export const StandardCardHeader = () => {
             style={{
                 borderColor: getThemeColor(0.8),
                 margin: 'auto',
-                marginBottom: '3vh',
+                marginBottom: '2vh',
                 width: '65%',
                 opacity: '0.65'
             }}>
@@ -206,9 +206,7 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons }
                 <Modal.Footer style={{ padding: 0, marginTop: '1vh', border: 'none' }}>
                     <Container>
                         <Row>
-                            <Col>
-                                {buttons}
-                            </Col>
+                            {buttons && <Col>{buttons}</Col>}
                             <Col>
                                 <StandardButton onClick={handleModalClose} style={{ minWidth: '25%' }}> Cancel</StandardButton>
                             </Col>

@@ -32,7 +32,12 @@
     color: white !important;
 }
 
-ul {
-    text-align: left;
-    list-style-position: inside;
+a:link {
+    color: #4fc9c9;
+}
+a:visited {
+    color: #4fc9c9 ;
+}
+a:hover {
+    color: #4fc9c9 !important;
 }
