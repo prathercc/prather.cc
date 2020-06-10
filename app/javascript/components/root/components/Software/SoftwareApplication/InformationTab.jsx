@@ -63,7 +63,7 @@ const InformationTab = ({ setImageModalObj, style, app }) => {
                         />
                     </Col>
                 </Row>
-                <StandardCard title={`What is ${name}?`} style={{ marginTop: '1vh' }}>
+                <StandardCard title={`What is ${name}?`} style={{ marginTop: '1vh', maxWidth: '90%' }}>
                     <Row>
                         <Col>
                             <div style={{ margin: 'auto', maxWidth: '90%', fontSize: softwareFontSize, textAlign: 'left', marginTop: '2vh' }} dangerouslySetInnerHTML={{ __html: description }} />
