@@ -10,6 +10,7 @@ import { AppContext } from '../../../AppContext';
 import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../../../downloadService';
 import { StandardCard, StandardModal, getThemeColor, StandardSpinner, StandardButton, StandardTextField, StandardDropDown } from '../../Utility/Utility';
 import DemoIcon from 'react-bootstrap-icons/dist/icons/file-earmark-diff';
+import ApplicationIcon from 'react-bootstrap-icons/dist/icons/gear-wide-connected';
 
 function DownloadsTab({ app, userData, style }) {
     const [downloads, setDownloads] = useState(null);
@@ -78,6 +79,9 @@ const DownloadTable = ({ style, downloads, type }) => {
                                 Filename
                             </th>
                             <th style={{ border: `1px solid ${getThemeColor(0.2)}` }}>
+                                Type
+                            </th>
+                            <th style={{ border: `1px solid ${getThemeColor(0.2)}` }}>
                                 File Size
                             </th>
                         </tr>
@@ -93,7 +97,7 @@ const DownloadTable = ({ style, downloads, type }) => {
                     </tbody>
                 </Table>
             }
-            {filteredDownloads.length > 0 && <div style={{ marginTop: '1vh' }}>*<ResourceIcon /> - Indicates resource file</div>}
+
 
         </>
     )
@@ -110,7 +114,8 @@ const DlRow = ({ download: { file_name, file_size, path, download_description, o
     return (
         <>
             <tr onClick={() => setModalOpen(true)} className='defaultMouseOver' style={{ cursor: 'pointer' }}>
-                <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }}>{os_type === 'Resource' && <ResourceIcon />}{file_name}</td>
+                <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }}>{file_name}</td>
+                <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }}>{<Icon type={os_type} />}</td>
                 <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }}>{file_size}</td>
             </tr>
             <StandardModal buttons={DownloadButton} title='' modalOpen={modalOpen} handleModalClose={() => { setModalOpen(false) }} closable={false}>
@@ -276,10 +281,11 @@ const Download = ({ app, download: value, reloadDownloads }) => {
     );
 };
 
-const ResourceIcon = () => {
+const Icon = ({ type }) => {
     return (
         <>
-            <DemoIcon style={{ color: getThemeColor(1) }} /> {' '}
+            {type === 'Resource' && <DemoIcon style={{ color: getThemeColor(1) }} />}
+            {type !== 'Resource' && <ApplicationIcon style={{ color: getThemeColor(1) }} />}
         </>
     )
 }

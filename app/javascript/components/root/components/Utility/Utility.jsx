@@ -134,6 +134,7 @@ export const StandardCard = ({ title = '', style, children, className, onClick }
                 backgroundColor: fgColorDetail,
                 fontSize: softwareFontSize,
                 alignItems: 'center',
+                border: `2px solid ${getThemeColor(0)}`
             }}>
             <div style={{ fontSize: standardCardTitleFontSize }}>{title}</div>
             {children}
@@ -198,7 +199,7 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons }
                 style={{
                     backgroundColor: fgColorDetail,
                     color: textColor,
-                    outline: `1px solid ${getThemeColor(0.3)}`,
+                    border: `1px solid ${getThemeColor(0.3)}`,
                     fontSize: softwareMaintenanceFontSize,
                 }}
             >

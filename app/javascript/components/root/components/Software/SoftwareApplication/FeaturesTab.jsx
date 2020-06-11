@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import '../Software.css';
 import { AppContext } from '../../../AppContext';
-import { StandardImage, StandardCard, getThemeColor, StandardButton, StandardModal, getIconSizing, StandardTextField } from '../../Utility/Utility';
+import { StandardImage, StandardCard, StandardButton, StandardModal, getIconSizing, StandardTextField, getThemeColor } from '../../Utility/Utility';
 import Carousel from 'react-bootstrap/Carousel';
 import RightArrow from 'react-bootstrap-icons/dist/icons/chevron-compact-right';
 import LeftArrow from 'react-bootstrap-icons/dist/icons/chevron-compact-left';
@@ -30,9 +30,7 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app }) => {
                                 <SoftwareFeature
                                     app={app}
                                     setImageModalObj={setImageModalObj}
-                                    index={index + 1}
                                     userData={userData}
-                                    featuresLength={features?.length}
                                     feature={feature}
                                     setFeatures={setFeatures} />
                             </Carousel.Item>
@@ -45,29 +43,25 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app }) => {
     )
 }
 
-const SoftwareFeature = ({ userData, index, setImageModalObj, featuresLength, feature, setFeatures, app }) => {
+const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app }) => {
     const appSettings = useContext(AppContext);
-    const { softwareFontSize } = appSettings;
+    const { softwareFontSize, standardCardTitleFontSize } = appSettings;
 
-    const cardTitle =
-        <>
-            <div>{feature.title}</div>
-            <div>{feature.description}</div>
-            <div style={{ color: getThemeColor(0.8), fontSize: softwareFontSize }}>Feature {index} of {featuresLength}</div>
-        </>
     return (
         <>
-            <StandardImage
-                className='defaultImageNudge'
-                src={feature.image_link}
-                onClick={() => setImageModalObj({ open: true, imageLink: feature.image_link })}
-                style={{ maxWidth: '65%', cursor: 'pointer', margin: 'auto', marginTop: '0.25vh' }}
-            />
-            <StandardCard style={{ marginTop: '1vh', maxWidth: '80%' }}>
-                <div>{cardTitle}</div>
-                <div style={{ marginTop: '1vh', textAlign: 'left' }}>
-                    <div style={{ margin: 'auto', maxWidth: '90%', fontSize: softwareFontSize, textAlign: 'left' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
+            <StandardCard style={{ marginTop: '1vh', maxWidth: '100%' }}>
+                <StandardImage
+                    className='defaultImageNudge'
+                    src={feature.image_link}
+                    onClick={() => setImageModalObj({ open: true, imageLink: feature.image_link })}
+                    style={{ maxWidth: '55%', cursor: 'pointer', margin: 'auto', marginTop: '1vh' }}
+                />
+                <div style={{ fontSize: standardCardTitleFontSize, marginTop: '1vh', color: getThemeColor(1) }}>
+                    <div>
+                        {feature.title}
+                    </div>
                 </div>
+                <div style={{ margin: 'auto', maxWidth: '90%', fontSize: softwareFontSize, textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
             </StandardCard>
             {userData && <EditFeature app={app} setFeatures={setFeatures} feature={feature} />}
         </>
