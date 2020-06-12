@@ -5,22 +5,23 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Container from 'react-bootstrap/Container';
 import { Breakpoint } from 'react-socks';
 import { AppContext } from '../../AppContext';
-import { StandardSeparator, getThemeColor } from '../Utility/Utility';
+import { StandardSeparator } from '../Utility/Utility';
+import Admin from './Admin';
 
-function AppBar() {
+function AppBar({ userData, setUserData }) {
   return (
     <>
       <Breakpoint small down>
-        <MobileView />
+        <MobileView setUserData={setUserData} userData={userData} />
       </Breakpoint>
       <Breakpoint medium up>
-        <DesktopView />
+        <DesktopView setUserData={setUserData} userData={userData} />
       </Breakpoint>
     </>
   );
 }
 
-const DesktopView = () => {
+const DesktopView = ({ userData, setUserData }) => {
   const appSettings = useContext(AppContext);
   const {
     fgColorDetail,
@@ -35,6 +36,7 @@ const DesktopView = () => {
         fontFamily: appbarFontStyle
       }}
       variant='dark'
+      fixed='top'
     >
       <Container style={{ textAlign: 'center', height: '4vh' }}>
         <Nav>
@@ -42,13 +44,13 @@ const DesktopView = () => {
           <CustomNavLink disabled={true} />
           <CustomNavLink href='/software'>Software</CustomNavLink>
         </Nav>
-        <CustomBrand appbarFontSize={appbarFontSize} />
+        <Admin setUserData={setUserData} userData={userData} />
       </Container>
     </Navbar>
   );
 };
 
-const MobileView = () => {
+const MobileView = ({ userData, setUserData }) => {
   const appSettings = useContext(AppContext);
   const {
     fgColorDetail,
@@ -69,7 +71,7 @@ const MobileView = () => {
           <Dropdown.Item href='/' onClick={() => window.open('/', '_self')}>Home</Dropdown.Item>
           <Dropdown.Item href='/' onClick={() => window.open('/software', '_self')}>Software</Dropdown.Item>
         </CustomNavDropDown>
-        <CustomBrand appbarFontSize={appbarFontSize} />
+        <Admin setUserData={setUserData} userData={userData} />
       </Container>
     </Navbar>
   );
@@ -104,14 +106,5 @@ const CustomNavLink = props => {
     </div>
   );
 };
-
-const CustomBrand = props => {
-  const { appbarFontSize } = props;
-  return (
-    <Navbar.Brand style={{ fontSize: appbarFontSize }} onClick={() => window.open('/login', '_self')}>
-      <div className='brandMouseOver' style={{ color: getThemeColor(1), cursor: 'pointer' }}>Prather.cc</div>
-    </Navbar.Brand>
-  )
-}
 
 export default AppBar;

@@ -111,7 +111,7 @@ export const StandardButton = ({ onClick, style, children, isActive = true }) =>
 
 export const StandardSpinner = () => {
     return (
-        <Spinner style={{ margin: 'auto', fontSize: '15vw', color: getThemeColor(0.1) }} animation='border' />
+        <Spinner style={{ margin: 'auto', color: getThemeColor(0.1) }} animation='border' />
     )
 }
 

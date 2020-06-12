@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   root 'main#index'
   get 'software', to: 'main#index'
   get 'software/*path', to: 'main#index'
-  get 'login', to: 'main#index'
   namespace 'api' do
     namespace 'v1' do
       resources :download
