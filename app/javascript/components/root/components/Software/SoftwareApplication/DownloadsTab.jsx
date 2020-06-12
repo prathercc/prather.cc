@@ -235,7 +235,7 @@ const Download = ({ app, download: value, reloadDownloads }) => {
 
     return (
         <>
-            <StandardCard title={value !== undefined ? 'Edit Existing Download' : 'Create New Download'} style={{ outline: `1px solid ${getThemeColor(0.5)}`, marginBottom: '1vh', padding: '1vh' }}>
+            <StandardCard title={value !== undefined ? 'Edit Existing Download' : 'Create New Download'} style={{ outline: `1px solid ${getThemeColor(0.2)}`, marginBottom: '1vh', padding: '1vh' }}>
                 <Form.Group style={{ minWidth: '95%' }}>
                     <Container>
                         <Row>

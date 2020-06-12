@@ -3,7 +3,6 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
-import '../Software.css';
 import { AppContext } from '../../../AppContext';
 import { StandardImage, StandardCard, StandardButton, StandardModal, getIconSizing, StandardTextField, getThemeColor } from '../../Utility/Utility';
 import Carousel from 'react-bootstrap/Carousel';
@@ -49,7 +48,7 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
 
     return (
         <>
-            <StandardCard style={{ marginTop: '1vh', maxWidth: '100%' }}>
+            <StandardCard>
                 <StandardImage
                     className='defaultImageNudge'
                     src={feature.image_link}
