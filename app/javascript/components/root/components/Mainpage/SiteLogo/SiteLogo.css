@@ -1,20 +1,14 @@
   .animation1 {
     background-repeat: repeat;
-    animation: animation1 infinite 350s linear ;
+    animation: animation1 1s forwards ;
   }
 
 @keyframes animation1 {
   0% {
-    transform: scale(4.5,2) perspective(1px) rotate(135deg);
-    filter: grayscale(0.5)
+    transform: scaleX(1) perspective(1px);
   }
-  50%{
-    transform: scale(4.5,2) perspective(1px) rotate(240deg);
-    filter: grayscale(0.5)
-  }
-  100% {
-    transform:scale(4.5,2) perspective(1px) rotate(135deg);
-    filter: grayscale(0.5)
+  100%{
+    transform: scaleX(1.025) perspective(1px);
   }
 }
 
