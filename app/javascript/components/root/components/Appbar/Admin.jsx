@@ -4,18 +4,12 @@ import Form from 'react-bootstrap/Form';
 import { AppContext } from '../../AppContext';
 import { getThemeColor, StandardModal, StandardCard, StandardTextField, StandardButton, StandardDropDown } from '../Utility/Utility';
 import { getUsers, createUser, deleteUser } from '../../userService';
-import { authenticate, clearSession, getSession } from '../../authService';
+import { authenticate, clearSession } from '../../authService';
 
 const Admin = ({ setUserData, userData }) => {
     const [modalOpen, setModalOpen] = useState(false);
     const appSettings = useContext(AppContext);
     const { appbarFontSize } = appSettings;
-    useEffect(() => {
-        const fetchSession = async () => {
-            await getSession(setUserData);
-        };
-        fetchSession();
-    }, []);
 
     return (
         <>
