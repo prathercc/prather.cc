@@ -68,7 +68,7 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
 };
 
 const EditFeature = ({ feature, setFeatures, app: { id, name } }) => {
-    const blankFeature = { title: '', description: '', image_link: '', content_description: '', application_name: name, software_id: id };
+    const blankFeature = { title: '', image_link: '', content_description: '', application_name: name, software_id: id };
     const [modalOpen, setModalOpen] = useState(false);
     const [activeFeature, setActiveFeature] = useState(feature ? feature : blankFeature);
 
@@ -120,7 +120,6 @@ const EditFeature = ({ feature, setFeatures, app: { id, name } }) => {
                     <Form.Group style={{ width: '95%', margin: 'auto' }}>
                         <StandardTextField value={activeFeature.application_name} isActive={false} label='Application Name' onChange={(e) => setActiveFeature({ ...activeFeature, application_name: e.target.value })} />
                         <StandardTextField value={activeFeature.title} label='Feature Title' onChange={(e) => setActiveFeature({ ...activeFeature, title: e.target.value })} />
-                        <StandardTextField rows={2} value={activeFeature.description} label='Description' onChange={(e) => setActiveFeature({ ...activeFeature, description: e.target.value })} />
                         <StandardTextField value={activeFeature.image_link} label='Image Link' onChange={(e) => setActiveFeature({ ...activeFeature, image_link: e.target.value })} />
                         <StandardTextField rows={8} value={activeFeature.content_description} label='Content Description' onChange={(e) => setActiveFeature({ ...activeFeature, content_description: e.target.value })} />
                     </Form.Group>
