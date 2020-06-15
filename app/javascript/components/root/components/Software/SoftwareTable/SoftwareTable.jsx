@@ -1,22 +1,21 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Table from 'react-bootstrap/Table';
-import Button from 'react-bootstrap/Button';
-import Spinner from 'react-bootstrap/Spinner';
 import Badge from 'react-bootstrap/Badge';
-import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Nav from 'react-bootstrap/Nav';
+import Tab from 'react-bootstrap/Tab';
 import { fetchAllSoftware } from '../../../softwareService';
 import { useCurrentBreakpointName } from 'react-socks';
-import { StandardImage, StandardCard, StandardPage, getThemeColor } from '../../Utility/Utility';
+import { StandardImage, StandardCard, StandardPage, getThemeColor, StandardCardHeader, StandardButton } from '../../Utility/Utility';
 import { AppContext } from '../../../AppContext';
+import RecentIcon from 'react-bootstrap-icons/dist/icons/layers';
+import AllIcon from 'react-bootstrap-icons/dist/icons/book';
 
 function SoftwareTable({ userData }) {
-  const [software, setSoftware] = useState(null);
-  const [filteredSoftware, setFilteredSoftware] = useState([]);
-  const [softwareType, setSoftwareType] = useState('Active');
+  const [software, setSoftware] = useState([]);
   const appSettings = useContext(AppContext);
-  const { softwareFontSize } = appSettings;
+  const { standardCardTitleFontSize } = appSettings;
   useEffect(() => {
     const loadSoftware = async () => {
       await fetchAllSoftware(setSoftware);
@@ -24,102 +23,75 @@ function SoftwareTable({ userData }) {
     loadSoftware();
   }, []);
 
-  useEffect(() => {
-    const sortActiveSoftware = () => {
-      let res = software?.filter(x => x.is_legacy === false);
-      setFilteredSoftware(res);
-    }
-    const sortInactiveSoftware = () => {
-      let res = software?.filter(x => x.is_legacy === true);
-      setFilteredSoftware(res);
-    }
-    const sortAllSoftware = () => {
-      setFilteredSoftware(software);
-    }
-    if (softwareType === 'Active') {
-      sortActiveSoftware();
-    }
-    else if (softwareType === 'Inactive') {
-      sortInactiveSoftware();
-    }
-    else {
-      sortAllSoftware();
-    }
-  }, [softwareType, software])
-
   return (
     <StandardPage title='Software Panel'>
-      {
-        software &&
-        <>
-          <SoftwareSwitcher setSoftwareType={setSoftwareType} softwareType={softwareType} />
-          <StandardCard style={{ marginTop: '1vh' }} title={`${softwareType} Applications`}>
-            <CustomTable software={filteredSoftware} userData={userData} />
-          </StandardCard>
-        </>
-      }
-      {
-        userData && <Button
-          style={{ fontSize: softwareFontSize, marginTop: '1vh' }}
-          block
-          variant='warning'
-          onClick={() => window.open('/software/admin/new', '_self')}
-        >
-          Add application
-              </Button>
-      }
-      {
-        !software && <Spinner animation='border' />
-      }
+      <SoftwareSwitcher>
+        <Tab.Pane eventKey='Recent'>
+          <div style={{ fontSize: standardCardTitleFontSize, marginTop: '1vh' }}>Recent Software</div>
+          <StandardCardHeader />
+          <CustomTable userData={userData} software={software.filter(x => x.is_legacy === false)} />
+        </Tab.Pane>
+        <Tab.Pane eventKey='All'>
+          <div style={{ fontSize: standardCardTitleFontSize, marginTop: '1vh' }}>All Software</div>
+          <StandardCardHeader />
+          <CustomTable userData={userData} software={[...software]} />
+        </Tab.Pane>
+        {userData && <StandardButton style={{ marginTop: '1vh', minWidth: '100%' }} onClick={() => window.open('/software/admin/new', '_self')}>Add application</StandardButton>}
+      </SoftwareSwitcher>
+
     </StandardPage>
   );
 }
 
-const SoftwareSwitcher = ({ setSoftwareType, softwareType }) => {
+const SoftwareSwitcher = ({ children }) => {
+  const BlankKeys = { Recent: false, All: false }
+  const [activeKey, setActiveKey] = useState({ ...BlankKeys, Recent: true });
+
+  const CustomLink = ({ keyBool, keyText, displayText, icon }) => {
+    return (
+      <Nav.Link as={'div'} className={keyBool || 'defaultMouseOver'} style={keyBool ? { backgroundColor: getThemeColor(1), color: 'black', cursor: 'pointer' } : { cursor: 'pointer' }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{icon}<div />{displayText}</Nav.Link>
+    )
+  }
 
   return (
-    <>
-      <Container>
-        <Row>
-          <Col>
-            <StandardCard onClick={() => setSoftwareType('Active')} className='defaultImageNudge' style={{ cursor: 'pointer', border: softwareType === 'Active' && `solid ${getThemeColor(1)} 1px` }}>
-              Active
-            </StandardCard>
-          </Col>
-          <Col>
-            <StandardCard onClick={() => setSoftwareType('Inactive')} className='defaultImageNudge' style={{ cursor: 'pointer', border: softwareType === 'Inactive' && `solid ${getThemeColor(1)} 1px` }}>
-              Inactive
-            </StandardCard>
-          </Col>
-          <Col>
-            <StandardCard onClick={() => setSoftwareType('All')} className='defaultImageNudge' style={{ cursor: 'pointer', border: softwareType === 'All' && `solid ${getThemeColor(1)} 1px` }}>
-              All
-            </StandardCard>
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <Tab.Container defaultActiveKey={'Recent'}>
+      <Row>
+        <Col sm={3}>
+          <StandardCard>
+            <Nav style={{ minWidth: '100%' }} variant='pills' className='flex-column'>
+              <Nav.Item>
+                <CustomLink icon={<RecentIcon />} keyBool={activeKey.Recent} keyText='Recent' displayText='Recent Software' />
+              </Nav.Item>
+              <Nav.Item>
+                <CustomLink icon={<AllIcon />} keyBool={activeKey.All} keyText='All' displayText='All Software' />
+              </Nav.Item>
+            </Nav>
+          </StandardCard>
+        </Col>
+        <Col sm={9}>
+          <Tab.Content>
+            {children}
+          </Tab.Content>
+        </Col>
+      </Row>
+    </Tab.Container>
   )
 }
 
 const CustomTable = ({ software, userData, style }) => {
+  const appSettings = useContext(AppContext);
+  const { fgColorDetail } = appSettings;
+
   return (
-    <div style={{ ...style, width: '95%' }}>
-      <Table
-        striped
-        bordered
-        responsive
-        variant='dark'
-        hover
-        size='sm'
-        style={{ cursor: 'default', marginTop: '1vh' }}
-      >
+    <div style={{ ...style, width: '95%', margin: 'auto' }}>
+      <Table size='sm' hover style={{ ...style, color: 'white', backgroundColor: fgColorDetail, border: `1px solid ${getThemeColor(0.2)}` }}>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Language</th>
-            <th>Platform(s)</th>
-            <th></th>
+            <th style={{ border: `1px solid ${getThemeColor(0.2)}` }}>Name</th>
+            <th style={{ border: `1px solid ${getThemeColor(0.2)}` }}>Language</th>
+            <th style={{ border: `1px solid ${getThemeColor(0.2)}` }}>Platform(s)</th>
+            <th style={{ border: `1px solid ${getThemeColor(0.2)}` }}>Year</th>
+            {userData && <th style={{ border: `1px solid ${getThemeColor(0.2)}` }}></th>}
           </tr>
         </thead>
         <tbody>
@@ -141,8 +113,6 @@ const CustomTable = ({ software, userData, style }) => {
 const SoftwareSample = (props) => {
   const { value, userData } = props;
   const breakpoint = useCurrentBreakpointName();
-  const appSettings = useContext(AppContext);
-  const { softwareFontSize } = appSettings;
   const compatibility = {
     windows: value.windows,
     linux: value.linux,
@@ -152,7 +122,7 @@ const SoftwareSample = (props) => {
 
   return (
     <tr className='defaultMouseOver' style={{ cursor: 'pointer' }}>
-      <td onClick={() => window.open(`/software/${value.name}`, '_self')}>
+      <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }} onClick={() => window.open(`/software/${value.name}`, '_self')}>
         <StandardImage
           src={value.icon_link}
           style={{
@@ -161,32 +131,17 @@ const SoftwareSample = (props) => {
           }} />
         {value.name}
       </td>
-      <td onClick={() => window.open(`/software/${value.name}`, '_self')}>
+      <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }} onClick={() => window.open(`/software/${value.name}`, '_self')}>
         {value.languages}
       </td>
-      <td onClick={() => window.open(`/software/${value.name}`, '_self')}>
-        {compatibility.windows && <Badge variant='light'>Windows</Badge>}{' '}
-        {compatibility.linux && <Badge variant='warning'>Linux</Badge>}{' '}
-        {compatibility.mac && <Badge variant='info'>Mac</Badge>}{' '}
-        {compatibility.android && <Badge variant='danger'>Android</Badge>}{' '}
+      <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }} onClick={() => window.open(`/software/${value.name}`, '_self')}>
+        {compatibility.windows && <Badge variant='dark'>Windows</Badge>}{' '}
+        {compatibility.linux && <Badge variant='dark'>Linux</Badge>}{' '}
+        {compatibility.mac && <Badge variant='dark'>Mac</Badge>}{' '}
+        {compatibility.android && <Badge variant='dark'>Android</Badge>}{' '}
       </td>
-      {userData ? (
-        <td>
-          <Button
-            style={{ fontSize: softwareFontSize }}
-            onClick={() =>
-              window.open(`/software/admin/edit/${value.name}`, '_self')
-            }
-            size='sm'
-            block
-            variant='warning'
-          >
-            Edit
-          </Button>
-        </td>
-      ) : (
-          <td></td>
-        )}
+      <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }}>'20</td>
+      {userData && <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }}><StandardButton style={{ minWidth: '100%' }} onClick={() => window.open(`/software/admin/edit/${value.name}`, '_self')}>Edit</StandardButton></td>}
     </tr>
   );
 };
