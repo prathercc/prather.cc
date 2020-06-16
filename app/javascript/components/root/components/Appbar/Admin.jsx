@@ -16,8 +16,8 @@ const Admin = ({ setUserData, userData }) => {
             <Navbar.Brand style={{ fontSize: appbarFontSize }} onClick={() => setModalOpen(true)}>
                 <div className='brandMouseOver' style={{ color: getThemeColor(1), cursor: 'pointer' }}>Prather.cc</div>
             </Navbar.Brand>
-            {!userData && <Login modalOpen={modalOpen} setModalOpen={setModalOpen} setUserData={setUserData} />}
-            {userData && <Manage userData={userData} modalOpen={modalOpen} setModalOpen={setModalOpen} setUserData={setUserData} />}
+            <Login modalOpen={!userData ? modalOpen : false} setModalOpen={setModalOpen} setUserData={setUserData} />
+            <Manage userData={userData} modalOpen={userData ? modalOpen : false} setModalOpen={setModalOpen} setUserData={setUserData} />
         </>
     )
 }
@@ -26,6 +26,7 @@ const Login = ({ setUserData, modalOpen, setModalOpen }) => {
     const [credentials, setCredentials] = useState({ email: '', password: '' });
     const authenticateUser = async () => {
         await authenticate(credentials, setUserData);
+        setModalOpen(false);
     };
     const SignInButton = <StandardButton isActive={credentials.email.length > 0 && credentials.password.length > 0} onClick={() => authenticateUser()}>Sign In</StandardButton>
     return (
@@ -72,7 +73,7 @@ const Manage = ({ setUserData, userData, setModalOpen, modalOpen }) => {
     const [newUser, setNewUser] = useState(blankUser);
     const newButtonEnabled = newUser.email.length > 0 && newUser.password.length > 0 && newUser.password === newUser.password2 && newUser.email !== userData.email;
     const handleCreateNewUser = async () => { await createUser(newUser); setNewUser(blankUser); await getUsers(setUsers); }
-    const signOut = async () => { await clearSession(setUserData, userData.id); };
+    const signOut = async () => { await clearSession(setUserData, userData.id); setModalOpen(false); };
     const signOutButton = <StandardButton onClick={() => signOut()}>Sign Out</StandardButton>;
     /*******/
 
