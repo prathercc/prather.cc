@@ -7,7 +7,6 @@ import { AppContext } from './AppContext';
 import background from './images/background.png';
 import SoftwareApplication from './components/Software/SoftwareApplication/SoftwareApplication';
 import SoftwareTable from './components/Software/SoftwareTable/SoftwareTable';
-import NewSoftware from './components/Software/NewSoftware/NewSoftware';
 import { getSession } from './authService';
 import './components/style.css';
 import { getThemeColor } from './components/Utility/Utility';
@@ -48,12 +47,6 @@ function Root() {
             <Switch>
               <Route exact path='/software'>
                 <SoftwareTable userData={userData} />
-              </Route>
-              <Route exact path='/software/admin/new'>
-                {userData ? <NewSoftware /> : <SiteLogo />}
-              </Route>
-              <Route exact path='/software/admin/edit/:name'>
-                {userData ? <NewSoftware /> : <SiteLogo />}
               </Route>
             </Switch>
             <Switch>

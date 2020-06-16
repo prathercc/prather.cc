@@ -2,12 +2,13 @@ import React, { useEffect, useState, useContext } from 'react';
 import Table from 'react-bootstrap/Table';
 import Badge from 'react-bootstrap/Badge';
 import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
-import { fetchAllSoftware } from '../../../softwareService';
-import { useCurrentBreakpointName } from 'react-socks';
-import { StandardImage, StandardCard, StandardPage, getThemeColor, StandardCardHeader, StandardButton } from '../../Utility/Utility';
+import Form from 'react-bootstrap/Form';
+import { fetchAllSoftware, postSoftware, putSoftware, deleteSoftware } from '../../../softwareService';
+import { StandardImage, StandardCard, StandardPage, getThemeColor, StandardCardHeader, StandardButton, StandardModal, StandardTextField, StandardCheckBox } from '../../Utility/Utility';
 import { AppContext } from '../../../AppContext';
 import RecentIcon from 'react-bootstrap-icons/dist/icons/layers';
 import AllIcon from 'react-bootstrap-icons/dist/icons/book';
@@ -29,18 +30,91 @@ function SoftwareTable({ userData }) {
         <Tab.Pane eventKey='Recent'>
           <div style={{ fontSize: standardCardTitleFontSize, marginTop: '1vh' }}>Recent Software</div>
           <StandardCardHeader />
-          <CustomTable userData={userData} software={software.filter(x => x.is_legacy === false)} />
+          <CustomTable userData={userData} software={software.filter(x => x.is_legacy === false)} setSoftware={setSoftware} />
         </Tab.Pane>
         <Tab.Pane eventKey='All'>
           <div style={{ fontSize: standardCardTitleFontSize, marginTop: '1vh' }}>All Software</div>
           <StandardCardHeader />
-          <CustomTable userData={userData} software={[...software]} />
+          <CustomTable userData={userData} software={[...software]} setSoftware={setSoftware} />
         </Tab.Pane>
-        {userData && <StandardButton style={{ marginTop: '1vh', minWidth: '100%' }} onClick={() => window.open('/software/admin/new', '_self')}>Add application</StandardButton>}
+        {userData && <EditSoftware setSoftware={setSoftware} />}
       </SoftwareSwitcher>
-
     </StandardPage>
   );
+}
+
+const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const blankSoftware = {
+    is_legacy: false,
+    icon_link: '',
+    name: '',
+    description: '',
+    image_link: '',
+    windows: false,
+    linux: false,
+    mac: false,
+    android: false,
+    repo_link: '',
+    languages: '',
+  };
+  const [software, setSoftware] = useState(existingSoftware ? existingSoftware : blankSoftware);
+
+  const handleCreateSoftware = async () => {
+    await postSoftware(software);
+    await fetchAllSoftware(setSoftwares);
+    setSoftware(blankSoftware);
+    setModalOpen(false);
+  };
+  const handleEditSoftware = async () => {
+    await putSoftware(software);
+    await fetchAllSoftware(setSoftwares);
+    setModalOpen(false);
+  };
+  const handleDeleteSoftware = async () => {
+    await deleteSoftware(software.id);
+    await fetchAllSoftware(setSoftwares);
+    setModalOpen(false);
+  };
+
+  const ExistingButtons = <Container>
+    <Row>
+      <Col>
+        <StandardButton onClick={() => handleEditSoftware()}>Save</StandardButton>
+      </Col>
+      <Col>
+        <StandardButton onClick={() => handleDeleteSoftware()}>Delete</StandardButton>
+      </Col>
+    </Row>
+  </Container>
+
+  const NewButtons = <StandardButton isActive={software?.name?.length !== 0} onClick={() => handleCreateSoftware()}>Create</StandardButton>
+
+  return (
+    <>
+      <StandardButton onClick={() => setModalOpen(true)} style={{ minWidth: '100%' }}>{existingSoftware ? 'Edit' : 'Add Application'}</StandardButton>
+
+      <StandardModal buttons={existingSoftware ? ExistingButtons : NewButtons} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
+
+        <StandardCard style={{ minWidth: '100%' }} title={!existingSoftware ? 'Add Software' : 'Modify Software'}>
+          <Form.Group style={{ width: '95%' }}>
+            <StandardTextField value={software.name} isActive={!existingSoftware} label='Name' onChange={(e) => setSoftware({ ...software, name: e.target.value })} />
+            <StandardTextField value={software.icon_link} label='Icon Image Link' onChange={(e) => setSoftware({ ...software, icon_link: e.target.value })} />
+            <StandardTextField value={software.image_link} label='Image Link' onChange={(e) => setSoftware({ ...software, image_link: e.target.value })} />
+            <StandardTextField value={software.description} rows={4} label='Description' onChange={(e) => setSoftware({ ...software, description: e.target.value })} />
+            <StandardTextField value={software.repo_link} label='Repository Link' onChange={(e) => setSoftware({ ...software, repo_link: e.target.value })} />
+            <StandardTextField value={software.languages} label='Languages' onChange={(e) => setSoftware({ ...software, languages: e.target.value })} />
+            <StandardCheckBox label='Is this legacy software?' value={software.is_legacy} onChange={() => setSoftware({ ...software, is_legacy: !software.is_legacy })} />
+            <StandardCheckBox label='Windows' value={software.windows} onChange={() => setSoftware({ ...software, windows: !software.windows })} />
+            <StandardCheckBox label='Linux' value={software.linux} onChange={() => setSoftware({ ...software, linux: !software.linux })} />
+            <StandardCheckBox label='Mac' value={software.mac} onChange={() => setSoftware({ ...software, mac: !software.mac })} />
+            <StandardCheckBox label='Android' value={software.android} onChange={() => setSoftware({ ...software, android: !software.android })} />
+          </Form.Group>
+        </StandardCard>
+
+      </StandardModal>
+    </>
+  )
 }
 
 const SoftwareSwitcher = ({ children }) => {
@@ -78,7 +152,7 @@ const SoftwareSwitcher = ({ children }) => {
   )
 }
 
-const CustomTable = ({ software, userData, style }) => {
+const CustomTable = ({ software, userData, style, setSoftware }) => {
   const appSettings = useContext(AppContext);
   const { fgColorDetail } = appSettings;
 
@@ -99,8 +173,9 @@ const CustomTable = ({ software, userData, style }) => {
             return (
               <SoftwareSample
                 key={app.id}
-                value={app}
+                software={app}
                 userData={userData}
+                setSoftware={setSoftware}
               />
             );
           })}
@@ -110,38 +185,33 @@ const CustomTable = ({ software, userData, style }) => {
   )
 }
 
-const SoftwareSample = (props) => {
-  const { value, userData } = props;
-  const breakpoint = useCurrentBreakpointName();
+const SoftwareSample = ({ software, userData, setSoftware }) => {
   const compatibility = {
-    windows: value.windows,
-    linux: value.linux,
-    mac: value.mac,
-    android: value.android
+    windows: software.windows,
+    linux: software.linux,
+    mac: software.mac,
+    android: software.android
   };
 
   return (
     <tr className='defaultMouseOver' style={{ cursor: 'pointer' }}>
-      <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }} onClick={() => window.open(`/software/${value.name}`, '_self')}>
-        <StandardImage
-          src={value.icon_link}
-          style={{
-            width: breakpoint === 'xsmall' ? '5vw'
-              : breakpoint === 'medium' ? '4vw' : '2vw'
-          }} />
-        {value.name}
+      <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }} onClick={() => window.open(`/software/${software.name}`, '_self')}>
+        <StandardImage src={software.icon_link} style={{ maxWidth: '6%' }} />
+        {software.name}
       </td>
-      <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }} onClick={() => window.open(`/software/${value.name}`, '_self')}>
-        {value.languages}
+      <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }} onClick={() => window.open(`/software/${software.name}`, '_self')}>
+        {software.languages}
       </td>
-      <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }} onClick={() => window.open(`/software/${value.name}`, '_self')}>
+      <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }} onClick={() => window.open(`/software/${software.name}`, '_self')}>
         {compatibility.windows && <Badge variant='dark'>Windows</Badge>}{' '}
         {compatibility.linux && <Badge variant='dark'>Linux</Badge>}{' '}
         {compatibility.mac && <Badge variant='dark'>Mac</Badge>}{' '}
         {compatibility.android && <Badge variant='dark'>Android</Badge>}{' '}
       </td>
       <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }}>'20</td>
-      {userData && <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }}><StandardButton style={{ minWidth: '100%' }} onClick={() => window.open(`/software/admin/edit/${value.name}`, '_self')}>Edit</StandardButton></td>}
+      {userData && <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }}><EditSoftware setSoftware={setSoftware} software={software} /></td>}
+
+
     </tr>
   );
 };
