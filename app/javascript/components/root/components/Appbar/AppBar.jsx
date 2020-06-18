@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react';
-import Navbar from 'react-bootstrap/Navbar';
+import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { Breakpoint } from 'react-socks';
-import { AppContext } from '../../AppContext';
-import { StandardSeparator } from '../Utility/Utility';
+import { StandardCard, getThemeColor } from '../Utility/Utility';
 import Admin from './Admin';
 
 function AppBar({ userData, setUserData }) {
@@ -22,88 +22,48 @@ function AppBar({ userData, setUserData }) {
 }
 
 const DesktopView = ({ userData, setUserData }) => {
-  const appSettings = useContext(AppContext);
-  const {
-    fgColorDetail,
-    appbarFontStyle,
-    appbarFontSize
-  } = appSettings;
   return (
-    <Navbar
-      style={{
-        fontSize: appbarFontSize,
-        backgroundColor: fgColorDetail,
-        fontFamily: appbarFontStyle
-      }}
-      variant='dark'
-      fixed='top'
-    >
-      <Container style={{ textAlign: 'center', height: '4vh' }}>
-        <Nav>
-          <CustomNavLink href='/'>Home</CustomNavLink>
-          <CustomNavLink disabled={true} />
-          <CustomNavLink href='/software'>Software</CustomNavLink>
-        </Nav>
-        <Admin setUserData={setUserData} userData={userData} />
-      </Container>
-    </Navbar>
+    <StandardCard>
+      <Nav style={{ minWidth: '100%' }}>
+        <Container style={{ minWidth: '85%' }}>
+          <Row>
+            <Col style={{ marginTop: '1vh' }}>
+              <Nav.Link style={{ outline: 0, display: 'inline' }} className='defaultMouseOver' eventKey='Home'>Home</Nav.Link>
+              <span style={{ color: getThemeColor(1) }}>/</span>
+              <Nav.Link style={{ outline: 0, display: 'inline' }} className='defaultMouseOver' eventKey='Software'>Software</Nav.Link>
+            </Col>
+            <Col>
+              <Nav.Link style={{ outline: 0 }}><Admin setUserData={setUserData} userData={userData} /></Nav.Link>
+            </Col>
+          </Row>
+        </Container>
+      </Nav>
+    </StandardCard>
   );
 };
 
 const MobileView = ({ userData, setUserData }) => {
-  const appSettings = useContext(AppContext);
-  const {
-    fgColorDetail,
-    appbarFontStyle,
-    appbarFontSize
-  } = appSettings;
   return (
-    <Navbar
-      style={{
-        fontSize: appbarFontSize,
-        backgroundColor: fgColorDetail,
-        fontFamily: appbarFontStyle
-      }}
-      variant='dark'
-    >
-      <Container style={{ alignItem: 'center', height: '4vh' }}>
-        <CustomNavDropDown>
-          <Dropdown.Item href='/' onClick={() => window.open('/', '_self')}>Home</Dropdown.Item>
-          <Dropdown.Item href='/' onClick={() => window.open('/software', '_self')}>Software</Dropdown.Item>
-        </CustomNavDropDown>
-        <Admin setUserData={setUserData} userData={userData} />
-      </Container>
-    </Navbar>
-  );
-};
-
-const CustomNavDropDown = props => {
-  const appSettings = useContext(AppContext);
-  const { textColor } = appSettings;
-  const [activeColor, setActiveColor] = useState(textColor);
-  return (
-    <Nav
-      style={{ alignItems: 'center', color: activeColor, cursor: 'default' }}
-      onMouseEnter={() => setActiveColor('grey')}
-      onMouseLeave={() => setActiveColor(textColor)}
-    >
-      <Dropdown>
-        <Dropdown.Toggle style={{ color: activeColor }} as={Nav.Link}>Navigate</Dropdown.Toggle>
-        <Dropdown.Menu>{props.children}</Dropdown.Menu>
-      </Dropdown>
-    </Nav>
-  );
-};
-
-const CustomNavLink = props => {
-  return (
-    <div
-      className='defaultMouseOver'
-      style={{ color: 'white', padding: '5px', cursor: props.disabled ? '' : 'pointer' }}
-      onClick={() => window.open(props.href, '_self')}
-    >
-      {props.disabled ? <StandardSeparator /> : props.children}
-    </div>
+    <StandardCard>
+      <Nav style={{ minWidth: '100%' }}>
+        <Container>
+          <Row>
+            <Col style={{ textAlign: 'left' }}>
+              <Dropdown>
+                <Dropdown.Toggle style={{ color: 'white', outline: 0 }} as={Nav.Link}>Navigate</Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Nav.Link style={{ outline: 0, color: 'black' }} eventKey='Home'>Home</Nav.Link>
+                  <Nav.Link style={{ outline: 0, color: 'black' }} eventKey='Software'>Software</Nav.Link>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Col>
+            <Col style={{ textAlign: 'right' }}>
+              <Nav.Link style={{ outline: 0 }}><Admin setUserData={setUserData} userData={userData} /></Nav.Link>
+            </Col>
+          </Row>
+        </Container>
+      </Nav>
+    </StandardCard>
   );
 };
 
