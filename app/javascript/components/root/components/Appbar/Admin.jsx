@@ -13,9 +13,9 @@ const Admin = ({ setUserData, userData }) => {
 
     return (
         <>
-            <Navbar.Brand style={{ fontSize: appbarFontSize }} onClick={() => setModalOpen(true)}>
-                <div className='brandMouseOver' style={{ color: getThemeColor(1), cursor: 'pointer' }}>Prather.cc</div>
-            </Navbar.Brand>
+            {/* <Navbar.Brand style={{ fontSize: appbarFontSize }} onClick={() => setModalOpen(true)}> */}
+            <div onClick={() => setModalOpen(true)} className='brandMouseOver' style={{ color: getThemeColor(1), cursor: 'pointer' }}>Prather.cc</div>
+            {/* </Navbar.Brand> */}
             <Login modalOpen={!userData ? modalOpen : false} setModalOpen={setModalOpen} setUserData={setUserData} />
             <Manage userData={userData} modalOpen={userData ? modalOpen : false} setModalOpen={setModalOpen} setUserData={setUserData} />
         </>
