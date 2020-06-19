@@ -46,9 +46,11 @@ const DesktopView = ({ userData, setUserData }) => {
 };
 
 const MobileView = ({ userData, setUserData }) => {
+  const appSettings = useContext(AppContext);
+  const { appbarFontSize } = appSettings;
   return (
     <StandardCard>
-      <Nav style={{ minWidth: '100%' }}>
+      <Nav style={{ minWidth: '100%', fontSize: appbarFontSize }}>
         <Container>
           <Row>
             <Col style={{ textAlign: 'left' }}>
