@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Container from 'react-bootstrap/Container';
@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Col';
 import { Breakpoint } from 'react-socks';
 import { StandardCard, getThemeColor } from '../Utility/Utility';
 import Admin from './Admin';
+import { AppContext } from '../../AppContext';
 
 function AppBar({ userData, setUserData }) {
   return (
@@ -22,9 +23,11 @@ function AppBar({ userData, setUserData }) {
 }
 
 const DesktopView = ({ userData, setUserData }) => {
+  const appSettings = useContext(AppContext);
+  const { appbarFontSize } = appSettings;
   return (
     <StandardCard>
-      <Nav style={{ minWidth: '100%' }}>
+      <Nav style={{ minWidth: '100%', fontSize: appbarFontSize }}>
         <Container style={{ minWidth: '85%' }}>
           <Row>
             <Col style={{ marginTop: '1vh' }}>
@@ -32,8 +35,8 @@ const DesktopView = ({ userData, setUserData }) => {
               <span style={{ color: getThemeColor(1) }}>/</span>
               <Nav.Link style={{ outline: 0, display: 'inline' }} className='defaultMouseOver' eventKey='Software'>Software</Nav.Link>
             </Col>
-            <Col>
-              <Nav.Link style={{ outline: 0 }}><Admin setUserData={setUserData} userData={userData} /></Nav.Link>
+            <Col style={{ textAlign: 'right' }}>
+              <Nav.Link style={{ outline: 0, maxWidth: 'max-content', margin: 'auto' }}><Admin setUserData={setUserData} userData={userData} /></Nav.Link>
             </Col>
           </Row>
         </Container>

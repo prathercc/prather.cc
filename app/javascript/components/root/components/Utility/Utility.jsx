@@ -171,7 +171,7 @@ export const StandardPage = ({ title = '', children, style }) => {
                     paddingTop: '3vh',
                     paddingBottom: '5vh',
                     borderColor: getThemeColor(0.3),
-                    marginTop: '8vh'
+                    marginTop: '4vh'
                 }}
             >
                 <div style={{ fontSize: standardPageTitleFontSize }}>
