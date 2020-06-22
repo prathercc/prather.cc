@@ -31,12 +31,12 @@ const DesktopView = ({ userData, setUserData }) => {
         <Container style={{ minWidth: '85%' }}>
           <Row>
             <Col style={{ marginTop: '1vh' }}>
-              <Nav.Link style={{ outline: 0, display: 'inline' }} className='defaultMouseOver' eventKey='Home'>Home</Nav.Link>
+              <Nav.Link as={'div'} style={{ outline: 0, display: 'inline', cursor: 'pointer' }} className='defaultMouseOver' eventKey='Home'>Home</Nav.Link>
               <span style={{ color: getThemeColor(1) }}>/</span>
-              <Nav.Link style={{ outline: 0, display: 'inline' }} className='defaultMouseOver' eventKey='Software'>Software</Nav.Link>
+              <Nav.Link as={'div'} style={{ outline: 0, display: 'inline', cursor: 'pointer' }} className='defaultMouseOver' eventKey='Software'>Software</Nav.Link>
             </Col>
             <Col style={{ textAlign: 'right' }}>
-              <Nav.Link style={{ outline: 0, maxWidth: 'max-content', margin: 'auto' }}><Admin setUserData={setUserData} userData={userData} /></Nav.Link>
+              <Nav.Link as={'div'} style={{ outline: 0, maxWidth: 'max-content', margin: 'auto' }}><Admin setUserData={setUserData} userData={userData} /></Nav.Link>
             </Col>
           </Row>
         </Container>
