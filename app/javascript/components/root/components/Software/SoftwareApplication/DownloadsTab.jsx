@@ -25,10 +25,10 @@ function DownloadsTab({ app, userData, style }) {
         const fetch = async () => {
             await fetchDownloads(app.id, setDownloads);
         };
-        if (app !== null) {
+        if (app) {
             fetch();
         }
-    }, []);
+    }, [app]);
 
     return (
         <>
@@ -135,12 +135,12 @@ const DownloadSwitcher = () => {
 
     const CustomLink = ({ keyBool, keyText, displayText }) => {
         return (
-            <Nav.Link as={'div'} className={keyBool || 'defaultMouseOver'} style={keyBool ? { backgroundColor: getThemeColor(1), color: 'black', cursor: 'pointer' } : { cursor: 'pointer' }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{displayText}</Nav.Link>
+            <Nav.Link as={'div'} className={keyBool || 'defaultMouseOver'} style={keyBool ? { backgroundColor: getThemeColor(1), color: 'black', cursor: 'pointer', outline: 0 } : { cursor: 'pointer', outline: 0 }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{displayText}</Nav.Link>
         )
     }
 
     return (
-        <StandardCard style={{ margin: 'auto', maxWidth: 'max-content' }}>
+        <StandardCard style={{ margin: 'auto', maxWidth: 'max-content', marginTop: '1vh' }}>
             <Nav defaultActiveKey='Windows'>
                 <Nav.Item>
                     <CustomLink keyBool={activeKey.Windows} keyText='Windows' displayText='Windows' />

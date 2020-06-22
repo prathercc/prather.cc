@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { AppContext } from '../../../AppContext';
-import { StandardImage, StandardCard, StandardButton, StandardModal, getIconSizing, StandardTextField, getThemeColor } from '../../Utility/Utility';
+import { StandardImage, StandardCard, StandardButton, StandardModal, getIconSizing, StandardTextField } from '../../Utility/Utility';
 import Carousel from 'react-bootstrap/Carousel';
 import RightArrow from 'react-bootstrap-icons/dist/icons/chevron-compact-right';
 import LeftArrow from 'react-bootstrap-icons/dist/icons/chevron-compact-left';
@@ -17,8 +17,7 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app }) => {
             await fetchFeatures(app.id, setFeatures);
         };
         featureFetch();
-
-    }, []);
+    }, [app]);
     return (
         <div style={{ ...style }}>
             <Carousel interval={null} nextIcon={<RightArrow style={{ fontSize: getIconSizing(), color: 'white' }} />} prevIcon={<LeftArrow style={{ fontSize: getIconSizing(), color: 'white' }} />}>
@@ -48,16 +47,18 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
 
     return (
         <>
-            <StandardCard>
+            <StandardCard style={{ maxWidth: '60%', width: 'max-content', padding: '5px', marginBottom: '1vh', marginTop: '1vh' }}>
                 <StandardImage
                     className='defaultImageNudge'
                     src={feature.image_link}
                     onClick={() => setImageModalObj({ open: true, imageLink: feature.image_link })}
-                    style={{ maxWidth: '55%', cursor: 'pointer', margin: 'auto', marginTop: '1vh' }}
+                    style={{ maxWidth: '100%', cursor: 'pointer', margin: 'auto' }}
                 />
-                <div style={{ fontSize: standardCardTitleFontSize, marginTop: '1vh', color: getThemeColor(1) }}>
+            </StandardCard>
+            <StandardCard>
+                <div style={{ fontSize: standardCardTitleFontSize }}>
                     <div>
-                        {feature.title}
+                        <i>{feature.title}</i>
                     </div>
                 </div>
                 <div style={{ margin: 'auto', maxWidth: '90%', fontSize: softwareFontSize, textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
