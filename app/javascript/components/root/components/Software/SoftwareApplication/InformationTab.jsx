@@ -23,7 +23,7 @@ const InformationTab = ({ setImageModalObj, style, app }) => {
                     </StandardCard>
                 </Col>
                 <Col xs={6} style={{ display: 'flex' }}>
-                    <StandardCard style={{ margin: 'auto', outline: `1px solid ${getThemeColor(0.5)}`, verticalAlign: 'middle', minWidth: '100%', height: '100%' }}>
+                    <StandardCard style={{ margin: 'auto', outline: `1px solid ${getThemeColor(0.25)}`, verticalAlign: 'middle', minWidth: '100%', height: '100%' }}>
                         <div style={{ fontSize: standardCardTitleFontSize, }}>
                             <i>What is {name}?</i>
                         </div>

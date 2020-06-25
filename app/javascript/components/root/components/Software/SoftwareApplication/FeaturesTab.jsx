@@ -8,6 +8,8 @@ import { StandardImage, StandardCard, StandardButton, StandardModal, getIconSizi
 import Carousel from 'react-bootstrap/Carousel';
 import RightArrow from 'react-bootstrap-icons/dist/icons/arrow-right';
 import LeftArrow from 'react-bootstrap-icons/dist/icons/arrow-left';
+import Edit from 'react-bootstrap-icons/dist/icons/pencil';
+import Add from 'react-bootstrap-icons/dist/icons/plus-circle';
 import { fetchFeatures, putFeature, deleteFeature, postFeature } from '../../../featureService';
 
 const FeaturesTab = ({ setImageModalObj, userData, style, app }) => {
@@ -71,18 +73,16 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
                 </StandardCard>
             </Col>
             <Col xs={6} style={{ display: 'flex' }}>
-                <StandardCard style={{ margin: 'auto', outline: `1px solid ${getThemeColor(0.5)}`, verticalAlign: 'middle', minWidth: '100%', height: '100%' }}>
+                <StandardCard style={{ margin: 'auto', outline: `1px solid ${getThemeColor(0.25)}`, verticalAlign: 'middle', minWidth: '100%', height: '100%' }}>
                     <div style={{ fontSize: standardCardTitleFontSize }}>
                         <div>
                             <i>{feature.title}</i>
                         </div>
                     </div>
                     <div style={{ margin: 'auto', maxWidth: '95%', fontSize: softwareFontSize, textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
+                    {userData && <EditFeature app={app} setFeatures={setFeatures} feature={feature} />}
                 </StandardCard>
             </Col>
-
-
-            {userData && <EditFeature app={app} setFeatures={setFeatures} feature={feature} />}
         </Row >
     );
 };
@@ -132,7 +132,7 @@ const EditFeature = ({ feature, setFeatures, app: { id, name } }) => {
 
     return (
         <>
-            <StandardButton style={{ marginTop: '1vh', minWidth: '75%' }} onClick={() => setModalOpen(true)}>
+            <StandardButton icon={feature ? <Edit style={{ fontSize: getIconSizing() }} /> : <Add style={{ fontSize: getIconSizing() }} />} style={{}} onClick={() => setModalOpen(true)}>
                 {feature ? 'Edit' : 'Add Feature'}
             </StandardButton>
             <StandardModal buttons={feature ? <EditButtons /> : <CreateButtons />} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
