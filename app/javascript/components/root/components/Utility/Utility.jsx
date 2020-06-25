@@ -90,22 +90,30 @@ export const StandardImage = (props) => {
     );
 };
 
-export const StandardButton = ({ onClick, style, children, isActive = true }) => {
+export const StandardButton = ({ onClick, style, children, isActive = true, icon }) => {
     const appSettings = useContext(AppContext);
     const { standardCardTitleFontSize } = appSettings;
     return (
-        <Card
-            onClick={isActive ? onClick : () => { }}
-            className='defaultButton'
-            style={{
-                margin: 'auto',
-                ...style,
-                fontSize: standardCardTitleFontSize,
-                alignItems: 'center',
-                cursor: isActive || 'not-allowed'
-            }}>
-            {children}
-        </Card>
+        <>
+            {icon && <div onClick={isActive ? onClick : () => { }} className='defaultMouseOver' style={{ margin: 'auto', maxWidth: 'max-content', cursor: isActive ? 'pointer' : 'not-allowed', ...style }}>
+                {icon}
+            </div>}
+            {
+                !icon && <Card
+                    onClick={isActive ? onClick : () => { }}
+                    className='defaultButton'
+                    style={{
+                        margin: 'auto',
+                        ...style,
+                        fontSize: standardCardTitleFontSize,
+                        alignItems: 'center',
+                        cursor: isActive || 'not-allowed'
+                    }}>
+                    {children}
+                </Card>
+            }
+
+        </>
     )
 }
 
@@ -148,9 +156,9 @@ export const StandardCardHeader = () => {
             style={{
                 borderColor: getThemeColor(0.8),
                 margin: 'auto',
-                marginBottom: '2vh',
-                width: '65%',
-                opacity: '0.65'
+                width: '100%',
+                opacity: '0.65',
+                marginBottom: '2vh'
             }}>
         </Card>
     )
@@ -166,19 +174,23 @@ export const StandardPage = ({ title = '', children, style }) => {
                 style={{
                     backgroundColor: fgColor,
                     fontFamily: fontStyle,
-                    opacity: '0.95',
+                    opacity: '0.85',
                     fontSize: softwareFontSize,
-                    paddingTop: '3vh',
+                    paddingTop: '0vh',
                     paddingBottom: '5vh',
                     borderColor: getThemeColor(0.3),
-                    marginTop: '4vh'
+                    marginTop: '4vh',
+                    paddingLeft: '0vw',
+                    paddingRight: '0vw'
                 }}
             >
-                <div style={{ fontSize: standardPageTitleFontSize }}>
+                <div style={{ fontSize: standardPageTitleFontSize, backgroundColor: getThemeColor(0.085), margin: 'auto', marginBottom: '2vh', padding: '5px', minWidth: '100%' }}>
                     {title}
                 </div>
-                <StandardCardHeader />
-                {children}
+                <div style={{ margin: 'auto', width: '95%' }}>
+                    {children}
+                </div>
+
             </Jumbotron>
         </Container>
     );
@@ -189,7 +201,7 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons }
     return (
         <Modal
             scrollable
-            style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle, opacity: 0.95, overflow: 'inherit' }}
+            style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle, opacity: 0.9, overflow: 'inherit' }}
             centered
             show={modalOpen}
             onHide={handleModalClose}
