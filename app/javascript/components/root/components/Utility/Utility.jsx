@@ -166,7 +166,7 @@ export const StandardCardHeader = () => {
 
 export const StandardPage = ({ title = '', children, style }) => {
     const appSettings = useContext(AppContext);
-    const { fgColor, fontStyle, softwareFontSize, standardPageTitleFontSize } = appSettings;
+    const { fgColor, fontStyle, softwareFontSize, standardPageTitleFontSize, fgColorDetail } = appSettings;
     return (
         <Container style={{ minWidth: '85%', ...style }}>
             <Jumbotron
@@ -184,7 +184,7 @@ export const StandardPage = ({ title = '', children, style }) => {
                     paddingRight: '0vw'
                 }}
             >
-                <div style={{ fontSize: standardPageTitleFontSize, backgroundColor: getThemeColor(0.085), margin: 'auto', marginBottom: '2vh', padding: '5px', minWidth: '100%' }}>
+                <div style={{ fontSize: standardPageTitleFontSize, backgroundColor: fgColorDetail, margin: 'auto', marginBottom: '2vh', padding: '5px', minWidth: '100%', borderBottom: `1px solid ${getThemeColor(0.25)}` }}>
                     {title}
                 </div>
                 <div style={{ margin: 'auto', width: '95%' }}>
@@ -255,9 +255,11 @@ export const getThemeColor = (opacity = 1) => {
     return `rgb(79, 201, 201, ${opacity})`;
 }
 
-export const getIconSizing = () => {
+export const getIconSizing = (size = 'large') => {
     const breakpoint = useCurrentBreakpointName();
-    return breakpoint === 'xsmall' ? '7vw' : breakpoint === 'large' ? '4.5vw' : breakpoint === 'medium' ? '5.5vw' : breakpoint === 'small' ? '6.5vw' : '3vw';
+    let largeLogic = breakpoint === 'xsmall' ? '7vw' : breakpoint === 'large' ? '4.5vw' : breakpoint === 'medium' ? '5.5vw' : breakpoint === 'small' ? '6.5vw' : '3vw';
+    let mediumLogic = breakpoint === 'xsmall' ? '4vw' : breakpoint === 'large' ? '3.5vw' : breakpoint === 'medium' ? '4.5vw' : breakpoint === 'small' ? '5.5vw' : '2vw';
+    return size === 'large' ? largeLogic : size === 'medium' ? mediumLogic : '1vw';
 }
 
 export const getLogoSizing = () => {
