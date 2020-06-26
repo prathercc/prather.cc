@@ -58,7 +58,7 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app }) => {
 
 const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app }) => {
     const appSettings = useContext(AppContext);
-    const { softwareFontSize, standardCardTitleFontSize } = appSettings;
+    const { softwareFontSize } = appSettings;
 
     return (
         <Row style={{ width: '99%', margin: 'auto', marginTop: '0.25vh' }}>
@@ -73,12 +73,7 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
                 </StandardCard>
             </Col>
             <Col xs={6} style={{ display: 'flex' }}>
-                <StandardCard style={{ margin: 'auto', outline: `1px solid ${getThemeColor(0.25)}`, verticalAlign: 'middle', minWidth: '100%', height: '100%' }}>
-                    <div style={{ fontSize: standardCardTitleFontSize }}>
-                        <div>
-                            <i>{feature.title}</i>
-                        </div>
-                    </div>
+                <StandardCard title={<i>{feature.title}</i>} style={{ margin: 'auto', outline: `1px solid ${getThemeColor(0.25)}`, verticalAlign: 'middle', minWidth: '100%' }}>
                     <div style={{ margin: 'auto', maxWidth: '95%', fontSize: softwareFontSize, textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
                     {userData && <EditFeature app={app} setFeatures={setFeatures} feature={feature} />}
                 </StandardCard>
@@ -132,9 +127,7 @@ const EditFeature = ({ feature, setFeatures, app: { id, name } }) => {
 
     return (
         <>
-            <StandardButton icon={feature ? <Edit style={{ fontSize: getIconSizing() }} /> : <Add style={{ fontSize: getIconSizing() }} />} style={{}} onClick={() => setModalOpen(true)}>
-                {feature ? 'Edit' : 'Add Feature'}
-            </StandardButton>
+            <StandardButton icon={feature ? <Edit style={{ fontSize: getIconSizing('medium'), marginBottom: '1vh' }} /> : <Add style={{ fontSize: getIconSizing('medium') }} />} style={{}} onClick={() => setModalOpen(true)} />
             <StandardModal buttons={feature ? <EditButtons /> : <CreateButtons />} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
                 <StandardCard title={feature ? 'Modify Feature' : 'Create Feature'}>
                     <Form.Group style={{ width: '95%', margin: 'auto' }}>

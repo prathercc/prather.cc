@@ -7,7 +7,7 @@ import { StandardImage, StandardCard, getThemeColor } from '../../Utility/Utilit
 const InformationTab = ({ setImageModalObj, style, app }) => {
     const { image_link, description, name } = app;
     const appSettings = useContext(AppContext);
-    const { softwareFontSize, standardCardTitleFontSize } = appSettings;
+    const { softwareFontSize } = appSettings;
     return (
         <>
             <Row style={{ ...style }}>
@@ -23,10 +23,7 @@ const InformationTab = ({ setImageModalObj, style, app }) => {
                     </StandardCard>
                 </Col>
                 <Col xs={6} style={{ display: 'flex' }}>
-                    <StandardCard style={{ margin: 'auto', outline: `1px solid ${getThemeColor(0.25)}`, verticalAlign: 'middle', minWidth: '100%', height: '100%' }}>
-                        <div style={{ fontSize: standardCardTitleFontSize, }}>
-                            <i>What is {name}?</i>
-                        </div>
+                    <StandardCard title={<i>What is {name}?</i>} style={{ margin: 'auto', outline: `1px solid ${getThemeColor(0.25)}`, verticalAlign: 'middle', minWidth: '100%' }}>
                         <div style={{ margin: 'auto', maxWidth: '90%', fontSize: softwareFontSize, textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: description }} />
                     </StandardCard>
                 </Col>
