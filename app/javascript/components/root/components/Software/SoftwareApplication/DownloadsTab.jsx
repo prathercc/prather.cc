@@ -8,9 +8,10 @@ import Nav from 'react-bootstrap/Nav';
 import Table from 'react-bootstrap/Table';
 import { AppContext } from '../../../AppContext';
 import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../../../downloadService';
-import { StandardCard, StandardModal, getThemeColor, StandardSpinner, StandardButton, StandardTextField, StandardDropDown } from '../../Utility/Utility';
+import { StandardCard, StandardModal, getThemeColor, StandardSpinner, StandardButton, StandardTextField, StandardDropDown, getIconSizing } from '../../Utility/Utility';
 import DemoIcon from 'react-bootstrap-icons/dist/icons/file-earmark-diff';
 import ApplicationIcon from 'react-bootstrap-icons/dist/icons/gear-wide-connected';
+import ModifyIcon from 'react-bootstrap-icons/dist/icons/pencil';
 
 function DownloadsTab({ app, userData, style }) {
     const [downloads, setDownloads] = useState(null);
@@ -72,16 +73,16 @@ const DownloadTable = ({ style, downloads, type }) => {
         <>
             {filteredDownloads?.length === 0 && <div style={{ marginTop: '1vh' }}>No downloads found</div>}
             {
-                filteredDownloads?.length > 0 && <Table size='sm' hover style={{ ...style, color: 'white', backgroundColor: fgColorDetail, border: `1px solid ${getThemeColor(0.2)}`, maxWidth: '85%' }}>
+                filteredDownloads?.length > 0 && <Table size='sm' hover style={{ ...style, color: 'white', backgroundColor: fgColorDetail, border: `1px solid ${getThemeColor(0.25)}`, maxWidth: '85%' }}>
                     <thead>
                         <tr>
-                            <th style={{ border: `1px solid ${getThemeColor(0.2)}` }}>
+                            <th style={{ border: `1px solid ${getThemeColor(0.25)}` }}>
                                 Filename
                             </th>
-                            <th style={{ border: `1px solid ${getThemeColor(0.2)}` }}>
+                            <th style={{ border: `1px solid ${getThemeColor(0.25)}` }}>
                                 Type
                             </th>
-                            <th style={{ border: `1px solid ${getThemeColor(0.2)}` }}>
+                            <th style={{ border: `1px solid ${getThemeColor(0.25)}` }}>
                                 File Size
                             </th>
                         </tr>
@@ -140,7 +141,7 @@ const DownloadSwitcher = () => {
     }
 
     return (
-        <StandardCard style={{ margin: 'auto', maxWidth: 'max-content', marginTop: '1vh' }}>
+        <StandardCard style={{ margin: 'auto', maxWidth: 'max-content', marginTop: '1vh', outline: `1px solid ${getThemeColor(0.25)}` }}>
             <Nav defaultActiveKey='Windows'>
                 <Nav.Item>
                     <CustomLink keyBool={activeKey.Windows} keyText='Windows' displayText='Windows' />
@@ -186,9 +187,7 @@ const EditDownloads = ({ app, setMainDownloads, style }) => {
 
     return (
         <>
-            <StandardButton style={{ ...style, fontSize: softwareFontSize }} onClick={() => openAndLoadDownloads()} variant='warning' block>
-                Modify {app.name} Downloads
-            </StandardButton>
+            <StandardButton icon={<ModifyIcon style={{ fontSize: getIconSizing('medium') }} />} style={{ ...style, fontSize: softwareFontSize }} onClick={() => openAndLoadDownloads()} variant='warning' block />
             <StandardModal
                 title='Modify Downloads'
                 modalOpen={modalOpen}
