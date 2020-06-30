@@ -73,16 +73,16 @@ const DownloadTable = ({ style, downloads, type }) => {
         <>
             {filteredDownloads?.length === 0 && <div style={{ marginTop: '1vh' }}>No downloads found</div>}
             {
-                filteredDownloads?.length > 0 && <Table size='sm' hover style={{ ...style, color: 'white', backgroundColor: fgColorDetail, border: `1px solid ${getThemeColor(0.25)}`, maxWidth: '85%' }}>
+                filteredDownloads?.length > 0 && <Table size='sm' hover style={{ ...style, color: 'white', backgroundColor: fgColorDetail, border: `1px solid ${getThemeColor(0.1)}`, maxWidth: '85%' }}>
                     <thead>
                         <tr>
-                            <th style={{ border: `1px solid ${getThemeColor(0.25)}` }}>
+                            <th style={{ border: `1px solid ${getThemeColor(0.1)}` }}>
                                 Filename
                             </th>
-                            <th style={{ border: `1px solid ${getThemeColor(0.25)}` }}>
+                            <th style={{ border: `1px solid ${getThemeColor(0.1)}` }}>
                                 Type
                             </th>
-                            <th style={{ border: `1px solid ${getThemeColor(0.25)}` }}>
+                            <th style={{ border: `1px solid ${getThemeColor(0.1)}` }}>
                                 File Size
                             </th>
                         </tr>
@@ -115,9 +115,9 @@ const DlRow = ({ download: { file_name, file_size, path, download_description, o
     return (
         <>
             <tr onClick={() => setModalOpen(true)} className='defaultMouseOver' style={{ cursor: 'pointer' }}>
-                <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }}>{file_name}</td>
-                <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }}>{<Icon type={os_type} />}</td>
-                <td style={{ borderTop: `1px solid ${getThemeColor(0.2)}` }}>{file_size}</td>
+                <td style={{ borderTop: `1px solid ${getThemeColor(0.1)}` }}>{file_name}</td>
+                <td style={{ borderTop: `1px solid ${getThemeColor(0.1)}` }}>{<Icon type={os_type} />}</td>
+                <td style={{ borderTop: `1px solid ${getThemeColor(0.1)}` }}>{file_size}</td>
             </tr>
             <StandardModal buttons={DownloadButton} title='' modalOpen={modalOpen} handleModalClose={() => { setModalOpen(false) }} closable={false}>
                 <div style={{ display: 'inline', color: getThemeColor(1) }}>File Name: </div><div style={{ display: 'inline' }}>{file_name}</div>
@@ -141,7 +141,7 @@ const DownloadSwitcher = () => {
     }
 
     return (
-        <StandardCard style={{ margin: 'auto', maxWidth: 'max-content', marginTop: '1vh', outline: `1px solid ${getThemeColor(0.25)}` }}>
+        <StandardCard style={{ margin: 'auto', maxWidth: 'max-content', marginTop: '1vh', outline: `1px solid ${getThemeColor(0.1)}` }}>
             <Nav defaultActiveKey='Windows'>
                 <Nav.Item>
                     <CustomLink keyBool={activeKey.Windows} keyText='Windows' displayText='Windows' />

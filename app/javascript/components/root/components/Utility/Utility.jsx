@@ -174,7 +174,7 @@ export const StandardPage = ({ title = '', children, style }) => {
                 style={{
                     backgroundColor: fgColor,
                     fontFamily: fontStyle,
-                    opacity: '0.85',
+                    opacity: '1',
                     fontSize: softwareFontSize,
                     paddingTop: '0vh',
                     paddingBottom: '5vh',
@@ -184,7 +184,7 @@ export const StandardPage = ({ title = '', children, style }) => {
                     paddingRight: '0vw'
                 }}
             >
-                <div style={{ fontSize: standardPageTitleFontSize, backgroundColor: fgColorDetail, margin: 'auto', marginBottom: '2vh', padding: '5px', minWidth: '100%', borderBottom: `1px solid ${getThemeColor(0.25)}` }}>
+                <div style={{ fontSize: standardPageTitleFontSize, backgroundColor: fgColorDetail, margin: 'auto', marginBottom: '2vh', padding: '5px', minWidth: '100%', borderBottom: `1px solid ${getThemeColor(0.1)}` }}>
                     {title}
                 </div>
                 <div style={{ margin: 'auto', width: '95%' }}>

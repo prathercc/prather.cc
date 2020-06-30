@@ -8,12 +8,12 @@ const VideoTab = ({ style, app }) => {
     return (
         <Container style={{ maxWidth: '50%' }}>
             {
-                youtube_link && <StandardCard className='video-container' style={{ ...style, outline: `1px solid ${getThemeColor(0.25)}` }}>
+                youtube_link && <StandardCard className='video-container' style={{ ...style, outline: `1px solid ${getThemeColor(0.1)}` }}>
                     <iframe
                         src={`https://www.youtube-nocookie.com/embed/${youtube_link}`}
-                        frameborder="0"
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen />
+                        frameBorder='0'
+                        allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+                        allowFullScreen />
                 </StandardCard>
             }
             {

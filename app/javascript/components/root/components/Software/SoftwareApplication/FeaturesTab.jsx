@@ -17,11 +17,13 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app }) => {
     const [features, setFeatures] = useState(null);
     useEffect(() => {
         const featureFetch = async () => {
-            setCaroselIndex(0);
             await fetchFeatures(app.id, setFeatures);
         };
+        setCaroselIndex(0);
+        setFeatures(null);
         featureFetch();
     }, [app]);
+
     return (
         <div style={{ ...style }}>
             <Carousel activeIndex={caroselIndex} onSelect={(index) => setCaroselIndex(index)} controls={false} interval={null}>
@@ -63,7 +65,7 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
     return (
         <Row style={{ width: '99%', margin: 'auto', marginTop: '0.25vh' }}>
             <Col xs={6} style={{ display: 'flex' }}>
-                <StandardCard style={{ maxWidth: '100%', width: 'max-content', padding: '2px', margin: 'auto', verticalAlign: 'middle' }}>
+                <StandardCard style={{ maxWidth: '100%', width: 'max-content', padding: '1px', margin: 'auto', verticalAlign: 'middle' }}>
                     <StandardImage
                         className='defaultImageNudge'
                         src={feature.image_link}
@@ -73,7 +75,7 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
                 </StandardCard>
             </Col>
             <Col xs={6} style={{ display: 'flex' }}>
-                <StandardCard title={<i>{feature.title}</i>} style={{ margin: 'auto', outline: `1px solid ${getThemeColor(0.25)}`, verticalAlign: 'middle', minWidth: '100%' }}>
+                <StandardCard title={<i>{feature.title}</i>} style={{ margin: 'auto', outline: `1px solid ${getThemeColor(0.1)}`, verticalAlign: 'middle', minWidth: '100%' }}>
                     <div style={{ margin: 'auto', maxWidth: '95%', fontSize: softwareFontSize, textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
                     {userData && <EditFeature app={app} setFeatures={setFeatures} feature={feature} />}
                 </StandardCard>
