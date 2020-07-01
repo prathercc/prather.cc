@@ -25,6 +25,7 @@ export const StandardCheckBox = ({ label, value, onChange, style }) => {
             <Row>
                 <Col>
                     <Form.Check
+                        onChange={onChange}
                         type='checkbox'
                         checked={value}
                         style={{ display: 'inline' }}
@@ -174,7 +175,7 @@ export const StandardPage = ({ title = '', children, style }) => {
                 style={{
                     backgroundColor: fgColor,
                     fontFamily: fontStyle,
-                    opacity: '1',
+                    opacity: '0.85',
                     fontSize: softwareFontSize,
                     paddingTop: '0vh',
                     paddingBottom: '5vh',
@@ -259,7 +260,8 @@ export const getIconSizing = (size = 'large') => {
     const breakpoint = useCurrentBreakpointName();
     let largeLogic = breakpoint === 'xsmall' ? '7vw' : breakpoint === 'large' ? '4.5vw' : breakpoint === 'medium' ? '5.5vw' : breakpoint === 'small' ? '6.5vw' : '3vw';
     let mediumLogic = breakpoint === 'xsmall' ? '4vw' : breakpoint === 'large' ? '3.5vw' : breakpoint === 'medium' ? '4.5vw' : breakpoint === 'small' ? '5.5vw' : '2vw';
-    return size === 'large' ? largeLogic : size === 'medium' ? mediumLogic : '1vw';
+    let smallLogic = breakpoint === 'xsmall' ? '3vw' : breakpoint === 'large' ? '2.5vw' : breakpoint === 'medium' ? '3.5vw' : breakpoint === 'small' ? '4.5vw' : '1.5vw';
+    return size === 'large' ? largeLogic : size === 'medium' ? mediumLogic : size === 'small' ? smallLogic : '1vw';
 }
 
 export const getLogoSizing = () => {
