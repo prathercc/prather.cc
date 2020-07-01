@@ -6,12 +6,14 @@
 .defaultMouseOver:hover {
     color: #4fc9c9 !important;
 }
+
 .defaultImageNudge {
-    outline: solid 1px rgb(79, 201, 201, 0.3);
+    outline: solid 1px rgb(79, 201, 201, 0.1);
     transition: outline 0.2s ease-in-out;
 }
+
 .defaultImageNudge:hover {
-    outline: solid 1px #4fc9c9;
+    outline: solid 1px rgb(79, 201, 201, 1);
 }
 
 .defaultButton {
@@ -19,8 +21,9 @@
     background-color: rgb(79, 201, 201, 0.1) !important;
     transition: background-color 0.2s ease-in-out;
 }
+
 .defaultButton:hover {
-    cursor:pointer;
+    cursor: pointer;
     background-color: rgb(79, 201, 201, 0.4) !important;
 }
 
@@ -28,6 +31,7 @@
     color: #4fc9c9 !important;
     transition: color 0.2s ease-in-out;
 }
+
 .brandMouseOver:hover {
     color: white !important;
 }
@@ -35,9 +39,27 @@
 a:link {
     color: #4fc9c9;
 }
+
 a:visited {
-    color: #4fc9c9 ;
+    color: #4fc9c9;
 }
+
 a:hover {
     color: #4fc9c9 !important;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+}
+
+.video-container iframe, .video-container object, .video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }

@@ -1,28 +1,25 @@
 {
-  "application.js": "/packs/js/application-90c09884af4280b2ddd6.js",
-  "application.js.map": "/packs/js/application-90c09884af4280b2ddd6.js.map",
+  "application.js": "/packs/js/application-56b25693635b7929828c.js",
+  "application.js.map": "/packs/js/application-56b25693635b7929828c.js.map",
   "entrypoints": {
     "application": {
       "js": [
-        "/packs/js/application-90c09884af4280b2ddd6.js"
+        "/packs/js/application-56b25693635b7929828c.js"
       ],
       "js.map": [
-        "/packs/js/application-90c09884af4280b2ddd6.js.map"
+        "/packs/js/application-56b25693635b7929828c.js.map"
       ]
     },
     "index": {
       "js": [
-        "/packs/js/index-15e9228314f7d1a2f420.js"
+        "/packs/js/index-58edd5f1375f68d1fb59.js"
       ],
       "js.map": [
-        "/packs/js/index-15e9228314f7d1a2f420.js.map"
+        "/packs/js/index-58edd5f1375f68d1fb59.js.map"
       ]
     }
   },
-  "index.js": "/packs/js/index-15e9228314f7d1a2f420.js",
-  "index.js.map": "/packs/js/index-15e9228314f7d1a2f420.js.map",
-  "media/components/root/images/GitHubMark.png": "/packs/media/components/root/images/GitHubMark-28532ab3c1c5f14f6f7ea648a27994aa.png",
-  "media/components/root/images/YouTubeMark.png": "/packs/media/components/root/images/YouTubeMark-c4b4cd85986bd3025090312b61d197bf.png",
-  "media/components/root/images/background.png": "/packs/media/components/root/images/background-31a5ee2a87418e034b01f3ffea04f070.png",
-  "media/components/root/images/pratherccsplatABS1.png": "/packs/media/components/root/images/pratherccsplatABS1-38ffac0e746f8bb19cc8bf1a3ed971d6.png"
+  "index.js": "/packs/js/index-58edd5f1375f68d1fb59.js",
+  "index.js.map": "/packs/js/index-58edd5f1375f68d1fb59.js.map",
+  "media/components/root/images/background.jpg": "/packs/media/components/root/images/background-aa234b07ece13eebe25a2859a1774184.jpg"
 }

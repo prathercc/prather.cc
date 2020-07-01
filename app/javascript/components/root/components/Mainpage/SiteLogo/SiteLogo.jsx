@@ -1,20 +1,15 @@
 import React from 'react';
-import './SiteLogo.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useCurrentBreakpointName } from 'react-socks';
-import pratherccsplatBright from '../../../images/pratherccsplatABS1.png';
+import { StandardImage } from '../../Utility/Utility';
 
 function SiteLogo() {
-  const breakpoint = useCurrentBreakpointName();
-  const widthLogic = breakpoint === 'xlarge' ? '25vw' : breakpoint === 'large' ? '45vw' : breakpoint === 'medium' ? '55vw' : '75vw';
-
   return (
-    <Container className='App-splat-to-mobile' style={{ opacity: .85, marginTop: '5vh' }}>
+    <Container style={{ opacity: .9, marginTop: '5vh' }}>
       <Row>
         <Col>
-          <img src={pratherccsplatBright} style={{ width: widthLogic, maxWidth: '375px' }} />
+          <StandardImage style={{ maxWidth: '95%', filter: 'grayscale(0.4)' }} src='https://i.servimg.com/u/f92/11/29/62/29/filter10.png' />
         </Col>
       </Row>
     </Container>
