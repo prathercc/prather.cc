@@ -9,11 +9,12 @@ import { AppContext } from '../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import XIcon from 'react-bootstrap-icons/dist/icons/x';
 
 export const StandardImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
     const RawButton = <StandardButton style={{ minWidth: '25%' }} onClick={() => window.open(imageLink)}>View Raw Image</StandardButton>
     return (
-        <StandardModal buttons={RawButton} modalOpen={modalOpen} handleModalClose={handleModalClose}>
+        <StandardModal title='View Image' buttons={RawButton} modalOpen={modalOpen} handleModalClose={handleModalClose}>
             <StandardImage src={imageLink} style={{ maxWidth: '85%' }} />
         </StandardModal>
     )
@@ -92,8 +93,7 @@ export const StandardImage = (props) => {
 };
 
 export const StandardButton = ({ onClick, style, children, isActive = true, icon }) => {
-    const appSettings = useContext(AppContext);
-    const { standardCardTitleFontSize } = appSettings;
+    const { standardCardTitleFontSize } = useContext(AppContext);
     return (
         <>
             {icon && <div onClick={isActive ? onClick : () => { }} className='defaultMouseOver' style={{ margin: 'auto', maxWidth: 'max-content', cursor: isActive ? 'pointer' : 'not-allowed', ...style }}>
@@ -130,9 +130,8 @@ export const StandardSeparator = ({ style, onClick }) => {
     )
 }
 
-export const StandardCard = ({ title = '', style, children, className, onClick }) => {
-    const appSettings = useContext(AppContext);
-    const { softwareFontSize, fgColorDetail, standardCardTitleFontSize } = appSettings;
+export const StandardCard = ({ title = '', style, children, className, onClick, transparentBg = false }) => {
+    const { softwareFontSize, fgColorDetail, standardCardTitleFontSize } = useContext(AppContext);
     return (
         <Card
             onClick={onClick}
@@ -140,7 +139,7 @@ export const StandardCard = ({ title = '', style, children, className, onClick }
             style={{
                 margin: 'auto',
                 ...style,
-                backgroundColor: fgColorDetail,
+                backgroundColor: transparentBg ? 'transparent' : fgColorDetail,
                 fontSize: softwareFontSize,
                 alignItems: 'center',
                 border: `2px solid ${getThemeColor(0)}`
@@ -166,28 +165,27 @@ export const StandardCardHeader = () => {
 }
 
 export const StandardPage = ({ title = '', children, style }) => {
-    const appSettings = useContext(AppContext);
-    const { fgColor, fontStyle, softwareFontSize, standardPageTitleFontSize, fgColorDetail } = appSettings;
+    const { fgColor, fontStyle, softwareFontSize, standardPageTitleFontSize, fgColorDetail } = useContext(AppContext);
     return (
         <Container style={{ minWidth: '85%', ...style }}>
+            <div style={{ fontSize: standardPageTitleFontSize, backgroundColor: getThemeColor(0.5), margin: 'auto', marginTop: '4vh', padding: '5px', border: `2px solid ${getThemeColor(.25)}` }}>
+                {title}
+            </div>
             <Jumbotron
                 as={Card}
                 style={{
                     backgroundColor: fgColor,
                     fontFamily: fontStyle,
-                    opacity: '0.85',
+                    opacity: '1',
                     fontSize: softwareFontSize,
-                    paddingTop: '0vh',
-                    paddingBottom: '5vh',
-                    borderColor: getThemeColor(0.3),
-                    marginTop: '4vh',
+                    paddingTop: '2vh',
+                    paddingBottom: '2vh',
+                    border: `2px solid ${getThemeColor(0.25)}`,
+                    borderTop: 'none',
                     paddingLeft: '0vw',
                     paddingRight: '0vw'
                 }}
             >
-                <div style={{ fontSize: standardPageTitleFontSize, backgroundColor: fgColorDetail, margin: 'auto', marginBottom: '2vh', padding: '5px', minWidth: '100%', borderBottom: `1px solid ${getThemeColor(0.1)}` }}>
-                    {title}
-                </div>
                 <div style={{ margin: 'auto', width: '95%' }}>
                     {children}
                 </div>
@@ -197,60 +195,58 @@ export const StandardPage = ({ title = '', children, style }) => {
     );
 }
 
-export const StandardModal = ({ modalOpen, handleModalClose, children, buttons }) => {
-    const { fgColorDetail, textColor, softwareMaintenanceFontSize, fontStyle } = useContext(AppContext);
+export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, title }) => {
+    const { fgColorDetail, textColor, softwareMaintenanceFontSize, fontStyle, standardPageTitleFontSize } = useContext(AppContext);
     return (
         <Modal
-            scrollable
-            style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle, opacity: 0.9, overflow: 'inherit' }}
+            style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle, opacity: 0.9 }}
             centered
             show={modalOpen}
             onHide={handleModalClose}
             size='lg'
         >
-            <Modal.Body
-                style={{
-                    backgroundColor: fgColorDetail,
-                    color: textColor,
-                    border: `1px solid ${getThemeColor(0.3)}`,
-                    fontSize: softwareMaintenanceFontSize,
-                }}
-            >
-                {children}
-                <Modal.Footer style={{ padding: 0, marginTop: '1vh', border: 'none' }}>
-                    <Container>
-                        <Row>
-                            {buttons && <Col>{buttons}</Col>}
-                            <Col>
-                                <StandardButton onClick={handleModalClose} style={{ minWidth: '25%' }}> Cancel</StandardButton>
-                            </Col>
-                        </Row>
-                    </Container>
+            <div style={{ backgroundColor: '#1a1a1a' }}>
+                <Modal.Header style={{
+                    backgroundColor: getThemeColor(0.5),
+                    border: `1px solid ${getThemeColor(0.5)}`,
+                    borderBottom: 'none',
+                    opacity: 1,
+                    padding: '10px',
+                    paddingTop: 0,
+                    paddingBottom: 0
+                }}>
+                    <Modal.Title style={{ fontSize: standardPageTitleFontSize, color: textColor }}>
+                        {title}
+                    </Modal.Title>
+                    <div>
+                        <StandardButton onClick={handleModalClose} icon={<XIcon style={{ fontSize: getIconSizing('medium') }} />} />
+                    </div>
 
-                </Modal.Footer>
-            </Modal.Body>
+                </Modal.Header>
+                <Modal.Body
+                    style={{
+                        backgroundColor: fgColorDetail,
+                        color: textColor,
+                        border: `3px solid ${getThemeColor(0.5)}`,
+                        fontSize: softwareMaintenanceFontSize,
+                        opacity: 1
+                    }}
+                >
+                    {children}
+                    <Modal.Footer style={{ padding: 0, marginTop: '1vh', border: 'none' }}>
+                        <Container>
+                            <Row>
+                                {buttons && <Col>{buttons}</Col>}
+                            </Row>
+                        </Container>
+                    </Modal.Footer>
+                </Modal.Body>
+            </div>
+
         </Modal>
     )
 }
 
-export const LinkModal = ({ link, handleModalClose, modalOpen }) => {
-    const ContinueButton =
-        <StandardButton
-            onClick={() => { handleModalClose(); window.open(`${link}`); }}
-            style={{ minWidth: '25%' }}>
-            Continue
-        </StandardButton>
-    return (
-        <StandardModal
-            modalOpen={modalOpen}
-            handleModalClose={handleModalClose}
-            buttons={ContinueButton}
-        >
-            <p>You are about to leave <strong style={{ color: getThemeColor(1) }}>Prather.cc</strong> and navigate to:</p>
-            <div style={{ color: getThemeColor(1) }}>{link}</div>
-        </StandardModal>
-    )
-}
 
 export const getThemeColor = (opacity = 1) => {
     return `rgb(79, 201, 201, ${opacity})`;
