@@ -119,7 +119,7 @@ const DlRow = ({ download: { file_name, file_size, path, download_description, o
                 <td style={{ borderTop: `1px solid ${getThemeColor(0.1)}` }}>{<Icon type={os_type} />}</td>
                 <td style={{ borderTop: `1px solid ${getThemeColor(0.1)}` }}>{file_size}</td>
             </tr>
-            <StandardModal buttons={DownloadButton} title='' modalOpen={modalOpen} handleModalClose={() => { setModalOpen(false) }} closable={false}>
+            <StandardModal buttons={DownloadButton} title='Download File' modalOpen={modalOpen} handleModalClose={() => { setModalOpen(false) }} closable={false}>
                 <div style={{ display: 'inline', color: getThemeColor(1) }}>File Name: </div><div style={{ display: 'inline' }}>{file_name}</div>
                 <div />
                 <div style={{ display: 'inline', color: getThemeColor(1) }}>File Size: </div><div style={{ display: 'inline' }}>{file_size}</div>
@@ -182,14 +182,13 @@ const EditDownloads = ({ app, setMainDownloads, style }) => {
         if (downloads !== null) {
             setDownloadsLoading(false);
         }
-        console.log(downloads)
     }, [downloads]);
 
     return (
         <>
-            <StandardButton icon={<ModifyIcon style={{ fontSize: getIconSizing('medium') }} />} style={{ ...style, fontSize: softwareFontSize }} onClick={() => openAndLoadDownloads()} variant='warning' block />
+            <StandardButton icon={<ModifyIcon style={{ fontSize: getIconSizing('small') }} />} style={{ ...style, fontSize: softwareFontSize }} onClick={() => openAndLoadDownloads()} variant='warning' block />
             <StandardModal
-                title='Modify Downloads'
+                title='Download Alteration'
                 modalOpen={modalOpen}
                 handleModalClose={handleModalClose}
             >
@@ -234,7 +233,7 @@ const Download = ({ app, download: value, reloadDownloads }) => {
 
     return (
         <>
-            <StandardCard title={value !== undefined ? 'Edit Existing Download' : 'Create New Download'} style={{ outline: `1px solid ${getThemeColor(0.2)}`, marginBottom: '1vh', padding: '1vh' }}>
+            <StandardCard transparentBg title={value !== undefined ? 'Edit Existing Download' : 'Create New Download'} style={{ outline: `1px solid ${getThemeColor(0.2)}`, marginBottom: '1vh', padding: '1vh' }}>
                 <Form.Group style={{ minWidth: '95%' }}>
                     <Container>
                         <Row>

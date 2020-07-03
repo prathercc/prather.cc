@@ -107,9 +107,9 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares })
     <>
       <StandardButton icon={existingSoftware ? <Edit style={{ fontSize: getIconSizing('small') }} /> : <Add style={{ fontSize: getIconSizing('small') }} />} onClick={() => setModalOpen(true)}>{existingSoftware ? 'Edit' : 'Add Application'}</StandardButton>
 
-      <StandardModal buttons={existingSoftware ? ExistingButtons : NewButtons} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
+      <StandardModal title={`Software Alteration - ${!existingSoftware ? 'Create' : 'Modify'}`} buttons={existingSoftware ? ExistingButtons : NewButtons} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
 
-        <StandardCard style={{ minWidth: '100%' }} title={!existingSoftware ? 'Add Software' : 'Modify Software'}>
+        <StandardCard transparentBg style={{ minWidth: '100%', outline: `1px solid ${getThemeColor(0.2)}` }}>
           <Form.Group style={{ width: '95%' }}>
             <StandardTextField value={software.name} isActive={!existingSoftware} label='Name' onChange={(e) => setSoftware({ ...software, name: e.target.value })} />
             <StandardTextField value={software.icon_link} label='Icon Image Link' onChange={(e) => setSoftware({ ...software, icon_link: e.target.value })} />

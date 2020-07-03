@@ -12,7 +12,7 @@ const InformationTab = ({ setImageModalObj, style, app }) => {
         <>
             <Row style={{ ...style }}>
                 <Col xs={6} style={{ display: 'flex' }}>
-                    <StandardCard style={{ maxWidth: '100%', width: 'max-content', padding: '1px', margin: 'auto', verticalAlign: 'middle' }}>
+                    <StandardCard style={{ maxWidth: '100%', width: 'max-content', margin: 'auto', verticalAlign: 'middle' }}>
                         <StandardImage
                             className='defaultImageNudge'
                             style={{ cursor: 'pointer', maxWidth: '100%', margin: 'auto' }}

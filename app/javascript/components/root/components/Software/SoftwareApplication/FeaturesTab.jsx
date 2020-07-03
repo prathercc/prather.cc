@@ -65,7 +65,7 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
     return (
         <Row style={{ width: '99%', margin: 'auto', marginTop: '0.25vh' }}>
             <Col xs={6} style={{ display: 'flex' }}>
-                <StandardCard style={{ maxWidth: '100%', width: 'max-content', padding: '1px', margin: 'auto', verticalAlign: 'middle' }}>
+                <StandardCard style={{ maxWidth: '100%', width: 'max-content', margin: 'auto', verticalAlign: 'middle' }}>
                     <StandardImage
                         className='defaultImageNudge'
                         src={feature.image_link}
@@ -129,9 +129,9 @@ const EditFeature = ({ feature, setFeatures, app: { id, name } }) => {
 
     return (
         <>
-            <StandardButton icon={feature ? <Edit style={{  fontSize: getIconSizing('small') }} /> : <Add style={{ fontSize: getIconSizing('small'), marginTop: '1vh' }} />} style={{}} onClick={() => setModalOpen(true)} />
-            <StandardModal buttons={feature ? <EditButtons /> : <CreateButtons />} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
-                <StandardCard title={feature ? 'Modify Feature' : 'Create Feature'}>
+            <StandardButton icon={feature ? <Edit style={{ fontSize: getIconSizing('small') }} /> : <Add style={{ fontSize: getIconSizing('small'), marginTop: '1vh' }} />} style={{}} onClick={() => setModalOpen(true)} />
+            <StandardModal title={`Feature Alteration - ${feature ? 'Modify' : 'Create'}`} buttons={feature ? <EditButtons /> : <CreateButtons />} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
+                <StandardCard style={{ outline: `1px solid ${getThemeColor(0.2)}`, paddingBottom: '15px' }} transparentBg>
                     <Form.Group style={{ width: '95%', margin: 'auto' }}>
                         <StandardTextField value={activeFeature.application_name} isActive={false} label='Application Name' onChange={(e) => setActiveFeature({ ...activeFeature, application_name: e.target.value })} />
                         <StandardTextField value={activeFeature.title} label='Feature Title' onChange={(e) => setActiveFeature({ ...activeFeature, title: e.target.value })} />
