@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -8,17 +7,18 @@ import Nav from 'react-bootstrap/Nav';
 import Table from 'react-bootstrap/Table';
 import { AppContext } from '../../../AppContext';
 import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../../../downloadService';
-import { StandardCard, StandardModal, getThemeColor, StandardSpinner, StandardButton, StandardTextField, StandardDropDown, getIconSizing } from '../../Utility/Utility';
+import { StandardCard, StandardModal, getThemeColor, StandardButton, StandardTextField, StandardDropDown, getIconSizing } from '../../Utility/Utility';
 import DemoIcon from 'react-bootstrap-icons/dist/icons/file-earmark-diff';
 import ApplicationIcon from 'react-bootstrap-icons/dist/icons/gear-wide-connected';
 import ModifyIcon from 'react-bootstrap-icons/dist/icons/pencil';
+import AddIcon from 'react-bootstrap-icons/dist/icons/plus-circle';
 
 function DownloadsTab({ app, userData, style }) {
     const [downloads, setDownloads] = useState(null);
 
     const ConfiguredTable = ({ type }) => {
         return (
-            <DownloadTable type={type} downloads={downloads} style={{ margin: 'auto', marginTop: '1vh' }} />
+            <DownloadTable type={type} downloads={downloads} style={{ margin: 'auto', marginTop: '1vh' }} userData={userData} app={app} setDownloads={setDownloads} />
         );
     };
 
@@ -55,7 +55,7 @@ function DownloadsTab({ app, userData, style }) {
     );
 }
 
-const DownloadTable = ({ style, downloads, type }) => {
+const DownloadTable = ({ style, downloads, type, userData, app, setDownloads }) => {
     const [filteredDownloads, setFilteredDownloads] = useState([]);
     const appSettings = useContext(AppContext);
     const { fgColorDetail } = appSettings;
@@ -85,26 +85,26 @@ const DownloadTable = ({ style, downloads, type }) => {
                             <th style={{ border: `1px solid ${getThemeColor(0.1)}` }}>
                                 File Size
                             </th>
+                            {userData && <th style={{ border: `1px solid ${getThemeColor(0.1)}` }}></th>}
                         </tr>
                     </thead>
                     <tbody>
                         {
                             filteredDownloads && filteredDownloads.map((download, index) => {
                                 return (
-                                    <DlRow key={index} download={download} />
+                                    <DlRow key={index} download={download} userData={userData} app={app} setDownloads={setDownloads} />
                                 )
                             })
                         }
                     </tbody>
                 </Table>
             }
-
-
         </>
     )
 }
 
-const DlRow = ({ download: { file_name, file_size, path, download_description, os_type } }) => {
+const DlRow = ({ download, userData, app, setDownloads }) => {
+    const { file_name, file_size, path, download_description, os_type } = download;
     const [modalOpen, setModalOpen] = useState(false);
     const handleDownload = async () => {
         window.open(path);
@@ -112,12 +112,20 @@ const DlRow = ({ download: { file_name, file_size, path, download_description, o
     };
     const DownloadButton = <StandardButton onClick={handleDownload} style={{ minWidth: '25%' }}>Download</StandardButton>
 
+    const CustomTd = ({ children, style, noOnClick = false }) => {
+        return (
+            <td style={{ borderTop: `1px solid ${getThemeColor(0.1)}`, ...style }} onClick={() => noOnClick ? () => { } : setModalOpen(true)}>
+                {children}
+            </td>
+        )
+    }
     return (
         <>
-            <tr onClick={() => setModalOpen(true)} className='defaultMouseOver' style={{ cursor: 'pointer' }}>
-                <td style={{ borderTop: `1px solid ${getThemeColor(0.1)}` }}>{file_name}</td>
-                <td style={{ borderTop: `1px solid ${getThemeColor(0.1)}` }}>{<Icon type={os_type} />}</td>
-                <td style={{ borderTop: `1px solid ${getThemeColor(0.1)}` }}>{file_size}</td>
+            <tr className='defaultMouseOver' style={{ cursor: 'pointer' }}>
+                <CustomTd>{file_name}</CustomTd>
+                <CustomTd>{<Icon type={os_type} />}</CustomTd>
+                <CustomTd>{file_size}</CustomTd>
+                {userData && <CustomTd noOnClick><EditDownloads download={download} app={app} setMainDownloads={setDownloads} /></CustomTd>}
             </tr>
             <StandardModal buttons={DownloadButton} title='Download File' modalOpen={modalOpen} handleModalClose={() => { setModalOpen(false) }} closable={false}>
                 <div style={{ display: 'inline', color: getThemeColor(1) }}>File Name: </div><div style={{ display: 'inline' }}>{file_name}</div>
@@ -138,7 +146,7 @@ const DownloadSwitcher = () => {
         return (
             <Nav.Link as={'div'} className={keyBool || 'defaultMouseOver'} style={keyBool ? { backgroundColor: getThemeColor(1), color: 'black', cursor: 'pointer', outline: 0 } : { cursor: 'pointer', outline: 0 }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{displayText}</Nav.Link>
         )
-    }
+    };
 
     return (
         <StandardCard style={{ margin: 'auto', maxWidth: 'max-content', marginTop: '1vh', outline: `1px solid ${getThemeColor(0.1)}` }}>
@@ -160,122 +168,74 @@ const DownloadSwitcher = () => {
     )
 }
 
-const EditDownloads = ({ app, setMainDownloads, style }) => {
+const EditDownloads = ({ app, setMainDownloads, style, download: value }) => {
+    const blankDownload = { application_name: app.name, file_name: '', file_size: '', os_type: '', path: '', download_count: 0, software_id: app.id, download_description: '' };
+    const [download, setDownload] = useState(value ? value : blankDownload);
     const [modalOpen, setModalOpen] = useState(false);
-    const [downloads, setDownloads] = useState(null);
-    const [downloadsLoading, setDownloadsLoading] = useState(true);
     const appSettings = useContext(AppContext);
     const { softwareFontSize } = appSettings;
+    const disabledButton = download?.file_name?.length === 0 || download?.os_type?.length === 0 || download?.file_size?.length === 0 || download?.path?.length === 0;
 
     const handleModalClose = async () => {
         setModalOpen(false);
-        setDownloadsLoading(true);
         await fetchDownloads(app.id, setMainDownloads);
     };
 
-    const openAndLoadDownloads = async () => {
-        setModalOpen(true);
-        await fetchDownloads(app.id, setDownloads);
-    };
-
-    useEffect(() => {
-        if (downloads !== null) {
-            setDownloadsLoading(false);
-        }
-    }, [downloads]);
-
-    return (
-        <>
-            <StandardButton icon={<ModifyIcon style={{ fontSize: getIconSizing('small') }} />} style={{ ...style, fontSize: softwareFontSize }} onClick={() => openAndLoadDownloads()} variant='warning' block />
-            <StandardModal
-                title='Download Alteration'
-                modalOpen={modalOpen}
-                handleModalClose={handleModalClose}
-            >
-                {downloadsLoading && <StandardSpinner />}
-                <Download app={app} reloadDownloads={openAndLoadDownloads} />
-                {!downloadsLoading && downloads.map((download) => {
-                    return (
-                        <Download
-                            key={download.id}
-                            download={download}
-                            app={app}
-                            reloadDownloads={openAndLoadDownloads}
-                        />
-                    );
-                })}
-            </StandardModal>
-        </>
-    );
-};
-
-const Download = ({ app, download: value, reloadDownloads }) => {
-    const blankDownload = { application_name: app.name, file_name: '', file_size: '', os_type: '', path: '', download_count: 0, software_id: app.id, download_description: '' }
-    const [download, setDownload] = useState(value ? value : blankDownload);
-    let disabledButton = download?.file_name?.length === 0 || download?.os_type?.length === 0 || download?.file_size?.length === 0 || download?.path?.length === 0;
-    const osTypes = [{ id: 'Windows', name: 'Windows' }, { id: 'Linux', name: 'Linux' }, { id: 'Mac', name: 'Mac' }, { id: 'Android', name: 'Android' }, { id: 'Resource', name: 'Resource' }];
-
     const handleDeleteDownload = async () => {
         await deleteDownload(download.id);
-        reloadDownloads();
+        await handleModalClose();
     };
 
     const handleAddDownload = async () => {
         await postDownload(download);
-        reloadDownloads();
+        await handleModalClose();
         setDownload(blankDownload);
     };
 
     const handleEditDownload = async () => {
         await putDownload(download);
-        reloadDownloads();
+        await handleModalClose();
     };
+
+    const EditButtons = <Row>
+        <Col>
+            <StandardButton isActive={!disabledButton} onClick={() => handleEditDownload()}>Save</StandardButton>
+        </Col>
+        <Col>
+            <StandardButton onClick={() => handleDeleteDownload()}>Delete</StandardButton>
+        </Col>
+    </Row>;
+
+    const AddButton = <StandardButton isActive={!disabledButton} onClick={() => handleAddDownload()}>Add</StandardButton>;
+
 
     return (
         <>
-            <StandardCard transparentBg title={value !== undefined ? 'Edit Existing Download' : 'Create New Download'} style={{ outline: `1px solid ${getThemeColor(0.2)}`, marginBottom: '1vh', padding: '1vh' }}>
-                <Form.Group style={{ minWidth: '95%' }}>
-                    <Container>
-                        <Row>
-                            <Col>
-                                <StandardTextField value={download?.file_name} label='Name' onChange={(e) => setDownload({ ...download, file_name: e.target.value })} />
-                            </Col>
-                            <Col>
-                                <StandardTextField value={download?.file_size} label='Size' onChange={(e) => setDownload({ ...download, file_size: e.target.value })} />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <StandardDropDown value={download?.os_type} data={osTypes} label='Operating System' onChange={(e) => setDownload({ ...download, os_type: e.target.value })} />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <StandardTextField value={download?.path} label='Path' onChange={(e) => setDownload({ ...download, path: e.target.value })} />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <StandardTextField value={download?.download_description} label='Description' onChange={(e) => setDownload({ ...download, download_description: e.target.value })} />
-                            </Col>
-                        </Row>
-                        <Row style={{ maxWidth: '40%', margin: 'auto', marginTop: '1vh' }}>
-                            <Col>
-                                {
-                                    value === undefined && <StandardButton isActive={!disabledButton} onClick={() => handleAddDownload()}>Add</StandardButton>
-                                }
-                                {
-                                    value !== undefined && <StandardButton isActive={!disabledButton} onClick={() => handleEditDownload()}>Save</StandardButton>
-                                }
-                            </Col>
-                            {
-                                value !== undefined && <Col><StandardButton onClick={() => handleDeleteDownload()}>Delete</StandardButton></Col>
-                            }
-                        </Row>
-                    </Container>
-                </Form.Group>
-            </StandardCard>
+            <StandardButton icon={value ? <ModifyIcon style={{ fontSize: getIconSizing('small') }} /> : <AddIcon style={{ fontSize: getIconSizing('small') }} />} style={{ ...style, fontSize: softwareFontSize }} onClick={() => setModalOpen(true)} variant='warning' block />
+            <StandardModal
+                title={`Download Alteration - ${value ? 'Modify' : 'Create'}`}
+                modalOpen={modalOpen}
+                handleModalClose={handleModalClose}
+                buttons={value ? EditButtons : AddButton}
+            >
+                <Download download={download} app={app} setDownload={setDownload} />
+            </StandardModal>
         </>
+    );
+};
+
+const Download = ({ download, setDownload }) => {
+    const osTypes = [{ id: 'Windows', name: 'Windows' }, { id: 'Linux', name: 'Linux' }, { id: 'Mac', name: 'Mac' }, { id: 'Android', name: 'Android' }, { id: 'Resource', name: 'Resource' }];
+    return (
+        <StandardCard transparentBg style={{ outline: `1px solid ${getThemeColor(0.2)}`, marginBottom: '1vh', padding: '1vh' }}>
+            <Form.Group style={{ minWidth: '95%' }}>
+                <StandardTextField value={download?.file_name} label='Name' onChange={(e) => setDownload({ ...download, file_name: e.target.value })} />
+                <StandardTextField value={download?.file_size} label='Size' onChange={(e) => setDownload({ ...download, file_size: e.target.value })} />
+                <StandardDropDown value={download?.os_type} data={osTypes} label='Operating System' onChange={(e) => setDownload({ ...download, os_type: e.target.value })} />
+                <StandardTextField value={download?.path} label='Path' onChange={(e) => setDownload({ ...download, path: e.target.value })} />
+                <StandardTextField value={download?.download_description} label='Description' onChange={(e) => setDownload({ ...download, download_description: e.target.value })} />
+            </Form.Group>
+        </StandardCard>
     );
 };
 

@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import Card from 'react-bootstrap/Card';
-import Jumbotron from 'react-bootstrap/Jumbotron';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -113,7 +112,6 @@ export const StandardButton = ({ onClick, style, children, isActive = true, icon
                     {children}
                 </Card>
             }
-
         </>
     )
 }
@@ -165,32 +163,32 @@ export const StandardCardHeader = () => {
 }
 
 export const StandardPage = ({ title = '', children, style }) => {
-    const { fgColor, fontStyle, softwareFontSize, standardPageTitleFontSize, fgColorDetail } = useContext(AppContext);
+    const { fgColor, fontStyle, softwareFontSize, standardPageTitleFontSize } = useContext(AppContext);
     return (
         <Container style={{ minWidth: '85%', ...style }}>
-            <div style={{ fontSize: standardPageTitleFontSize, backgroundColor: getThemeColor(0.5), margin: 'auto', marginTop: '4vh', padding: '5px', border: `2px solid ${getThemeColor(.25)}` }}>
+            <div style={{ fontSize: standardPageTitleFontSize, backgroundColor: getThemeColor(0.5), margin: 'auto', marginTop: '4vh', padding: '5px', borderRadius: '5px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>
                 {title}
             </div>
-            <Jumbotron
-                as={Card}
+            <div
                 style={{
                     backgroundColor: fgColor,
                     fontFamily: fontStyle,
-                    opacity: '1',
                     fontSize: softwareFontSize,
                     paddingTop: '2vh',
                     paddingBottom: '2vh',
-                    border: `2px solid ${getThemeColor(0.25)}`,
-                    borderTop: 'none',
+                    border: `3px solid ${getThemeColor(0.5)}`,
+                    borderTop: `1px solid ${getThemeColor(0.5)}`,
                     paddingLeft: '0vw',
-                    paddingRight: '0vw'
+                    paddingRight: '0vw',
+                    borderTopLeftRadius: 0,
+                    borderTopRightRadius: 0
                 }}
             >
-                <div style={{ margin: 'auto', width: '95%' }}>
+                <Card style={{ margin: 'auto', width: '95%', backgroundColor: 'transparent', border: 'none' }}>
                     {children}
-                </div>
+                </Card>
 
-            </Jumbotron>
+            </div>
         </Container>
     );
 }
@@ -208,7 +206,6 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
             <div style={{ backgroundColor: '#1a1a1a' }}>
                 <Modal.Header style={{
                     backgroundColor: getThemeColor(0.5),
-                    border: `1px solid ${getThemeColor(0.5)}`,
                     borderBottom: 'none',
                     opacity: 1,
                     padding: '10px',
@@ -228,6 +225,7 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
                         backgroundColor: fgColorDetail,
                         color: textColor,
                         border: `3px solid ${getThemeColor(0.5)}`,
+                        borderTop: 0,
                         fontSize: softwareMaintenanceFontSize,
                         opacity: 1
                     }}
