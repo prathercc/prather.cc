@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Breakpoint } from 'react-socks';
-import { StandardCard, getThemeColor } from '../Utility/Utility';
+import { getThemeColor } from '../Utility/Utility';
 import Admin from './Admin';
 import { AppContext } from '../../AppContext';
 
@@ -26,7 +26,7 @@ const DesktopView = ({ userData, setUserData }) => {
   const appSettings = useContext(AppContext);
   const { appbarFontSize } = appSettings;
   return (
-    <StandardCard>
+    <div style={{ backgroundColor: getThemeColor(0.5), borderBottom: `2px solid ${getThemeColor(0.1)}` }}>
       <Nav style={{ minWidth: '100%', fontSize: appbarFontSize }}>
         <Container style={{ minWidth: '85%' }}>
           <Row>
@@ -41,7 +41,7 @@ const DesktopView = ({ userData, setUserData }) => {
           </Row>
         </Container>
       </Nav>
-    </StandardCard>
+    </div>
   );
 };
 
@@ -49,7 +49,7 @@ const MobileView = ({ userData, setUserData }) => {
   const appSettings = useContext(AppContext);
   const { appbarFontSize } = appSettings;
   return (
-    <StandardCard>
+    <div style={{ backgroundColor: getThemeColor(0.5), borderBottom: `2px solid ${getThemeColor(0.1)}` }}>
       <Nav style={{ minWidth: '100%', fontSize: appbarFontSize }}>
         <Container>
           <Row>
@@ -68,7 +68,7 @@ const MobileView = ({ userData, setUserData }) => {
           </Row>
         </Container>
       </Nav>
-    </StandardCard>
+    </div>
   );
 };
 

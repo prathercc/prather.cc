@@ -176,25 +176,23 @@ const EditDownloads = ({ app, setMainDownloads, style, download: value }) => {
     const { softwareFontSize } = appSettings;
     const disabledButton = download?.file_name?.length === 0 || download?.os_type?.length === 0 || download?.file_size?.length === 0 || download?.path?.length === 0;
 
-    const handleModalClose = async () => {
+    const handleDeleteDownload = async () => {
+        await deleteDownload(download.id);
         setModalOpen(false);
         await fetchDownloads(app.id, setMainDownloads);
     };
 
-    const handleDeleteDownload = async () => {
-        await deleteDownload(download.id);
-        await handleModalClose();
-    };
-
     const handleAddDownload = async () => {
         await postDownload(download);
-        await handleModalClose();
+        setModalOpen(false);
+        await fetchDownloads(app.id, setMainDownloads);
         setDownload(blankDownload);
     };
 
     const handleEditDownload = async () => {
         await putDownload(download);
-        await handleModalClose();
+        setModalOpen(false);
+        await fetchDownloads(app.id, setMainDownloads);
     };
 
     const EditButtons = <Row>
@@ -215,7 +213,7 @@ const EditDownloads = ({ app, setMainDownloads, style, download: value }) => {
             <StandardModal
                 title={`Download Alteration - ${value ? 'Modify' : 'Create'}`}
                 modalOpen={modalOpen}
-                handleModalClose={handleModalClose}
+                handleModalClose={() => setModalOpen(false)}
                 buttons={value ? EditButtons : AddButton}
             >
                 <Download download={download} app={app} setDownload={setDownload} />
