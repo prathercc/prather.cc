@@ -75,9 +75,9 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
                 </StandardCard>
             </Col>
             <Col xs={6} style={{ display: 'flex' }}>
-                <StandardCard title={<i>{feature.title}</i>} style={{ margin: 'auto', outline: `1px solid ${getThemeColor(0.1)}`, verticalAlign: 'middle', minWidth: '100%' }}>
-                    {userData && <EditFeature app={app} setFeatures={setFeatures} feature={feature} />}
+                <StandardCard title={feature.title} style={{ margin: 'auto', outline: `1px solid ${getThemeColor(0)}`, verticalAlign: 'middle', minWidth: '100%', borderRadius: '15px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>
                     <div style={{ margin: 'auto', maxWidth: '95%', fontSize: softwareFontSize, textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
+                    {userData && <EditFeature app={app} setFeatures={setFeatures} feature={feature} />}
                 </StandardCard>
             </Col>
         </Row >
@@ -129,7 +129,7 @@ const EditFeature = ({ feature, setFeatures, app: { id, name } }) => {
 
     return (
         <>
-            <StandardButton icon={feature ? <Edit style={{ fontSize: getIconSizing('small') }} /> : <Add style={{ fontSize: getIconSizing('small'), marginTop: '1vh' }} />} style={{}} onClick={() => setModalOpen(true)} />
+            <StandardButton icon={feature ? <Edit style={{ fontSize: getIconSizing('small'), marginBottom: '1vh' }} /> : <Add style={{ fontSize: getIconSizing('small'), marginTop: '1vh' }} />} style={{}} onClick={() => setModalOpen(true)} />
             <StandardModal title={`Feature Alteration - ${feature ? 'Modify' : 'Create'}`} buttons={feature ? <EditButtons /> : <CreateButtons />} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
                 <StandardCard style={{ outline: `1px solid ${getThemeColor(0.2)}`, paddingBottom: '15px' }} transparentBg>
                     <Form.Group style={{ width: '95%', margin: 'auto' }}>

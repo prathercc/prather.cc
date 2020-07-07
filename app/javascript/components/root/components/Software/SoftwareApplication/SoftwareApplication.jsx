@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import { fetchSoftware } from '../../../softwareService';
 import { fetchFeatures } from '../../../featureService';
-import { StandardCard, StandardPage, getThemeColor, StandardSpinner, StandardImageModal } from '../../Utility/Utility';
+import { StandardPage, getThemeColor, StandardSpinner, StandardImageModal } from '../../Utility/Utility';
 import InformationTab from './InformationTab';
 import FeaturesTab from './FeaturesTab';
 import DownloadsTab from './DownloadsTab';
@@ -67,36 +65,34 @@ function SoftwareApplication({ userData, name }) {
   );
 }
 
-const ViewSwitcher = ({ style, children, app }) => {
+const ViewSwitcher = () => {
   const BlankKeys = { Information: false, Repository: false, Downloads: false, 'Video Demo': false, Features: false, Compatibility: false, Code: false, Video: false }
   const [activeKey, setActiveKey] = useState({ ...BlankKeys, Information: true });
 
-  const CustomLink = ({ keyBool, keyText, displayText, icon }) => {
+  const CustomLink = ({ keyBool, keyText, displayText, icon, style }) => {
     return (
-      <Nav.Link as={'div'} className={keyBool || 'defaultMouseOver'} style={keyBool ? { backgroundColor: getThemeColor(1), color: 'black', cursor: 'pointer', outline: 0, padding: '12px' } : { cursor: 'pointer', outline: 0, padding: '12px' }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{icon}<div />{displayText}</Nav.Link>
+      <Nav.Link as={'div'} className={keyBool || 'defaultMouseOver'} style={keyBool ? { backgroundColor: getThemeColor(1), color: 'black', cursor: 'pointer', outline: 0, padding: '12px', ...style } : { cursor: 'pointer', outline: 0, padding: '12px', backgroundColor: getThemeColor(0.3), ...style }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{icon}<div />{displayText}</Nav.Link>
     )
   }
 
   return (
-    <StandardCard style={{ maxWidth: 'max-content', margin: 'auto', outline: `1px solid ${getThemeColor(0.1)}` }}>
-      <Nav>
-        <Nav.Item>
-          <CustomLink keyBool={activeKey.Information} keyText='Information' displayText='About' />
-        </Nav.Item>
-        <Nav.Item>
-          <CustomLink keyBool={activeKey.Features} keyText='Features' displayText='Features' />
-        </Nav.Item>
-        <Nav.Item>
-          <CustomLink keyBool={activeKey.Video} keyText='Video' displayText='Video' />
-        </Nav.Item>
-        <Nav.Item>
-          <CustomLink keyBool={activeKey.Downloads} keyText='Downloads' displayText='Downloads' />
-        </Nav.Item>
-        <Nav.Item>
-          <CustomLink keyBool={activeKey.Code} keyText='Code' displayText='Code' />
-        </Nav.Item>
-      </Nav>
-    </StandardCard>
+    <Nav style={{ maxWidth: 'max-content', margin: 'auto' }}>
+      <Nav.Item>
+        <CustomLink style={{ borderBottomLeftRadius: '10px', borderTopLeftRadius: '10px' }} keyBool={activeKey.Information} keyText='Information' displayText='About' />
+      </Nav.Item>
+      <Nav.Item>
+        <CustomLink keyBool={activeKey.Features} keyText='Features' displayText='Features' />
+      </Nav.Item>
+      <Nav.Item>
+        <CustomLink keyBool={activeKey.Video} keyText='Video' displayText='Video' />
+      </Nav.Item>
+      <Nav.Item>
+        <CustomLink keyBool={activeKey.Downloads} keyText='Downloads' displayText='Downloads' />
+      </Nav.Item>
+      <Nav.Item>
+        <CustomLink style={{ borderBottomRightRadius: '10px', borderTopRightRadius: '10px' }} keyBool={activeKey.Code} keyText='Code' displayText='Code' />
+      </Nav.Item>
+    </Nav>
   )
 }
 export default SoftwareApplication;

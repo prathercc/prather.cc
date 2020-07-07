@@ -128,7 +128,7 @@ export const StandardSeparator = ({ style, onClick }) => {
     )
 }
 
-export const StandardCard = ({ title = '', style, children, className, onClick, transparentBg = false }) => {
+export const StandardCard = ({ title, style, children, className, onClick, transparentBg = false }) => {
     const { softwareFontSize, fgColorDetail, standardCardTitleFontSize } = useContext(AppContext);
     return (
         <Card
@@ -140,10 +140,11 @@ export const StandardCard = ({ title = '', style, children, className, onClick, 
                 backgroundColor: transparentBg ? 'transparent' : fgColorDetail,
                 fontSize: softwareFontSize,
                 alignItems: 'center',
-                border: `2px solid ${getThemeColor(0)}`
             }}>
-            <div style={{ fontSize: standardCardTitleFontSize }}>{title}</div>
-            {children}
+            <div style={{ fontSize: standardCardTitleFontSize, backgroundColor: getThemeColor(0.25), minWidth: '100%', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}>{title}</div>
+            <div style={{ border: title ? `3px solid ${getThemeColor(0.25)}` : '', borderTop: 'none', minWidth: '100%' }}>
+                {children}
+            </div>
         </Card>
     )
 }
@@ -210,15 +211,11 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
                     opacity: 1,
                     padding: '10px',
                     paddingTop: 0,
-                    paddingBottom: 0
+                    paddingBottom: 0,
                 }}>
-                    <Modal.Title style={{ fontSize: standardPageTitleFontSize, color: textColor }}>
-                        {title}
-                    </Modal.Title>
-                    <div>
-                        <StandardButton onClick={handleModalClose} icon={<XIcon style={{ fontSize: getIconSizing('medium') }} />} />
-                    </div>
-
+                    <div style={{ paddingLeft: getIconSizing('medium') }} />
+                    <div style={{ fontSize: standardPageTitleFontSize, color: textColor, justifyContent: 'center', margin: 'auto', verticalAlign: 'middle' }}>{title}</div>
+                    <div><StandardButton onClick={handleModalClose} icon={<XIcon style={{ fontSize: getIconSizing('medium') }} />} /></div>
                 </Modal.Header>
                 <Modal.Body
                     style={{
@@ -241,7 +238,7 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
                 </Modal.Body>
             </div>
 
-        </Modal>
+        </Modal >
     )
 }
 

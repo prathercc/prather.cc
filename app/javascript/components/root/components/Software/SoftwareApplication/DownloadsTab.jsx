@@ -142,29 +142,27 @@ const DownloadSwitcher = () => {
     const BlankKeys = { Windows: false, Linux: false, Mac: false, Android: false }
     const [activeKey, setActiveKey] = useState({ ...BlankKeys, Windows: true });
 
-    const CustomLink = ({ keyBool, keyText, displayText }) => {
+    const CustomLink = ({ keyBool, keyText, displayText, style }) => {
         return (
-            <Nav.Link as={'div'} className={keyBool || 'defaultMouseOver'} style={keyBool ? { backgroundColor: getThemeColor(1), color: 'black', cursor: 'pointer', outline: 0 } : { cursor: 'pointer', outline: 0 }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{displayText}</Nav.Link>
+            <Nav.Link as={'div'} className={keyBool || 'defaultMouseOver'} style={keyBool ? { backgroundColor: getThemeColor(1), color: 'black', cursor: 'pointer', outline: 0, ...style } : { cursor: 'pointer', outline: 0, backgroundColor: getThemeColor(0.3), ...style }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{displayText}</Nav.Link>
         )
     };
 
     return (
-        <StandardCard style={{ margin: 'auto', maxWidth: 'max-content', marginTop: '1vh', outline: `1px solid ${getThemeColor(0.1)}` }}>
-            <Nav defaultActiveKey='Windows'>
-                <Nav.Item>
-                    <CustomLink keyBool={activeKey.Windows} keyText='Windows' displayText='Windows' />
-                </Nav.Item>
-                <Nav.Item>
-                    <CustomLink keyBool={activeKey.Linux} keyText='Linux' displayText='Linux' />
-                </Nav.Item>
-                <Nav.Item>
-                    <CustomLink keyBool={activeKey.Mac} keyText='Mac' displayText='Mac' />
-                </Nav.Item>
-                <Nav.Item>
-                    <CustomLink keyBool={activeKey.Android} keyText='Android' displayText='Android' />
-                </Nav.Item>
-            </Nav>
-        </StandardCard>
+        <Nav style={{ margin: 'auto', maxWidth: 'max-content', marginTop: '1vh' }} defaultActiveKey='Windows'>
+            <Nav.Item>
+                <CustomLink style={{ borderBottomLeftRadius: '10px', borderTopLeftRadius: '10px' }} keyBool={activeKey.Windows} keyText='Windows' displayText='Windows' />
+            </Nav.Item>
+            <Nav.Item>
+                <CustomLink keyBool={activeKey.Linux} keyText='Linux' displayText='Linux' />
+            </Nav.Item>
+            <Nav.Item>
+                <CustomLink keyBool={activeKey.Mac} keyText='Mac' displayText='Mac' />
+            </Nav.Item>
+            <Nav.Item>
+                <CustomLink style={{ borderBottomRightRadius: '10px', borderTopRightRadius: '10px' }} keyBool={activeKey.Android} keyText='Android' displayText='Android' />
+            </Nav.Item>
+        </Nav>
     )
 }
 

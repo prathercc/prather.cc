@@ -19,7 +19,7 @@ const appSettings = {
   softwareMaintenanceFontSize: 'calc(0.5px + 2vmin)',
 
   standardPageTitleFontSize: 'calc(5px + 2vmin)',
-  standardCardTitleFontSize: 'calc(4px + 2vmin)'
+  standardCardTitleFontSize: 'calc(3px + 2vmin)'
 };
 
 export const AppContext = createContext(appSettings);
