@@ -1,34 +1,28 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import { AppContext } from '../../../AppContext';
-import { StandardImage, StandardCard, getThemeColor } from '../../Utility/Utility';
+import { StandardImage, StandardCard } from '../../Utility/Utility';
 
 const InformationTab = ({ setImageModalObj, style, app }) => {
     const { image_link, description, name } = app;
-    const appSettings = useContext(AppContext);
-    const { softwareFontSize } = appSettings;
     return (
-        <>
-            <Row style={{ ...style }}>
-                <Col xs={6} style={{ display: 'flex' }}>
-                    <StandardCard style={{ maxWidth: '100%', width: 'max-content', margin: 'auto', verticalAlign: 'middle' }}>
-                        <StandardImage
-                            className='defaultImageNudge'
-                            style={{ cursor: 'pointer', maxWidth: '100%', margin: 'auto' }}
-                            onClick={() => setImageModalObj({ open: true, imageLink: image_link })}
-                            variant='top'
-                            src={image_link}
-                        />
-                    </StandardCard>
-                </Col>
-                <Col xs={6} style={{ display: 'flex' }}>
-                    <StandardCard title={`What is ${name}?`} style={{ margin: 'auto', outline: `1px solid ${getThemeColor(0)}`, verticalAlign: 'middle', minWidth: '100%', borderRadius: '15px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>
-                        <div style={{ margin: 'auto', maxWidth: '90%', fontSize: softwareFontSize, textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: description }} />
-                    </StandardCard>
-                </Col>
-            </Row >
-        </>
+        <Row style={{ ...style }}>
+            <Col xs={6} style={{ display: 'flex' }}>
+                <StandardCard>
+                    <StandardImage
+                        className='defaultImageNudge'
+                        style={{ cursor: 'pointer', maxWidth: '100%' }}
+                        onClick={() => setImageModalObj({ open: true, imageLink: image_link })}
+                        src={image_link}
+                    />
+                </StandardCard>
+            </Col>
+            <Col xs={6} style={{ display: 'flex' }}>
+                <StandardCard title={`What is ${name}?`} style={{ margin: 'auto', verticalAlign: 'middle', minWidth:'100%' }}>
+                    <div style={{ margin: 'auto', marginTop: '1vh', maxWidth: '90%', textAlign: 'left' }} dangerouslySetInnerHTML={{ __html: description }} />
+                </StandardCard>
+            </Col>
+        </Row >
     );
 };
 

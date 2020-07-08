@@ -7,7 +7,7 @@ import Nav from 'react-bootstrap/Nav';
 import Table from 'react-bootstrap/Table';
 import { AppContext } from '../../../AppContext';
 import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../../../downloadService';
-import { StandardCard, StandardModal, getThemeColor, StandardButton, StandardTextField, StandardDropDown, getIconSizing } from '../../Utility/Utility';
+import { StandardModal, getThemeColor, StandardButton, StandardTextField, StandardDropDown, getIconSizing } from '../../Utility/Utility';
 import DemoIcon from 'react-bootstrap-icons/dist/icons/file-earmark-diff';
 import ApplicationIcon from 'react-bootstrap-icons/dist/icons/gear-wide-connected';
 import ModifyIcon from 'react-bootstrap-icons/dist/icons/pencil';
@@ -50,7 +50,7 @@ function DownloadsTab({ app, userData, style }) {
                     </Tab.Pane>
                 </Tab.Content>
             </Tab.Container>
-            {userData && <EditDownloads style={{ marginTop: '1vh' }} app={app} setMainDownloads={setDownloads} />}
+            {userData && <EditDownloads app={app} setMainDownloads={setDownloads} />}
         </>
     );
 }
@@ -166,12 +166,10 @@ const DownloadSwitcher = () => {
     )
 }
 
-const EditDownloads = ({ app, setMainDownloads, style, download: value }) => {
+const EditDownloads = ({ app, setMainDownloads, download: value }) => {
     const blankDownload = { application_name: app.name, file_name: '', file_size: '', os_type: '', path: '', download_count: 0, software_id: app.id, download_description: '' };
     const [download, setDownload] = useState(value ? value : blankDownload);
     const [modalOpen, setModalOpen] = useState(false);
-    const appSettings = useContext(AppContext);
-    const { softwareFontSize } = appSettings;
     const disabledButton = download?.file_name?.length === 0 || download?.os_type?.length === 0 || download?.file_size?.length === 0 || download?.path?.length === 0;
 
     const handleDeleteDownload = async () => {
@@ -193,26 +191,34 @@ const EditDownloads = ({ app, setMainDownloads, style, download: value }) => {
         await fetchDownloads(app.id, setMainDownloads);
     };
 
-    const EditButtons = <Row>
-        <Col>
-            <StandardButton isActive={!disabledButton} onClick={() => handleEditDownload()}>Save</StandardButton>
-        </Col>
-        <Col>
-            <StandardButton onClick={() => handleDeleteDownload()}>Delete</StandardButton>
-        </Col>
-    </Row>;
+    const EditButtons = () => {
+        return (
+            <Row>
+                <Col>
+                    <StandardButton isActive={!disabledButton} onClick={() => handleEditDownload()}>Save</StandardButton>
+                </Col>
+                <Col>
+                    <StandardButton onClick={() => handleDeleteDownload()}>Delete</StandardButton>
+                </Col>
+            </Row>
+        );
+    };
 
-    const AddButton = <StandardButton isActive={!disabledButton} onClick={() => handleAddDownload()}>Add</StandardButton>;
+    const AddButton = () => {
+        return (
+            <StandardButton isActive={!disabledButton} onClick={() => handleAddDownload()}>Add</StandardButton>
+        );
+    };
 
 
     return (
         <>
-            <StandardButton icon={value ? <ModifyIcon style={{ fontSize: getIconSizing('small') }} /> : <AddIcon style={{ fontSize: getIconSizing('small') }} />} style={{ ...style, fontSize: softwareFontSize }} onClick={() => setModalOpen(true)} variant='warning' block />
+            <StandardButton icon={value ? <ModifyIcon style={{ fontSize: getIconSizing('small') }} /> : <AddIcon style={{ fontSize: getIconSizing('small'), marginTop: '1vh' }} />} onClick={() => setModalOpen(true)} />
             <StandardModal
                 title={`Download Alteration - ${value ? 'Modify' : 'Create'}`}
                 modalOpen={modalOpen}
                 handleModalClose={() => setModalOpen(false)}
-                buttons={value ? EditButtons : AddButton}
+                buttons={value ? <EditButtons /> : <AddButton />}
             >
                 <Download download={download} app={app} setDownload={setDownload} />
             </StandardModal>
@@ -223,15 +229,13 @@ const EditDownloads = ({ app, setMainDownloads, style, download: value }) => {
 const Download = ({ download, setDownload }) => {
     const osTypes = [{ id: 'Windows', name: 'Windows' }, { id: 'Linux', name: 'Linux' }, { id: 'Mac', name: 'Mac' }, { id: 'Android', name: 'Android' }, { id: 'Resource', name: 'Resource' }];
     return (
-        <StandardCard transparentBg style={{ outline: `1px solid ${getThemeColor(0.2)}`, marginBottom: '1vh', padding: '1vh' }}>
-            <Form.Group style={{ minWidth: '95%' }}>
-                <StandardTextField value={download?.file_name} label='Name' onChange={(e) => setDownload({ ...download, file_name: e.target.value })} />
-                <StandardTextField value={download?.file_size} label='Size' onChange={(e) => setDownload({ ...download, file_size: e.target.value })} />
-                <StandardDropDown value={download?.os_type} data={osTypes} label='Operating System' onChange={(e) => setDownload({ ...download, os_type: e.target.value })} />
-                <StandardTextField value={download?.path} label='Path' onChange={(e) => setDownload({ ...download, path: e.target.value })} />
-                <StandardTextField value={download?.download_description} label='Description' onChange={(e) => setDownload({ ...download, download_description: e.target.value })} />
-            </Form.Group>
-        </StandardCard>
+        <Form.Group style={{ minWidth: '95%', outline: `1px solid ${getThemeColor(0.2)}`, padding: '10px', paddingTop: '5px' }}>
+            <StandardTextField value={download?.file_name} label='Name' onChange={(e) => setDownload({ ...download, file_name: e.target.value })} />
+            <StandardTextField value={download?.file_size} label='Size' onChange={(e) => setDownload({ ...download, file_size: e.target.value })} />
+            <StandardDropDown value={download?.os_type} data={osTypes} label='Operating System' onChange={(e) => setDownload({ ...download, os_type: e.target.value })} />
+            <StandardTextField value={download?.path} label='Path' onChange={(e) => setDownload({ ...download, path: e.target.value })} />
+            <StandardTextField value={download?.download_description} label='Description' onChange={(e) => setDownload({ ...download, download_description: e.target.value })} />
+        </Form.Group>
     );
 };
 

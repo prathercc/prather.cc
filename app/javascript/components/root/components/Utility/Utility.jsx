@@ -140,8 +140,10 @@ export const StandardCard = ({ title, style, children, className, onClick, trans
                 backgroundColor: transparentBg ? 'transparent' : fgColorDetail,
                 fontSize: softwareFontSize,
                 alignItems: 'center',
+                borderTopLeftRadius: '5px',
+                borderTopRightRadius: '5px'
             }}>
-            <div style={{ fontSize: standardCardTitleFontSize, backgroundColor: getThemeColor(0.25), minWidth: '100%', borderTopLeftRadius: '10px', borderTopRightRadius: '10px' }}>{title}</div>
+            <div style={{ fontSize: standardCardTitleFontSize, backgroundColor: getThemeColor(0.25), minWidth: '100%', borderTopLeftRadius: '5px', borderTopRightRadius: '5px' }}>{title}</div>
             <div style={{ border: title ? `3px solid ${getThemeColor(0.25)}` : '', borderTop: 'none', minWidth: '100%' }}>
                 {children}
             </div>
