@@ -142,25 +142,27 @@ const DownloadSwitcher = () => {
     const BlankKeys = { Windows: false, Linux: false, Mac: false, Android: false }
     const [activeKey, setActiveKey] = useState({ ...BlankKeys, Windows: true });
 
-    const CustomLink = ({ keyBool, keyText, displayText, style }) => {
+    const CustomLink = ({ keyBool, keyText, displayText, style, className }) => {
         return (
-            <Nav.Link as={'div'} className={keyBool || 'defaultMouseOver'} style={keyBool ? { backgroundColor: getThemeColor(1), color: 'black', cursor: 'pointer', outline: 0, ...style } : { cursor: 'pointer', outline: 0, backgroundColor: getThemeColor(0.3), ...style }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{displayText}</Nav.Link>
+            <span className={keyBool || 'defaultMouseOver'}>
+                <Nav.Link className={className} as={'div'} style={keyBool ? { backgroundColor: getThemeColor(1), color: 'black', cursor: 'pointer', outline: 0, ...style } : { cursor: 'pointer', outline: 0, backgroundColor: getThemeColor(0.3), ...style }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{displayText}</Nav.Link>
+            </span>
         )
     };
 
     return (
         <Nav style={{ margin: 'auto', maxWidth: 'max-content', marginTop: '1vh' }} defaultActiveKey='Windows'>
             <Nav.Item>
-                <CustomLink style={{ borderBottomLeftRadius: '10px', borderTopLeftRadius: '10px' }} keyBool={activeKey.Windows} keyText='Windows' displayText='Windows' />
+                <CustomLink className='tabsLeftBorderRadius' keyBool={activeKey.Windows} keyText='Windows' displayText='Windows' />
             </Nav.Item>
-            <Nav.Item>
+            <Nav.Item className='tabsLeftBorderBlack'>
                 <CustomLink keyBool={activeKey.Linux} keyText='Linux' displayText='Linux' />
             </Nav.Item>
-            <Nav.Item>
+            <Nav.Item className='tabsLeftBorderBlack'>
                 <CustomLink keyBool={activeKey.Mac} keyText='Mac' displayText='Mac' />
             </Nav.Item>
-            <Nav.Item>
-                <CustomLink style={{ borderBottomRightRadius: '10px', borderTopRightRadius: '10px' }} keyBool={activeKey.Android} keyText='Android' displayText='Android' />
+            <Nav.Item className='tabsLeftBorderBlack'>
+                <CustomLink className='tabsRightBorderRadius' keyBool={activeKey.Android} keyText='Android' displayText='Android' />
             </Nav.Item>
         </Nav>
     )

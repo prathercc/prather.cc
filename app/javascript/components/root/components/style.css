@@ -1,3 +1,5 @@
+/* DEFAULT SECTION */
+
 .defaultMouseOver {
     color: white !important;
     transition: color 0.2s ease-in-out;
@@ -27,14 +29,25 @@
     background-color: rgb(79, 201, 201, 0.4) !important;
 }
 
-.brandMouseOver {
-    color: #4fc9c9 !important;
-    transition: color 0.2s ease-in-out;
+/* ******** */
+
+/* TABS SECTION */
+
+.tabsLeftBorderBlack {
+    border-left: 1px solid black;
 }
 
-.brandMouseOver:hover {
-    color: white !important;
+.tabsLeftBorderRadius {
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
 }
+
+.tabsRightBorderRadius {
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* ************ */
 
 a:link {
     color: #4fc9c9;
