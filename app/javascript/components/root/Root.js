@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AppContext } from './AppContext';
-import background from './images/background.jpg';
+import stars from './images/stars.png';
+import blackhole from './images/blackhole.png';
 import './components/style.css';
 import MainWrapper from './components/MainWrapper';
 import './components/Mainpage/SiteLogo/SiteLogo.css';
@@ -16,7 +17,7 @@ function Root() {
       <Router>
         <div
           style={{
-            backgroundColor: 'white',
+            backgroundColor: '#1a1a1a',
             color: textColor,
             textAlign: 'center',
             overflow: 'hidden',
@@ -25,8 +26,9 @@ function Root() {
             userSelect: 'none'
           }}
         >
-          <div style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(${background})`, opacity: 1, backgroundSize: 'cover' }}></div>
-          <div className='animation1' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(${background})`, opacity: 1 }}></div>
+          <div className='starCW' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(${stars})`, opacity: 0.85 }}></div>
+          <div className='starCCW' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(${stars})`, opacity: 0.85 }}></div>
+          <div className='blackhole' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(${blackhole})`, opacity: 0.85 }}></div>
           <Switch>
             <Route exact path='/software/:name' component={(props) => <MainWrapper activeApplication={props.match.params.name} activeKey='Software' />} />
           </Switch>

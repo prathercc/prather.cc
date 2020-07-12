@@ -1,16 +1,57 @@
-  .animation1 {
+  .starCW {
     background-repeat: repeat;
-    animation: animation1 infinite 150s linear;
+    animation: starCW infinite 5000s linear;
   }
 
-  @keyframes animation1 {
+  @keyframes starCW {
     0% {
-      transform: scale(4.5, 2) perspective(1px) rotate(100deg);
+      transform: scale(4.5, 2) perspective(1px) rotate(0deg);
+      filter: opacity(1)
     }
     50% {
-      transform: scale(4.5, 2) perspective(1px) rotate(155deg);
+      transform: scale(4.5, 2) perspective(1px) rotate(-360deg);
+      filter: opacity(1)
     }
     100% {
-      transform: scale(4.5, 2) perspective(1px) rotate(100deg);
+      transform: scale(4.5, 2) perspective(1px) rotate(0deg);
+      filter: opacity(1)
+    }
+  }
+
+  .starCCW {
+    background-repeat: repeat;
+    animation: starCCW infinite 500s linear;
+  }
+
+  @keyframes starCCW {
+    0% {
+      transform: scale(4.5, 2) perspective(1px) rotate(0deg);
+      filter: opacity(1)
+    }
+    50% {
+      transform: scale(4.5, 2) perspective(1px) rotate(360deg);
+      filter: opacity(1)
+    }
+    100% {
+      transform: scale(4.5, 2) perspective(1px) rotate(0deg);
+      filter: opacity(1)
+    }
+  }
+
+  .blackhole {
+    background-repeat: no-repeat;
+    animation: blackhole infinite 4000s linear;
+    background-position: center;
+  }
+
+  @keyframes blackhole {
+    0% {
+      transform: scale(9.5, 2) perspective(1px) rotate(0deg);
+    }
+    50% {
+      transform: scale(9.5, 2) perspective(1px) rotate(36000deg);
+    }
+    100% {
+      transform: scale(9.5, 2) perspective(1px) rotate(0deg);
     }
   }
