@@ -1,57 +1,51 @@
   .starCW {
     background-repeat: repeat;
-    animation: starCW infinite 5000s linear;
+    animation: starCW infinite 1000s linear;
   }
 
   @keyframes starCW {
     0% {
-      transform: scale(4.5, 2) perspective(1px) rotate(0deg);
-      filter: opacity(1)
+      transform: scale(4.5, 2) perspective(1px) rotate(5deg);
     }
     50% {
-      transform: scale(4.5, 2) perspective(1px) rotate(-360deg);
-      filter: opacity(1)
+      transform: scale(4.5, 2) perspective(1px) rotate(365deg);
     }
     100% {
-      transform: scale(4.5, 2) perspective(1px) rotate(0deg);
-      filter: opacity(1)
+      transform: scale(4.5, 2) perspective(1px) rotate(5deg);
     }
   }
 
   .starCCW {
     background-repeat: repeat;
-    animation: starCCW infinite 500s linear;
+    animation: starCCW infinite 2000s linear;
   }
 
   @keyframes starCCW {
     0% {
       transform: scale(4.5, 2) perspective(1px) rotate(0deg);
-      filter: opacity(1)
     }
     50% {
-      transform: scale(4.5, 2) perspective(1px) rotate(360deg);
-      filter: opacity(1)
+      transform: scale(4.5, 2) perspective(1px) rotate(-360deg);
     }
     100% {
       transform: scale(4.5, 2) perspective(1px) rotate(0deg);
-      filter: opacity(1)
     }
   }
 
   .blackhole {
     background-repeat: no-repeat;
-    animation: blackhole infinite 4000s linear;
+    animation: blackhole infinite 20000s linear;
     background-position: center;
   }
 
   @keyframes blackhole {
     0% {
-      transform: scale(9.5, 2) perspective(1px) rotate(0deg);
+      transform: scale(9.5, 3) perspective(1px) rotate(0deg);
     }
     50% {
-      transform: scale(9.5, 2) perspective(1px) rotate(36000deg);
+      transform: scale(9.5, 3) perspective(1px) rotate(36000deg);
     }
     100% {
-      transform: scale(9.5, 2) perspective(1px) rotate(0deg);
+      transform: scale(9.5, 3) perspective(1px) rotate(0deg);
     }
   }

@@ -26,9 +26,9 @@ function Root() {
             userSelect: 'none'
           }}
         >
-          <div className='starCW' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(${stars})`, opacity: 0.85 }}></div>
-          <div className='starCCW' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(${stars})`, opacity: 0.85 }}></div>
-          <div className='blackhole' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(${blackhole})`, opacity: 0.85 }}></div>
+          <div className='starCW' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(${stars})`}}></div>
+          <div className='starCCW' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(${stars})` }}></div>
+          <div className='blackhole' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(${blackhole})` }} />
           <Switch>
             <Route exact path='/software/:name' component={(props) => <MainWrapper activeApplication={props.match.params.name} activeKey='Software' />} />
           </Switch>
