@@ -128,7 +128,7 @@ export const StandardSeparator = ({ style, onClick }) => {
     )
 }
 
-export const StandardCard = ({ title, style, children, className, onClick, transparentBg = false }) => {
+export const StandardCard = ({ title, style, children, className, onClick, noBorders }) => {
     const { softwareFontSize, fgColorDetail, standardCardTitleFontSize } = useContext(AppContext);
     return (
         <Card
@@ -137,80 +137,65 @@ export const StandardCard = ({ title, style, children, className, onClick, trans
             style={{
                 margin: 'auto',
                 ...style,
-                backgroundColor: transparentBg ? 'transparent' : fgColorDetail,
+                backgroundColor: 'transparent',
                 fontSize: softwareFontSize,
                 alignItems: 'center',
-                borderTopLeftRadius: '5px',
-                borderTopRightRadius: '5px'
+                border: 'none'
             }}>
-            <div style={{ fontSize: standardCardTitleFontSize, backgroundColor: getThemeColor(0.25), minWidth: '100%', borderTopLeftRadius: '5px', borderTopRightRadius: '5px' }}>{title}</div>
-            <div style={{ border: title ? `3px solid ${getThemeColor(0.25)}` : '', borderTop: 'none', minWidth: '100%' }}>
+            <div style={{ fontSize: standardCardTitleFontSize, minWidth: '100%', backgroundColor: getThemeColor(0.5), borderTopLeftRadius: '5px', borderTopRightRadius: '5px' }}>{title}</div>
+            <div style={noBorders ? {} : { border: `1px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderBottomLeftRadius: '25px', borderBottomRightRadius: '25px' }}>
                 {children}
             </div>
         </Card>
     )
 }
 
-export const StandardCardHeader = () => {
-    return (
-        <Card
-            style={{
-                borderColor: getThemeColor(0.8),
-                margin: 'auto',
-                width: '100%',
-                opacity: '0.65',
-                marginBottom: '2vh'
-            }}>
-        </Card>
-    )
-}
-
 export const StandardPage = ({ title = '', children, style }) => {
-    const { fgColor, fontStyle, softwareFontSize, standardPageTitleFontSize } = useContext(AppContext);
+    const { bgColor, fontStyle, softwareFontSize, standardPageTitleFontSize } = useContext(AppContext);
     return (
-        <Container style={{ minWidth: '85%', ...style }}>
-            <div style={{ fontSize: standardPageTitleFontSize, backgroundColor: getThemeColor(0.5), margin: 'auto', marginTop: '4vh', padding: '5px', borderRadius: '5px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>
-                {title}
-            </div>
-            <div
-                style={{
-                    backgroundColor: fgColor,
-                    fontFamily: fontStyle,
-                    fontSize: softwareFontSize,
-                    paddingTop: '2vh',
-                    paddingBottom: '2vh',
-                    border: `3px solid ${getThemeColor(0.5)}`,
-                    borderTop: `1px solid ${getThemeColor(0.5)}`,
-                    paddingLeft: '0vw',
-                    paddingRight: '0vw',
-                    borderTopLeftRadius: 0,
-                    borderTopRightRadius: 0
-                }}
-            >
-                <Card style={{ margin: 'auto', width: '95%', backgroundColor: 'transparent', border: 'none' }}>
-                    {children}
-                </Card>
-
+        <Container style={{ backgroundColor: 'transparent', position: 'relative', minWidth: '85%', ...style }}>
+            <div style={{ backgroundColor: bgColor }}>
+                <div style={{ fontSize: standardPageTitleFontSize, backgroundColor: getThemeColor(0.5), margin: 'auto', marginTop: '4vh', padding: '5px', borderRadius: '5px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>
+                    {title}
+                </div>
+                <div
+                    style={{
+                        backgroundColor: 'transparent',
+                        fontFamily: fontStyle,
+                        fontSize: softwareFontSize,
+                        paddingTop: '1vh',
+                        paddingBottom: '2vh',
+                        border: `1px solid ${getThemeColor(0.5)}`,
+                        borderTop: 'none',
+                        paddingLeft: '0vw',
+                        paddingRight: '0vw',
+                        borderTopLeftRadius: 0,
+                        borderTopRightRadius: 0
+                    }}
+                >
+                    <Card style={{ margin: 'auto', width: '95%', backgroundColor: 'transparent', border: 'none' }}>
+                        {children}
+                    </Card>
+                </div>
             </div>
         </Container>
     );
 }
 
 export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, title }) => {
-    const { fgColorDetail, textColor, softwareMaintenanceFontSize, fontStyle, standardPageTitleFontSize } = useContext(AppContext);
+    const { bgColor, textColor, softwareMaintenanceFontSize, fontStyle, standardPageTitleFontSize } = useContext(AppContext);
     return (
         <Modal
-            style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle, opacity: 0.9 }}
+            style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle }}
             centered
             show={modalOpen}
             onHide={handleModalClose}
             size='lg'
         >
-            <div style={{ backgroundColor: '#1a1a1a' }}>
+            <div style={{ backgroundColor: bgColor }}>
                 <Modal.Header style={{
                     backgroundColor: getThemeColor(0.5),
                     borderBottom: 'none',
-                    opacity: 1,
                     padding: '10px',
                     paddingTop: 0,
                     paddingBottom: 0,
@@ -221,12 +206,11 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
                 </Modal.Header>
                 <Modal.Body
                     style={{
-                        backgroundColor: fgColorDetail,
+                        backgroundColor: 'transparent',
                         color: textColor,
                         border: `3px solid ${getThemeColor(0.5)}`,
                         borderTop: 0,
                         fontSize: softwareMaintenanceFontSize,
-                        opacity: 1
                     }}
                 >
                     {children}
