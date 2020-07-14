@@ -24,12 +24,10 @@ const Login = ({ setUserData, modalOpen, setModalOpen }) => {
     const SignInButton = <StandardButton isActive={credentials.email.length > 0 && credentials.password.length > 0} onClick={() => authenticateUser()}>Sign In</StandardButton>
     return (
         <StandardModal title='Admin Panel' buttons={SignInButton} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
-            <StandardCard style={{ outline: `1px solid ${getThemeColor(0.2)}` }} transparentBg>
-                <Form.Group style={{ width: '95%', margin: 'auto', paddingBottom: '15px' }}>
-                    <StandardTextField value={credentials.email} label='Email' onChange={(e) => setCredentials({ ...credentials, email: e.target.value })} />
-                    <StandardTextField isPassword value={credentials.password} label='Password' onChange={(e) => setCredentials({ ...credentials, password: e.target.value })} />
-                </Form.Group>
-            </StandardCard>
+            <Form.Group style={{ width: '95%', margin: 'auto', paddingBottom: '15px' }}>
+                <StandardTextField value={credentials.email} label='Email' onChange={(e) => setCredentials({ ...credentials, email: e.target.value })} />
+                <StandardTextField isPassword value={credentials.password} label='Password' onChange={(e) => setCredentials({ ...credentials, password: e.target.value })} />
+            </Form.Group>
         </StandardModal>
     );
 };
@@ -72,20 +70,16 @@ const Manage = ({ setUserData, userData, setModalOpen, modalOpen }) => {
 
     return (
         <StandardModal title='Admin Panel' buttons={signOutButton} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
-            <StandardCard transparentBg style={{ minWidth: '100%', outline: `1px solid ${getThemeColor(0.2)}` }}>
-                <Form.Group style={{ width: '95%', margin: 'auto', paddingBottom: '15px' }}>
-                    <StandardTextField value={newUser.email} label='Email' onChange={(e) => setNewUser({ ...newUser, email: e.target.value })} />
-                    <StandardTextField isPassword value={newUser.password} label='Password' onChange={(e) => setNewUser({ ...newUser, password: e.target.value })} />
-                    <StandardTextField isPassword value={newUser.password2} label='Password Again' onChange={(e) => setNewUser({ ...newUser, password2: e.target.value })} />
-                    <StandardButton style={{ marginTop: '1vh' }} onClick={() => handleCreateNewUser()} isActive={newButtonEnabled}>Create New User</StandardButton>
-                </Form.Group>
-            </StandardCard>
-            <StandardCard transparentBg style={{ minWidth: '100%', outline: `1px solid ${getThemeColor(0.2)}`, marginTop: '1vh' }}>
-                <Form.Group style={{ width: '95%', margin: 'auto', paddingBottom: '15px' }}>
-                    <StandardDropDown value={selectedUser} label='Users' data={filteredUsers} onChange={(e) => setSelectedUser(e.target.value)} />
-                    <StandardButton style={{ marginTop: '1vh' }} onClick={() => handleDeleteUser()} isActive={!deleteButtonDisabled}>Delete User</StandardButton>
-                </Form.Group>
-            </StandardCard>
+            <Form.Group style={{ width: '95%', margin: 'auto', paddingBottom: '15px' }}>
+                <StandardTextField value={newUser.email} label='Email' onChange={(e) => setNewUser({ ...newUser, email: e.target.value })} />
+                <StandardTextField isPassword value={newUser.password} label='Password' onChange={(e) => setNewUser({ ...newUser, password: e.target.value })} />
+                <StandardTextField isPassword value={newUser.password2} label='Password Again' onChange={(e) => setNewUser({ ...newUser, password2: e.target.value })} />
+                <StandardButton style={{ marginTop: '1vh' }} onClick={() => handleCreateNewUser()} isActive={newButtonEnabled}>Create New User</StandardButton>
+            </Form.Group>
+            <Form.Group style={{ width: '95%', margin: 'auto', paddingBottom: '15px' }}>
+                <StandardDropDown value={selectedUser} label='Users' data={filteredUsers} onChange={(e) => setSelectedUser(e.target.value)} />
+                <StandardButton style={{ marginTop: '1vh' }} onClick={() => handleDeleteUser()} isActive={!deleteButtonDisabled}>Delete User</StandardButton>
+            </Form.Group>
         </StandardModal>
     )
 }

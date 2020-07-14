@@ -24,18 +24,18 @@ function AppBar({ userData, setUserData }) {
 
 const DesktopView = ({ userData, setUserData }) => {
   const appSettings = useContext(AppContext);
-  const { appbarFontSize } = appSettings;
+  const { appbarFontSize, bgColor } = appSettings;
   return (
-    <div style={{ backgroundColor: getThemeColor(0.5), borderBottom: `2px solid ${getThemeColor(0.1)}` }}>
-      <Nav style={{ minWidth: '100%', fontSize: appbarFontSize }}>
+    <div style={{ backgroundColor: bgColor, position: 'relative' }}>
+      <Nav style={{ minWidth: '100%', fontSize: appbarFontSize, backgroundColor: getThemeColor(0.5) }}>
         <Container style={{ minWidth: '85%' }}>
           <Row>
-            <Col style={{ marginTop: '1vh' }}>
+            <Col style={{ margin: 'auto' }}>
               <Nav.Link as={'div'} style={{ outline: 0, display: 'inline', cursor: 'pointer' }} className='defaultMouseOver' eventKey='Home'>Home</Nav.Link>
               <span style={{ color: getThemeColor(1) }}>/</span>
               <Nav.Link as={'div'} style={{ outline: 0, display: 'inline', cursor: 'pointer' }} className='defaultMouseOver' eventKey='Software'>Software</Nav.Link>
             </Col>
-            <Col style={{ textAlign: 'right' }}>
+            <Col style={{ margin: 'auto' }}>
               <Nav.Link as={'div'} style={{ outline: 0, maxWidth: 'max-content', margin: 'auto' }}><Admin setUserData={setUserData} userData={userData} /></Nav.Link>
             </Col>
           </Row>
@@ -47,10 +47,10 @@ const DesktopView = ({ userData, setUserData }) => {
 
 const MobileView = ({ userData, setUserData }) => {
   const appSettings = useContext(AppContext);
-  const { appbarFontSize } = appSettings;
+  const { appbarFontSize, bgColor } = appSettings;
   return (
-    <div style={{ backgroundColor: getThemeColor(0.5), borderBottom: `2px solid ${getThemeColor(0.1)}` }}>
-      <Nav style={{ minWidth: '100%', fontSize: appbarFontSize }}>
+    <div style={{ backgroundColor: bgColor, position: 'relative' }}>
+      <Nav style={{ minWidth: '100%', fontSize: appbarFontSize, backgroundColor: getThemeColor(0.5) }}>
         <Container>
           <Row>
             <Col style={{ textAlign: 'left' }}>

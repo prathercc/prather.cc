@@ -7,8 +7,8 @@ const InformationTab = ({ setImageModalObj, style, app }) => {
     const { image_link, description, name } = app;
     return (
         <Row style={{ ...style }}>
-            <Col xs={6} style={{ display: 'flex' }}>
-                <StandardCard>
+            <Col xs={12} md={6} style={{ display: 'flex', maxWidth: '75%', margin: 'auto', marginBottom: '1vh' }}>
+                <StandardCard noBorders>
                     <StandardImage
                         className='defaultImageNudge'
                         style={{ cursor: 'pointer', maxWidth: '100%' }}
@@ -17,8 +17,8 @@ const InformationTab = ({ setImageModalObj, style, app }) => {
                     />
                 </StandardCard>
             </Col>
-            <Col xs={6} style={{ display: 'flex' }}>
-                <StandardCard title={`What is ${name}?`} style={{ margin: 'auto', verticalAlign: 'middle', minWidth:'100%' }}>
+            <Col xs={12} md={6} style={{ display: 'flex' }}>
+                <StandardCard title={`Brief Description`} style={{ margin: 'auto', verticalAlign: 'middle', minWidth: '100%' }}>
                     <div style={{ margin: 'auto', marginTop: '1vh', maxWidth: '90%', textAlign: 'left' }} dangerouslySetInnerHTML={{ __html: description }} />
                 </StandardCard>
             </Col>

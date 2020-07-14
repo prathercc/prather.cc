@@ -29,7 +29,7 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app }) => {
                 {
                     features && features.map((feature, index) => {
                         return (
-                            <Carousel.Item key={index} style={{ paddingBottom: '10vh' }}>
+                            <Carousel.Item key={index} style={{ paddingBottom: '8vh', paddingTop: '1vh' }}>
                                 <SoftwareFeature
                                     app={app}
                                     setImageModalObj={setImageModalObj}
@@ -59,8 +59,8 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app }) => {
 const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app }) => {
     return (
         <Row>
-            <Col xs={6} style={{ display: 'flex' }}>
-                <StandardCard>
+            <Col xs={12} md={6} style={{ display: 'flex', margin: 'auto', marginBottom: '1vh', maxWidth: '75%' }}>
+                <StandardCard noBorders>
                     <StandardImage
                         className='defaultImageNudge'
                         src={feature.image_link}
@@ -69,7 +69,7 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
                     />
                 </StandardCard>
             </Col>
-            <Col xs={6} style={{ display: 'flex' }}>
+            <Col xs={12} md={6} style={{ display: 'flex' }}>
                 <StandardCard title={feature.title} style={{ margin: 'auto', verticalAlign: 'middle', minWidth: '100%' }}>
                     <div style={{ margin: 'auto', maxWidth: '95%', textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
                     {userData && <EditFeature app={app} setFeatures={setFeatures} feature={feature} />}
@@ -124,9 +124,9 @@ const EditFeature = ({ feature, setFeatures, app: { id, name } }) => {
 
     return (
         <>
-            <StandardButton icon={feature ? <Edit style={{ fontSize: getIconSizing('small'), marginBottom: '1vh' }} /> : <Add style={{ fontSize: getIconSizing('small')}} />} onClick={() => setModalOpen(true)} />
+            <StandardButton icon={feature ? <Edit style={{ fontSize: getIconSizing('small'), marginBottom: '1vh' }} /> : <Add style={{ fontSize: getIconSizing('small') }} />} onClick={() => setModalOpen(true)} />
             <StandardModal title={`Feature Alteration - ${feature ? 'Modify' : 'Create'}`} buttons={feature ? <EditButtons /> : <CreateButtons />} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
-                <Form.Group style={{ width: '95%', margin: 'auto', outline: `1px solid ${getThemeColor(0.2)}`, padding: '10px', paddingTop: '5px' }}>
+                <Form.Group style={{ width: '95%', margin: 'auto', padding: '10px', paddingTop: '5px' }}>
                     <StandardTextField value={activeFeature.application_name} isActive={false} label='Application Name' onChange={(e) => setActiveFeature({ ...activeFeature, application_name: e.target.value })} />
                     <StandardTextField value={activeFeature.title} label='Feature Title' onChange={(e) => setActiveFeature({ ...activeFeature, title: e.target.value })} />
                     <StandardTextField value={activeFeature.image_link} label='Image Link' onChange={(e) => setActiveFeature({ ...activeFeature, image_link: e.target.value })} />
