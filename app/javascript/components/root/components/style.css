@@ -34,7 +34,7 @@
 /* TABS SECTION */
 
 .tabsLeftBorderBlack {
-    border-left: 1px solid black;
+    margin-left: 1px;
 }
 
 .tabsLeftBorderRadius {
@@ -45,6 +45,24 @@
 .tabsRightBorderRadius {
     border-bottom-right-radius: 10px;
     border-top-right-radius: 10px;
+}
+
+.tabsLinkActive {
+    color: black;
+    outline: 0;
+    background-color: rgb(79, 201, 201, 1);
+}
+
+.tabsLinkInactive {
+    color: white;
+    cursor: pointer;
+    outline: 0;
+    background-color: rgb(79, 201, 201, 0.5);
+    transition: color 0.2s ease-in-out;
+}
+
+.tabsLinkInactive:hover {
+    color: rgb(79, 201, 201, 1);
 }
 
 /* ************ */

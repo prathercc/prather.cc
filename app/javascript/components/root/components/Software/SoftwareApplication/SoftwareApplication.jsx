@@ -68,11 +68,12 @@ function SoftwareApplication({ userData, name }) {
 const ViewSwitcher = () => {
   const BlankKeys = { Information: false, Repository: false, Downloads: false, 'Video Demo': false, Features: false, Compatibility: false, Code: false, Video: false }
   const [activeKey, setActiveKey] = useState({ ...BlankKeys, Information: true });
+  const padding = { paddingLeft: '15px', paddingRight: '15px', paddingTop: '3px', paddingBottom: '3px' }
 
-  const CustomLink = ({ keyBool, keyText, displayText, icon, style, className }) => {
+  const CustomLink = ({ keyBool, keyText, displayText, icon, style }) => {
     return (
       <span className={keyBool || 'defaultMouseOver'}>
-        <Nav.Link as={'div'} className={className} style={keyBool ? { backgroundColor: getThemeColor(1), color: 'black', cursor: 'pointer', outline: 0, padding: '12px', ...style } : { cursor: 'pointer', outline: 0, padding: '12px', backgroundColor: getThemeColor(0.3), ...style }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{icon}<div />{displayText}</Nav.Link>
+        <Nav.Link as={'div'} className={keyBool ? 'tabsLinkActive' : 'tabsLinkInactive'} style={{ ...style, ...padding }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{icon}<div />{displayText}</Nav.Link>
       </span>
     )
   }
@@ -80,7 +81,7 @@ const ViewSwitcher = () => {
   return (
     <Nav style={{ maxWidth: 'max-content', margin: 'auto' }}>
       <Nav.Item>
-        <CustomLink className='tabsLeftBorderRadius' keyBool={activeKey.Information} keyText='Information' displayText='About' />
+        <CustomLink style={{ borderBottomLeftRadius: '10px', borderTopLeftRadius: '10px' }} className='tabsLeftBorderRadius' keyBool={activeKey.Information} keyText='Information' displayText='About' />
       </Nav.Item>
       <Nav.Item className='tabsLeftBorderBlack'>
         <CustomLink keyBool={activeKey.Features} keyText='Features' displayText='Features' />
@@ -92,7 +93,7 @@ const ViewSwitcher = () => {
         <CustomLink keyBool={activeKey.Downloads} keyText='Downloads' displayText='Downloads' />
       </Nav.Item>
       <Nav.Item className='tabsLeftBorderBlack'>
-        <CustomLink className='tabsRightBorderRadius' keyBool={activeKey.Code} keyText='Code' displayText='Code' />
+        <CustomLink style={{ borderBottomRightRadius: '10px', borderTopRightRadius: '10px' }} className='tabsRightBorderRadius' keyBool={activeKey.Code} keyText='Code' displayText='Code' />
       </Nav.Item>
     </Nav>
   )

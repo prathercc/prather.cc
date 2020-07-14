@@ -141,19 +141,18 @@ const DlRow = ({ download, userData, app, setDownloads }) => {
 const DownloadSwitcher = () => {
     const BlankKeys = { Windows: false, Linux: false, Mac: false, Android: false }
     const [activeKey, setActiveKey] = useState({ ...BlankKeys, Windows: true });
+    const padding = { paddingLeft: '15px', paddingRight: '15px', paddingTop: '3px', paddingBottom: '3px' }
 
-    const CustomLink = ({ keyBool, keyText, displayText, style, className }) => {
+    const CustomLink = ({ keyBool, keyText, displayText, style }) => {
         return (
-            <span className={keyBool || 'defaultMouseOver'}>
-                <Nav.Link className={className} as={'div'} style={keyBool ? { backgroundColor: getThemeColor(1), color: 'black', cursor: 'pointer', outline: 0, ...style } : { cursor: 'pointer', outline: 0, backgroundColor: getThemeColor(0.3), ...style }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{displayText}</Nav.Link>
-            </span>
+            <Nav.Link className={keyBool ? 'tabsLinkActive' : 'tabsLinkInactive'} as={'div'} style={{ ...style, ...padding }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{displayText}</Nav.Link>
         )
     };
 
     return (
         <Nav style={{ margin: 'auto', maxWidth: 'max-content', marginTop: '1vh' }} defaultActiveKey='Windows'>
             <Nav.Item>
-                <CustomLink className='tabsLeftBorderRadius' keyBool={activeKey.Windows} keyText='Windows' displayText='Windows' />
+                <CustomLink style={{ borderBottomLeftRadius: '10px', borderTopLeftRadius: '10px' }} keyBool={activeKey.Windows} keyText='Windows' displayText='Windows' />
             </Nav.Item>
             <Nav.Item className='tabsLeftBorderBlack'>
                 <CustomLink keyBool={activeKey.Linux} keyText='Linux' displayText='Linux' />
@@ -162,7 +161,7 @@ const DownloadSwitcher = () => {
                 <CustomLink keyBool={activeKey.Mac} keyText='Mac' displayText='Mac' />
             </Nav.Item>
             <Nav.Item className='tabsLeftBorderBlack'>
-                <CustomLink className='tabsRightBorderRadius' keyBool={activeKey.Android} keyText='Android' displayText='Android' />
+                <CustomLink style={{ borderBottomRightRadius: '10px', borderTopRightRadius: '10px' }} keyBool={activeKey.Android} keyText='Android' displayText='Android' />
             </Nav.Item>
         </Nav>
     )
@@ -231,7 +230,7 @@ const EditDownloads = ({ app, setMainDownloads, download: value }) => {
 const Download = ({ download, setDownload }) => {
     const osTypes = [{ id: 'Windows', name: 'Windows' }, { id: 'Linux', name: 'Linux' }, { id: 'Mac', name: 'Mac' }, { id: 'Android', name: 'Android' }, { id: 'Resource', name: 'Resource' }];
     return (
-        <Form.Group style={{ minWidth: '95%', outline: `1px solid ${getThemeColor(0.2)}`, padding: '10px', paddingTop: '5px' }}>
+        <Form.Group style={{ minWidth: '95%', padding: '10px', paddingTop: '5px' }}>
             <StandardTextField value={download?.file_name} label='Name' onChange={(e) => setDownload({ ...download, file_name: e.target.value })} />
             <StandardTextField value={download?.file_size} label='Size' onChange={(e) => setDownload({ ...download, file_size: e.target.value })} />
             <StandardDropDown value={download?.os_type} data={osTypes} label='Operating System' onChange={(e) => setDownload({ ...download, os_type: e.target.value })} />
