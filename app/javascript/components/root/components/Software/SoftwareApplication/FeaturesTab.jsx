@@ -23,13 +23,18 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app }) => {
         featureFetch();
     }, [app]);
 
+    useEffect(() => {
+        if (features)
+            setCaroselIndex(0);
+    }, [features])
+
     return (
         <div style={{ ...style }}>
-            <Carousel activeIndex={caroselIndex} onSelect={(index) => setCaroselIndex(index)} controls={false} interval={null}>
+            <Carousel indicators={false} activeIndex={caroselIndex} onSelect={(index) => setCaroselIndex(index)} controls={false} interval={null}>
                 {
-                    features && features.map((feature, index) => {
+                    features?.map((feature, index) => {
                         return (
-                            <Carousel.Item key={index} style={{ paddingBottom: '8vh', paddingTop: '1vh' }}>
+                            <Carousel.Item key={index} style={{ paddingTop: '0.25vh' }}>
                                 <SoftwareFeature
                                     app={app}
                                     setImageModalObj={setImageModalObj}
@@ -41,17 +46,20 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app }) => {
                     })
                 }
             </Carousel>
-            <Row style={{ maxWidth: '60%', margin: 'auto' }}>
+
+            <Row style={{ maxWidth: '60%', margin: 'auto', display: features?.length > 0 ? '' : 'none' }}>
                 <Col>
                     <StandardButton icon={<LeftArrow style={{ fontSize: getIconSizing() }} />} onClick={() => setCaroselIndex(caroselIndex === 0 ? features?.length - 1 : caroselIndex - 1)}>Left</StandardButton>
                 </Col>
-                <Col>
-                    {userData && <EditFeature setFeatures={setFeatures} app={app} />}
+                <Col style={{ paddingTop: '1vh' }}>
+                    {caroselIndex + 1} of {features?.length}
                 </Col>
                 <Col>
                     <StandardButton icon={<RightArrow style={{ fontSize: getIconSizing() }} />} onClick={() => setCaroselIndex(caroselIndex === features?.length - 1 ? 0 : caroselIndex + 1)}>Right</StandardButton>
                 </Col>
             </Row>
+            {features?.length === 0 && 'No features found'}
+            {userData && <EditFeature setFeatures={setFeatures} app={app} />}
         </div>
     )
 }
@@ -97,6 +105,7 @@ const EditFeature = ({ feature, setFeatures, app: { id, name } }) => {
     };
     const handleDeleteFeature = async () => {
         await deleteFeature(activeFeature.id);
+        setFeatures(null);
         await fetchFeatures(id, setFeatures);
         setModalOpen(false);
     };

@@ -129,7 +129,7 @@ export const StandardSeparator = ({ style, onClick }) => {
 }
 
 export const StandardCard = ({ title, style, children, className, onClick, noBorders }) => {
-    const { softwareFontSize, fgColorDetail, standardCardTitleFontSize } = useContext(AppContext);
+    const { softwareFontSize, standardCardTitleFontSize } = useContext(AppContext);
     return (
         <Card
             onClick={onClick}
@@ -163,9 +163,9 @@ export const StandardPage = ({ title = '', children, style }) => {
                         backgroundColor: 'transparent',
                         fontFamily: fontStyle,
                         fontSize: softwareFontSize,
-                        paddingTop: '1vh',
+                        paddingTop: '0vh',
                         paddingBottom: '2vh',
-                        border: `1px solid ${getThemeColor(0.5)}`,
+                        border: `3px solid ${getThemeColor(0.5)}`,
                         borderTop: 'none',
                         paddingLeft: '0vw',
                         paddingRight: '0vw',

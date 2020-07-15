@@ -20,13 +20,14 @@
 
 .defaultButton {
     color: white;
-    background-color: rgb(79, 201, 201, 0.1) !important;
+    background-color: rgb(79, 201, 201, 0.5) !important;
     transition: background-color 0.2s ease-in-out;
 }
 
 .defaultButton:hover {
     cursor: pointer;
-    background-color: rgb(79, 201, 201, 0.4) !important;
+    background-color: rgb(79, 201, 201, 1) !important;
+    color: black;
 }
 
 /* ******** */
@@ -35,16 +36,6 @@
 
 .tabsLeftBorderBlack {
     margin-left: 1px;
-}
-
-.tabsLeftBorderRadius {
-    border-bottom-left-radius: 10px;
-    border-top-left-radius: 10px;
-}
-
-.tabsRightBorderRadius {
-    border-bottom-right-radius: 10px;
-    border-top-right-radius: 10px;
 }
 
 .tabsLinkActive {

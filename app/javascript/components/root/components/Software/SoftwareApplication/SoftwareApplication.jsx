@@ -43,19 +43,19 @@ function SoftwareApplication({ userData, name }) {
           <ViewSwitcher />
           <Tab.Content>
             <Tab.Pane eventKey='Information'>
-              <InformationTab style={{ marginTop: '2vh' }} app={app} setImageModalObj={setImageModalObj} />
+              <InformationTab style={{ marginTop: '1vh' }} app={app} setImageModalObj={setImageModalObj} />
             </Tab.Pane>
             <Tab.Pane eventKey='Features'>
-              <FeaturesTab style={{ marginTop: '2vh' }} setImageModalObj={setImageModalObj} features={features} userData={userData} app={app} />
+              <FeaturesTab style={{ marginTop: '1vh' }} setImageModalObj={setImageModalObj} features={features} userData={userData} app={app} />
             </Tab.Pane>
             <Tab.Pane eventKey='Video'>
-              <VideoTab style={{ marginTop: '2vh' }} app={app} userData={userData} />
+              <VideoTab style={{ marginTop: '1vh' }} app={app} userData={userData} />
             </Tab.Pane>
             <Tab.Pane eventKey='Downloads'>
-              <DownloadsTab style={{ marginTop: '2vh' }} app={app} userData={userData} />
+              <DownloadsTab style={{ marginTop: '1vh' }} app={app} userData={userData} />
             </Tab.Pane>
             <Tab.Pane eventKey='Code'>
-              <CodeTab style={{ marginTop: '2vh' }} app={app} userData={userData} />
+              <CodeTab style={{ marginTop: '1vh' }} app={app} userData={userData} />
             </Tab.Pane>
           </Tab.Content>
         </Tab.Container>
@@ -72,7 +72,7 @@ const ViewSwitcher = () => {
 
   const CustomLink = ({ keyBool, keyText, displayText, icon, style }) => {
     return (
-      <span className={keyBool || 'defaultMouseOver'}>
+      <span className={keyBool ? 'defaultMouseOver' : ''}>
         <Nav.Link as={'div'} className={keyBool ? 'tabsLinkActive' : 'tabsLinkInactive'} style={{ ...style, ...padding }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{icon}<div />{displayText}</Nav.Link>
       </span>
     )
@@ -81,7 +81,7 @@ const ViewSwitcher = () => {
   return (
     <Nav style={{ maxWidth: 'max-content', margin: 'auto' }}>
       <Nav.Item>
-        <CustomLink style={{ borderBottomLeftRadius: '10px', borderTopLeftRadius: '10px' }} className='tabsLeftBorderRadius' keyBool={activeKey.Information} keyText='Information' displayText='About' />
+        <CustomLink style={{ borderBottomLeftRadius: '25px' }} keyBool={activeKey.Information} keyText='Information' displayText='About' />
       </Nav.Item>
       <Nav.Item className='tabsLeftBorderBlack'>
         <CustomLink keyBool={activeKey.Features} keyText='Features' displayText='Features' />
@@ -93,7 +93,7 @@ const ViewSwitcher = () => {
         <CustomLink keyBool={activeKey.Downloads} keyText='Downloads' displayText='Downloads' />
       </Nav.Item>
       <Nav.Item className='tabsLeftBorderBlack'>
-        <CustomLink style={{ borderBottomRightRadius: '10px', borderTopRightRadius: '10px' }} className='tabsRightBorderRadius' keyBool={activeKey.Code} keyText='Code' displayText='Code' />
+        <CustomLink style={{ borderBottomRightRadius: '25px' }} keyBool={activeKey.Code} keyText='Code' displayText='Code' />
       </Nav.Item>
     </Nav>
   )
