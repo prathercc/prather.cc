@@ -33,64 +33,38 @@ function DownloadsTab({ app, userData, style }) {
 
     return (
         <>
-            <Tab.Container style={{ ...style }} defaultActiveKey='Windows'>
-                <DownloadSwitcher />
-                <Tab.Content>
-                    <Tab.Pane eventKey='Windows'>
-                        <ConfiguredTable type='Windows' />
-                    </Tab.Pane>
-                    <Tab.Pane eventKey='Linux'>
-                        <ConfiguredTable type='Linux' />
-                    </Tab.Pane>
-                    <Tab.Pane eventKey='Mac'>
-                        <ConfiguredTable type='Mac' />
-                    </Tab.Pane>
-                    <Tab.Pane eventKey='Android'>
-                        <ConfiguredTable type='Android' />
-                    </Tab.Pane>
-                </Tab.Content>
-            </Tab.Container>
+            <DownloadTable downloads={downloads} style={{ margin: 'auto', marginTop: '1vh' }} userData={userData} app={app} setDownloads={setDownloads} />
             {userData && <EditDownloads app={app} setMainDownloads={setDownloads} />}
         </>
     );
 }
 
-const DownloadTable = ({ style, downloads, type, userData, app, setDownloads }) => {
-    const [filteredDownloads, setFilteredDownloads] = useState([]);
-    const appSettings = useContext(AppContext);
-    const { fgColorDetail } = appSettings;
-
-    useEffect(() => {
-        const filterDownloads = () => {
-            let resources = downloads?.filter(x => x.os_type === 'Resource');
-            let arr = downloads?.filter(x => x.os_type === type);
-            setFilteredDownloads(arr?.length > 0 ? [...arr, ...resources] : []);
-        }
-        filterDownloads();
-    }, []);
-
+const DownloadTable = ({ style, downloads, userData, app, setDownloads }) => {
     return (
         <>
-            {filteredDownloads?.length === 0 && <div style={{ marginTop: '1vh' }}>No downloads found</div>}
+            {downloads?.length === 0 && <div style={{ ...style }}>No downloads found</div>}
             {
-                filteredDownloads?.length > 0 && <Table size='sm' hover style={{ ...style, color: 'white', backgroundColor: fgColorDetail, border: `1px solid ${getThemeColor(0.1)}`, maxWidth: '85%' }}>
+                downloads?.length > 0 && <Table size='sm' hover style={{ ...style, color: 'white', backgroundColor: 'transparent' }}>
                     <thead>
                         <tr>
-                            <th style={{ border: `1px solid ${getThemeColor(0.1)}` }}>
+                            <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}>
                                 Filename
                             </th>
-                            <th style={{ border: `1px solid ${getThemeColor(0.1)}` }}>
+                            <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}>
                                 Type
                             </th>
-                            <th style={{ border: `1px solid ${getThemeColor(0.1)}` }}>
+                            <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}>
                                 File Size
                             </th>
-                            {userData && <th style={{ border: `1px solid ${getThemeColor(0.1)}` }}></th>}
+                            <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}>
+                                Compatibility
+                            </th>
+                            {userData && <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}></th>}
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            filteredDownloads && filteredDownloads.map((download, index) => {
+                            downloads && downloads.map((download, index) => {
                                 return (
                                     <DlRow key={index} download={download} userData={userData} app={app} setDownloads={setDownloads} />
                                 )
@@ -121,10 +95,11 @@ const DlRow = ({ download, userData, app, setDownloads }) => {
     }
     return (
         <>
-            <tr className='defaultMouseOver' style={{ cursor: 'pointer' }}>
+            <tr className='tableMouseOver' style={{ cursor: 'pointer' }}>
                 <CustomTd>{file_name}</CustomTd>
                 <CustomTd>{<Icon type={os_type} />}</CustomTd>
                 <CustomTd>{file_size}</CustomTd>
+                <CustomTd>{os_type}</CustomTd>
                 {userData && <CustomTd noOnClick><EditDownloads download={download} app={app} setMainDownloads={setDownloads} /></CustomTd>}
             </tr>
             <StandardModal buttons={DownloadButton} title='Download File' modalOpen={modalOpen} handleModalClose={() => { setModalOpen(false) }} closable={false}>
@@ -135,35 +110,6 @@ const DlRow = ({ download, userData, app, setDownloads }) => {
                 <div style={{ marginTop: '2vh' }}>{download_description}</div>
             </StandardModal>
         </>
-    )
-}
-
-const DownloadSwitcher = () => {
-    const BlankKeys = { Windows: false, Linux: false, Mac: false, Android: false }
-    const [activeKey, setActiveKey] = useState({ ...BlankKeys, Windows: true });
-    const padding = { paddingLeft: '15px', paddingRight: '15px', paddingTop: '3px', paddingBottom: '3px' }
-
-    const CustomLink = ({ keyBool, keyText, displayText, style }) => {
-        return (
-            <Nav.Link className={keyBool ? 'tabsLinkActive' : 'tabsLinkInactive'} as={'div'} style={{ ...style, ...padding }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{displayText}</Nav.Link>
-        )
-    };
-
-    return (
-        <Nav style={{ margin: 'auto', maxWidth: 'max-content', marginTop: '1vh' }} defaultActiveKey='Windows'>
-            <Nav.Item>
-                <CustomLink style={{ borderBottomLeftRadius: '10px', borderTopLeftRadius: '10px' }} keyBool={activeKey.Windows} keyText='Windows' displayText='Windows' />
-            </Nav.Item>
-            <Nav.Item className='tabsLeftBorderBlack'>
-                <CustomLink keyBool={activeKey.Linux} keyText='Linux' displayText='Linux' />
-            </Nav.Item>
-            <Nav.Item className='tabsLeftBorderBlack'>
-                <CustomLink keyBool={activeKey.Mac} keyText='Mac' displayText='Mac' />
-            </Nav.Item>
-            <Nav.Item className='tabsLeftBorderBlack'>
-                <CustomLink style={{ borderBottomRightRadius: '10px', borderTopRightRadius: '10px' }} keyBool={activeKey.Android} keyText='Android' displayText='Android' />
-            </Nav.Item>
-        </Nav>
     )
 }
 
@@ -228,7 +174,7 @@ const EditDownloads = ({ app, setMainDownloads, download: value }) => {
 };
 
 const Download = ({ download, setDownload }) => {
-    const osTypes = [{ id: 'Windows', name: 'Windows' }, { id: 'Linux', name: 'Linux' }, { id: 'Mac', name: 'Mac' }, { id: 'Android', name: 'Android' }, { id: 'Resource', name: 'Resource' }];
+    const osTypes = [{ id: 'Windows', name: 'Windows' }, { id: 'Linux', name: 'Linux' }, { id: 'Mac', name: 'Mac' }, { id: 'Android', name: 'Android' }, { id: 'All', name: 'All' }];
     return (
         <Form.Group style={{ minWidth: '95%', padding: '10px', paddingTop: '5px' }}>
             <StandardTextField value={download?.file_name} label='Name' onChange={(e) => setDownload({ ...download, file_name: e.target.value })} />
@@ -243,8 +189,8 @@ const Download = ({ download, setDownload }) => {
 const Icon = ({ type }) => {
     return (
         <>
-            {type === 'Resource' && <DemoIcon style={{ color: getThemeColor(1) }} />}
-            {type !== 'Resource' && <ApplicationIcon style={{ color: getThemeColor(1) }} />}
+            {type === 'All' && <DemoIcon style={{ color: getThemeColor(1) }} />}
+            {type !== 'All' && <ApplicationIcon style={{ color: getThemeColor(1) }} />}
         </>
     )
 }

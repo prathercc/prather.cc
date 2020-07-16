@@ -5,7 +5,7 @@ module Api
     class DownloadController < ApplicationController
       def index
         software = Software.find(params[:software_id])
-        downloads = software.downloads.all.sort_by(&:id)
+        downloads = software.downloads.all.sort_by(&:os_type)
         render json: {
           message: 'Loaded downloads',
           data: downloads
