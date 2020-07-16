@@ -67,8 +67,8 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app }) => {
 const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app }) => {
     return (
         <Row>
-            <Col xs={12} md={6} style={{ display: 'flex', margin: 'auto', marginBottom: '1vh', maxWidth: '75%' }}>
-                <StandardCard noBorders>
+            <Col xs={12} md={6} style={{ display: 'flex', marginBottom: '1vh' }}>
+                <StandardCard noBorders style={{ verticalAlign: 'middle', margin: 'auto', maxWidth: '75%' }}>
                     <StandardImage
                         className='defaultImageNudge'
                         src={feature.image_link}

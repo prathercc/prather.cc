@@ -4,11 +4,11 @@ import Row from 'react-bootstrap/Row';
 import { StandardImage, StandardCard } from '../../Utility/Utility';
 
 const InformationTab = ({ setImageModalObj, style, app }) => {
-    const { image_link, description, name } = app;
+    const { image_link, description } = app;
     return (
         <Row style={{ ...style }}>
-            <Col xs={12} md={6} style={{ display: 'flex', maxWidth: '75%', margin: 'auto', marginBottom: '1vh' }}>
-                <StandardCard noBorders>
+            <Col xs={12} md={6} style={{ display: 'flex', marginBottom: '1vh' }}>
+                <StandardCard noBorders style={{ verticalAlign: 'middle', margin: 'auto', maxWidth: '75%' }}>
                     <StandardImage
                         className='defaultImageNudge'
                         style={{ cursor: 'pointer', maxWidth: '100%' }}

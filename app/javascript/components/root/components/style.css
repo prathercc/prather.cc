@@ -21,7 +21,7 @@
 .defaultButton {
     color: white;
     background-color: rgb(79, 201, 201, 0.5) !important;
-    transition: background-color 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .defaultButton:hover {
@@ -31,6 +31,20 @@
 }
 
 /* ******** */
+
+/* TABLE SECTION */
+
+.tableMouseOver {
+    color: white !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.tableMouseOver:hover {
+    color: rgb(79, 201, 201, 1) !important;
+    background-color: rgb(79, 201, 201, 0.1) !important;
+}
+
+/* ************* */
 
 /* TABS SECTION */
 
@@ -49,11 +63,12 @@
     cursor: pointer;
     outline: 0;
     background-color: rgb(79, 201, 201, 0.5);
-    transition: color 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .tabsLinkInactive:hover {
-    color: rgb(79, 201, 201, 1);
+    color: black;
+    background-color: rgb(79, 201, 201, 1);
 }
 
 /* ************ */
