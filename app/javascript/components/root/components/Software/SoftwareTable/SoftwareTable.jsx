@@ -12,8 +12,6 @@ import Add from 'react-bootstrap-icons/dist/icons/plus-circle';
 import Edit from 'react-bootstrap-icons/dist/icons/pencil';
 
 function SoftwareTable({ userData, setActiveApplication }) {
-  const appSettings = useContext(AppContext);
-  const { fgColorDetail } = appSettings;
   const [software, setSoftware] = useState([]);
   useEffect(() => {
     const loadSoftware = async () => {
@@ -24,32 +22,30 @@ function SoftwareTable({ userData, setActiveApplication }) {
 
   return (
     <StandardPage title='Software Panel'>
-      <div style={{ width: '95%', margin: 'auto' }}>
-        <Table size='sm' hover style={{ color: 'white', backgroundColor: fgColorDetail, border: `1px solid ${getThemeColor(0.1)}` }}>
-          <thead>
-            <tr>
-              <th style={{ border: `1px solid ${getThemeColor(0.1)}` }}>Name</th>
-              <th style={{ border: `1px solid ${getThemeColor(0.1)}` }}>Language</th>
-              <th style={{ border: `1px solid ${getThemeColor(0.1)}` }}>Platform(s)</th>
-              <th style={{ border: `1px solid ${getThemeColor(0.1)}` }}>Year</th>
-              {userData && <th style={{ border: `1px solid ${getThemeColor(0.1)}` }}></th>}
-            </tr>
-          </thead>
-          <tbody>
-            {software?.map((app) => {
-              return (
-                <SoftwareSample
-                  key={app.id}
-                  software={app}
-                  userData={userData}
-                  setSoftware={setSoftware}
-                  setActiveApplication={setActiveApplication}
-                />
-              );
-            })}
-          </tbody>
-        </Table>
-      </div>
+      <Table size='sm' hover style={{ color: 'white', backgroundColor: 'transparent', marginTop: '1vh' }}>
+        <thead>
+          <tr>
+            <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}>Name</th>
+            <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}>Language</th>
+            <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}>Platform(s)</th>
+            <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}>Year</th>
+            {userData && <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}></th>}
+          </tr>
+        </thead>
+        <tbody>
+          {software?.map((app) => {
+            return (
+              <SoftwareSample
+                key={app.id}
+                software={app}
+                userData={userData}
+                setSoftware={setSoftware}
+                setActiveApplication={setActiveApplication}
+              />
+            );
+          })}
+        </tbody>
+      </Table>
       {userData && <EditSoftware setSoftware={setSoftware} />}
     </StandardPage>
   );
@@ -108,24 +104,20 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares })
       <StandardButton icon={existingSoftware ? <Edit style={{ fontSize: getIconSizing('small') }} /> : <Add style={{ fontSize: getIconSizing('small') }} />} onClick={() => setModalOpen(true)}>{existingSoftware ? 'Edit' : 'Add Application'}</StandardButton>
 
       <StandardModal title={`Software Alteration - ${!existingSoftware ? 'Create' : 'Modify'}`} buttons={existingSoftware ? ExistingButtons : NewButtons} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
-
-        <StandardCard transparentBg style={{ minWidth: '100%', outline: `1px solid ${getThemeColor(0.2)}` }}>
-          <Form.Group style={{ width: '95%' }}>
-            <StandardTextField value={software.name} isActive={!existingSoftware} label='Name' onChange={(e) => setSoftware({ ...software, name: e.target.value })} />
-            <StandardTextField value={software.icon_link} label='Icon Image Link' onChange={(e) => setSoftware({ ...software, icon_link: e.target.value })} />
-            <StandardTextField value={software.image_link} label='Image Link' onChange={(e) => setSoftware({ ...software, image_link: e.target.value })} />
-            <StandardTextField value={software.description} rows={4} label='Description' onChange={(e) => setSoftware({ ...software, description: e.target.value })} />
-            <StandardTextField value={software.repo_link} label='Repository Link' onChange={(e) => setSoftware({ ...software, repo_link: e.target.value })} />
-            <StandardTextField value={software.languages} label='Languages' onChange={(e) => setSoftware({ ...software, languages: e.target.value })} />
-            <StandardTextField value={software.youtube_link} label='Youtube Video Identifier' onChange={(e) => setSoftware({ ...software, youtube_link: e.target.value })} />
-            <StandardCheckBox label='Is this legacy software?' value={software.is_legacy} onChange={() => setSoftware({ ...software, is_legacy: !software.is_legacy })} />
-            <StandardCheckBox label='Windows' value={software.windows} onChange={() => setSoftware({ ...software, windows: !software.windows })} />
-            <StandardCheckBox label='Linux' value={software.linux} onChange={() => setSoftware({ ...software, linux: !software.linux })} />
-            <StandardCheckBox label='Mac' value={software.mac} onChange={() => setSoftware({ ...software, mac: !software.mac })} />
-            <StandardCheckBox label='Android' value={software.android} onChange={() => setSoftware({ ...software, android: !software.android })} />
-          </Form.Group>
-        </StandardCard>
-
+        <Form.Group style={{ width: '95%', margin: 'auto' }}>
+          <StandardTextField value={software.name} isActive={!existingSoftware} label='Name' onChange={(e) => setSoftware({ ...software, name: e.target.value })} />
+          <StandardTextField value={software.icon_link} label='Icon Image Link' onChange={(e) => setSoftware({ ...software, icon_link: e.target.value })} />
+          <StandardTextField value={software.image_link} label='Image Link' onChange={(e) => setSoftware({ ...software, image_link: e.target.value })} />
+          <StandardTextField value={software.description} rows={4} label='Description' onChange={(e) => setSoftware({ ...software, description: e.target.value })} />
+          <StandardTextField value={software.repo_link} label='Repository Link' onChange={(e) => setSoftware({ ...software, repo_link: e.target.value })} />
+          <StandardTextField value={software.languages} label='Languages' onChange={(e) => setSoftware({ ...software, languages: e.target.value })} />
+          <StandardTextField value={software.youtube_link} label='Youtube Video Identifier' onChange={(e) => setSoftware({ ...software, youtube_link: e.target.value })} />
+          <StandardCheckBox label='Is this legacy software?' value={software.is_legacy} onChange={() => setSoftware({ ...software, is_legacy: !software.is_legacy })} />
+          <StandardCheckBox label='Windows' value={software.windows} onChange={() => setSoftware({ ...software, windows: !software.windows })} />
+          <StandardCheckBox label='Linux' value={software.linux} onChange={() => setSoftware({ ...software, linux: !software.linux })} />
+          <StandardCheckBox label='Mac' value={software.mac} onChange={() => setSoftware({ ...software, mac: !software.mac })} />
+          <StandardCheckBox label='Android' value={software.android} onChange={() => setSoftware({ ...software, android: !software.android })} />
+        </Form.Group>
       </StandardModal>
     </>
   )
@@ -148,17 +140,17 @@ const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication 
   }
 
   return (
-    <tr className='defaultMouseOver' style={{ cursor: 'pointer' }}>
+    <tr className='tableMouseOver' style={{ cursor: 'pointer' }}>
       <CustomTd style={{ width: '35%' }}>
-        <StandardImage src={software.icon_link} style={{ width: '10%' }} />
+        <StandardImage src={software.icon_link} style={{ width: getIconSizing('medium') }} />
         {software.name}
       </CustomTd>
       <CustomTd>{software.languages}</CustomTd>
       <CustomTd>
-        {compatibility.windows && <Badge variant='dark'>Windows</Badge>}{' '}
-        {compatibility.linux && <Badge variant='dark'>Linux</Badge>}{' '}
-        {compatibility.mac && <Badge variant='dark'>Mac</Badge>}{' '}
-        {compatibility.android && <Badge variant='dark'>Android</Badge>}{' '}
+        {compatibility.windows && <Badge variant='light'>Windows</Badge>}{' '}
+        {compatibility.linux && <Badge variant='light'>Linux</Badge>}{' '}
+        {compatibility.mac && <Badge variant='light'>Mac</Badge>}{' '}
+        {compatibility.android && <Badge variant='light'>Android</Badge>}{' '}
       </CustomTd>
       <CustomTd>2019</CustomTd>
       {userData && <CustomTd noOnClick><EditSoftware setSoftware={setSoftware} software={software} /></CustomTd>}

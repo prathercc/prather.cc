@@ -1,11 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Tab from 'react-bootstrap/Tab';
-import Nav from 'react-bootstrap/Nav';
 import Table from 'react-bootstrap/Table';
-import { AppContext } from '../../../AppContext';
 import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../../../downloadService';
 import { StandardModal, getThemeColor, StandardButton, StandardTextField, StandardDropDown, getIconSizing } from '../../Utility/Utility';
 import DemoIcon from 'react-bootstrap-icons/dist/icons/file-earmark-diff';
@@ -15,12 +12,6 @@ import AddIcon from 'react-bootstrap-icons/dist/icons/plus-circle';
 
 function DownloadsTab({ app, userData, style }) {
     const [downloads, setDownloads] = useState(null);
-
-    const ConfiguredTable = ({ type }) => {
-        return (
-            <DownloadTable type={type} downloads={downloads} style={{ margin: 'auto', marginTop: '1vh' }} userData={userData} app={app} setDownloads={setDownloads} />
-        );
-    };
 
     useEffect(() => {
         const fetch = async () => {
@@ -33,7 +24,7 @@ function DownloadsTab({ app, userData, style }) {
 
     return (
         <>
-            <DownloadTable downloads={downloads} style={{ margin: 'auto', marginTop: '1vh' }} userData={userData} app={app} setDownloads={setDownloads} />
+            <DownloadTable downloads={downloads} style={{ margin: 'auto', ...style }} userData={userData} app={app} setDownloads={setDownloads} />
             {userData && <EditDownloads app={app} setMainDownloads={setDownloads} />}
         </>
     );
