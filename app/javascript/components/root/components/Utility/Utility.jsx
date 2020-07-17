@@ -42,7 +42,7 @@ export const StandardDropDown = ({ onChange, label, isActive = true, style, data
         <div style={{ ...style }}>
             <Form.Text style={{ textAlign: 'left' }}>{label}</Form.Text>
             <Form.Control
-                style={{ cursor: isActive ? 'default' : 'not-allowed', textAlign: 'left' }}
+                style={{ cursor: isActive ? 'default' : 'not-allowed', textAlign: 'left', backgroundColor: '#d9d9d9' }}
                 disabled={!isActive}
                 as="select"
                 value={value}
@@ -65,7 +65,7 @@ export const StandardTextField = ({ onChange, label, isActive = true, value, row
         <div style={{ ...style }}>
             <Form.Text style={{ textAlign: 'left' }}>{label}</Form.Text>
             <Form.Control
-                style={{ textAlign: 'left', cursor: isActive ? 'text' : 'not-allowed' }}
+                style={{ textAlign: 'left', cursor: isActive ? 'text' : 'not-allowed', backgroundColor: '#d9d9d9' }}
                 size='sm'
                 type={isPassword ? 'password' : 'text'}
                 placeholder={label}
