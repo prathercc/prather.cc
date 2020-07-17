@@ -27,6 +27,7 @@ function Root() {
           }}
         >
           <div className='starCW' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(${stars})` }}></div>
+          <div className='starCWLag' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(${stars})` }}></div>
           <div className='starCCW' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(${stars})` }}></div>
           <div className='blackhole' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(${blackhole})` }} />
           <Switch>

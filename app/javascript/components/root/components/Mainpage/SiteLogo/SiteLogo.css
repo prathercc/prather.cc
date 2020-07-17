@@ -1,6 +1,6 @@
   .starCW {
     background-repeat: repeat;
-    animation: starCW infinite 1000s linear;
+    animation: starCW infinite 3000s linear;
   }
 
   @keyframes starCW {
@@ -12,6 +12,23 @@
     }
     100% {
       transform: scale(4.5, 2) perspective(1px) rotate(5deg);
+    }
+  }
+
+  .starCWLag {
+    background-repeat: repeat;
+    animation: starCWLag infinite 3000s linear;
+  }
+
+  @keyframes starCWLag {
+    0% {
+      transform: scale(4.5, 2) perspective(1px) rotate(20deg);
+    }
+    50% {
+      transform: scale(4.5, 2) perspective(1px) rotate(380deg);
+    }
+    100% {
+      transform: scale(4.5, 2) perspective(1px) rotate(20deg);
     }
   }
 
@@ -34,7 +51,7 @@
 
   .blackhole {
     background-repeat: no-repeat;
-    animation: blackhole infinite 20000s linear;
+    animation: blackhole infinite 9000s linear;
     background-position: center;
   }
 
