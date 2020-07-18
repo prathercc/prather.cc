@@ -79,14 +79,20 @@ export const StandardTextField = ({ onChange, label, isActive = true, value, row
     );
 };
 
-export const StandardImage = (props) => {
+export const StandardImage = ({ style, src, className, onClick, onLoaded = () => { } }) => {
     const [isLoading, setIsLoading] = useState(true);
+
+    const handleOnLoad = () => {
+        setIsLoading(false);
+        onLoaded();
+    }
+
     return (
         <>
             {
                 isLoading && <StandardSpinner />
             }
-            <img {...props} style={{ ...props.style, display: isLoading ? 'none' : '' }} onLoad={() => setIsLoading(false)} onError={() => setIsLoading(true)} />
+            <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={() => setIsLoading(true)} />
         </>
     );
 };

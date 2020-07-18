@@ -65,19 +65,29 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app }) => {
 }
 
 const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app }) => {
+    const [loadingObj, setLoadingObj] = useState({ content: false, image: false });
+
+    useEffect(() => {
+        if (feature)
+            setLoadingObj({ ...loadingObj, content: true })
+    }, [feature]);
+
+    const allContentLoaded = loadingObj.content && loadingObj.image;
+
     return (
         <Row>
-            <Col xs={12} md={6} style={{ display: 'flex', marginBottom: '1vh' }}>
+            <Col xs={12} md={allContentLoaded ? 6 : 12} style={{ display: 'flex', marginBottom: '1vh' }}>
                 <StandardCard noBorders style={{ verticalAlign: 'middle', margin: 'auto', maxWidth: '75%' }}>
                     <StandardImage
                         className='defaultImageNudge'
                         src={feature.image_link}
                         onClick={() => setImageModalObj({ open: true, imageLink: feature.image_link })}
                         style={{ maxWidth: '100%', cursor: 'pointer' }}
+                        onLoaded={() => setLoadingObj({ ...loadingObj, image: true })}
                     />
                 </StandardCard>
             </Col>
-            <Col xs={12} md={6} style={{ display: 'flex' }}>
+            <Col xs={12} md={6} style={{ display: allContentLoaded ? 'flex' : 'none' }}>
                 <StandardCard title={feature.title} style={{ margin: 'auto', verticalAlign: 'middle', minWidth: '100%' }}>
                     <div style={{ margin: 'auto', maxWidth: '95%', textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
                     {userData && <EditFeature app={app} setFeatures={setFeatures} feature={feature} />}

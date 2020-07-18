@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import Badge from 'react-bootstrap/Badge';
 import Col from 'react-bootstrap/Col';
@@ -6,13 +6,12 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { fetchAllSoftware, postSoftware, putSoftware, deleteSoftware } from '../../../softwareService';
-import { StandardImage, StandardCard, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing } from '../../Utility/Utility';
-import { AppContext } from '../../../AppContext';
+import { StandardImage, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing, StandardSpinner } from '../../Utility/Utility';
 import Add from 'react-bootstrap-icons/dist/icons/plus-circle';
 import Edit from 'react-bootstrap-icons/dist/icons/pencil';
 
 function SoftwareTable({ userData, setActiveApplication }) {
-  const [software, setSoftware] = useState([]);
+  const [software, setSoftware] = useState(null);
   useEffect(() => {
     const loadSoftware = async () => {
       await fetchAllSoftware(setSoftware);
@@ -46,6 +45,7 @@ function SoftwareTable({ userData, setActiveApplication }) {
           })}
         </tbody>
       </Table>
+      <span style={{ marginBottom: '1vh', display: software ? 'none' : '' }}><StandardSpinner /></span>
       {userData && <EditSoftware setSoftware={setSoftware} />}
     </StandardPage>
   );

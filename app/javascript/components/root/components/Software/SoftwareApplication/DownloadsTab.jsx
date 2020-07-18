@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../../../downloadService';
-import { StandardModal, getThemeColor, StandardButton, StandardTextField, StandardDropDown, getIconSizing } from '../../Utility/Utility';
+import { StandardModal, getThemeColor, StandardButton, StandardTextField, StandardDropDown, getIconSizing, StandardSpinner } from '../../Utility/Utility';
 import DemoIcon from 'react-bootstrap-icons/dist/icons/file-earmark-diff';
 import ApplicationIcon from 'react-bootstrap-icons/dist/icons/gear-wide-connected';
 import ModifyIcon from 'react-bootstrap-icons/dist/icons/pencil';
@@ -24,7 +24,8 @@ function DownloadsTab({ app, userData, style }) {
 
     return (
         <>
-            <DownloadTable downloads={downloads} style={{ margin: 'auto', ...style }} userData={userData} app={app} setDownloads={setDownloads} />
+            {!downloads && <StandardSpinner />}
+            {downloads && <DownloadTable downloads={downloads} style={{ margin: 'auto', ...style }} userData={userData} app={app} setDownloads={setDownloads} />}
             {userData && <EditDownloads app={app} setMainDownloads={setDownloads} />}
         </>
     );
