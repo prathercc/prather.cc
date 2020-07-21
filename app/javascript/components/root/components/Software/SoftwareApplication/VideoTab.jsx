@@ -17,7 +17,7 @@ const VideoTab = ({ style, app }) => {
                 </StandardCard>
             }
             {
-                !youtube_link && <div style={{ marginTop: '2vh' }}>No video found</div>
+                !youtube_link && <div style={{ ...style }}>No video found</div>
             }
         </Container>
     );
