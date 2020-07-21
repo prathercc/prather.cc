@@ -122,9 +122,9 @@ export const StandardButton = ({ onClick, style, children, isActive = true, icon
     )
 }
 
-export const StandardSpinner = () => {
+export const StandardSpinner = ({ style }) => {
     return (
-        <Spinner style={{ margin: 'auto', color: getThemeColor(0.1) }} animation='border' />
+        <Spinner style={{ margin: 'auto', color: getThemeColor(0.5), ...style }} animation='border' />
     )
 }
 
@@ -148,8 +148,8 @@ export const StandardCard = ({ title, style, children, className, onClick, noBor
                 alignItems: 'center',
                 border: 'none'
             }}>
-            <div style={{ fontSize: standardCardTitleFontSize, minWidth: '100%', backgroundColor: getThemeColor(0.5), borderTopLeftRadius: '5px', borderTopRightRadius: '5px' }}>{title}</div>
-            <div style={noBorders ? {} : { border: `1px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderBottomLeftRadius: '25px', borderBottomRightRadius: '25px' }}>
+            {title && <div style={{ fontSize: standardCardTitleFontSize, borderTop: `1px solid ${getThemeColor(0.5)}`, borderBottom: `1px solid ${getThemeColor(0)}`, minWidth: '100%', backgroundColor: getThemeColor(0), borderTopLeftRadius: '15px', borderTopRightRadius: '15px' }}>{title}</div>}
+            <div style={noBorders ? {} : { borderBottom: `1px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderBottomLeftRadius: '25px', borderBottomRightRadius: '25px' }}>
                 {children}
             </div>
         </Card>
