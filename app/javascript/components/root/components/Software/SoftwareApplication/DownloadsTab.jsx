@@ -39,19 +39,19 @@ const DownloadTable = ({ style, downloads, userData, app, setDownloads }) => {
                 downloads?.length > 0 && <Table size='sm' hover style={{ ...style, color: 'white', backgroundColor: 'transparent' }}>
                     <thead>
                         <tr>
-                            <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}>
+                            <th style={{ border: 'none', backgroundColor: getThemeColor(0.0) }}>
                                 Filename
                             </th>
-                            <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}>
+                            <th style={{ border: 'none', backgroundColor: getThemeColor(0.0) }}>
                                 Type
                             </th>
-                            <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}>
+                            <th style={{ border: 'none', backgroundColor: getThemeColor(0.0) }}>
                                 File Size
                             </th>
-                            <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}>
+                            <th style={{ border: 'none', backgroundColor: getThemeColor(0.0) }}>
                                 Compatibility
                             </th>
-                            {userData && <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}></th>}
+                            {userData && <th style={{ border: 'none', backgroundColor: getThemeColor(0.0) }}></th>}
                         </tr>
                     </thead>
                     <tbody>

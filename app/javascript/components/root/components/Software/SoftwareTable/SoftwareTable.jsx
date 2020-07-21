@@ -24,11 +24,11 @@ function SoftwareTable({ userData, setActiveApplication }) {
       <Table size='sm' hover style={{ color: 'white', backgroundColor: 'transparent', marginTop: '1vh' }}>
         <thead>
           <tr>
-            <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}>Name</th>
-            <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}>Language</th>
-            <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}>Platform(s)</th>
-            <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}>Year</th>
-            {userData && <th style={{ border: 'none', backgroundColor: getThemeColor(0.5) }}></th>}
+            <th style={{ border: 'none', backgroundColor: getThemeColor(0) }}>Name</th>
+            <th style={{ border: 'none', backgroundColor: getThemeColor(0) }}>Language</th>
+            <th style={{ border: 'none', backgroundColor: getThemeColor(0) }}>Platform(s)</th>
+            <th style={{ border: 'none', backgroundColor: getThemeColor(0) }}>Year</th>
+            {userData && <th style={{ border: 'none', backgroundColor: getThemeColor(0) }}></th>}
           </tr>
         </thead>
         <tbody>
