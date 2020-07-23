@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
 import { fetchSoftware } from '../../../softwareService';
 import { fetchFeatures } from '../../../featureService';
-import { StandardPage, getThemeColor, StandardSpinner, StandardImageModal } from '../../Utility/Utility';
+import { StandardPage, StandardSpinner, StandardImageModal } from '../../Utility/Utility';
 import InformationTab from './InformationTab';
 import FeaturesTab from './FeaturesTab';
 import DownloadsTab from './DownloadsTab';
 import CodeTab from './CodeTab';
 import VideoTab from './VideoTab';
+import { AppContext } from '../../../AppContext';
 
 function SoftwareApplication({ userData, name }) {
   const [features, setFeatures] = useState(null);
@@ -68,20 +69,19 @@ function SoftwareApplication({ userData, name }) {
 const ViewSwitcher = () => {
   const BlankKeys = { Information: false, Repository: false, Downloads: false, 'Video Demo': false, Features: false, Compatibility: false, Code: false, Video: false }
   const [activeKey, setActiveKey] = useState({ ...BlankKeys, Information: true });
-  const padding = { paddingLeft: '15px', paddingRight: '15px', paddingTop: '3px', paddingBottom: '3px' }
+  const padding = { paddingLeft: '10px', paddingRight: '10px', paddingTop: '3px', paddingBottom: '3px' }
+  const { standardCardTitleFontSize } = useContext(AppContext);
 
   const CustomLink = ({ keyBool, keyText, displayText, icon, style }) => {
     return (
-      <span className={keyBool ? 'defaultMouseOver' : ''}>
-        <Nav.Link as={'div'} className={keyBool ? 'tabsLinkActive' : 'tabsLinkInactive'} style={{ ...style, ...padding }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{icon}<div />{displayText}</Nav.Link>
-      </span>
+      <Nav.Link as={'div'} className={keyBool ? 'tabsLinkActive' : 'tabsLinkInactive'} style={{ ...padding, ...style, fontSize:standardCardTitleFontSize }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{icon}<div />{displayText}</Nav.Link>
     )
   }
 
   return (
-    <Nav style={{ maxWidth: 'max-content', margin: 'auto' }}>
+    <Nav className='tabsNavBar' style={{ margin: 'auto', marginTop: '0vh' }}>
       <Nav.Item>
-        <CustomLink style={{ borderBottomLeftRadius: '25px' }} keyBool={activeKey.Information} keyText='Information' displayText='About' />
+        <CustomLink keyBool={activeKey.Information} keyText='Information' displayText='About' />
       </Nav.Item>
       <Nav.Item className='tabsLeftBorderBlack'>
         <CustomLink keyBool={activeKey.Features} keyText='Features' displayText='Features' />
@@ -93,7 +93,7 @@ const ViewSwitcher = () => {
         <CustomLink keyBool={activeKey.Downloads} keyText='Downloads' displayText='Downloads' />
       </Nav.Item>
       <Nav.Item className='tabsLeftBorderBlack'>
-        <CustomLink style={{ borderBottomRightRadius: '25px' }} keyBool={activeKey.Code} keyText='Code' displayText='Code' />
+        <CustomLink keyBool={activeKey.Code} keyText='Code' displayText='Code' />
       </Nav.Item>
     </Nav>
   )

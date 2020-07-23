@@ -11,10 +11,9 @@ import Form from 'react-bootstrap/Form';
 import XIcon from 'react-bootstrap-icons/dist/icons/x';
 
 export const StandardImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
-    const RawButton = <StandardButton style={{ minWidth: '25%' }} onClick={() => window.open(imageLink)}>View Raw Image</StandardButton>
     return (
-        <StandardModal title='View Image' buttons={RawButton} modalOpen={modalOpen} handleModalClose={handleModalClose}>
-            <StandardImage src={imageLink} style={{ maxWidth: '85%' }} />
+        <StandardModal title='View Image' modalOpen={modalOpen} handleModalClose={handleModalClose}>
+            <StandardImage onClick={() => window.open(imageLink)} className='defaultImageNudge' src={imageLink} style={{ maxWidth: '85%' }} />
         </StandardModal>
     )
 }
@@ -202,13 +201,13 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
                 <Modal.Header style={{
                     backgroundColor: getThemeColor(0.5),
                     borderBottom: 'none',
-                    padding: '10px',
+                    padding: '3px',
                     paddingTop: 0,
                     paddingBottom: 0,
                 }}>
                     <div style={{ paddingLeft: getIconSizing('medium') }} />
                     <div style={{ fontSize: standardPageTitleFontSize, color: textColor, justifyContent: 'center', margin: 'auto', verticalAlign: 'middle' }}>{title}</div>
-                    <div><StandardButton onClick={handleModalClose} icon={<XIcon style={{ fontSize: getIconSizing('medium') }} />} /></div>
+                    <div><StandardButton onClick={handleModalClose} icon={<XIcon className='modalXButton' style={{ fontSize: getIconSizing('medium') }} />} /></div>
                 </Modal.Header>
                 <Modal.Body
                     style={{
