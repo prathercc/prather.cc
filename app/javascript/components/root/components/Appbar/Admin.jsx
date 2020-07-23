@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
-import { getThemeColor, StandardModal, StandardCard, StandardTextField, StandardButton, StandardDropDown, getIconSizing } from '../Utility/Utility';
+import { StandardModal, StandardTextField, StandardButton, StandardDropDown, getIconSizing } from '../Utility/Utility';
 import { getUsers, createUser, deleteUser } from '../../userService';
 import { authenticate, clearSession } from '../../authService';
 import AdminIcon from 'react-bootstrap-icons/dist/icons/shield-shaded';
@@ -9,7 +9,7 @@ const Admin = ({ setUserData, userData }) => {
     const [modalOpen, setModalOpen] = useState(false);
     return (
         <>
-            <div onClick={() => setModalOpen(true)} className='defaultMouseOver' style={{ cursor: 'pointer' }}><AdminIcon style={{ fontSize: getIconSizing('small') }} /> Admin Portal</div>
+            <div onClick={() => setModalOpen(true)}><AdminIcon style={{ fontSize: getIconSizing('small') }} /> Admin Portal</div>
             <Login modalOpen={!userData ? modalOpen : false} setModalOpen={setModalOpen} setUserData={setUserData} />
             <Manage userData={userData} modalOpen={userData ? modalOpen : false} setModalOpen={setModalOpen} setUserData={setUserData} />
         </>
