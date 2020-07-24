@@ -24,7 +24,7 @@ function AppBar({ userData, setUserData }) {
             </Dropdown>
           </Col>
           <Col style={{ maxWidth: 'max-content', margin: 'auto' }}>
-            <Nav.Link className='appbarDefault' as={'div'}><Admin setUserData={setUserData} userData={userData} /></Nav.Link>
+            <Admin setUserData={setUserData} userData={userData} />
           </Col>
         </Row>
       </Nav>

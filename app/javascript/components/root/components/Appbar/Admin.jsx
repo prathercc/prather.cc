@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
+import Nav from 'react-bootstrap/Nav';
 import { StandardModal, StandardTextField, StandardButton, StandardDropDown, getIconSizing } from '../Utility/Utility';
 import { getUsers, createUser, deleteUser } from '../../userService';
 import { authenticate, clearSession } from '../../authService';
@@ -9,7 +10,7 @@ const Admin = ({ setUserData, userData }) => {
     const [modalOpen, setModalOpen] = useState(false);
     return (
         <>
-            <div onClick={() => setModalOpen(true)}><AdminIcon style={{ fontSize: getIconSizing('small') }} /> Admin Portal</div>
+            <Nav.Link onClick={() => setModalOpen(true)} className='appbarDefault'><AdminIcon style={{ fontSize: getIconSizing('small') }} /> Admin Portal</Nav.Link>
             <Login modalOpen={!userData ? modalOpen : false} setModalOpen={setModalOpen} setUserData={setUserData} />
             <Manage userData={userData} modalOpen={userData ? modalOpen : false} setModalOpen={setModalOpen} setUserData={setUserData} />
         </>
