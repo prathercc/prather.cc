@@ -9,7 +9,6 @@ const appSettings = {
   iconSizing: '3vw',
   iconSizingSmall: '3vw',
 
-  appbarFontStyle: 'Titillium Web',
   appbarFontSize: 'calc(5px + 2vmin)',
 
   tableHeaderFontSize: 'calc(3.5px + 2vmin)',

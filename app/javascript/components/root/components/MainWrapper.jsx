@@ -30,16 +30,16 @@ const MainWrapper = ({ activeKey: urlKey, activeApplication: urlApplication }) =
     const getMainKeyRoute = (key) => {
         return key === 'Home' ? '/' : key === 'Software' ? '/software' : '';
     }
-    
+
     return (
         <>
             <Tab.Container activeKey={activeKey} onSelect={(key) => { setActiveKey(key); window.history.pushState({}, '', getMainKeyRoute(key)); }}>
                 <AppBar userData={userData} setUserData={setUserData} />
                 <Tab.Content>
-                    <Tab.Pane eventKey='Home'>
+                    <Tab.Pane unmountOnExit eventKey='Home'>
                         <SiteLogo />
                     </Tab.Pane>
-                    <Tab.Pane eventKey='Software'>
+                    <Tab.Pane unmountOnExit eventKey='Software'>
                         <SoftwareTable userData={userData} setActiveApplication={(app) => { setActiveApplication(app); window.history.pushState({}, '', `/software/${app}`) }} />
                     </Tab.Pane>
                     <Tab.Pane eventKey='Application'>
