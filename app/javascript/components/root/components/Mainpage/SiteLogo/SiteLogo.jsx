@@ -6,10 +6,10 @@ import { StandardImage } from '../../Utility/Utility';
 
 function SiteLogo() {
   return (
-    <Container style={{ marginTop: '3vh', filter:'grayscale(0.6)' }}>
+    <Container style={{ filter: 'grayscale(0.6)', opacity: 1 }}>
       <Row>
         <Col style={{ padding: 0 }}>
-          <StandardImage className='logoAnim' src='https://i92.servimg.com/u/f92/11/29/62/29/filter13.png' />
+          <StandardImage src='https://i92.servimg.com/u/f92/11/29/62/29/filter18.png' />
         </Col>
       </Row>
     </Container>
