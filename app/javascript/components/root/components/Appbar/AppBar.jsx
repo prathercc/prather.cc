@@ -16,7 +16,7 @@ function AppBar({ userData, setUserData }) {
         <Row style={{ minWidth: '100%', margin: 'auto' }}>
           <Col style={{ maxWidth: 'max-content', margin: 'auto' }}>
             <Dropdown>
-              <Dropdown.Toggle className='appbarDefault' as={Nav.Link}><NavIcon style={{ fontSize: getIconSizing('small') }} /> Navigate</Dropdown.Toggle>
+              <Dropdown.Toggle style={{ fontFamily: fontStyle }} className='appbarDefault' as={Nav.Link}><NavIcon style={{ fontSize: getIconSizing('small') }} /> Navigate</Dropdown.Toggle>
               <Dropdown.Menu style={{ minWidth: '100%', backgroundColor: bgColor, border: `1px solid ${getThemeColor(0.5)}`, borderTop: 'none', fontSize: standardCardTitleFontSize, fontFamily: fontStyle }}>
                 <Nav.Link className='appbarDefault' eventKey='Home'>Home</Nav.Link>
                 <Nav.Link className='appbarDefault' eventKey='Software'>Software</Nav.Link>
