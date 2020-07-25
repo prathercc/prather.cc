@@ -1,27 +1,24 @@
 {
-  "application.js": "/packs/js/application-90c09884af4280b2ddd6.js",
-  "application.js.map": "/packs/js/application-90c09884af4280b2ddd6.js.map",
+  "application.js": "/packs/js/application-56b25693635b7929828c.js",
+  "application.js.map": "/packs/js/application-56b25693635b7929828c.js.map",
   "entrypoints": {
     "application": {
       "js": [
-        "/packs/js/application-90c09884af4280b2ddd6.js"
+        "/packs/js/application-56b25693635b7929828c.js"
       ],
       "js.map": [
-        "/packs/js/application-90c09884af4280b2ddd6.js.map"
+        "/packs/js/application-56b25693635b7929828c.js.map"
       ]
     },
     "index": {
       "js": [
-        "/packs/js/index-bca02882b4f3f5ea738a.js"
+        "/packs/js/index-dbcc9091b0fb197af841.js"
       ],
       "js.map": [
-        "/packs/js/index-bca02882b4f3f5ea738a.js.map"
+        "/packs/js/index-dbcc9091b0fb197af841.js.map"
       ]
     }
   },
-  "index.js": "/packs/js/index-bca02882b4f3f5ea738a.js",
-  "index.js.map": "/packs/js/index-bca02882b4f3f5ea738a.js.map",
-  "media/components/root/images/blackhole.png": "/packs/media/components/root/images/blackhole-0153d91abd4b87a2aac112ac03c3e922.png",
-  "media/components/root/images/overlay.png": "/packs/media/components/root/images/overlay-5d48fd1838c38a7a1a4b00eee1978432.png",
-  "media/components/root/images/stars.png": "/packs/media/components/root/images/stars-cac2048388e44b34bfc1088a878d1318.png"
+  "index.js": "/packs/js/index-dbcc9091b0fb197af841.js",
+  "index.js.map": "/packs/js/index-dbcc9091b0fb197af841.js.map"
 }
