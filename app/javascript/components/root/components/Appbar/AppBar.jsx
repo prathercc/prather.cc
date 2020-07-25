@@ -12,12 +12,12 @@ function AppBar({ userData, setUserData }) {
   const { appbarFontSize, bgColor, standardCardTitleFontSize, fontStyle } = useContext(AppContext);
   return (
     <div style={{ backgroundColor: bgColor, position: 'relative' }}>
-      <Nav style={{ minWidth: '100%', fontSize: appbarFontSize, backgroundColor: getThemeColor(0.5) }}>
+      <Nav style={{ minWidth: '100%', fontSize: appbarFontSize, backgroundColor: getThemeColor(0.5), fontFamily: fontStyle }}>
         <Row style={{ minWidth: '100%', margin: 'auto' }}>
           <Col style={{ maxWidth: 'max-content', margin: 'auto' }}>
             <Dropdown>
               <Dropdown.Toggle className='appbarDefault' as={Nav.Link}><NavIcon style={{ fontSize: getIconSizing('small') }} /> Navigate</Dropdown.Toggle>
-              <Dropdown.Menu style={{ minWidth: '100%', backgroundColor: bgColor, border: `1px solid ${getThemeColor(0.5)}`, borderTop: 'none', fontSize: standardCardTitleFontSize, fontFamily: fontStyle }}>
+              <Dropdown.Menu style={{ minWidth: '100%', backgroundColor: bgColor, border: `1px solid ${getThemeColor(0.5)}`, borderTop: 'none', fontSize: standardCardTitleFontSize }}>
                 <Nav.Link className='appbarDefault' eventKey='Home'>Home</Nav.Link>
                 <Nav.Link className='appbarDefault' eventKey='Software'>Software</Nav.Link>
               </Dropdown.Menu>

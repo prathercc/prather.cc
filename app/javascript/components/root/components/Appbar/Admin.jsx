@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import { StandardModal, StandardTextField, StandardButton, StandardDropDown, getIconSizing } from '../Utility/Utility';
 import { getUsers, createUser, deleteUser } from '../../userService';
 import { authenticate, clearSession } from '../../authService';
-import AdminIcon from 'react-bootstrap-icons/dist/icons/shield-shaded';
+import AdminIcon from 'react-bootstrap-icons/dist/icons/gear';
+import { AppContext } from '../../AppContext';
 
 const Admin = ({ setUserData, userData }) => {
     const [modalOpen, setModalOpen] = useState(false);
+    const { fontStyle } = useContext(AppContext);
     return (
         <>
-            <Nav.Link onClick={() => setModalOpen(true)} className='appbarDefault'><AdminIcon style={{ fontSize: getIconSizing('small') }} /> Admin Portal</Nav.Link>
+            <Nav.Link as='span' style={{ fontFamily: fontStyle, display:'inline' }} onClick={() => setModalOpen(true)} className='appbarDefault'><AdminIcon style={{ fontSize: getIconSizing('small') }} /></Nav.Link>
             <Login modalOpen={!userData ? modalOpen : false} setModalOpen={setModalOpen} setUserData={setUserData} />
             <Manage userData={userData} modalOpen={userData ? modalOpen : false} setModalOpen={setModalOpen} setUserData={setUserData} />
         </>

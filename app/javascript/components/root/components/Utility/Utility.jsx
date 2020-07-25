@@ -152,7 +152,7 @@ export const StandardCard = ({ title, style, children, className, onClick, noBor
                 border: 'none',
                 fontFamily: fontStyle
             }}>
-            {title && <div style={{ fontSize: standardCardTitleFontSize, borderTop: `1px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderRadius: '15px' }}>{title}</div>}
+            {title && <div style={{ fontSize: standardCardTitleFontSize, borderTop: `1px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderRadius: '15px', color: getThemeColor(1) }}>{title}</div>}
             <div style={noBorders ? {} : { borderBottom: `1px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderRadius: '25px' }}>
                 {children}
             </div>
