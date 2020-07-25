@@ -19,16 +19,24 @@ function SoftwareTable({ userData, setActiveApplication }) {
     loadSoftware();
   }, []);
 
+  const CustomTh = ({ children }) => {
+    return (
+      <th style={{ border: 'none', backgroundColor: getThemeColor(0), fontWeight: 'normal', color: getThemeColor(1) }}>
+        {children}
+      </th>
+    )
+  }
+
   return (
     <StandardPage title='Software Panel'>
       <Table size='sm' hover style={{ color: 'white', backgroundColor: 'transparent', marginTop: '1vh' }}>
         <thead>
           <tr>
-            <th style={{ border: 'none', backgroundColor: getThemeColor(0) }}>Name</th>
-            <th style={{ border: 'none', backgroundColor: getThemeColor(0) }}>Language</th>
-            <th style={{ border: 'none', backgroundColor: getThemeColor(0) }}>Platform(s)</th>
-            <th style={{ border: 'none', backgroundColor: getThemeColor(0) }}>Year</th>
-            {userData && <th style={{ border: 'none', backgroundColor: getThemeColor(0) }}></th>}
+            <CustomTh>Name</CustomTh>
+            <CustomTh>Language</CustomTh>
+            <CustomTh>Compatibility</CustomTh>
+            <CustomTh>Development Date</CustomTh>
+            {userData && <CustomTh />}
           </tr>
         </thead>
         <tbody>
@@ -142,7 +150,7 @@ const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication 
   return (
     <tr className='tableMouseOver' style={{ cursor: 'pointer' }}>
       <CustomTd style={{ width: '35%' }}>
-        <StandardImage src={software.icon_link} style={{ width: getIconSizing('medium') }} />
+        <StandardImage noErrorMessage src={software.icon_link} style={{ width: getIconSizing('medium') }} />
         {software.name}
       </CustomTd>
       <CustomTd>{software.languages}</CustomTd>
@@ -152,7 +160,7 @@ const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication 
         {compatibility.mac && <Badge variant='light'>Mac</Badge>}{' '}
         {compatibility.android && <Badge variant='light'>Android</Badge>}{' '}
       </CustomTd>
-      <CustomTd>2019</CustomTd>
+      <CustomTd>1/12/2019</CustomTd>
       {userData && <CustomTd noOnClick><EditSoftware setSoftware={setSoftware} software={software} /></CustomTd>}
     </tr>
   );

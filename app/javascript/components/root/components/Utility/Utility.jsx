@@ -78,20 +78,24 @@ export const StandardTextField = ({ onChange, label, isActive = true, value, row
     );
 };
 
-export const StandardImage = ({ style, src, className, onClick, onLoaded = () => { } }) => {
+export const StandardImage = ({ style, noErrorMessage, src, className, onClick, onLoaded = () => { } }) => {
     const [isLoading, setIsLoading] = useState(true);
-
+    const [hasError, setHasError] = useState(false);
     const handleOnLoad = () => {
         setIsLoading(false);
         onLoaded();
     }
-
+    const handleOnError = () => {
+        setHasError(true);
+        setIsLoading(false);
+        onLoaded();
+    }
     return (
         <>
-            {
-                isLoading && <StandardSpinner />
-            }
-            <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={() => setIsLoading(true)} />
+            {hasError && <><XIcon style={{ fontSize: getIconSizing('medium'), color: 'red' }} /></>}
+            {(!noErrorMessage && hasError) && <div>No image found</div>}
+            {isLoading && <StandardSpinner />}
+            {!hasError && <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />}
         </>
     );
 };
@@ -134,7 +138,7 @@ export const StandardSeparator = ({ style, onClick }) => {
 }
 
 export const StandardCard = ({ title, style, children, className, onClick, noBorders }) => {
-    const { softwareFontSize, standardCardTitleFontSize } = useContext(AppContext);
+    const { softwareFontSize, standardCardTitleFontSize, fontStyle } = useContext(AppContext);
     return (
         <Card
             onClick={onClick}
@@ -145,10 +149,11 @@ export const StandardCard = ({ title, style, children, className, onClick, noBor
                 backgroundColor: 'transparent',
                 fontSize: softwareFontSize,
                 alignItems: 'center',
-                border: 'none'
+                border: 'none',
+                fontFamily: fontStyle
             }}>
-            {title && <div style={{ fontSize: standardCardTitleFontSize, borderTop: `1px solid ${getThemeColor(0.5)}`, borderBottom: `1px solid ${getThemeColor(0)}`, minWidth: '100%', backgroundColor: getThemeColor(0), borderTopLeftRadius: '15px', borderTopRightRadius: '15px' }}>{title}</div>}
-            <div style={noBorders ? {} : { borderBottom: `1px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderBottomLeftRadius: '25px', borderBottomRightRadius: '25px' }}>
+            {title && <div style={{ fontSize: standardCardTitleFontSize, borderTop: `1px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderRadius: '15px' }}>{title}</div>}
+            <div style={noBorders ? {} : { borderBottom: `1px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderRadius: '25px' }}>
                 {children}
             </div>
         </Card>
@@ -160,7 +165,7 @@ export const StandardPage = ({ title = '', children, style }) => {
     return (
         <Container style={{ backgroundColor: 'transparent', position: 'relative', minWidth: '85%', ...style }}>
             <div style={{ backgroundColor: bgColor }}>
-                <div style={{ fontSize: standardPageTitleFontSize, backgroundColor: getThemeColor(0.5), margin: 'auto', marginTop: '4vh', padding: '5px', borderRadius: '5px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>
+                <div style={{ fontFamily: fontStyle, fontSize: standardPageTitleFontSize, backgroundColor: getThemeColor(0.5), margin: 'auto', marginTop: '4vh', padding: '5px', borderRadius: '5px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>
                     {title}
                 </div>
                 <div

@@ -32,26 +32,25 @@ function DownloadsTab({ app, userData, style }) {
 }
 
 const DownloadTable = ({ style, downloads, userData, app, setDownloads }) => {
+    const CustomTh = ({ children }) => {
+        return (
+            <th style={{ border: 'none', backgroundColor: getThemeColor(0), fontWeight: 'normal', color: getThemeColor(1) }}>
+                {children}
+            </th>
+        )
+    }
     return (
         <>
             {downloads?.length === 0 && <div style={{ ...style }}>No downloads found</div>}
             {
                 downloads?.length > 0 && <Table size='sm' hover style={{ ...style, color: 'white', backgroundColor: 'transparent' }}>
                     <thead>
-                        <tr>
-                            <th style={{ border: 'none', backgroundColor: getThemeColor(0.0) }}>
-                                Filename
-                            </th>
-                            <th style={{ border: 'none', backgroundColor: getThemeColor(0.0) }}>
-                                Type
-                            </th>
-                            <th style={{ border: 'none', backgroundColor: getThemeColor(0.0) }}>
-                                File Size
-                            </th>
-                            <th style={{ border: 'none', backgroundColor: getThemeColor(0.0) }}>
-                                Compatibility
-                            </th>
-                            {userData && <th style={{ border: 'none', backgroundColor: getThemeColor(0.0) }}></th>}
+                        <tr style={{ fontWeight: 'normal' }}>
+                            <CustomTh>Filename</CustomTh>
+                            <CustomTh>Type</CustomTh>
+                            <CustomTh>File Size </CustomTh>
+                            <CustomTh>Compatibility</CustomTh>
+                            {userData && <CustomTh />}
                         </tr>
                     </thead>
                     <tbody>
@@ -76,7 +75,7 @@ const DlRow = ({ download, userData, app, setDownloads }) => {
         window.open(path);
         setModalOpen(false);
     };
-    const DownloadButton = <StandardButton onClick={handleDownload} style={{ minWidth: '25%' }}>Download</StandardButton>
+    const DownloadButton = <StandardButton onClick={handleDownload}>Download</StandardButton>
 
     const CustomTd = ({ children, style, noOnClick = false }) => {
         return (
@@ -84,7 +83,15 @@ const DlRow = ({ download, userData, app, setDownloads }) => {
                 {children}
             </td>
         )
-    }
+    };
+    const Icon = ({ type }) => {
+        return (
+            <>
+                {type === 'All' && <DemoIcon />}
+                {type !== 'All' && <ApplicationIcon />}
+            </>
+        )
+    };
     return (
         <>
             <tr className='tableMouseOver' style={{ cursor: 'pointer' }}>
@@ -130,24 +137,12 @@ const EditDownloads = ({ app, setMainDownloads, download: value }) => {
         await fetchDownloads(app.id, setMainDownloads);
     };
 
-    const EditButtons = () => {
-        return (
-            <Row>
-                <Col>
-                    <StandardButton isActive={!disabledButton} onClick={() => handleEditDownload()}>Save</StandardButton>
-                </Col>
-                <Col>
-                    <StandardButton onClick={() => handleDeleteDownload()}>Delete</StandardButton>
-                </Col>
-            </Row>
-        );
-    };
+    const EditButtons = <Row>
+        <Col><StandardButton isActive={!disabledButton} onClick={() => handleEditDownload()}>Save</StandardButton></Col>
+        <Col><StandardButton onClick={() => handleDeleteDownload()}>Delete</StandardButton></Col>
+    </Row>
 
-    const AddButton = () => {
-        return (
-            <StandardButton isActive={!disabledButton} onClick={() => handleAddDownload()}>Add</StandardButton>
-        );
-    };
+    const AddButton = <StandardButton isActive={!disabledButton} onClick={() => handleAddDownload()}>Add</StandardButton>
 
 
     return (
@@ -157,7 +152,7 @@ const EditDownloads = ({ app, setMainDownloads, download: value }) => {
                 title={`Download Alteration - ${value ? 'Modify' : 'Create'}`}
                 modalOpen={modalOpen}
                 handleModalClose={() => setModalOpen(false)}
-                buttons={value ? <EditButtons /> : <AddButton />}
+                buttons={value ? EditButtons : AddButton}
             >
                 <Download download={download} app={app} setDownload={setDownload} />
             </StandardModal>
@@ -178,13 +173,6 @@ const Download = ({ download, setDownload }) => {
     );
 };
 
-const Icon = ({ type }) => {
-    return (
-        <>
-            {type === 'All' && <DemoIcon style={{ color: getThemeColor(1) }} />}
-            {type !== 'All' && <ApplicationIcon style={{ color: getThemeColor(1) }} />}
-        </>
-    )
-}
+
 
 export default DownloadsTab;
