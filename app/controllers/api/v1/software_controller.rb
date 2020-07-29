@@ -95,7 +95,7 @@ module Api
         end
 
       def software_params
-        params.require(:software).permit(:is_legacy, :name, :icon_link, :description, :image_link, :windows, :linux, :mac, :android, :repo_link, :languages, :youtube_link)
+        params.require(:software).permit(:is_legacy, :name, :icon_link, :description, :image_link, :windows, :linux, :mac, :android, :repo_link, :languages, :youtube_link, :dev_date)
       end
   end
   end
