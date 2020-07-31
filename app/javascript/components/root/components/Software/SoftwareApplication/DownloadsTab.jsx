@@ -4,9 +4,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../../../downloadService';
-import { StandardModal, getThemeColor, StandardButton, StandardTextField, StandardDropDown, getIconSizing, StandardSpinner } from '../../Utility/Utility';
-import DemoIcon from 'react-bootstrap-icons/dist/icons/file-earmark-diff';
-import ApplicationIcon from 'react-bootstrap-icons/dist/icons/gear-wide-connected';
+import { StandardModal, getThemeColor, StandardButton, StandardTextField, StandardDropDown, StandardSpinner, StandardIconButton } from '../../Utility/Utility';
+import AllIcon from 'react-bootstrap-icons/dist/icons/file-earmark';
+import ExecutableIcon from 'react-bootstrap-icons/dist/icons/window';
 import ModifyIcon from 'react-bootstrap-icons/dist/icons/pencil';
 import AddIcon from 'react-bootstrap-icons/dist/icons/plus-circle';
 
@@ -79,7 +79,7 @@ const DlRow = ({ download, userData, app, setDownloads }) => {
 
     const CustomTd = ({ children, style, noOnClick = false }) => {
         return (
-            <td style={{ borderTop: `1px solid ${getThemeColor(0.1)}`, ...style }} onClick={() => noOnClick ? () => { } : setModalOpen(true)}>
+            <td style={{ borderTop: `1px solid ${getThemeColor(0.1)}`, verticalAlign: 'middle', ...style }} onClick={() => noOnClick ? () => { } : setModalOpen(true)}>
                 {children}
             </td>
         )
@@ -87,8 +87,8 @@ const DlRow = ({ download, userData, app, setDownloads }) => {
     const Icon = ({ type }) => {
         return (
             <>
-                {type === 'All' && <DemoIcon />}
-                {type !== 'All' && <ApplicationIcon />}
+                {type === 'All' && <StandardIconButton isActive={false} toolTip='Resource' icon={<AllIcon />} />}
+                {type !== 'All' && <StandardIconButton isActive={false} toolTip='Executable' icon={<ExecutableIcon />} />}
             </>
         )
     };
@@ -137,22 +137,30 @@ const EditDownloads = ({ app, setMainDownloads, download: value }) => {
         await fetchDownloads(app.id, setMainDownloads);
     };
 
-    const EditButtons = <Row>
-        <Col><StandardButton isActive={!disabledButton} onClick={() => handleEditDownload()}>Save</StandardButton></Col>
-        <Col><StandardButton onClick={() => handleDeleteDownload()}>Delete</StandardButton></Col>
-    </Row>
+    const EditButtons = () => {
+        return (
+            <Row>
+                <Col><StandardButton isActive={!disabledButton} onClick={() => handleEditDownload()}>Save</StandardButton></Col>
+                <Col><StandardButton onClick={() => handleDeleteDownload()}>Delete</StandardButton></Col>
+            </Row>
+        )
+    }
 
-    const AddButton = <StandardButton isActive={!disabledButton} onClick={() => handleAddDownload()}>Add</StandardButton>
-
+    const AddButton = () => {
+        return (
+            <StandardButton isActive={!disabledButton} onClick={() => handleAddDownload()}>Add</StandardButton>
+        )
+    }
 
     return (
         <>
-            <StandardButton icon={value ? <ModifyIcon style={{ fontSize: getIconSizing('small') }} /> : <AddIcon style={{ fontSize: getIconSizing('small'), marginTop: '1vh' }} />} onClick={() => setModalOpen(true)} />
+            {value && <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Edit Download' icon={<ModifyIcon />} />}
+            {!value && <StandardIconButton onClick={() => setModalOpen(true)} style={{ marginTop: '2vh' }} toolTip='Add Download' icon={<AddIcon />} />}
             <StandardModal
                 title={`Download Alteration - ${value ? 'Modify' : 'Create'}`}
                 modalOpen={modalOpen}
                 handleModalClose={() => setModalOpen(false)}
-                buttons={value ? EditButtons : AddButton}
+                buttons={value ? <EditButtons /> : <AddButton />}
             >
                 <Download download={download} app={app} setDownload={setDownload} />
             </StandardModal>
@@ -172,7 +180,5 @@ const Download = ({ download, setDownload }) => {
         </Form.Group>
     );
 };
-
-
 
 export default DownloadsTab;

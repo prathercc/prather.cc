@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
-import { StandardImage, StandardCard, StandardButton, StandardModal, getIconSizing, StandardTextField, getThemeColor } from '../../Utility/Utility';
+import { StandardImage, StandardCard, StandardButton, StandardModal, StandardTextField, StandardIconButton } from '../../Utility/Utility';
 import Carousel from 'react-bootstrap/Carousel';
 import RightArrow from 'react-bootstrap-icons/dist/icons/arrow-right';
 import LeftArrow from 'react-bootstrap-icons/dist/icons/arrow-left';
@@ -49,13 +49,13 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app }) => {
 
             <Row style={{ maxWidth: '60%', margin: 'auto', display: features?.length > 0 ? '' : 'none' }}>
                 <Col>
-                    <StandardButton icon={<LeftArrow style={{ fontSize: getIconSizing() }} />} onClick={() => setCaroselIndex(caroselIndex === 0 ? features?.length - 1 : caroselIndex - 1)}>Left</StandardButton>
+                    <StandardIconButton toolTip='Previous' size='large' icon={<LeftArrow />} onClick={() => setCaroselIndex(caroselIndex === 0 ? features?.length - 1 : caroselIndex - 1)} />
                 </Col>
                 <Col style={{ paddingTop: '1vh' }}>
                     {caroselIndex + 1} of {features?.length}
                 </Col>
                 <Col>
-                    <StandardButton icon={<RightArrow style={{ fontSize: getIconSizing() }} />} onClick={() => setCaroselIndex(caroselIndex === features?.length - 1 ? 0 : caroselIndex + 1)}>Right</StandardButton>
+                    <StandardIconButton toolTip='Next' size='large' icon={<RightArrow />} onClick={() => setCaroselIndex(caroselIndex === features?.length - 1 ? 0 : caroselIndex + 1)} />
                 </Col>
             </Row>
             {features?.length === 0 && 'No features found'}
@@ -76,9 +76,10 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
 
     return (
         <Row>
-            <Col md={12} lg={allContentLoaded ? 6 : 12} style={{ display: 'flex', marginBottom: '1vh' }}>
-                <StandardCard noBorders style={{ verticalAlign: 'middle', margin: 'auto', maxWidth: '75%' }}>
+            <Col md={12} lg={allContentLoaded ? 5 : 12} style={{ display: 'flex', marginBottom: '1vh' }}>
+                <StandardCard noBorders style={{ verticalAlign: 'middle', margin: 'auto', maxWidth: '85%' }}>
                     <StandardImage
+                        toolTip='Expand Image'
                         className='defaultImageNudge'
                         src={feature.image_link}
                         onClick={() => setImageModalObj({ open: true, imageLink: feature.image_link })}
@@ -87,9 +88,9 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
                     />
                 </StandardCard>
             </Col>
-            <Col md={12} lg={6} style={{ display: allContentLoaded ? 'flex' : 'none' }}>
+            <Col md={12} lg={7} style={{ display: allContentLoaded ? 'flex' : 'none' }}>
                 <StandardCard title={feature.title} style={{ margin: 'auto', verticalAlign: 'middle', minWidth: '100%' }}>
-                    <div style={{ margin: 'auto', maxWidth: '95%', textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
+                    <div style={{ margin: 'auto', maxWidth: '95%', textAlign: 'center', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
                     {userData && <EditFeature app={app} setFeatures={setFeatures} feature={feature} />}
                 </StandardCard>
             </Col>
@@ -143,7 +144,8 @@ const EditFeature = ({ feature, setFeatures, app: { id, name } }) => {
 
     return (
         <>
-            <StandardButton icon={feature ? <Edit style={{ fontSize: getIconSizing('small'), marginBottom: '1vh' }} /> : <Add style={{ fontSize: getIconSizing('small') }} />} onClick={() => setModalOpen(true)} />
+            {feature && <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Edit Feature' style={{ marginBottom: '1vh' }} icon={<Edit />} />}
+            {!feature && <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Add Feature' icon={<Add />} />}
             <StandardModal title={`Feature Alteration - ${feature ? 'Modify' : 'Create'}`} buttons={feature ? <EditButtons /> : <CreateButtons />} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
                 <Form.Group style={{ width: '95%', margin: 'auto', padding: '10px', paddingTop: '5px' }}>
                     <StandardTextField value={activeFeature.application_name} isActive={false} label='Application Name' onChange={(e) => setActiveFeature({ ...activeFeature, application_name: e.target.value })} />

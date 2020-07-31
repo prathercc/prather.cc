@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
-import { StandardModal, StandardTextField, StandardButton, StandardDropDown, getIconSizing } from '../Utility/Utility';
+import { StandardModal, StandardTextField, StandardButton, StandardDropDown, StandardTooltip, StandardIconButton } from '../Utility/Utility';
 import { getUsers, createUser, deleteUser } from '../../userService';
 import { authenticate, clearSession } from '../../authService';
-import AdminIcon from 'react-bootstrap-icons/dist/icons/gear';
+import AdminIcon from 'react-bootstrap-icons/dist/icons/terminal';
 import { AppContext } from '../../AppContext';
 
 const Admin = ({ setUserData, userData }) => {
@@ -12,7 +12,11 @@ const Admin = ({ setUserData, userData }) => {
     const { fontStyle } = useContext(AppContext);
     return (
         <>
-            <Nav.Link as='span' style={{ fontFamily: fontStyle, display:'inline' }} onClick={() => setModalOpen(true)} className='appbarDefault'><AdminIcon style={{ fontSize: getIconSizing('small') }} /></Nav.Link>
+            <StandardTooltip text='Admin Portal'>
+                <Nav.Link as='span' style={{ fontFamily: fontStyle, minHeight: '100%', display: 'flex' }} onClick={() => setModalOpen(true)} className='appbarDefault'>
+                    <StandardIconButton isActive={false} icon={<AdminIcon />} />
+                </Nav.Link>
+            </StandardTooltip>
             <Login modalOpen={!userData ? modalOpen : false} setModalOpen={setModalOpen} setUserData={setUserData} />
             <Manage userData={userData} modalOpen={userData ? modalOpen : false} setModalOpen={setModalOpen} setUserData={setUserData} />
         </>

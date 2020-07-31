@@ -1,34 +1,54 @@
-import React, { useContext } from 'react';
+import React, { useContext, forwardRef } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Dropdown from 'react-bootstrap/Dropdown';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { getThemeColor, getIconSizing } from '../Utility/Utility';
+import Navbar from 'react-bootstrap/Navbar';
+import { getThemeColor, StandardIconButton } from '../Utility/Utility';
 import Admin from './Admin';
 import { AppContext } from '../../AppContext';
-import NavIcon from 'react-bootstrap-icons/dist/icons/list-nested';
+import NavIcon from 'react-bootstrap-icons/dist/icons/list';
+import { useCurrentBreakpointName } from 'react-socks';
+import MoreInformation from './MoreInformation';
 
-function AppBar({ userData, setUserData }) {
-  const { appbarFontSize, bgColor, standardCardTitleFontSize, fontStyle } = useContext(AppContext);
+function AppBar({ userData, setUserData, onSelect }) {
+  const { standardTitleFontSize, bgColor, fontStyle } = useContext(AppContext);
+  const breakpoint = useCurrentBreakpointName();
+  const activePadding = breakpoint === 'xsmall' ? { paddingLeft: 0, paddingRight: 0 } : { paddingLeft: '15%', paddingRight: '15%' };
+
+  const CustomToggle = forwardRef(({ onClick }, ref) => (
+    <Nav.Link
+      as='div'
+      className='appbarDefault'
+      style={{ minHeight: '100%', display: 'flex' }}
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      <StandardIconButton isActive={false} icon={<NavIcon />}>
+        <span style={{ fontSize: standardTitleFontSize }}>
+          Navigate{' '}&#x25BE;
+        </span>
+      </StandardIconButton>
+    </Nav.Link>
+  ));
+
   return (
     <div style={{ backgroundColor: bgColor, position: 'relative' }}>
-      <Nav style={{ minWidth: '100%', fontSize: appbarFontSize, backgroundColor: getThemeColor(0.5), fontFamily: fontStyle }}>
-        <Row style={{ minWidth: '100%', margin: 'auto' }}>
-          <Col style={{ maxWidth: 'max-content', margin: 'auto' }}>
-            <Dropdown>
-              <Dropdown.Toggle className='appbarDefault' as={Nav.Link}><NavIcon style={{ fontSize: getIconSizing('small') }} /> Navigate</Dropdown.Toggle>
-              <Dropdown.Menu style={{ minWidth: '100%', backgroundColor: bgColor, border: `1px solid ${getThemeColor(0.5)}`, borderTop: 'none', fontSize: standardCardTitleFontSize }}>
-                <Nav.Link className='appbarDefault' eventKey='Home'>Home</Nav.Link>
-                <Nav.Link className='appbarDefault' eventKey='Software'>Software</Nav.Link>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Col>
-          <Col style={{ maxWidth: 'max-content', margin: 'auto' }}>
-            <Admin setUserData={setUserData} userData={userData} />
-          </Col>
-        </Row>
-      </Nav>
-    </div>
+      <Navbar style={{ fontSize: standardTitleFontSize, height: '6vh', backgroundColor: getThemeColor(0.5), fontFamily: fontStyle, padding: 0, ...activePadding }}>
+        <Nav style={{ height: '100%' }} className='mr-auto'>
+          <Dropdown>
+            <Dropdown.Toggle as={CustomToggle} />
+            <Dropdown.Menu style={{ minWidth: '100%', backgroundColor: bgColor, border: `2px solid ${getThemeColor(0.5)}`, borderTop: 'none', fontSize: standardTitleFontSize, textAlign: 'center' }}>
+              <Nav.Link className='appbarDefault' eventKey='Home' onClick={() => onSelect('Home')}>Home</Nav.Link>
+              <Nav.Link className='appbarDefault' eventKey='Software' onClick={() => onSelect('Software')}>Software</Nav.Link>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Nav>
+        <Admin setUserData={setUserData} userData={userData} />
+        <MoreInformation />
+      </Navbar>
+    </div >
   );
 }
 
