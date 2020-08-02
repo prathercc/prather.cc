@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
@@ -9,14 +9,19 @@ import { useCurrentBreakpointName } from 'react-socks';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import XIcon from 'react-bootstrap-icons/dist/icons/x';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+import Alert from 'react-bootstrap/Alert';
 
 export const StandardImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
     return (
         <StandardModal title='View Image' modalOpen={modalOpen} handleModalClose={handleModalClose}>
-            <StandardImage onClick={() => window.open(imageLink)} className='defaultImageNudge' src={imageLink} style={{ maxWidth: '85%' }} />
+            <div style={{ maxWidth: 'max-content', margin: 'auto' }}>
+                <StandardImage toolTip='Open Raw Image' onClick={() => { window.open(imageLink); handleModalClose(); }} className='defaultImageNudge' src={imageLink} style={{ maxWidth: '85%' }} />
+            </div>
         </StandardModal>
-    )
-}
+    );
+};
 
 export const StandardCheckBox = ({ label, value, onChange, style }) => {
     return (
@@ -33,8 +38,8 @@ export const StandardCheckBox = ({ label, value, onChange, style }) => {
                 </Col>
             </Row>
         </Container>
-    )
-}
+    );
+};
 
 export const StandardDropDown = ({ onChange, label, isActive = true, style, data, value }) => {
     return (
@@ -78,7 +83,7 @@ export const StandardTextField = ({ onChange, label, isActive = true, value, row
     );
 };
 
-export const StandardImage = ({ style, noErrorMessage, src, className, onClick, onLoaded = () => { } }) => {
+export const StandardImage = ({ style, noErrorMessage, src, className, onClick, onLoaded = () => { }, toolTip }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
     const handleOnLoad = () => {
@@ -90,55 +95,110 @@ export const StandardImage = ({ style, noErrorMessage, src, className, onClick, 
         setIsLoading(false);
         onLoaded();
     }
+
     return (
-        <>
-            {hasError && <><XIcon style={{ fontSize: getIconSizing('medium'), color: 'red' }} /></>}
-            {(!noErrorMessage && hasError) && <div>No image found</div>}
-            {isLoading && <StandardSpinner />}
-            {!hasError && <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />}
+        < >
+            {isLoading &&
+                <StandardSpinner />
+            }
+            {hasError &&
+                <>
+                    <XIcon style={{ fontSize: getIconSizing('medium'), color: 'red' }} />
+                    <div style={{ display: noErrorMessage ? 'none' : '' }}>No image found</div>
+                </>
+            }
+            {!hasError && !toolTip &&
+                <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />
+            }
+            {!hasError && toolTip &&
+                <StandardTooltip text={toolTip}>
+                    <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />
+                </StandardTooltip>
+            }
         </>
     );
 };
 
-export const StandardButton = ({ onClick, style, children, isActive = true, icon }) => {
-    const { standardCardTitleFontSize } = useContext(AppContext);
+export const StandardTooltip = ({ children, text }) => {
+    const { fontStyle, standardSmallFontSize } = useContext(AppContext);
+    return (
+        <OverlayTrigger placement='bottom' overlay={<Tooltip style={{ fontFamily: fontStyle, fontSize: standardSmallFontSize }}>{text}</Tooltip>}>
+            {children}
+        </OverlayTrigger>
+    );
+};
+
+export const StandardButton = ({ onClick, style, children, isActive = true }) => {
+    const { standardTitleFontSize } = useContext(AppContext);
+    return (
+        <Card
+            onClick={isActive ? onClick : () => { }}
+            className='defaultButton'
+            style={{
+                margin: 'auto',
+                ...style,
+                fontSize: standardTitleFontSize,
+                alignItems: 'center',
+                cursor: isActive || 'not-allowed',
+                display: 'flex',
+                maxWidth: 'max-content',
+                paddingLeft: '15px',
+                paddingRight: '15px'
+            }}>
+            {children}
+        </Card>
+    );
+};
+
+export const StandardIconButton = ({ icon, style, onClick, isActive = true, toolTip, size, children }) => {
     return (
         <>
-            {icon && <div onClick={isActive ? onClick : () => { }} className='defaultMouseOver' style={{ margin: 'auto', maxWidth: 'max-content', cursor: isActive ? 'pointer' : 'not-allowed', ...style }}>
-                {icon}
-            </div>}
+            {!toolTip &&
+                <div onClick={isActive ? onClick : () => { }} className={'defaultMouseOver'} style={{ fontSize: getIconSizing(size), lineHeight: 0, margin: 'auto', maxWidth: 'max-content', cursor: 'pointer', ...style }}>
+                    {icon} {children}
+                </div>
+            }
             {
-                !icon && <Card
-                    onClick={isActive ? onClick : () => { }}
-                    className='defaultButton'
-                    style={{
-                        margin: 'auto',
-                        ...style,
-                        fontSize: standardCardTitleFontSize,
-                        alignItems: 'center',
-                        cursor: isActive || 'not-allowed'
-                    }}>
-                    {children}
-                </Card>
+                toolTip &&
+                <StandardTooltip text={toolTip}>
+                    <div onClick={isActive ? onClick : () => { }} className={'defaultMouseOver'} style={{ fontSize: getIconSizing(size), lineHeight: 0, margin: 'auto', maxWidth: 'max-content', cursor: 'pointer', ...style }}>
+                        {icon} {children}
+                    </div>
+                </StandardTooltip>
             }
         </>
-    )
-}
+    );
+};
+
+export const StandardAlert = ({ success = false, text, alertOpen, setAlertOpen }) => {
+    const { fontStyle, standardBodyFontSize } = useContext(AppContext);
+    useEffect(() => {
+        if (alertOpen) {
+            setTimeout(() => {
+                setAlertOpen(false);
+            }, 3000)
+        }
+    }, [alertOpen])
+
+    return (
+        <Alert style={{ position: 'fixed', zIndex: 1000000, bottom: 0, minWidth: '100%', right: 0, padding: '5px', margin: 0, fontFamily: fontStyle, fontSize: standardBodyFontSize }} show={alertOpen} variant={success ? 'success' : 'danger'}>{text}</Alert>
+    );
+};
 
 export const StandardSpinner = ({ style }) => {
     return (
         <Spinner style={{ margin: 'auto', color: getThemeColor(0.5), ...style }} animation='border' />
-    )
-}
+    );
+};
 
 export const StandardSeparator = ({ style, onClick }) => {
     return (
         <div onClick={onClick} style={{ ...style, display: 'inline', color: getThemeColor() }}> <em>/</em> </div>
-    )
-}
+    );
+};
 
 export const StandardCard = ({ title, style, children, className, onClick, noBorders }) => {
-    const { softwareFontSize, standardCardTitleFontSize, fontStyle } = useContext(AppContext);
+    const { standardBodyFontSize, standardTitleFontSize, fontStyle } = useContext(AppContext);
     return (
         <Card
             onClick={onClick}
@@ -147,32 +207,32 @@ export const StandardCard = ({ title, style, children, className, onClick, noBor
                 margin: 'auto',
                 ...style,
                 backgroundColor: 'transparent',
-                fontSize: softwareFontSize,
+                fontSize: standardBodyFontSize,
                 alignItems: 'center',
                 border: 'none',
                 fontFamily: fontStyle
             }}>
-            {title && <div style={{ fontSize: standardCardTitleFontSize, borderTop: `1px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderRadius: '15px', color: getThemeColor(1) }}>{title}</div>}
-            <div style={noBorders ? {} : { borderBottom: `1px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderRadius: '25px' }}>
+            {title && <div style={{ fontSize: standardTitleFontSize, borderTop: noBorders ? '' : `2px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderRadius: '15px', color: getThemeColor(1) }}>{title}</div>}
+            <div style={noBorders ? {} : { borderBottom: `2px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderRadius: '25px' }}>
                 {children}
             </div>
         </Card>
-    )
-}
+    );
+};
 
 export const StandardPage = ({ title = '', children, style }) => {
-    const { bgColor, fontStyle, softwareFontSize, standardPageTitleFontSize } = useContext(AppContext);
+    const { bgColor, fontStyle, standardBodyFontSize, standardTitleFontSize } = useContext(AppContext);
     return (
-        <Container style={{ backgroundColor: 'transparent', position: 'relative', minWidth: '85%', ...style }}>
+        <Container style={{ backgroundColor: 'transparent', position: 'relative', minWidth: '75%', ...style }}>
             <div style={{ backgroundColor: bgColor }}>
-                <div style={{ fontFamily: fontStyle, fontSize: standardPageTitleFontSize, backgroundColor: getThemeColor(0.5), margin: 'auto', marginTop: '4vh', padding: '5px', borderRadius: '5px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>
+                <div style={{ fontFamily: fontStyle, fontSize: standardTitleFontSize, backgroundColor: getThemeColor(0.5), margin: 'auto', marginTop: '4vh', padding: '5px', borderRadius: '5px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>
                     {title}
                 </div>
                 <div
                     style={{
                         backgroundColor: 'transparent',
                         fontFamily: fontStyle,
-                        fontSize: softwareFontSize,
+                        fontSize: standardBodyFontSize,
                         paddingTop: '0vh',
                         paddingBottom: '2vh',
                         border: `3px solid ${getThemeColor(0.5)}`,
@@ -190,10 +250,11 @@ export const StandardPage = ({ title = '', children, style }) => {
             </div>
         </Container>
     );
-}
+};
 
-export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, title }) => {
-    const { bgColor, textColor, softwareMaintenanceFontSize, fontStyle, standardPageTitleFontSize } = useContext(AppContext);
+export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, title, omitPadding = false }) => {
+    const { bgColor, standardBodyFontSize, fontStyle, standardTitleFontSize } = useContext(AppContext);
+    const bodyPadding = omitPadding ? { paddingTop: 0 } : {};
     return (
         <Modal
             style={{ textAlign: 'center', userSelect: 'none', fontFamily: fontStyle }}
@@ -210,48 +271,44 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
                     paddingTop: 0,
                     paddingBottom: 0,
                 }}>
-                    <div style={{ paddingLeft: getIconSizing('medium') }} />
-                    <div style={{ fontSize: standardPageTitleFontSize, color: textColor, justifyContent: 'center', margin: 'auto', verticalAlign: 'middle' }}>{title}</div>
-                    <div><StandardButton onClick={handleModalClose} icon={<XIcon className='modalXButton' style={{ fontSize: getIconSizing('medium') }} />} /></div>
+                    <Modal.Title style={{ fontSize: standardTitleFontSize, color: 'white', justifyContent: 'center', margin: 'auto', verticalAlign: 'middle' }}>
+                        {title}
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body
                     style={{
                         backgroundColor: 'transparent',
-                        color: textColor,
+                        color: 'white',
                         border: `3px solid ${getThemeColor(0.5)}`,
                         borderTop: 0,
-                        fontSize: softwareMaintenanceFontSize,
+                        fontSize: standardBodyFontSize,
+                        ...bodyPadding
                     }}
                 >
                     {children}
                     <Modal.Footer style={{ padding: 0, marginTop: '1vh', border: 'none' }}>
                         <Container>
-                            <Row>
-                                {buttons && <Col>{buttons}</Col>}
-                            </Row>
+                            {buttons && buttons}
                         </Container>
                     </Modal.Footer>
                 </Modal.Body>
             </div>
-
         </Modal >
-    )
-}
+    );
+};
 
 
 export const getThemeColor = (opacity = 1) => {
     return `rgb(79, 201, 201, ${opacity})`;
-}
+};
 
-export const getIconSizing = (size = 'large') => {
-    const breakpoint = useCurrentBreakpointName();
-    let largeLogic = breakpoint === 'xsmall' ? '7vw' : breakpoint === 'large' ? '4.5vw' : breakpoint === 'medium' ? '5.5vw' : breakpoint === 'small' ? '6.5vw' : '3vw';
-    let mediumLogic = breakpoint === 'xsmall' ? '4vw' : breakpoint === 'large' ? '3.5vw' : breakpoint === 'medium' ? '4.5vw' : breakpoint === 'small' ? '5.5vw' : '2vw';
-    let smallLogic = breakpoint === 'xsmall' ? '3vw' : breakpoint === 'large' ? '2.5vw' : breakpoint === 'medium' ? '3.5vw' : breakpoint === 'small' ? '4.5vw' : '1.5vw';
-    return size === 'large' ? largeLogic : size === 'medium' ? mediumLogic : size === 'small' ? smallLogic : '1vw';
-}
+export const getIconSizing = (size = 'small') => {
+    let largeLogic = 'calc(1px + 6vmin)';
+    let smallLogic = 'calc(1px + 3vmin)';
+    return size === 'large' ? largeLogic : smallLogic;
+};
 
 export const getLogoSizing = () => {
     const breakpoint = useCurrentBreakpointName();
     return breakpoint === 'xsmall' ? '15vw' : breakpoint === 'large' ? '12.5vw' : breakpoint === 'medium' ? '13.5vw' : breakpoint === 'small' ? '14.5vw' : '8vw';
-}
+};
