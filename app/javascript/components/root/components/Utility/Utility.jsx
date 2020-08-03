@@ -129,7 +129,7 @@ export const StandardTooltip = ({ children, text }) => {
 };
 
 export const StandardButton = ({ onClick, style, children, isActive = true }) => {
-    const { standardTitleFontSize } = useContext(AppContext);
+    const { standardBodyFontSize } = useContext(AppContext);
     return (
         <Card
             onClick={isActive ? onClick : () => { }}
@@ -137,36 +137,25 @@ export const StandardButton = ({ onClick, style, children, isActive = true }) =>
             style={{
                 margin: 'auto',
                 ...style,
-                fontSize: standardTitleFontSize,
+                fontSize: standardBodyFontSize,
                 alignItems: 'center',
                 cursor: isActive || 'not-allowed',
                 display: 'flex',
-                maxWidth: 'max-content',
-                paddingLeft: '15px',
-                paddingRight: '15px'
+                maxWidth: '95%'
             }}>
             {children}
         </Card>
     );
 };
 
-export const StandardIconButton = ({ icon, style, onClick, isActive = true, toolTip, size, children }) => {
+export const StandardIconButton = ({ icon, style, onClick, toolTip, children }) => {
+    const padding = { padding: '1px', paddingLeft: '10px', paddingRight: '10px' };
     return (
-        <>
-            {!toolTip &&
-                <div onClick={isActive ? onClick : () => { }} className={'defaultMouseOver'} style={{ fontSize: getIconSizing(size), lineHeight: 0, margin: 'auto', maxWidth: 'max-content', cursor: 'pointer', ...style }}>
-                    {icon} {children}
-                </div>
-            }
-            {
-                toolTip &&
-                <StandardTooltip text={toolTip}>
-                    <div onClick={isActive ? onClick : () => { }} className={'defaultMouseOver'} style={{ fontSize: getIconSizing(size), lineHeight: 0, margin: 'auto', maxWidth: 'max-content', cursor: 'pointer', ...style }}>
-                        {icon} {children}
-                    </div>
-                </StandardTooltip>
-            }
-        </>
+        <StandardTooltip text={toolTip}>
+            <div onClick={onClick} className={'iconButton'} style={{ fontSize: getIconSizing(), lineHeight: 0, margin: 'auto', maxWidth: 'max-content', cursor: 'pointer', ...style, ...padding }}>
+                {icon} {children}
+            </div>
+        </StandardTooltip>
     );
 };
 
@@ -176,7 +165,7 @@ export const StandardAlert = ({ success = false, text, alertOpen, setAlertOpen }
         if (alertOpen) {
             setTimeout(() => {
                 setAlertOpen(false);
-            }, 3000)
+            }, 1500)
         }
     }, [alertOpen])
 
