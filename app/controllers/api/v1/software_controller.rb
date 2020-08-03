@@ -35,7 +35,7 @@ module Api
           if exists
             render json: {
               message: "Software with name '#{software.name}' already exists",
-              data: software
+              data: nil
             }, status: 400
           elsif software.save
             render json: {
@@ -45,7 +45,7 @@ module Api
           else
             render json: {
               message: 'Could not create software',
-              data: software
+              data: nil
             }, status: 400
           end
         else
@@ -83,7 +83,7 @@ module Api
           else
             render json: {
               message: 'Could not update software',
-              data: software
+              data: nil
             }, status: 400
           end
         else
