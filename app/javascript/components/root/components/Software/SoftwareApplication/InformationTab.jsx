@@ -23,7 +23,7 @@ const InformationTab = ({ setImageModalObj, style, app }) => {
                     <StandardButton onClick={() => { window.open(app.repo_link); setRepoModalOpen(false); }}>Yes</StandardButton>
                 </Col>
                 <Col>
-                    <StandardButton onClick={() => setRepoModalOpen(false)}>No</StandardButton>
+                    <StandardButton onClick={() => { setRepoModalOpen(false); }}>No</StandardButton>
                 </Col>
             </Row>
         );
@@ -57,7 +57,7 @@ const InformationTab = ({ setImageModalObj, style, app }) => {
                 </Col>
             </Row >
             <StandardModal buttons={<RepoModalButtons />} title={`View Code`} modalOpen={repoModalOpen} handleModalClose={() => setRepoModalOpen(false)}>
-                Visit the official <span style={{ color: getThemeColor(1) }}>{app.name}</span> Github repository?
+                Open the official <span style={{ color: getThemeColor(1) }}>{app.name}</span> Github repository?
             </StandardModal>
         </>
     );

@@ -3,20 +3,21 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
-import { StandardImage, StandardCard, StandardButton, StandardModal, StandardTextField, StandardIconButton } from '../../Utility/Utility';
+import { StandardImage, StandardCard, StandardModal, StandardTextField, StandardIconButton, StandardButton } from '../../Utility/Utility';
 import Carousel from 'react-bootstrap/Carousel';
 import RightArrow from 'react-bootstrap-icons/dist/icons/arrow-right';
 import LeftArrow from 'react-bootstrap-icons/dist/icons/arrow-left';
 import Edit from 'react-bootstrap-icons/dist/icons/pencil';
-import Add from 'react-bootstrap-icons/dist/icons/plus-circle';
+import Add from 'react-bootstrap-icons/dist/icons/file-plus';
 import { fetchFeatures, putFeature, deleteFeature, postFeature } from '../../../featureService';
 
-const FeaturesTab = ({ setImageModalObj, userData, style, app }) => {
+const FeaturesTab = ({ setImageModalObj, userData, style, app, displayAlert }) => {
     const [caroselIndex, setCaroselIndex] = useState(0);
     const [features, setFeatures] = useState(null);
     useEffect(() => {
         const featureFetch = async () => {
-            await fetchFeatures(app.id, setFeatures);
+            const { data } = await fetchFeatures(app.id);
+            setFeatures(data);
         };
         setCaroselIndex(0);
         setFeatures(null);
@@ -40,31 +41,32 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app }) => {
                                     setImageModalObj={setImageModalObj}
                                     userData={userData}
                                     feature={feature}
-                                    setFeatures={setFeatures} />
+                                    setFeatures={setFeatures}
+                                    displayAlert={displayAlert} />
                             </Carousel.Item>
                         )
                     })
                 }
             </Carousel>
 
-            <Row style={{ maxWidth: '60%', margin: 'auto', display: features?.length > 0 ? '' : 'none' }}>
+            <Row style={{ maxWidth: '60%', margin: 'auto', display: features?.length > 0 ? '' : 'none', marginTop: '1vh' }}>
                 <Col>
-                    <StandardIconButton toolTip='Previous' size='large' icon={<LeftArrow />} onClick={() => setCaroselIndex(caroselIndex === 0 ? features?.length - 1 : caroselIndex - 1)} />
+                    <StandardIconButton toolTip='Previous' icon={<LeftArrow />} onClick={() => setCaroselIndex(caroselIndex === 0 ? features?.length - 1 : caroselIndex - 1)} />
                 </Col>
                 <Col style={{ paddingTop: '1vh' }}>
                     {caroselIndex + 1} of {features?.length}
                 </Col>
                 <Col>
-                    <StandardIconButton toolTip='Next' size='large' icon={<RightArrow />} onClick={() => setCaroselIndex(caroselIndex === features?.length - 1 ? 0 : caroselIndex + 1)} />
+                    <StandardIconButton toolTip='Next' icon={<RightArrow />} onClick={() => setCaroselIndex(caroselIndex === features?.length - 1 ? 0 : caroselIndex + 1)} />
                 </Col>
             </Row>
             {features?.length === 0 && 'No features found'}
-            {userData && <EditFeature setFeatures={setFeatures} app={app} />}
+            {userData && <EditFeature displayAlert={displayAlert} setFeatures={setFeatures} app={app} />}
         </div>
-    )
-}
+    );
+};
 
-const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app }) => {
+const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app, displayAlert }) => {
     const [loadingObj, setLoadingObj] = useState({ content: false, image: false });
 
     useEffect(() => {
@@ -91,34 +93,68 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
             <Col md={12} lg={7} style={{ display: allContentLoaded ? 'flex' : 'none' }}>
                 <StandardCard title={feature.title} style={{ margin: 'auto', verticalAlign: 'middle', minWidth: '100%' }}>
                     <div style={{ margin: 'auto', maxWidth: '95%', textAlign: 'center', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
-                    {userData && <EditFeature app={app} setFeatures={setFeatures} feature={feature} />}
+                    {userData && <EditFeature displayAlert={displayAlert} app={app} setFeatures={setFeatures} feature={feature} />}
                 </StandardCard>
             </Col>
         </Row >
     );
 };
 
-const EditFeature = ({ feature, setFeatures, app: { id, name } }) => {
+const EditFeature = ({ feature, setFeatures, app: { id, name }, displayAlert }) => {
     const blankFeature = { title: '', image_link: '', content_description: '', application_name: name, software_id: id };
     const [modalOpen, setModalOpen] = useState(false);
     const [activeFeature, setActiveFeature] = useState(feature ? feature : blankFeature);
+    const saveButtonEnabled = activeFeature.title.length > 0 && activeFeature.content_description.length > 0 && activeFeature.application_name.length > 0;
 
     const handleCreateFeature = async () => {
-        await postFeature(activeFeature);
-        await fetchFeatures(id, setFeatures);
-        setActiveFeature(blankFeature);
-        setModalOpen(false);
+        if (saveButtonEnabled) {
+            const { data } = await postFeature(activeFeature);
+            if (data) {
+                const { data } = await fetchFeatures(id);
+                setFeatures(data);
+                setActiveFeature(blankFeature);
+                setModalOpen(false);
+                displayAlert('Feature created successfully', true);
+            }
+            else {
+                displayAlert('Network error occured while creating feature', false);
+            }
+        }
+        else {
+            displayAlert('Complete the form and try again', false);
+        }
     };
+
     const handleEditFeature = async () => {
-        await putFeature(activeFeature);
-        await fetchFeatures(id, setFeatures);
-        setModalOpen(false);
+        if (saveButtonEnabled) {
+            const { data } = await putFeature(activeFeature);
+            if (data) {
+                const { data } = await fetchFeatures(id);
+                setFeatures(data);
+                setModalOpen(false);
+                displayAlert('Feature saved successfully', true);
+            }
+            else {
+                displayAlert('Network error occured while saving feature', false);
+            }
+        }
+        else {
+            displayAlert('Complete the form and try again', false);
+        }
     };
+
     const handleDeleteFeature = async () => {
-        await deleteFeature(activeFeature.id);
-        setFeatures(null);
-        await fetchFeatures(id, setFeatures);
-        setModalOpen(false);
+        const { data } = await deleteFeature(activeFeature.id);
+        if (data) {
+            setFeatures(null);
+            const { data } = await fetchFeatures(id);
+            setFeatures(data);
+            setModalOpen(false);
+            displayAlert('Feature deleted successfully', true);
+        }
+        else {
+            displayAlert('Network error occured while deleting feature', false);
+        }
     };
 
     const EditButtons = () => {
@@ -138,14 +174,14 @@ const EditFeature = ({ feature, setFeatures, app: { id, name } }) => {
 
     const CreateButtons = () => {
         return (
-            <StandardButton isActive={activeFeature.title.length > 0} onClick={() => handleCreateFeature()}>Create</StandardButton>
+            <StandardButton style={{ maxWidth: 'max-content', paddingLeft: '15px', paddingRight: '15px' }} onClick={() => handleCreateFeature()}>Save</StandardButton>
         );
     };
 
     return (
         <>
             {feature && <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Edit Feature' style={{ marginBottom: '1vh' }} icon={<Edit />} />}
-            {!feature && <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Add Feature' icon={<Add />} />}
+            {!feature && <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Add Feature' style={{ marginTop: '1vh' }} icon={<Add />} />}
             <StandardModal title={`Feature Alteration - ${feature ? 'Modify' : 'Create'}`} buttons={feature ? <EditButtons /> : <CreateButtons />} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
                 <Form.Group style={{ width: '95%', margin: 'auto', padding: '10px', paddingTop: '5px' }}>
                     <StandardTextField value={activeFeature.application_name} isActive={false} label='Application Name' onChange={(e) => setActiveFeature({ ...activeFeature, application_name: e.target.value })} />
@@ -155,7 +191,7 @@ const EditFeature = ({ feature, setFeatures, app: { id, name } }) => {
                 </Form.Group>
             </StandardModal>
         </>
-    )
-}
+    );
+};
 
 export default FeaturesTab;

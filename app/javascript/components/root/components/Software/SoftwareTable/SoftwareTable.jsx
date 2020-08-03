@@ -6,15 +6,16 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { fetchAllSoftware, postSoftware, putSoftware, deleteSoftware } from '../../../softwareService';
-import { StandardImage, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing, StandardSpinner } from '../../Utility/Utility';
-import Add from 'react-bootstrap-icons/dist/icons/plus-circle';
+import { StandardImage, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing, StandardSpinner, StandardIconButton } from '../../Utility/Utility';
+import Add from 'react-bootstrap-icons/dist/icons/file-plus';
 import Edit from 'react-bootstrap-icons/dist/icons/pencil';
 
-function SoftwareTable({ userData, setActiveApplication }) {
+function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
   const [software, setSoftware] = useState(null);
   useEffect(() => {
     const loadSoftware = async () => {
-      await fetchAllSoftware(setSoftware);
+      const { data } = await fetchAllSoftware();
+      setSoftware(data);
     };
     loadSoftware();
   }, []);
@@ -24,8 +25,8 @@ function SoftwareTable({ userData, setActiveApplication }) {
       <th style={{ border: 'none', backgroundColor: getThemeColor(0), fontWeight: 'normal', color: getThemeColor(1) }}>
         {children}
       </th>
-    )
-  }
+    );
+  };
 
   return (
     <StandardPage title='Software Panel'>
@@ -48,18 +49,19 @@ function SoftwareTable({ userData, setActiveApplication }) {
                 userData={userData}
                 setSoftware={setSoftware}
                 setActiveApplication={setActiveApplication}
+                displayAlert={displayAlert}
               />
             );
           })}
         </tbody>
       </Table>
       <span style={{ marginBottom: '1vh', display: software ? 'none' : '' }}><StandardSpinner /></span>
-      {userData && <EditSoftware setSoftware={setSoftware} />}
+      {userData && <EditSoftware displayAlert={displayAlert} setSoftware={setSoftware} />}
     </StandardPage>
   );
-}
+};
 
-const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares }) => {
+const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares, displayAlert }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const blankSoftware = {
     is_legacy: false,
@@ -73,45 +75,90 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares })
     android: false,
     repo_link: '',
     languages: '',
-    youtube_link: ''
+    youtube_link: '',
+    dev_date: new Date()
   };
   const [software, setSoftware] = useState(existingSoftware ? existingSoftware : blankSoftware);
+  const canSubmitSoftware = software.name.length > 0;
 
   const handleCreateSoftware = async () => {
-    await postSoftware(software);
-    await fetchAllSoftware(setSoftwares);
-    setSoftware(blankSoftware);
-    setModalOpen(false);
+    if (canSubmitSoftware) {
+      const { data } = await postSoftware(software);
+      if (data) {
+        const { data } = await fetchAllSoftware();
+        setSoftwares(data);
+        setSoftware(blankSoftware);
+        setModalOpen(false);
+        displayAlert('Successfully saved software', true);
+      }
+      else {
+        displayAlert('Network error while saving software', false);
+      }
+    }
+    else {
+      displayAlert('Complete the form and try again', false);
+    }
   };
   const handleEditSoftware = async () => {
-    await putSoftware(software);
-    await fetchAllSoftware(setSoftwares);
-    setModalOpen(false);
+    if (canSubmitSoftware) {
+      const { data } = await putSoftware(software);
+      if (data) {
+        const { data } = await fetchAllSoftware();
+        setSoftwares(data);
+        setModalOpen(false);
+        displayAlert('Successfully saved software', true);
+      }
+      else {
+        displayAlert('Network error while saving software', false);
+      }
+    }
+    else {
+      displayAlert('Complete the form and try again', false);
+    }
   };
   const handleDeleteSoftware = async () => {
-    await deleteSoftware(software.id);
-    await fetchAllSoftware(setSoftwares);
-    setModalOpen(false);
+    const { data } = await deleteSoftware(software.id);
+    if (data) {
+      const { data } = await fetchAllSoftware();
+      setSoftwares(data);
+      setModalOpen(false);
+      displayAlert('Successfully deleted software', true);
+    }
+    else {
+      displayAlert('Network error while deleting software', false);
+    }
   };
 
-  const ExistingButtons = <Container>
-    <Row>
-      <Col>
-        <StandardButton onClick={() => handleEditSoftware()}>Save</StandardButton>
-      </Col>
-      <Col>
-        <StandardButton onClick={() => handleDeleteSoftware()}>Delete</StandardButton>
-      </Col>
-    </Row>
-  </Container>
+  const ExistingButtons = () => {
+    return (
+      <Container>
+        <Row>
+          <Col>
+            <StandardButton onClick={() => handleEditSoftware()}>Save</StandardButton>
+          </Col>
+          <Col>
+            <StandardButton onClick={() => handleDeleteSoftware()}>Delete</StandardButton>
+          </Col>
+        </Row>
+      </Container>
+    );
+  };
 
-  const NewButtons = <StandardButton isActive={software?.name?.length !== 0} onClick={() => handleCreateSoftware()}>Create</StandardButton>
+  const NewButtons = () => {
+    return (
+      <StandardButton onClick={() => handleCreateSoftware()}>Create</StandardButton>
+    );
+  };
 
   return (
     <>
-      <StandardButton icon={existingSoftware ? <Edit style={{ fontSize: getIconSizing('small') }} /> : <Add style={{ fontSize: getIconSizing('small') }} />} onClick={() => setModalOpen(true)}>{existingSoftware ? 'Edit' : 'Add Application'}</StandardButton>
-
-      <StandardModal title={`Software Alteration - ${!existingSoftware ? 'Create' : 'Modify'}`} buttons={existingSoftware ? ExistingButtons : NewButtons} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
+      {existingSoftware &&
+        <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Edit Software' icon={<Edit />} />
+      }
+      {!existingSoftware &&
+        <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Add Software' icon={<Add />} />
+      }
+      <StandardModal title={`Software Alteration - ${!existingSoftware ? 'Create' : 'Modify'}`} buttons={existingSoftware ? <ExistingButtons /> : <NewButtons />} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
         <Form.Group style={{ width: '95%', margin: 'auto' }}>
           <StandardTextField value={software.name} isActive={!existingSoftware} label='Name' onChange={(e) => setSoftware({ ...software, name: e.target.value })} />
           <StandardTextField value={software.icon_link} label='Icon Image Link' onChange={(e) => setSoftware({ ...software, icon_link: e.target.value })} />
@@ -128,10 +175,10 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares })
         </Form.Group>
       </StandardModal>
     </>
-  )
-}
+  );
+};
 
-const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication }) => {
+const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication, displayAlert }) => {
   const compatibility = {
     windows: software.windows,
     linux: software.linux,
@@ -144,13 +191,13 @@ const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication 
       <td style={{ borderTop: `1px solid ${getThemeColor(0.1)}`, verticalAlign: 'middle', ...style }} onClick={() => noOnClick ? () => { } : setActiveApplication(software.name)}>
         {children}
       </td>
-    )
-  }
+    );
+  };
 
   return (
     <tr className='tableMouseOver' style={{ cursor: 'pointer' }}>
       <CustomTd style={{ width: '35%' }}>
-        <StandardImage noErrorMessage src={software.icon_link} style={{ width: getIconSizing('medium') }} />
+        <StandardImage noErrorMessage src={software.icon_link} style={{ width: getIconSizing() }} />
         {software.name}
       </CustomTd>
       <CustomTd>{software.languages}</CustomTd>
@@ -160,9 +207,10 @@ const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication 
         {compatibility.mac && <Badge variant='light'>Mac</Badge>}{' '}
         {compatibility.android && <Badge variant='light'>Android</Badge>}{' '}
       </CustomTd>
-      <CustomTd>1/12/2019</CustomTd>
-      {userData && <CustomTd noOnClick><EditSoftware setSoftware={setSoftware} software={software} /></CustomTd>}
+      <CustomTd>{software.dev_date}</CustomTd>
+      {userData && <CustomTd noOnClick><EditSoftware displayAlert={displayAlert} setSoftware={setSoftware} software={software} /></CustomTd>}
     </tr>
   );
 };
+
 export default SoftwareTable;

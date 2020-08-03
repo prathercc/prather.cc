@@ -2,7 +2,7 @@
 
 .defaultMouseOver {
     color: white !important;
-    transition: color 0.25s ease-in-out;
+    transition: color 0.2s ease-in-out;
 }
 
 .defaultMouseOver:hover {
@@ -11,8 +11,8 @@
 
 .defaultImageNudge {
     border: solid 2px rgb(79, 201, 201, 0.1);
-    border-radius: 5px;
-    transition: all 0.25s ease-in-out;
+    border-radius: 15px;
+    transition: all 0.2s ease-in-out;
 }
 
 .defaultImageNudge:hover {
@@ -24,7 +24,7 @@
 .defaultButton {
     color: white;
     background-color: rgb(79, 201, 201, 0.5) !important;
-    transition: all 0.25s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .defaultButton:hover {
@@ -34,13 +34,25 @@
     border: 1px solid rgb(79, 201, 201, 0);
 }
 
+.iconButton {
+    border-radius: 5px;
+    color: white !important;
+    background-color: rgb(79, 201, 201, 0.5);
+    transition: all 0.2s ease-in-out;
+}
+
+.iconButton:hover {
+    color: #4fc9c9 !important;
+    background-color: rgb(79, 201, 201, 0);
+}
+
 /* ******** */
 
 /* MODAL SECTION */
 
 .modalXButton {
     color: white;
-    transition: all 0.25s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .modalXButton:hover {
@@ -55,7 +67,7 @@
 
 .tableMouseOver {
     color: white !important;
-    transition: all 0.25s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .tableMouseOver:hover {
@@ -72,8 +84,7 @@
     cursor: pointer;
     outline: 0;
     background-color: rgb(79, 201, 201, 0);
-    transition: all 0.25s ease-in-out;
-    margin-top: 0;
+    transition: all 0.2s ease-in-out;
 }
 
 .appbarDefault:hover {
@@ -89,9 +100,10 @@
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     padding-top: 1vh;
-    border-bottom: 1px solid rgb(79, 201, 201, 0.5);
+    border-bottom: 2px solid rgb(79, 201, 201, 0.5);
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
+    flex-direction: row !important;
 }
 
 .tabsLeftBorderBlack {
@@ -107,7 +119,7 @@
     color: white;
     cursor: pointer;
     outline: 0;
-    transition: all 0.25s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 
 .tabsLinkInactive:hover {
