@@ -1,37 +1,21 @@
 const host = `${window.location.origin}`;
 
-export const getUsers = async (setUserData) => {
-  const response = await fetch(`${host}/api/v1/user`);
-  response
-    .json()
-    .then((resp) => {
-      setUserData(resp.data);
-    })
-    .catch((err) => console.log(err));
+export const getUsers = () => {
+  return fetch(`${host}/api/v1/user`).then(res => res.json());
 };
 
-export const createUser = async (user) => {
-  const response = await fetch(`${host}/api/v1/user`, {
+export const createUser = (user) => {
+  return fetch(`${host}/api/v1/user`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(user),
-  });
-  response
-    .json()
-    .then(() => {
-    })
-    .catch((err) => console.log(err));
+  }).then(res => res.json());
 };
 
-export const deleteUser = async (id) => {
-  const response = await fetch(`${host}/api/v1/user/${id}`, {
+export const deleteUser = (id) => {
+  return fetch(`${host}/api/v1/user/${id}`, {
     method: 'DELETE',
-  });
-  response
-    .json()
-    .then(() => {
-    })
-    .catch((err) => console.log(err));
+  }).then(res => res.json());
 };

@@ -1,66 +1,33 @@
 const host = `${window.location.origin}`;
 
-export const fetchFeatures = async (software_id, setFeatures) => {
-  const response = await fetch(
+export const fetchFeatures = (software_id) => {
+  return fetch(
     `${host}/api/v1/feature?software_id=${software_id}`
-  );
-  response
-    .json()
-    .then((resp) => {
-      setFeatures(resp.data);
-    })
-    .catch((err) => console.log(err));
-};
-export const fetchFeature = async (id, setFeature) => {
-  const response = await fetch(
-    `${host}/api/v1/feature?id=${id}`
-  );
-  response
-    .json()
-    .then((resp) => {
-      setFeature(resp.data);
-    })
-    .catch((err) => console.log(err));
+  ).then(resp => resp.json());
 };
 
-export const postFeature = async (feature) => {
-  const response = await fetch(`${host}/api/v1/feature`, {
+export const postFeature = (feature) => {
+  return fetch(`${host}/api/v1/feature`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(feature),
-  });
-  response
-    .json()
-    .then((resp) => {
-    })
-    .catch((err) => console.log(err));
+  }).then(resp => resp.json());
 };
 
-export const putFeature = async (feature) => {
-  const response = await fetch(`${host}/api/v1/feature/${feature.id}`, {
+export const putFeature = (feature) => {
+  return fetch(`${host}/api/v1/feature/${feature.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(feature),
-  });
-  response
-    .json()
-    .then((resp) => {
-    })
-    .catch((err) => console.log(err));
-
+  }).then(resp => resp.json());
 };
 
-export const deleteFeature = async (featureId) => {
-  const response = await fetch(`${host}/api/v1/feature/${featureId}`, {
+export const deleteFeature = (featureId) => {
+  return fetch(`${host}/api/v1/feature/${featureId}`, {
     method: 'DELETE',
-  });
-  response
-    .json()
-    .then((resp) => {
-    })
-    .catch((err) => console.log(err));
+  }).then(resp => resp.json());
 };
