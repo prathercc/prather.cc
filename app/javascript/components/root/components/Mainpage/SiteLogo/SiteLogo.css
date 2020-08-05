@@ -1,39 +1,24 @@
-.bigStars {
+.starbend {
   background-repeat: repeat;
   background-position: center;
+  animation: starbend infinite 300s linear;
 }
 
-.starCW {
-  background-repeat: repeat;
-  animation: starCW infinite 3000s linear;
-}
-
-@keyframes starCW {
+@keyframes starbend {
   0% {
-    transform: scale(1.5, 1) perspective(1px) rotate(5deg);
+    transform: scale(1, 1) perspective(1px);
+  }
+  25% {
+    transform: scale(1, 1.5) perspective(1px);
   }
   50% {
-    transform: scale(1.5, 1) perspective(1px) rotate(365deg);
+    transform: scale(1.5, 1) perspective(1px);
+  }
+  75% {
+    transform: scale(1, 1.5) perspective(1px);
   }
   100% {
-    transform: scale(1.5, 1) perspective(1px) rotate(5deg);
-  }
-}
-
-.starCCW {
-  background-repeat: repeat;
-  animation: starCCW infinite 3000s linear;
-}
-
-@keyframes starCCW {
-  0% {
-    transform: scale(1.5, 1) perspective(1px) rotate(0deg);
-  }
-  50% {
-    transform: scale(1.5, 1) perspective(1px) rotate(-360deg);
-  }
-  100% {
-    transform: scale(1.5, 1) perspective(1px) rotate(0deg);
+    transform: scale(1, 1) perspective(1px);
   }
 }
 
