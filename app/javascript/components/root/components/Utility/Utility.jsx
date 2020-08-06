@@ -64,21 +64,37 @@ export const StandardDropDown = ({ onChange, label, isActive = true, style, data
     );
 };
 
-export const StandardTextField = ({ onChange, label, isActive = true, value, rows = 1, isPassword, style }) => {
+export const StandardTextField = ({ onChange, label, isActive = true, value, rows = 1, isPassword, style, errorMessage = 'Default Error Message!', hasError = false }) => {
+    const { standardBodyFontSize, fontStyle, standardSmallFontSize } = useContext(AppContext);
+
+    const [modified, setModified] = useState(false);
+
+    const handleOnChange = (e) => {
+        onChange(e);
+        if (!modified) {
+            setModified(true);
+        }
+    }
+
+    const borderLogic = modified && hasError ? { border: '1px solid red' } : {};
+
     return (
         <div style={{ ...style }}>
-            <Form.Text style={{ textAlign: 'left' }}>{label}</Form.Text>
+            <Form.Label style={{ textAlign: 'left', width: '100%', marginBottom: 0, fontSize: standardBodyFontSize, fontFamily: fontStyle }}>{label}</Form.Label>
             <Form.Control
-                style={{ textAlign: 'left', cursor: isActive ? 'text' : 'not-allowed', backgroundColor: '#d9d9d9' }}
+                style={{ textAlign: 'left', cursor: isActive ? 'text' : 'not-allowed', backgroundColor: '#d9d9d9', fontSize: standardSmallFontSize, ...borderLogic }}
                 size='sm'
                 type={isPassword ? 'password' : 'text'}
                 placeholder={label}
                 disabled={!isActive}
                 value={value}
-                onChange={onChange}
+                onChange={handleOnChange}
                 as={rows > 1 ? 'textarea' : 'input'}
                 rows={rows}
             />
+            {
+                modified && hasError && <Form.Text style={{ fontSize: standardSmallFontSize, margin: 0, color: 'red' }}>{errorMessage}</Form.Text>
+            }
         </div>
     );
 };
