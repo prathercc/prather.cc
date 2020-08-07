@@ -21,6 +21,12 @@
     cursor: pointer;
 }
 
+.defaultButtonDisabled {
+    color: white;
+    background-color: rgb(79, 201, 201, 0.5) !important;
+    filter: grayscale(1);
+}
+
 .defaultButton {
     color: white;
     background-color: rgb(79, 201, 201, 0.5) !important;

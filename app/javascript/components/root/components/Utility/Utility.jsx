@@ -64,7 +64,7 @@ export const StandardDropDown = ({ onChange, label, isActive = true, style, data
     );
 };
 
-export const StandardTextField = ({ onChange, label, isActive = true, value, rows = 1, isPassword, style, errorMessage = 'Default Error Message!', hasError = false }) => {
+export const StandardTextField = ({ onChange, label, isActive = true, value, rows = 1, isPassword, style, errorMessage = 'Error', hasError = false }) => {
     const { standardBodyFontSize, fontStyle, standardSmallFontSize } = useContext(AppContext);
 
     const [modified, setModified] = useState(false);
@@ -144,18 +144,17 @@ export const StandardTooltip = ({ children, text }) => {
     );
 };
 
-export const StandardButton = ({ onClick, style, children, isActive = true }) => {
+export const StandardButton = ({ onClick, style, children, disabled = false }) => {
     const { standardBodyFontSize } = useContext(AppContext);
     return (
         <Card
-            onClick={isActive ? onClick : () => { }}
-            className='defaultButton'
+            onClick={disabled ? () => { } : onClick}
+            className={disabled ? 'defaultButtonDisabled' : 'defaultButton'}
             style={{
                 margin: 'auto',
                 ...style,
                 fontSize: standardBodyFontSize,
                 alignItems: 'center',
-                cursor: isActive || 'not-allowed',
                 display: 'flex',
                 maxWidth: '95%'
             }}>
