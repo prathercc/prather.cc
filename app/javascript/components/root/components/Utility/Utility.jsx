@@ -25,32 +25,37 @@ export const StandardImageModal = ({ modalOpen, handleModalClose, imageLink }) =
 
 export const StandardCheckBox = ({ label, value, onChange, style }) => {
     return (
-        <Container style={{ maxWidth: 'max-content', ...style }} onClick={onChange}>
-            <Row>
-                <Col>
-                    <Form.Check
-                        onChange={onChange}
-                        type='checkbox'
-                        checked={value}
-                        style={{ display: 'inline' }}
-                    />
-                    <div style={{ display: 'inline' }}> {label}</div>
-                </Col>
-            </Row>
-        </Container>
+        <span style={{ ...style }} onClick={onChange}>
+            <Form.Check
+                readOnly
+                type='checkbox'
+                checked={value}
+                style={{ display: 'inline' }}
+            />
+            <div style={{ display: 'inline' }}> {label}</div>
+        </span>
     );
 };
 
-export const StandardDropDown = ({ onChange, label, isActive = true, style, data, value }) => {
+export const StandardDropDown = ({ onChange, label, isActive = true, style, data, value, errorMessage = 'Error', hasError = false }) => {
+    const { standardBodyFontSize, fontStyle, standardSmallFontSize } = useContext(AppContext);
+    const [modified, setModified] = useState(false);
+    const borderLogic = modified && hasError ? { border: '1px solid red' } : {};
+    const handleOnChange = (e) => {
+        onChange(e);
+        if (!modified) {
+            setModified(true);
+        }
+    }
     return (
         <div style={{ ...style }}>
-            <Form.Text style={{ textAlign: 'left' }}>{label}</Form.Text>
+            <Form.Label style={{ textAlign: 'left', width: '100%', marginBottom: 0, fontSize: standardBodyFontSize, fontFamily: fontStyle }}>{label}</Form.Label>
             <Form.Control
-                style={{ cursor: isActive ? 'default' : 'not-allowed', textAlign: 'left', backgroundColor: '#d9d9d9' }}
+                style={{ cursor: isActive ? 'default' : 'not-allowed', textAlign: 'left', backgroundColor: '#d9d9d9', ...borderLogic }}
                 disabled={!isActive}
                 as="select"
                 value={value}
-                onChange={onChange}>
+                onChange={handleOnChange}>
                 <option>Make a selection</option>
                 {
                     data.map(x => {
@@ -60,6 +65,9 @@ export const StandardDropDown = ({ onChange, label, isActive = true, style, data
                     })
                 }
             </Form.Control>
+            {
+                modified && hasError && <Form.Text style={{ fontSize: standardSmallFontSize, margin: 0, color: 'red' }}>{errorMessage}</Form.Text>
+            }
         </div>
     );
 };
@@ -138,7 +146,7 @@ export const StandardImage = ({ style, noErrorMessage, src, className, onClick, 
 export const StandardTooltip = ({ children, text }) => {
     const { fontStyle, standardSmallFontSize } = useContext(AppContext);
     return (
-        <OverlayTrigger placement='bottom' overlay={<Tooltip style={{ fontFamily: fontStyle, fontSize: standardSmallFontSize }}>{text}</Tooltip>}>
+        <OverlayTrigger placement='bottom' overlay={<Tooltip style={{ fontFamily: fontStyle, fontSize: standardSmallFontSize, marginTop: '1vh' }}>{text}</Tooltip>}>
             {children}
         </OverlayTrigger>
     );
@@ -164,7 +172,7 @@ export const StandardButton = ({ onClick, style, children, disabled = false }) =
 };
 
 export const StandardIconButton = ({ icon, style, onClick, toolTip, children }) => {
-    const padding = { padding: '1px', paddingLeft: '10px', paddingRight: '10px' };
+    const padding = { padding: '2px', paddingLeft: '20px', paddingRight: '20px' };
     return (
         <StandardTooltip text={toolTip}>
             <div onClick={onClick} className={'iconButton'} style={{ fontSize: getIconSizing(), lineHeight: 0, margin: 'auto', maxWidth: 'max-content', cursor: 'pointer', ...style, ...padding }}>
@@ -185,7 +193,7 @@ export const StandardAlert = ({ success = false, text, alertOpen, setAlertOpen }
     }, [alertOpen])
 
     return (
-        <Alert style={{ position: 'fixed', zIndex: 1000000, bottom: 0, minWidth: '100%', right: 0, padding: '5px', margin: 0, fontFamily: fontStyle, fontSize: standardBodyFontSize }} show={alertOpen} variant={success ? 'success' : 'danger'}>{text}</Alert>
+        <Alert style={{ position: 'fixed', zIndex: 1000000, bottom: 0, minWidth: '100%', right: 0, padding: 0, margin: 0, fontFamily: fontStyle, fontSize: standardBodyFontSize }} show={alertOpen} variant={success ? 'success' : 'danger'}>{text}</Alert>
     );
 };
 

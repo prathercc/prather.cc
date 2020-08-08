@@ -12,12 +12,14 @@
 .defaultImageNudge {
     border: solid 2px rgb(79, 201, 201, 0.1);
     border-radius: 15px;
+    box-shadow: 3px 3px black;
     transition: all 0.2s ease-in-out;
 }
 
 .defaultImageNudge:hover {
     border: solid 2px rgb(79, 201, 201, 0.5);
     background-color: rgb(79, 201, 201, 0.1);
+    box-shadow: 15px 10px black;
     cursor: pointer;
 }
 
@@ -30,26 +32,30 @@
 .defaultButton {
     color: white;
     background-color: rgb(79, 201, 201, 0.5) !important;
+    box-shadow: 3px 3px black;
     transition: all 0.2s ease-in-out;
 }
 
 .defaultButton:hover {
     cursor: pointer;
-    background-color: #1a1a1a !important;
+    background-color: rgb(79, 201, 201, 0.1) !important;
     color: rgb(79, 201, 201, 1);
     border: 1px solid rgb(79, 201, 201, 0);
+    box-shadow: 10px 10px black;
 }
 
 .iconButton {
     border-radius: 5px;
     color: white !important;
     background-color: rgb(79, 201, 201, 0.5);
+    box-shadow: 3px 3px black;
     transition: all 0.2s ease-in-out;
 }
 
 .iconButton:hover {
     color: #4fc9c9 !important;
-    background-color: rgb(79, 201, 201, 0);
+    background-color: rgb(79, 201, 201, 0.1);
+    box-shadow: 10px 10px black;
 }
 
 /* ******** */
