@@ -104,42 +104,33 @@ const EditFeature = ({ feature, setFeatures, app: { id, name }, displayAlert }) 
     const blankFeature = { title: '', image_link: '', content_description: '', application_name: name, software_id: id };
     const [modalOpen, setModalOpen] = useState(false);
     const [activeFeature, setActiveFeature] = useState(feature ? feature : blankFeature);
-    const saveButtonEnabled = activeFeature.title.length > 0 && activeFeature.content_description.length > 0 && activeFeature.application_name.length > 0;
+    const saveButtonDisabled = activeFeature.title.length === 0 || activeFeature.content_description.length === 0 ||
+        activeFeature.application_name.length === 0 || activeFeature.application_name.length === 0;
 
     const handleCreateFeature = async () => {
-        if (saveButtonEnabled) {
-            const { data } = await postFeature(activeFeature);
-            if (data) {
-                const { data } = await fetchFeatures(id);
-                setFeatures(data);
-                setActiveFeature(blankFeature);
-                setModalOpen(false);
-                displayAlert('Feature created successfully', true);
-            }
-            else {
-                displayAlert('Network error occured while creating feature', false);
-            }
+        const { data } = await postFeature(activeFeature);
+        if (data) {
+            const { data } = await fetchFeatures(id);
+            setFeatures(data);
+            setActiveFeature(blankFeature);
+            setModalOpen(false);
+            displayAlert('Feature created successfully', true);
         }
         else {
-            displayAlert('Complete the form and try again', false);
+            displayAlert('Network error occured while creating feature', false);
         }
     };
 
     const handleEditFeature = async () => {
-        if (saveButtonEnabled) {
-            const { data } = await putFeature(activeFeature);
-            if (data) {
-                const { data } = await fetchFeatures(id);
-                setFeatures(data);
-                setModalOpen(false);
-                displayAlert('Feature saved successfully', true);
-            }
-            else {
-                displayAlert('Network error occured while saving feature', false);
-            }
+        const { data } = await putFeature(activeFeature);
+        if (data) {
+            const { data } = await fetchFeatures(id);
+            setFeatures(data);
+            setModalOpen(false);
+            displayAlert('Feature saved successfully', true);
         }
         else {
-            displayAlert('Complete the form and try again', false);
+            displayAlert('Network error occured while saving feature', false);
         }
     };
 
@@ -162,7 +153,7 @@ const EditFeature = ({ feature, setFeatures, app: { id, name }, displayAlert }) 
             <Container>
                 <Row>
                     <Col>
-                        <StandardButton onClick={() => handleEditFeature()}>Save</StandardButton>
+                        <StandardButton disabled={saveButtonDisabled} onClick={() => handleEditFeature()}>Save</StandardButton>
                     </Col>
                     <Col>
                         <StandardButton onClick={() => handleDeleteFeature()}>Delete</StandardButton>
@@ -174,7 +165,7 @@ const EditFeature = ({ feature, setFeatures, app: { id, name }, displayAlert }) 
 
     const CreateButtons = () => {
         return (
-            <StandardButton style={{ maxWidth: 'max-content', paddingLeft: '15px', paddingRight: '15px' }} onClick={() => handleCreateFeature()}>Save</StandardButton>
+            <StandardButton disabled={saveButtonDisabled} style={{ maxWidth: 'max-content', paddingLeft: '15px', paddingRight: '15px' }} onClick={() => handleCreateFeature()}>Save</StandardButton>
         );
     };
 
@@ -184,10 +175,10 @@ const EditFeature = ({ feature, setFeatures, app: { id, name }, displayAlert }) 
             {!feature && <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Add Feature' style={{ marginTop: '1vh' }} icon={<Add />} />}
             <StandardModal title={`Feature Alteration - ${feature ? 'Modify' : 'Create'}`} buttons={feature ? <EditButtons /> : <CreateButtons />} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
                 <Form.Group style={{ width: '95%', margin: 'auto', padding: '10px', paddingTop: '5px' }}>
-                    <StandardTextField value={activeFeature.application_name} isActive={false} label='Application Name' onChange={(e) => setActiveFeature({ ...activeFeature, application_name: e.target.value })} />
-                    <StandardTextField value={activeFeature.title} label='Feature Title' onChange={(e) => setActiveFeature({ ...activeFeature, title: e.target.value })} />
-                    <StandardTextField value={activeFeature.image_link} label='Image Link' onChange={(e) => setActiveFeature({ ...activeFeature, image_link: e.target.value })} />
-                    <StandardTextField rows={8} value={activeFeature.content_description} label='Content Description' onChange={(e) => setActiveFeature({ ...activeFeature, content_description: e.target.value })} />
+                    <StandardTextField errorMessage='An application name is required!' hasError={activeFeature.application_name.length === 0} value={activeFeature.application_name} isActive={false} label='Application Name' onChange={(e) => setActiveFeature({ ...activeFeature, application_name: e.target.value })} />
+                    <StandardTextField errorMessage='A title is required!' hasError={activeFeature.title.length === 0} value={activeFeature.title} label='Feature Title' onChange={(e) => setActiveFeature({ ...activeFeature, title: e.target.value })} />
+                    <StandardTextField errorMessage='An image link is required!' hasError={activeFeature.image_link.length === 0} value={activeFeature.image_link} label='Image Link' onChange={(e) => setActiveFeature({ ...activeFeature, image_link: e.target.value })} />
+                    <StandardTextField errorMessage='A description is required!' hasError={activeFeature.content_description.length === 0} rows={8} value={activeFeature.content_description} label='Content Description' onChange={(e) => setActiveFeature({ ...activeFeature, content_description: e.target.value })} />
                 </Form.Group>
             </StandardModal>
         </>

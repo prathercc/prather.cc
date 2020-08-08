@@ -111,8 +111,8 @@ const EditDownloads = ({ app, setMainDownloads, download: value, displayAlert })
     const blankDownload = { application_name: app.name, file_name: '', file_size: '', os_type: '', path: '', download_count: 0, software_id: app.id, download_description: '' };
     const [download, setDownload] = useState(value ? value : blankDownload);
     const [modalOpen, setModalOpen] = useState(false);
-    const disabledButton = download?.file_name?.length === 0 || download?.os_type?.length === 0 || download?.file_size?.length === 0 || download?.path?.length === 0;
-
+    const disabledButton = download.file_name.length === 0 || download.os_type.length === 0 || download.os_type === 'Make a selection'
+        || download.file_size.length === 0 || download.path.length === 0 || download.download_description.length === 0;
     const handleDeleteDownload = async () => {
         const { data } = await deleteDownload(download.id);
         if (data) {
@@ -124,43 +124,32 @@ const EditDownloads = ({ app, setMainDownloads, download: value, displayAlert })
         else {
             displayAlert('Network error while deleting download', false);
         }
-
     };
 
     const handleAddDownload = async () => {
-        if (!disabledButton) {
-            const { data } = await postDownload(download);
-            if (data) {
-                setModalOpen(false);
-                const { data } = await fetchDownloads(app.id);
-                setMainDownloads(data);
-                setDownload(blankDownload);
-                displayAlert('Successfully saved download', true);
-            }
-            else {
-                displayAlert('Network error while saving download', false);
-            }
+        const { data } = await postDownload(download);
+        if (data) {
+            setModalOpen(false);
+            const { data } = await fetchDownloads(app.id);
+            setMainDownloads(data);
+            setDownload(blankDownload);
+            displayAlert('Successfully saved download', true);
         }
         else {
-            displayAlert('Complete the form and try again', false);
+            displayAlert('Network error while saving download', false);
         }
     };
 
     const handleEditDownload = async () => {
-        if (!disabledButton) {
-            const { data } = await putDownload(download);
-            if (data) {
-                setModalOpen(false);
-                const { data } = await fetchDownloads(app.id);
-                setMainDownloads(data);
-                displayAlert('Successfully saved download', true)
-            }
-            else {
-                displayAlert('Network error while saving download', false);
-            }
+        const { data } = await putDownload(download);
+        if (data) {
+            setModalOpen(false);
+            const { data } = await fetchDownloads(app.id);
+            setMainDownloads(data);
+            displayAlert('Successfully saved download', true)
         }
         else {
-            displayAlert('Complete the form and try again');
+            displayAlert('Network error while saving download', false);
         }
     };
 
@@ -168,7 +157,7 @@ const EditDownloads = ({ app, setMainDownloads, download: value, displayAlert })
         return (
             <Container>
                 <Row>
-                    <Col><StandardButton onClick={() => handleEditDownload()}>Save</StandardButton></Col>
+                    <Col><StandardButton disabled={disabledButton} onClick={() => handleEditDownload()}>Save</StandardButton></Col>
                     <Col><StandardButton onClick={() => handleDeleteDownload()}>Delete</StandardButton></Col>
                 </Row>
             </Container>
@@ -177,7 +166,7 @@ const EditDownloads = ({ app, setMainDownloads, download: value, displayAlert })
 
     const AddButton = () => {
         return (
-            <StandardButton onClick={() => handleAddDownload()}>Save</StandardButton>
+            <StandardButton disabled={disabledButton} onClick={() => handleAddDownload()}>Save</StandardButton>
         );
     };
 
@@ -201,11 +190,11 @@ const Download = ({ download, setDownload }) => {
     const osTypes = [{ id: 'Windows', name: 'Windows' }, { id: 'Linux', name: 'Linux' }, { id: 'Mac', name: 'Mac' }, { id: 'Android', name: 'Android' }, { id: 'All', name: 'All' }];
     return (
         <Form.Group style={{ maxWidth: '95%', padding: '10px', paddingTop: '5px', margin: 'auto' }}>
-            <StandardTextField value={download?.file_name} label='Name' onChange={(e) => setDownload({ ...download, file_name: e.target.value })} />
-            <StandardTextField value={download?.file_size} label='Size' onChange={(e) => setDownload({ ...download, file_size: e.target.value })} />
-            <StandardDropDown value={download?.os_type} data={osTypes} label='Operating System' onChange={(e) => setDownload({ ...download, os_type: e.target.value })} />
-            <StandardTextField value={download?.path} label='Path' onChange={(e) => setDownload({ ...download, path: e.target.value })} />
-            <StandardTextField rows={4} value={download?.download_description} label='Description' onChange={(e) => setDownload({ ...download, download_description: e.target.value })} />
+            <StandardTextField errorMessage='A file name is required!' hasError={download?.file_name.length === 0} value={download?.file_name} label='Name' onChange={(e) => setDownload({ ...download, file_name: e.target.value })} />
+            <StandardTextField errorMessage='A file size is required!' hasError={download?.file_size.length === 0} value={download?.file_size} label='Size' onChange={(e) => setDownload({ ...download, file_size: e.target.value })} />
+            <StandardDropDown errorMessage='An operating system must be selected!' hasError={download?.os_type === 'Make a selection'} value={download?.os_type} data={osTypes} label='Operating System' onChange={(e) => setDownload({ ...download, os_type: e.target.value })} />
+            <StandardTextField errorMessage='A download path is required!' hasError={download?.path.length === 0} value={download?.path} label='Path' onChange={(e) => setDownload({ ...download, path: e.target.value })} />
+            <StandardTextField errorMessage='A download description is required!' hasError={download?.download_description.length === 0} rows={4} value={download?.download_description} label='Description' onChange={(e) => setDownload({ ...download, download_description: e.target.value })} />
         </Form.Group>
     );
 };
