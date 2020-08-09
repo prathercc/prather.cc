@@ -4,6 +4,20 @@ export const getUsers = () => {
   return fetch(`${host}/api/v1/user`).then(res => res.json());
 };
 
+export const getUser = (id) => {
+  return fetch(`${host}/api/v1/user/${id}`).then(res => res.json());
+};
+
+export const updateUser = (id, user) => {
+  return fetch(`${host}/api/v1/user/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user),
+  }).then(res => res.json());
+};
+
 export const createUser = (user) => {
   return fetch(`${host}/api/v1/user`, {
     method: 'POST',
