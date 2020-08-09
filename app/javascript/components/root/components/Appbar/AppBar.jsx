@@ -2,12 +2,11 @@ import React, { useContext, forwardRef } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Navbar from 'react-bootstrap/Navbar';
-import { getThemeColor, getIconSizing } from '../Utility/Utility';
-import Admin from './Admin';
+import { getThemeColor, getIconSizing, StandardTooltip } from '../Utility/Utility';
 import { AppContext } from '../../AppContext';
 import NavIcon from 'react-bootstrap-icons/dist/icons/list';
+import InfoIcon from 'react-bootstrap-icons/dist/icons/question-circle';
 import { useCurrentBreakpointName } from 'react-socks';
-import MoreInformation from './MoreInformation';
 import SignIn from './SignIn';
 
 function AppBar({ userData, setUserData, onSelect, displayAlert }) {
@@ -42,14 +41,28 @@ function AppBar({ userData, setUserData, onSelect, displayAlert }) {
             <Dropdown.Menu style={{ minWidth: '100%', backgroundColor: bgColor, border: `2px solid ${getThemeColor(0.5)}`, borderTop: 'none', fontSize: standardTitleFontSize, textAlign: 'center' }}>
               <Nav.Link as='div' className='appbarDefault' eventKey='Home' onClick={() => onSelect('Home')}>Home</Nav.Link>
               <Nav.Link as='div' className='appbarDefault' eventKey='Software' onClick={() => onSelect('Software')}>Software</Nav.Link>
+              {userData?.group === 'Administrator' && <Nav.Link as='div' className='appbarDefault' eventKey='Maintenance' onClick={() => onSelect('Maintenance')}>Maintenance</Nav.Link>}
             </Dropdown.Menu>
           </Dropdown>
         </Nav>
         <SignIn displayAlert={displayAlert} setUserData={setUserData} userData={userData} />
-        {userData && <Admin displayAlert={displayAlert} setUserData={setUserData} userData={userData} />}
         <MoreInformation />
       </Navbar>
     </div >
+  );
+};
+
+const MoreInformation = () => {
+  return (
+    <>
+      <StandardTooltip text='More Information'>
+        <Nav.Link style={{ minHeight: '100%', display: 'flex' }} as='span' className='appbarDefault'>
+          <span style={{ fontSize: getIconSizing(), margin: 'auto', lineHeight: 0 }}>
+            <InfoIcon />
+          </span>
+        </Nav.Link>
+      </StandardTooltip>
+    </>
   );
 };
 

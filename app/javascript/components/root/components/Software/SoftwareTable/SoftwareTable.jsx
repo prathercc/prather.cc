@@ -56,7 +56,7 @@ function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
         </tbody>
       </Table>
       <span style={{ marginBottom: '1vh', display: software ? 'none' : '' }}><StandardSpinner /></span>
-      {userData && <EditSoftware displayAlert={displayAlert} setSoftware={setSoftware} />}
+      {userData?.group === 'Administrator' && <EditSoftware displayAlert={displayAlert} setSoftware={setSoftware} />}
     </StandardPage>
   );
 };
@@ -167,11 +167,29 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares, d
           <StandardTextField value={software.repo_link} label='Repository Link' onChange={(e) => setSoftware({ ...software, repo_link: e.target.value })} />
           <StandardTextField value={software.languages} label='Languages' onChange={(e) => setSoftware({ ...software, languages: e.target.value })} />
           <StandardTextField value={software.youtube_link} label='Youtube Video Identifier' onChange={(e) => setSoftware({ ...software, youtube_link: e.target.value })} />
-          <StandardCheckBox label='Is this legacy software?' value={software.is_legacy} onChange={() => setSoftware({ ...software, is_legacy: !software.is_legacy })} />
-          <StandardCheckBox label='Windows' value={software.windows} onChange={() => setSoftware({ ...software, windows: !software.windows })} />
-          <StandardCheckBox label='Linux' value={software.linux} onChange={() => setSoftware({ ...software, linux: !software.linux })} />
-          <StandardCheckBox label='Mac' value={software.mac} onChange={() => setSoftware({ ...software, mac: !software.mac })} />
-          <StandardCheckBox label='Android' value={software.android} onChange={() => setSoftware({ ...software, android: !software.android })} />
+          <Container>
+            <Row>
+              <Col>
+                <StandardCheckBox label='Legacy Application' value={software.is_legacy} onChange={() => setSoftware({ ...software, is_legacy: !software.is_legacy })} />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <StandardCheckBox label='Windows' value={software.windows} onChange={() => setSoftware({ ...software, windows: !software.windows })} />
+              </Col>
+              <Col>
+                <StandardCheckBox label='Linux' value={software.linux} onChange={() => setSoftware({ ...software, linux: !software.linux })} />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <StandardCheckBox label='Mac' value={software.mac} onChange={() => setSoftware({ ...software, mac: !software.mac })} />
+              </Col>
+              <Col>
+                <StandardCheckBox label='Android' value={software.android} onChange={() => setSoftware({ ...software, android: !software.android })} />
+              </Col>
+            </Row>
+          </Container>
         </Form.Group>
       </StandardModal>
     </>
@@ -208,7 +226,7 @@ const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication,
         {compatibility.android && <Badge variant='light'>Android</Badge>}{' '}
       </CustomTd>
       <CustomTd>{software.dev_date}</CustomTd>
-      {userData && <CustomTd noOnClick><EditSoftware displayAlert={displayAlert} setSoftware={setSoftware} software={software} /></CustomTd>}
+      {userData?.group === 'Administrator' && <CustomTd noOnClick><EditSoftware displayAlert={displayAlert} setSoftware={setSoftware} software={software} /></CustomTd>}
     </tr>
   );
 };

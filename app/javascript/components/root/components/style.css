@@ -26,6 +26,7 @@
 .defaultButtonDisabled {
     color: white;
     background-color: rgb(79, 201, 201, 0.5) !important;
+    box-shadow: 3px 3px black;
     filter: grayscale(1);
 }
 

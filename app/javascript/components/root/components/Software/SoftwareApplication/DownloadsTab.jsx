@@ -26,7 +26,7 @@ function DownloadsTab({ app, userData, style, displayAlert }) {
         <>
             {!downloads && <StandardSpinner />}
             {downloads && <DownloadTable displayAlert={displayAlert} downloads={downloads} style={{ margin: 'auto', ...style }} userData={userData} app={app} setDownloads={setDownloads} />}
-            {userData && <EditDownloads displayAlert={displayAlert} app={app} setMainDownloads={setDownloads} />}
+            {userData?.group === 'Administrator' && <EditDownloads displayAlert={displayAlert} app={app} setMainDownloads={setDownloads} />}
         </>
     );
 };
@@ -49,7 +49,7 @@ const DownloadTable = ({ style, downloads, userData, app, setDownloads, displayA
                             <CustomTh>Filename</CustomTh>
                             <CustomTh>File Size </CustomTh>
                             <CustomTh>Compatibility</CustomTh>
-                            {userData && <CustomTh />}
+                            {userData?.group === 'Administrator' && <CustomTh />}
                         </tr>
                     </thead>
                     <tbody>
@@ -94,7 +94,7 @@ const DlRow = ({ download, userData, app, setDownloads, displayAlert }) => {
                 <CustomTd>{file_name}</CustomTd>
                 <CustomTd>{file_size}</CustomTd>
                 <CustomTd>{os_type}</CustomTd>
-                {userData && <CustomTd noOnClick><EditDownloads displayAlert={displayAlert} download={download} app={app} setMainDownloads={setDownloads} /></CustomTd>}
+                {userData?.group === 'Administrator' && <CustomTd noOnClick><EditDownloads displayAlert={displayAlert} download={download} app={app} setMainDownloads={setDownloads} /></CustomTd>}
             </tr>
             <StandardModal buttons={<DownloadButton />} title='Download File' modalOpen={modalOpen} handleModalClose={() => { setModalOpen(false) }} closable={false}>
                 <div style={{ display: 'inline', color: getThemeColor(1) }}>File Name: </div><div style={{ display: 'inline' }}>{file_name}</div>
