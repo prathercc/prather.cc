@@ -44,6 +44,9 @@ function Root() {
             <Switch>
               <Route exact path='/' component={() => <MainWrapper activeKey='Home' />} />
             </Switch>
+            <Switch>
+              <Route exact path='/maintenance' component={() => <MainWrapper activeKey='Maintenance' />} />
+            </Switch>
           </div>
         </div>
       </Router>

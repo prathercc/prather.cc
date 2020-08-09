@@ -6,6 +6,7 @@ import SiteLogo from './Mainpage/SiteLogo/SiteLogo';
 import { getSession } from '../authService';
 import Tab from 'react-bootstrap/Tab';
 import { StandardAlert } from './Utility/Utility';
+import Maintenance from './MaintenancePage/Maintenance';
 
 const MainWrapper = ({ activeKey: urlKey, activeApplication: urlApplication }) => {
     const [alertObject, setAlertObject] = useState({ text: '', success: false, open: false });
@@ -31,7 +32,7 @@ const MainWrapper = ({ activeKey: urlKey, activeApplication: urlApplication }) =
     }, [activeKey]);
 
     const getMainKeyRoute = (key) => {
-        return key === 'Home' ? '/' : key === 'Software' ? '/software' : '';
+        return key === 'Home' ? '/' : key === 'Software' ? '/software' : key === 'Maintenance' ? '/maintenance' : '';
     }
     const handleOnSelect = (key) => {
         setActiveKey(key);
@@ -54,6 +55,9 @@ const MainWrapper = ({ activeKey: urlKey, activeApplication: urlApplication }) =
                 </Tab.Pane>
                 <Tab.Pane eventKey='Application'>
                     <SoftwareApplication displayAlert={displayAlert} userData={userData} name={activeApplication} />
+                </Tab.Pane>
+                <Tab.Pane mountOnEnter unmountOnExit eventKey='Maintenance'>
+                    <Maintenance onSelect={handleOnSelect} displayAlert={displayAlert} userData={userData} />
                 </Tab.Pane>
                 <StandardAlert success={alertObject.success} text={alertObject.text} alertOpen={alertObject.open} setAlertOpen={(val) => setAlertObject({ ...alertObject, open: val })} />
             </Tab.Content>
