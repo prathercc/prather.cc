@@ -12,6 +12,8 @@ import XIcon from 'react-bootstrap-icons/dist/icons/x';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Alert from 'react-bootstrap/Alert';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 export const StandardImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
     return (
@@ -69,6 +71,20 @@ export const StandardDropDown = ({ onChange, label, isActive = true, style, data
                 modified && hasError && <Form.Text style={{ fontSize: standardSmallFontSize, margin: 0, color: 'red' }}>{errorMessage}</Form.Text>
             }
         </div>
+    );
+};
+
+export const StandardDatePicker = ({ date, setDate, label }) => {
+    const { standardBodyFontSize, fontStyle } = useContext(AppContext);
+    const CustomInput = ({ value, onClick }) => (
+        <>
+            <Form.Label style={{ textAlign: 'left', width: '100%', marginBottom: 0, fontSize: standardBodyFontSize, fontFamily: fontStyle }}>{label}</Form.Label>
+            <StandardButton style={{ paddingLeft: '15px', paddingRight: '15px' }} onClick={onClick}>{value}</StandardButton>
+        </>
+    );
+
+    return (
+        <DatePicker showYearDropdown selected={date} onChange={(d) => setDate(d)} customInput={<CustomInput />} />
     );
 };
 

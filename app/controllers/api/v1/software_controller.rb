@@ -25,7 +25,7 @@ module Api
     end
 
       def create
-        if current_user
+        if current_user[:group] == 'Administrator'
           software = Software.new(software_params)
           softwares = Software.all
           exists = false
@@ -57,7 +57,7 @@ module Api
       end
 
       def destroy
-        if current_user
+        if current_user[:group] == 'Administrator'
           software = Software.find(params[:id])
           software.destroy
           render json: {
@@ -73,7 +73,7 @@ module Api
       end
 
       def update
-        if current_user
+        if current_user[:group] == 'Administrator'
           software = Software.find(params[:id])
           if software.update(software_params)
             render json: {

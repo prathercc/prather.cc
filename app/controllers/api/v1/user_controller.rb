@@ -8,7 +8,7 @@ module Api
       # GET /user
       # GET /user.json
       def index
-        if current_user
+        if current_user[:group] == 'Administrator'
           users = User.all
           render json: {
             message: 'Retrieved users',
@@ -25,7 +25,7 @@ module Api
       # GET /user/1
       # GET /user/1.json
       def show
-        if current_user
+        if current_user[:group] == 'Administrator'
           user = User.find(params[:id])
           render json: {
             message: 'Retrieved user',
@@ -48,7 +48,7 @@ module Api
       # POST /user
       # POST /user.json
       def create
-        if current_user
+        if current_user[:group] == 'Administrator'
           user = User.new({ email: params[:email], password: params[:password], password_confirmation: params[:password_confirmation], group: params[:group] })
           if user.save
             render json: {
@@ -72,7 +72,7 @@ module Api
       # PATCH/PUT /user/1
       # PATCH/PUT /user/1.json
       def update
-        if current_user
+        if current_user[:group] == 'Administrator'
           user = User.find(params[:id])
           if user.update(user_params)
             render json: {
@@ -96,7 +96,7 @@ module Api
       # DELETE /user/1
       # DELETE /user/1.json
       def destroy
-        if current_user
+        if current_user[:group] == 'Administrator'
           user = User.find(params[:id])
           user.destroy
           render json: {

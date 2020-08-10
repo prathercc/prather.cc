@@ -4,25 +4,23 @@ module Api
   module V1
     class FeatureController < ApplicationController
       def index
-        id = params[:id]
-        if !id.nil?
-          feature = Feature.find(id)
-          render json: {
-            message: 'Retrieved feature',
-            data: feature
-          }, status: 200
-        else
           software = Software.find(params[:software_id])
           features = software.features.all.sort_by(&:id)
-          render json: {
-            message: 'Loaded feature',
-            data: features
-          }, status: 200
-        end
+          if features
+            render json: {
+              message: 'Loaded feature',
+              data: features
+            }, status: 200
+          else
+            render json: {
+              message: 'No features found with the given software id',
+              data: nil
+            }, status: 400
+          end
     end
 
       def create
-        if current_user
+        if current_user[:group] == 'Administrator'
           software = Software.find(params[:software_id])
           feature = software.features.create(feature_params)
           render json: {
@@ -38,7 +36,7 @@ module Api
       end
 
       def destroy
-        if current_user
+        if current_user[:group] == 'Administrator'
           feature = Feature.find(params[:id])
           feature.destroy
           render json: {
@@ -54,7 +52,7 @@ module Api
         end
 
       def update
-        if current_user
+        if current_user[:group] == 'Administrator'
           feature = Feature.find(params[:id])
           if feature.update(feature_params)
             render json: {
