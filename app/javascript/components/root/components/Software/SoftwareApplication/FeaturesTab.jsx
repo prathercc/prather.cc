@@ -91,7 +91,7 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
                 </StandardCard>
             </Col>
             <Col md={12} lg={7} style={{ display: allContentLoaded ? 'flex' : 'none' }}>
-                <StandardCard title={feature.title} style={{ margin: 'auto', verticalAlign: 'middle', minWidth: '100%' }}>
+                <StandardCard title={feature.title} style={{ verticalAlign: 'middle', maxWidth: '95%' }}>
                     <div style={{ margin: 'auto', maxWidth: '95%', textAlign: 'center', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
                     {userData?.group === 'Administrator' && <EditFeature displayAlert={displayAlert} app={app} setFeatures={setFeatures} feature={feature} />}
                 </StandardCard>

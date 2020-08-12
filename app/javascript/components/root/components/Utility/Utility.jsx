@@ -187,11 +187,11 @@ export const StandardButton = ({ onClick, style, children, disabled = false }) =
     );
 };
 
-export const StandardIconButton = ({ icon, style, onClick, toolTip, children }) => {
+export const StandardIconButton = ({ icon, style, onClick, toolTip, children, disabled = false }) => {
     const padding = { padding: '2px', paddingLeft: '20px', paddingRight: '20px' };
     return (
         <StandardTooltip text={toolTip}>
-            <div onClick={onClick} className={'iconButton'} style={{ fontSize: getIconSizing(), lineHeight: 0, margin: 'auto', maxWidth: 'max-content', cursor: 'pointer', ...style, ...padding }}>
+            <div onClick={disabled ? () => { } : onClick} className={disabled ? 'iconButtonDisabled' : 'iconButton'} style={{ fontSize: getIconSizing(), lineHeight: 0, margin: 'auto', maxWidth: 'max-content', cursor: 'pointer', ...style, ...padding }}>
                 {icon} {children}
             </div>
         </StandardTooltip>
@@ -228,7 +228,7 @@ export const StandardSeparator = ({ style, onClick }) => {
 export const StandardCard = ({ title, style, children, className, onClick, noBorders }) => {
     const { standardBodyFontSize, standardTitleFontSize, fontStyle } = useContext(AppContext);
     return (
-        <Card
+        <div
             onClick={onClick}
             className={className}
             style={{
@@ -238,13 +238,12 @@ export const StandardCard = ({ title, style, children, className, onClick, noBor
                 fontSize: standardBodyFontSize,
                 alignItems: 'center',
                 border: 'none',
-                fontFamily: fontStyle
             }}>
-            {title && <div style={{ fontSize: standardTitleFontSize, borderTop: noBorders ? '' : `2px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderRadius: '15px', color: getThemeColor(1) }}>{title}</div>}
-            <div style={noBorders ? {} : { borderBottom: `2px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderRadius: '25px' }}>
+            <div style={noBorders ? {} : { borderBottom: `2px solid ${getThemeColor(0.5)}`, borderTop: `2px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderRadius: '25px', boxShadow: '5px 5px black', fontFamily: fontStyle }}>
+                <span style={{ fontSize: standardTitleFontSize, minWidth: '100%', color: getThemeColor(1) }}>{title}</span>
                 {children}
             </div>
-        </Card>
+        </div>
     );
 };
 
