@@ -56,7 +56,7 @@ const MainWrapper = ({ activeKey: urlKey, activeApplication: urlApplication }) =
                 <Tab.Pane eventKey='Application'>
                     <SoftwareApplication displayAlert={displayAlert} userData={userData} name={activeApplication} />
                 </Tab.Pane>
-                <Tab.Pane mountOnEnter unmountOnExit eventKey='Maintenance'>
+                <Tab.Pane eventKey='Maintenance'>
                     <Maintenance onSelect={handleOnSelect} displayAlert={displayAlert} userData={userData} />
                 </Tab.Pane>
                 <StandardAlert success={alertObject.success} text={alertObject.text} alertOpen={alertObject.open} setAlertOpen={(val) => setAlertObject({ ...alertObject, open: val })} />

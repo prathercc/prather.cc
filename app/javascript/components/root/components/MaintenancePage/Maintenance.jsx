@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import { StandardPage, StandardIconButton, StandardModal, StandardTextField, StandardButton, StandardDropDown, getThemeColor } from '../Utility/Utility';
+import { StandardPage, StandardIconButton, StandardModal, StandardTextField, StandardButton, StandardDropDown, getThemeColor, StandardCard } from '../Utility/Utility';
 import CreateIcon from 'react-bootstrap-icons/dist/icons/person-plus';
 import DeleteIcon from 'react-bootstrap-icons/dist/icons/person-dash';
 import UpdateIcon from 'react-bootstrap-icons/dist/icons/person-check';
+import UnknownIcon from 'react-bootstrap-icons/dist/icons/question-diamond';
 import { getUsers, createUser, deleteUser, updateUser, getUser } from '../../userService';
 function Maintenance({ userData, displayAlert, onSelect }) {
     useEffect(() => {
@@ -18,19 +19,33 @@ function Maintenance({ userData, displayAlert, onSelect }) {
     return (
         <StandardPage title='Maintenance Portal'>
             <Row style={{ marginTop: '2vh' }}>
-                <Col>
-                    <div style={{ borderBottom: `2px solid ${getThemeColor(0.5)}`, maxWidth: 'max-content', margin: 'auto', color: getThemeColor(1) }}>User Actions</div>
-                    <CreateUser userData={userData} displayAlert={displayAlert} />
-                    <UpdateUser userData={userData} displayAlert={displayAlert} />
-                    <DeleteUser userData={userData} displayAlert={displayAlert} />
+                <Col xs={12} md={6} style={{ display: 'flex' }}>
+                    <Col style={{ display: 'flex' }}>
+                        <div style={{ verticalAlign: 'middle', margin: 'auto' }}>
+                            <div style={{ borderBottom: `2px solid ${getThemeColor(0.5)}`, maxWidth: 'max-content', margin: 'auto', color: getThemeColor(1) }}>User Actions</div>
+                            <CreateUser userData={userData} displayAlert={displayAlert} />
+                            <UpdateUser userData={userData} displayAlert={displayAlert} />
+                            <DeleteUser userData={userData} displayAlert={displayAlert} />
+                        </div>
+                    </Col>
+                    <Col style={{ display: 'flex' }}>
+                        <div style={{ verticalAlign: 'middle', margin: 'auto' }}>
+                            <div style={{ borderBottom: `2px solid ${getThemeColor(0.5)}`, maxWidth: 'max-content', margin: 'auto', color: getThemeColor(1) }}>Site Actions</div>
+                            <StandardIconButton disabled style={{ marginTop: '1vh' }} toolTip='TBD' icon={<UnknownIcon />} />
+                            <StandardIconButton disabled style={{ marginTop: '1vh' }} toolTip='TBD' icon={<UnknownIcon />} />
+                            <StandardIconButton disabled style={{ marginTop: '1vh' }} toolTip='TBD' icon={<UnknownIcon />} />
+                        </div>
+                    </Col>
                 </Col>
-                <Col>
-                    <div style={{ color: getThemeColor(1) }}>Email: <span style={{ color: 'white' }}>{userData?.email}</span></div>
-                    <div style={{ color: getThemeColor(1) }}>Group: <span style={{ color: 'white' }}>{userData?.group}</span></div>
-                    <div style={{ color: getThemeColor(1) }}>Session Token: <span style={{ color: 'white' }}>{userData?.token}</span></div>
-                    <div style={{ color: getThemeColor(1) }}>Account Identifier: <span style={{ color: 'white' }}>{userData?.id}</span></div>
-                    <div style={{ color: getThemeColor(1) }}>Account Created: <span style={{ color: 'white' }}>{new Date(userData?.created_at).toLocaleDateString()}</span></div>
-                    <div style={{ color: getThemeColor(1) }}>Last Sign-in: <span style={{ color: 'white' }}>{new Date(userData?.updated_at).toLocaleDateString()}</span></div>
+                <Col xs={12} md={6} style={{ display: 'flex', marginTop: '1vh' }}>
+                    <StandardCard title='Session Information' style={{ verticalAlign: 'middle', minWidth: '100%' }}>
+                        <div style={{ color: getThemeColor(1) }}>Email: <span style={{ color: 'white' }}>{userData?.email}</span></div>
+                        <div style={{ color: getThemeColor(1) }}>Group: <span style={{ color: 'white' }}>{userData?.group}</span></div>
+                        <div style={{ color: getThemeColor(1) }}>Session Token: <span style={{ color: 'white' }}>{userData?.token}</span></div>
+                        <div style={{ color: getThemeColor(1) }}>Account Identifier: <span style={{ color: 'white' }}>{userData?.id}</span></div>
+                        <div style={{ color: getThemeColor(1) }}>Account Created: <span style={{ color: 'white' }}>{new Date(userData?.created_at).toLocaleDateString()}</span></div>
+                        <div style={{ color: getThemeColor(1) }}>Last Sign-in: <span style={{ color: 'white' }}>{new Date(userData?.updated_at).toLocaleDateString()}</span></div>
+                    </StandardCard>
                 </Col>
             </Row>
         </StandardPage>
@@ -88,11 +103,6 @@ const UpdateUser = ({ userData, displayAlert }) => {
         const { data } = await getUser(e.target.value);
         setSelectedRole(data.group || 'Make a selection');
     }
-
-    useEffect(() => {
-        console.log(selectedUser)
-        console.log(userData)
-    }, [selectedUser, userData])
     return (
         <>
             <StandardModal buttons={<UpdateButton />} title='Update User' modalOpen={modalOpen} handleModalClose={handleModalClose}>
