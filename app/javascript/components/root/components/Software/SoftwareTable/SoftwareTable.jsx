@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { fetchAllSoftware, postSoftware, putSoftware, deleteSoftware } from '../../../softwareService';
-import { StandardImage, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing, StandardSpinner, StandardIconButton } from '../../Utility/Utility';
+import { StandardImage, StandardDatePicker, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing, StandardSpinner, StandardIconButton } from '../../Utility/Utility';
 import Add from 'react-bootstrap-icons/dist/icons/file-plus';
 import Edit from 'react-bootstrap-icons/dist/icons/pencil';
 
@@ -79,41 +79,32 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares, d
     dev_date: new Date()
   };
   const [software, setSoftware] = useState(existingSoftware ? existingSoftware : blankSoftware);
-  const canSubmitSoftware = software.name.length > 0;
+  const isSubmitDisabled = software.name.length === 0 || software.icon_link.length === 0 || software.description.length === 0 ||
+    software.image_link.length === 0 || software.repo_link.length === 0 || software.languages.length === 0
 
   const handleCreateSoftware = async () => {
-    if (canSubmitSoftware) {
-      const { data } = await postSoftware(software);
-      if (data) {
-        const { data } = await fetchAllSoftware();
-        setSoftwares(data);
-        setSoftware(blankSoftware);
-        setModalOpen(false);
-        displayAlert('Successfully saved software', true);
-      }
-      else {
-        displayAlert('Network error while saving software', false);
-      }
+    const { data } = await postSoftware(software);
+    if (data) {
+      const { data } = await fetchAllSoftware();
+      setSoftwares(data);
+      setSoftware(blankSoftware);
+      setModalOpen(false);
+      displayAlert('Successfully saved software', true);
     }
     else {
-      displayAlert('Complete the form and try again', false);
+      displayAlert('Network error while saving software', false);
     }
   };
   const handleEditSoftware = async () => {
-    if (canSubmitSoftware) {
-      const { data } = await putSoftware(software);
-      if (data) {
-        const { data } = await fetchAllSoftware();
-        setSoftwares(data);
-        setModalOpen(false);
-        displayAlert('Successfully saved software', true);
-      }
-      else {
-        displayAlert('Network error while saving software', false);
-      }
+    const { data } = await putSoftware(software);
+    if (data) {
+      const { data } = await fetchAllSoftware();
+      setSoftwares(data);
+      setModalOpen(false);
+      displayAlert('Successfully saved software', true);
     }
     else {
-      displayAlert('Complete the form and try again', false);
+      displayAlert('Network error while saving software', false);
     }
   };
   const handleDeleteSoftware = async () => {
@@ -134,7 +125,7 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares, d
       <Container>
         <Row>
           <Col>
-            <StandardButton onClick={() => handleEditSoftware()}>Save</StandardButton>
+            <StandardButton disabled={isSubmitDisabled} onClick={() => handleEditSoftware()}>Save</StandardButton>
           </Col>
           <Col>
             <StandardButton onClick={() => handleDeleteSoftware()}>Delete</StandardButton>
@@ -146,7 +137,7 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares, d
 
   const NewButtons = () => {
     return (
-      <StandardButton onClick={() => handleCreateSoftware()}>Create</StandardButton>
+      <StandardButton disabled={isSubmitDisabled} onClick={() => handleCreateSoftware()}>Create</StandardButton>
     );
   };
 
@@ -160,17 +151,17 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares, d
       }
       <StandardModal title={`Software Alteration - ${!existingSoftware ? 'Create' : 'Modify'}`} buttons={existingSoftware ? <ExistingButtons /> : <NewButtons />} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
         <Form.Group style={{ width: '95%', margin: 'auto' }}>
-          <StandardTextField value={software.name} isActive={!existingSoftware} label='Name' onChange={(e) => setSoftware({ ...software, name: e.target.value })} />
-          <StandardTextField value={software.icon_link} label='Icon Image Link' onChange={(e) => setSoftware({ ...software, icon_link: e.target.value })} />
-          <StandardTextField value={software.image_link} label='Image Link' onChange={(e) => setSoftware({ ...software, image_link: e.target.value })} />
-          <StandardTextField value={software.description} rows={4} label='Description' onChange={(e) => setSoftware({ ...software, description: e.target.value })} />
-          <StandardTextField value={software.repo_link} label='Repository Link' onChange={(e) => setSoftware({ ...software, repo_link: e.target.value })} />
-          <StandardTextField value={software.languages} label='Languages' onChange={(e) => setSoftware({ ...software, languages: e.target.value })} />
+          <StandardTextField errorMessage='A name is required!' hasError={software.name.length === 0} value={software.name} isActive={!existingSoftware} label='Name' onChange={(e) => setSoftware({ ...software, name: e.target.value })} />
+          <StandardTextField errorMessage='An icon link is required!' hasError={software.icon_link.length === 0} value={software.icon_link} label='Icon Image Link' onChange={(e) => setSoftware({ ...software, icon_link: e.target.value })} />
+          <StandardTextField errorMessage='An image link is required!' hasError={software.image_link.length === 0} value={software.image_link} label='Image Link' onChange={(e) => setSoftware({ ...software, image_link: e.target.value })} />
+          <StandardTextField errorMessage='A description is required!' hasError={software.description.length === 0} value={software.description} rows={4} label='Description' onChange={(e) => setSoftware({ ...software, description: e.target.value })} />
+          <StandardTextField errorMessage='A repository link is required!' hasError={software.repo_link.length === 0} value={software.repo_link} label='Repository Link' onChange={(e) => setSoftware({ ...software, repo_link: e.target.value })} />
+          <StandardTextField errorMessage='Language(s) are required!' hasError={software.languages.length === 0} value={software.languages} label='Languages' onChange={(e) => setSoftware({ ...software, languages: e.target.value })} />
           <StandardTextField value={software.youtube_link} label='Youtube Video Identifier' onChange={(e) => setSoftware({ ...software, youtube_link: e.target.value })} />
           <Container>
             <Row>
               <Col>
-                <StandardCheckBox label='Legacy Application' value={software.is_legacy} onChange={() => setSoftware({ ...software, is_legacy: !software.is_legacy })} />
+                <StandardDatePicker label='Development Date' date={new Date(software.dev_date)} setDate={(d) => setSoftware({ ...software, dev_date: d })} />
               </Col>
             </Row>
             <Row>
@@ -187,6 +178,11 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares, d
               </Col>
               <Col>
                 <StandardCheckBox label='Android' value={software.android} onChange={() => setSoftware({ ...software, android: !software.android })} />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <StandardCheckBox label='Legacy Application' value={software.is_legacy} onChange={() => setSoftware({ ...software, is_legacy: !software.is_legacy })} />
               </Col>
             </Row>
           </Container>
@@ -211,6 +207,11 @@ const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication,
       </td>
     );
   };
+  const months = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  const developmentDate = new Date(software.dev_date);
+  const dateDisplayString = months[developmentDate.getMonth()] + ' ' + developmentDate.getFullYear();
 
   return (
     <tr className='tableMouseOver' style={{ cursor: 'pointer' }}>
@@ -225,7 +226,7 @@ const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication,
         {compatibility.mac && <Badge variant='light'>Mac</Badge>}{' '}
         {compatibility.android && <Badge variant='light'>Android</Badge>}{' '}
       </CustomTd>
-      <CustomTd>{software.dev_date}</CustomTd>
+      <CustomTd>{dateDisplayString}</CustomTd>
       {userData?.group === 'Administrator' && <CustomTd noOnClick><EditSoftware displayAlert={displayAlert} setSoftware={setSoftware} software={software} /></CustomTd>}
     </tr>
   );
