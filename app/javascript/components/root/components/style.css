@@ -149,6 +149,7 @@
     color: rgb(79, 201, 201, 1);
     background-color: rgb(79, 201, 201, 0.1);
     outline: 0;
+    margin-top: 1px;
 }
 
 .tabsLinkInactive {
@@ -162,6 +163,7 @@
 .tabsLinkInactive:hover {
     background-color: rgb(79, 201, 201, 0.1);
     color: rgb(79, 201, 201, 1);
+    margin-top: 1px;
 }
 
 /* ************ */

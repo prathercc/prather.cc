@@ -122,7 +122,7 @@ export const StandardTextField = ({ onChange, label, isActive = true, value, row
 };
 
 export const StandardImage = ({ style, noErrorMessage, src, className, onClick, onLoaded = () => { }, toolTip, overlayText }) => {
-    const { standardBodyFontSize, fontStyle, standardSmallFontSize, bgColor } = useContext(AppContext);
+    const { standardSmallFontSize, bgColor } = useContext(AppContext);
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
     const handleOnLoad = () => {
@@ -155,11 +155,13 @@ export const StandardImage = ({ style, noErrorMessage, src, className, onClick, 
                         <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />
                     </StandardTooltip>
                 }
-                <div className='legacyAppOverlay' style={{
-                    color: getThemeColor(1), fontSize: standardSmallFontSize,
-                    position: 'absolute', top: '45%', backgroundColor: bgColor,
-                    pointerEvents: 'none', transform: 'rotate(0deg)', left: 0, right: 0
-                }}>{overlayText}</div>
+                {!hasError &&
+                    <div className='legacyAppOverlay' style={{
+                        color: getThemeColor(1), fontSize: standardSmallFontSize,
+                        position: 'absolute', top: '45%', backgroundColor: bgColor,
+                        pointerEvents: 'none', left: 0, right: 0
+                    }}>{overlayText}</div>
+                }
             </div>
         </>
     );

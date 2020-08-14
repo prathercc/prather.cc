@@ -87,6 +87,7 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
                         onClick={() => setImageModalObj({ open: true, imageLink: feature.image_link })}
                         style={{ maxWidth: '100%' }}
                         onLoaded={() => setLoadingObj({ ...loadingObj, image: true })}
+                        overlayText={app.is_legacy ? 'No Longer In Development' : ''}
                     />
                 </StandardCard>
             </Col>

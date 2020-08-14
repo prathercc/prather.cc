@@ -41,6 +41,7 @@ const InformationTab = ({ setImageModalObj, style, app }) => {
                             onClick={() => setImageModalObj({ open: true, imageLink: image_link })}
                             src={image_link}
                             onLoaded={() => setLoadingObj({ ...loadingObj, image: true })}
+                            overlayText={app.is_legacy ? 'No Longer In Development' : ''}
                         />
                     </StandardCard>
                 </Col>
