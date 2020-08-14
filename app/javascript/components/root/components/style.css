@@ -19,7 +19,7 @@
 .defaultImageNudge:hover {
     border: solid 2px rgb(79, 201, 201, 0.5);
     background-color: rgb(79, 201, 201, 0.1);
-    box-shadow: 15px 10px black;
+    box-shadow: 11px 11px black;
     cursor: pointer;
 }
 
@@ -57,7 +57,7 @@
     border-radius: 5px;
     color: white !important;
     background-color: rgb(79, 201, 201, 0.5);
-    box-shadow: 3px 3px black;
+    box-shadow: 5px 5px black;
     transition: all 0.2s ease-in-out;
 }
 
@@ -65,6 +65,22 @@
     color: #4fc9c9 !important;
     background-color: rgb(79, 201, 201, 0.1);
     box-shadow: 10px 10px black;
+}
+
+.legacyAppOverlay {
+    animation: legacyFade infinite 4s both;
+}
+
+@keyframes legacyFade {
+    0% {
+        filter: opacity(1);
+    }
+    50% {
+        filter: opacity(0.5);
+    }
+    100% {
+        filter: opacity(1);
+    }
 }
 
 /* ******** */

@@ -2,8 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import { AppContext } from '../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
 import Modal from 'react-bootstrap/Modal';
@@ -123,7 +121,8 @@ export const StandardTextField = ({ onChange, label, isActive = true, value, row
     );
 };
 
-export const StandardImage = ({ style, noErrorMessage, src, className, onClick, onLoaded = () => { }, toolTip }) => {
+export const StandardImage = ({ style, noErrorMessage, src, className, onClick, onLoaded = () => { }, toolTip, overlayText }) => {
+    const { standardBodyFontSize, fontStyle, standardSmallFontSize, bgColor } = useContext(AppContext);
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
     const handleOnLoad = () => {
@@ -137,7 +136,7 @@ export const StandardImage = ({ style, noErrorMessage, src, className, onClick, 
     }
 
     return (
-        < >
+        <>
             {isLoading &&
                 <StandardSpinner />
             }
@@ -147,14 +146,21 @@ export const StandardImage = ({ style, noErrorMessage, src, className, onClick, 
                     <div style={{ display: noErrorMessage ? 'none' : '' }}>No image found</div>
                 </>
             }
-            {!hasError && !toolTip &&
-                <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />
-            }
-            {!hasError && toolTip &&
-                <StandardTooltip text={toolTip}>
+            <div style={{ position: 'relative', display: 'inline-block', alignItems: 'center' }}>
+                {!hasError && !toolTip &&
                     <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />
-                </StandardTooltip>
-            }
+                }
+                {!hasError && toolTip &&
+                    <StandardTooltip text={toolTip}>
+                        <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />
+                    </StandardTooltip>
+                }
+                <div className='legacyAppOverlay' style={{
+                    color: getThemeColor(1), fontSize: standardSmallFontSize,
+                    position: 'absolute', top: '45%', backgroundColor: bgColor,
+                    pointerEvents: 'none', transform: 'rotate(0deg)', left: 0, right: 0
+                }}>{overlayText}</div>
+            </div>
         </>
     );
 };

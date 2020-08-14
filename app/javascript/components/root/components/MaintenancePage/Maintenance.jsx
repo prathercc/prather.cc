@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import { StandardPage, StandardIconButton, StandardModal, StandardTextField, StandardButton, StandardDropDown, getThemeColor, StandardCard } from '../Utility/Utility';
+import { StandardPage, StandardIconButton, StandardModal, StandardTextField, StandardButton, StandardDropDown, getThemeColor } from '../Utility/Utility';
 import CreateIcon from 'react-bootstrap-icons/dist/icons/person-plus';
 import DeleteIcon from 'react-bootstrap-icons/dist/icons/person-dash';
 import UpdateIcon from 'react-bootstrap-icons/dist/icons/person-check';
 import UnknownIcon from 'react-bootstrap-icons/dist/icons/question-diamond';
+import SessionIcon from 'react-bootstrap-icons/dist/icons/unlock';
 import { getUsers, createUser, deleteUser, updateUser, getUser } from '../../userService';
 function Maintenance({ userData, displayAlert, onSelect }) {
     useEffect(() => {
@@ -19,10 +20,9 @@ function Maintenance({ userData, displayAlert, onSelect }) {
     return (
         <StandardPage title='Maintenance Portal'>
             <Row style={{ marginTop: '2vh' }}>
-                <Col xs={12} md={6} style={{ display: 'flex' }}>
+                <Col xs={12} md={6} style={{ display: 'flex', margin: 'auto' }}>
                     <Col style={{ display: 'flex' }}>
                         <div style={{ verticalAlign: 'middle', margin: 'auto' }}>
-                            <div style={{ borderBottom: `2px solid ${getThemeColor(0.5)}`, maxWidth: 'max-content', margin: 'auto', color: getThemeColor(1) }}>User Actions</div>
                             <CreateUser userData={userData} displayAlert={displayAlert} />
                             <UpdateUser userData={userData} displayAlert={displayAlert} />
                             <DeleteUser userData={userData} displayAlert={displayAlert} />
@@ -30,25 +30,40 @@ function Maintenance({ userData, displayAlert, onSelect }) {
                     </Col>
                     <Col style={{ display: 'flex' }}>
                         <div style={{ verticalAlign: 'middle', margin: 'auto' }}>
-                            <div style={{ borderBottom: `2px solid ${getThemeColor(0.5)}`, maxWidth: 'max-content', margin: 'auto', color: getThemeColor(1) }}>Site Actions</div>
-                            <StandardIconButton disabled style={{ marginTop: '1vh' }} toolTip='TBD' icon={<UnknownIcon />} />
+                            <ViewSession userData={userData} />
                             <StandardIconButton disabled style={{ marginTop: '1vh' }} toolTip='TBD' icon={<UnknownIcon />} />
                             <StandardIconButton disabled style={{ marginTop: '1vh' }} toolTip='TBD' icon={<UnknownIcon />} />
                         </div>
                     </Col>
                 </Col>
-                <Col xs={12} md={6} style={{ display: 'flex', marginTop: '1vh' }}>
-                    <StandardCard title='Session Information' style={{ verticalAlign: 'middle', minWidth: '100%' }}>
-                        <div style={{ color: getThemeColor(1) }}>Email: <span style={{ color: 'white' }}>{userData?.email}</span></div>
-                        <div style={{ color: getThemeColor(1) }}>Group: <span style={{ color: 'white' }}>{userData?.group}</span></div>
-                        <div style={{ color: getThemeColor(1) }}>Session Token: <span style={{ color: 'white' }}>{userData?.token}</span></div>
-                        <div style={{ color: getThemeColor(1) }}>Account Identifier: <span style={{ color: 'white' }}>{userData?.id}</span></div>
-                        <div style={{ color: getThemeColor(1) }}>Account Created: <span style={{ color: 'white' }}>{new Date(userData?.created_at).toLocaleDateString()}</span></div>
-                        <div style={{ color: getThemeColor(1) }}>Last Sign-in: <span style={{ color: 'white' }}>{new Date(userData?.updated_at).toLocaleDateString()}</span></div>
-                    </StandardCard>
-                </Col>
             </Row>
         </StandardPage>
+    );
+};
+
+const ViewSession = ({ userData }) => {
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const CancelButton = () => {
+        return (
+            <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
+        );
+    };
+
+    return (
+        <>
+            <StandardIconButton onClick={() => setModalOpen(true)} style={{ marginTop: '1vh' }} toolTip='View Session' icon={<SessionIcon />} />
+            <StandardModal buttons={<CancelButton />} title='Session Information' modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
+                <Form.Group style={{ width: '95%', margin: 'auto', paddingBottom: '15px' }}>
+                    <div style={{ color: getThemeColor(1), marginTop: '1vh' }}>Email: <span style={{ color: 'white' }}>{userData?.email}</span></div>
+                    <div style={{ color: getThemeColor(1) }}>Group: <span style={{ color: 'white' }}>{userData?.group}</span></div>
+                    <div style={{ color: getThemeColor(1) }}>Session Token: <span style={{ color: 'white' }}>{userData?.token}</span></div>
+                    <div style={{ color: getThemeColor(1) }}>Account Identifier: <span style={{ color: 'white' }}>{userData?.id}</span></div>
+                    <div style={{ color: getThemeColor(1) }}>Account Created: <span style={{ color: 'white' }}>{new Date(userData?.created_at).toLocaleDateString()}</span></div>
+                    <div style={{ color: getThemeColor(1) }}>Last Sign-in: <span style={{ color: 'white' }}>{new Date(userData?.updated_at).toLocaleDateString()}</span></div>
+                </Form.Group>
+            </StandardModal>
+        </>
     );
 };
 
