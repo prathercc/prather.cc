@@ -105,7 +105,14 @@ const UpdateUser = ({ userData, displayAlert }) => {
     const disabledButton = selectedUser === 'Make a selection' || selectedRole === 'Make a selection' || selectedUser === userData?.id.toString();
     const UpdateButton = () => {
         return (
-            <StandardButton onClick={handleUpdate} disabled={disabledButton}>Update User</StandardButton>
+            <Row>
+                <Col>
+                    <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
+                </Col>
+                <Col>
+                    <StandardButton onClick={handleUpdate} disabled={disabledButton}>Update User</StandardButton>
+                </Col>
+            </Row>
         );
     };
     const handleModalClose = () => {
@@ -172,7 +179,14 @@ const DeleteUser = ({ userData, displayAlert }) => {
     };
     const DeleteButton = () => {
         return (
-            <StandardButton disabled={deleteButtonDisabled} onClick={handleDeleteUser}>Delete User</StandardButton>
+            <Row>
+                <Col>
+                    <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
+                </Col>
+                <Col>
+                    <StandardButton disabled={deleteButtonDisabled} onClick={handleDeleteUser}>Delete User</StandardButton>
+                </Col>
+            </Row>
         );
     };
 
@@ -206,7 +220,14 @@ const CreateUser = ({ userData, displayAlert }) => {
     };
     const CreateButton = () => {
         return (
-            <StandardButton disabled={newButtonDisabled} onClick={handleCreateNewUser}>Create User</StandardButton>
+            <Row>
+                <Col>
+                    <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
+                </Col>
+                <Col>
+                    <StandardButton disabled={newButtonDisabled} onClick={handleCreateNewUser}>Create User</StandardButton>
+                </Col>
+            </Row>
         );
     };
 

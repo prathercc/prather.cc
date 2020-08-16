@@ -76,7 +76,15 @@ const DlRow = ({ download, userData, app, setDownloads, displayAlert }) => {
     };
     const DownloadButton = () => {
         return (
-            <StandardButton onClick={handleDownload}>Download</StandardButton>
+            <Row>
+                <Col>
+                    <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
+                </Col>
+                <Col>
+                    <StandardButton onClick={handleDownload}>Download</StandardButton>
+                </Col>
+            </Row>
+
         );
     };
 
@@ -155,18 +163,30 @@ const EditDownloads = ({ app, setMainDownloads, download: value, displayAlert })
 
     const EditButtons = () => {
         return (
-            <Container>
-                <Row>
-                    <Col><StandardButton disabled={disabledButton} onClick={() => handleEditDownload()}>Save</StandardButton></Col>
-                    <Col><StandardButton onClick={() => handleDeleteDownload()}>Delete</StandardButton></Col>
-                </Row>
-            </Container>
+            <Row>
+                <Col>
+                    <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
+                </Col>
+                <Col>
+                    <StandardButton onClick={handleDeleteDownload}>Delete</StandardButton>
+                </Col>
+                <Col>
+                    <StandardButton disabled={disabledButton} onClick={handleEditDownload}>Save</StandardButton>
+                </Col>
+            </Row>
         );
     };
 
     const AddButton = () => {
         return (
-            <StandardButton disabled={disabledButton} onClick={() => handleAddDownload()}>Save</StandardButton>
+            <Row>
+                <Col>
+                    <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
+                </Col>
+                <Col>
+                    <StandardButton disabled={disabledButton} onClick={() => handleAddDownload()}>Save</StandardButton>
+                </Col>
+            </Row>
         );
     };
 

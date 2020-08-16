@@ -154,10 +154,13 @@ const EditFeature = ({ feature, setFeatures, app: { id, name }, displayAlert }) 
             <Container>
                 <Row>
                     <Col>
-                        <StandardButton disabled={saveButtonDisabled} onClick={() => handleEditFeature()}>Save</StandardButton>
+                        <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
                     </Col>
                     <Col>
-                        <StandardButton onClick={() => handleDeleteFeature()}>Delete</StandardButton>
+                        <StandardButton onClick={handleDeleteFeature}>Delete</StandardButton>
+                    </Col>
+                    <Col>
+                        <StandardButton disabled={saveButtonDisabled} onClick={handleEditFeature}>Save</StandardButton>
                     </Col>
                 </Row>
             </Container>
@@ -166,7 +169,14 @@ const EditFeature = ({ feature, setFeatures, app: { id, name }, displayAlert }) 
 
     const CreateButtons = () => {
         return (
-            <StandardButton disabled={saveButtonDisabled} style={{ maxWidth: 'max-content', paddingLeft: '15px', paddingRight: '15px' }} onClick={() => handleCreateFeature()}>Save</StandardButton>
+            <Row>
+                <Col>
+                    <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
+                </Col>
+                <Col>
+                    <StandardButton disabled={saveButtonDisabled} style={{ maxWidth: 'max-content', paddingLeft: '15px', paddingRight: '15px' }} onClick={() => handleCreateFeature()}>Save</StandardButton>
+                </Col>
+            </Row>
         );
     };
 

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
-import Badge from 'react-bootstrap/Badge';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { fetchAllSoftware, postSoftware, putSoftware, deleteSoftware } from '../../../softwareService';
-import { StandardImage, StandardDatePicker, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing, StandardSpinner, StandardIconButton } from '../../Utility/Utility';
+import { StandardImage, StandardDatePicker, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing, StandardSpinner, StandardIconButton, StandardTable } from '../../Utility/Utility';
 import Add from 'react-bootstrap-icons/dist/icons/file-plus';
 import Edit from 'react-bootstrap-icons/dist/icons/pencil';
 
@@ -20,9 +19,9 @@ function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
     loadSoftware();
   }, []);
 
-  const CustomTh = ({ children }) => {
+  const CustomTh = ({ children, onClick }) => {
     return (
-      <th style={{ border: 'none', backgroundColor: getThemeColor(0), fontWeight: 'normal', color: getThemeColor(1) }}>
+      <th onClick={onClick} style={{ border: 'none', backgroundColor: getThemeColor(0), fontWeight: 'normal', color: getThemeColor(1) }}>
         {children}
       </th>
     );
@@ -34,10 +33,8 @@ function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
         <thead>
           <tr>
             <CustomTh>Name</CustomTh>
-            <CustomTh>Language</CustomTh>
-            <CustomTh>Compatibility</CustomTh>
             <CustomTh>Development Date</CustomTh>
-            {userData && <CustomTh />}
+            {userData?.group === 'Administrator' && <CustomTh />}
           </tr>
         </thead>
         <tbody>
@@ -125,10 +122,13 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares, d
       <Container>
         <Row>
           <Col>
-            <StandardButton disabled={isSubmitDisabled} onClick={() => handleEditSoftware()}>Save</StandardButton>
+            <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
           </Col>
           <Col>
-            <StandardButton onClick={() => handleDeleteSoftware()}>Delete</StandardButton>
+            <StandardButton onClick={handleDeleteSoftware}>Delete</StandardButton>
+          </Col>
+          <Col>
+            <StandardButton disabled={isSubmitDisabled} onClick={handleEditSoftware}>Save</StandardButton>
           </Col>
         </Row>
       </Container>
@@ -137,7 +137,14 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares, d
 
   const NewButtons = () => {
     return (
-      <StandardButton disabled={isSubmitDisabled} onClick={() => handleCreateSoftware()}>Create</StandardButton>
+      <Row>
+        <Col>
+          <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
+        </Col>
+        <Col>
+          <StandardButton disabled={isSubmitDisabled} onClick={handleCreateSoftware}>Create</StandardButton>
+        </Col>
+      </Row>
     );
   };
 
@@ -193,13 +200,6 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares, d
 };
 
 const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication, displayAlert }) => {
-  const compatibility = {
-    windows: software.windows,
-    linux: software.linux,
-    mac: software.mac,
-    android: software.android
-  };
-
   const CustomTd = ({ children, style, noOnClick = false }) => {
     return (
       <td style={{ borderTop: `1px solid ${getThemeColor(0.1)}`, verticalAlign: 'middle', ...style }} onClick={() => noOnClick ? () => { } : setActiveApplication(software.name)}>
@@ -215,16 +215,9 @@ const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication,
 
   return (
     <tr className='tableMouseOver' style={{ cursor: 'pointer' }}>
-      <CustomTd style={{ width: '35%' }}>
+      <CustomTd style={{ width: '50%' }}>
         <StandardImage noErrorMessage src={software.icon_link} style={{ width: getIconSizing() }} />
         {software.name}
-      </CustomTd>
-      <CustomTd>{software.languages}</CustomTd>
-      <CustomTd>
-        {compatibility.windows && <Badge variant='light'>Windows</Badge>}{' '}
-        {compatibility.linux && <Badge variant='light'>Linux</Badge>}{' '}
-        {compatibility.mac && <Badge variant='light'>Mac</Badge>}{' '}
-        {compatibility.android && <Badge variant='light'>Android</Badge>}{' '}
       </CustomTd>
       <CustomTd>{dateDisplayString}</CustomTd>
       {userData?.group === 'Administrator' && <CustomTd noOnClick><EditSoftware displayAlert={displayAlert} setSoftware={setSoftware} software={software} /></CustomTd>}

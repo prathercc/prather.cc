@@ -20,10 +20,10 @@ const InformationTab = ({ setImageModalObj, style, app }) => {
         return (
             <Row>
                 <Col>
-                    <StandardButton onClick={() => { window.open(app.repo_link); setRepoModalOpen(false); }}>Yes</StandardButton>
+                    <StandardButton onClick={() => { setRepoModalOpen(false); }}>Cancel</StandardButton>
                 </Col>
                 <Col>
-                    <StandardButton onClick={() => { setRepoModalOpen(false); }}>No</StandardButton>
+                    <StandardButton onClick={() => { window.open(app.repo_link); setRepoModalOpen(false); }}>Open</StandardButton>
                 </Col>
             </Row>
         );
