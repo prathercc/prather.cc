@@ -155,7 +155,7 @@ export const StandardImage = ({ style, noErrorMessage, src, className, onClick, 
                         <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />
                     </StandardTooltip>
                 }
-                {!hasError &&
+                {!hasError && !isLoading &&
                     <div className='legacyAppOverlay' style={{
                         color: getThemeColor(1), fontSize: standardSmallFontSize,
                         position: 'absolute', top: '45%', backgroundColor: bgColor,

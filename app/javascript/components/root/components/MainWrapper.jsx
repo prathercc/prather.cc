@@ -48,7 +48,7 @@ const MainWrapper = ({ activeKey: urlKey, activeApplication: urlApplication }) =
             <AppBar displayAlert={displayAlert} onSelect={handleOnSelect} userData={userData} setUserData={setUserData} />
             <Tab.Content>
                 <Tab.Pane unmountOnExit eventKey='Home'>
-                    <SiteLogo />
+                    <SiteLogo setActiveApplication={(app) => { setActiveApplication(app); window.history.pushState({}, '', `/software/${app}`) }} />
                 </Tab.Pane>
                 <Tab.Pane unmountOnExit eventKey='Software'>
                     <SoftwareTable displayAlert={displayAlert} userData={userData} setActiveApplication={(app) => { setActiveApplication(app); window.history.pushState({}, '', `/software/${app}`) }} />

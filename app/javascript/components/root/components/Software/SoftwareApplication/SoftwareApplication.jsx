@@ -83,7 +83,7 @@ const ViewSwitcher = () => {
   return (
     <Nav className='tabsNavBar' style={{ margin: 'auto' }}>
       <Nav.Item className='tabsLeftBorderBlack'>
-        <CustomLink style={{ borderBottomLeftRadius: '10px' }} keyBool={activeKey.Information} keyText='Information' displayText='About' />
+        <CustomLink style={{ borderBottomLeftRadius: '10px' }} keyBool={activeKey.Information} keyText='Information' displayText='Information' />
       </Nav.Item>
       <Nav.Item className='tabsLeftBorderBlack'>
         <CustomLink keyBool={activeKey.Features} keyText='Features' displayText='Features' />
