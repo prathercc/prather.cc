@@ -2,8 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import { AppContext } from '../../AppContext';
 import { useCurrentBreakpointName } from 'react-socks';
 import Modal from 'react-bootstrap/Modal';
@@ -12,6 +10,8 @@ import XIcon from 'react-bootstrap-icons/dist/icons/x';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Alert from 'react-bootstrap/Alert';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 export const StandardImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
     return (
@@ -25,32 +25,37 @@ export const StandardImageModal = ({ modalOpen, handleModalClose, imageLink }) =
 
 export const StandardCheckBox = ({ label, value, onChange, style }) => {
     return (
-        <Container style={{ maxWidth: 'max-content', ...style }} onClick={onChange}>
-            <Row>
-                <Col>
-                    <Form.Check
-                        onChange={onChange}
-                        type='checkbox'
-                        checked={value}
-                        style={{ display: 'inline' }}
-                    />
-                    <div style={{ display: 'inline' }}> {label}</div>
-                </Col>
-            </Row>
-        </Container>
+        <span style={{ ...style }} onClick={onChange}>
+            <Form.Check
+                readOnly
+                type='checkbox'
+                checked={value}
+                style={{ display: 'inline' }}
+            />
+            <div style={{ display: 'inline' }}> {label}</div>
+        </span>
     );
 };
 
-export const StandardDropDown = ({ onChange, label, isActive = true, style, data, value }) => {
+export const StandardDropDown = ({ onChange, label, isActive = true, style, data, value, errorMessage = 'Error', hasError = false }) => {
+    const { standardBodyFontSize, fontStyle, standardSmallFontSize } = useContext(AppContext);
+    const [modified, setModified] = useState(false);
+    const borderLogic = modified && hasError ? { border: '1px solid red' } : {};
+    const handleOnChange = (e) => {
+        onChange(e);
+        if (!modified) {
+            setModified(true);
+        }
+    }
     return (
         <div style={{ ...style }}>
-            <Form.Text style={{ textAlign: 'left' }}>{label}</Form.Text>
+            <Form.Label style={{ textAlign: 'left', width: '100%', marginBottom: 0, fontSize: standardBodyFontSize, fontFamily: fontStyle }}>{label}</Form.Label>
             <Form.Control
-                style={{ cursor: isActive ? 'default' : 'not-allowed', textAlign: 'left', backgroundColor: '#d9d9d9' }}
+                style={{ cursor: isActive ? 'default' : 'not-allowed', textAlign: 'left', backgroundColor: '#d9d9d9', ...borderLogic }}
                 disabled={!isActive}
                 as="select"
                 value={value}
-                onChange={onChange}>
+                onChange={handleOnChange}>
                 <option>Make a selection</option>
                 {
                     data.map(x => {
@@ -60,30 +65,64 @@ export const StandardDropDown = ({ onChange, label, isActive = true, style, data
                     })
                 }
             </Form.Control>
+            {
+                modified && hasError && <Form.Text style={{ fontSize: standardSmallFontSize, margin: 0, color: 'red' }}>{errorMessage}</Form.Text>
+            }
         </div>
     );
 };
 
-export const StandardTextField = ({ onChange, label, isActive = true, value, rows = 1, isPassword, style }) => {
+export const StandardDatePicker = ({ date, setDate, label }) => {
+    const { standardBodyFontSize, fontStyle } = useContext(AppContext);
+    const CustomInput = ({ value, onClick }) => (
+        <>
+            <Form.Label style={{ textAlign: 'left', width: '100%', marginBottom: 0, fontSize: standardBodyFontSize, fontFamily: fontStyle }}>{label}</Form.Label>
+            <StandardButton style={{ paddingLeft: '15px', paddingRight: '15px' }} onClick={onClick}>{value}</StandardButton>
+        </>
+    );
+
+    return (
+        <DatePicker showYearDropdown selected={date} onChange={(d) => setDate(d)} customInput={<CustomInput />} />
+    );
+};
+
+export const StandardTextField = ({ onChange, label, isActive = true, value, rows = 1, isPassword, style, errorMessage = 'Error', hasError = false }) => {
+    const { standardBodyFontSize, fontStyle, standardSmallFontSize } = useContext(AppContext);
+
+    const [modified, setModified] = useState(false);
+
+    const handleOnChange = (e) => {
+        onChange(e);
+        if (!modified) {
+            setModified(true);
+        }
+    }
+
+    const borderLogic = modified && hasError ? { border: '1px solid red' } : {};
+
     return (
         <div style={{ ...style }}>
-            <Form.Text style={{ textAlign: 'left' }}>{label}</Form.Text>
+            <Form.Label style={{ textAlign: 'left', width: '100%', marginBottom: 0, fontSize: standardBodyFontSize, fontFamily: fontStyle }}>{label}</Form.Label>
             <Form.Control
-                style={{ textAlign: 'left', cursor: isActive ? 'text' : 'not-allowed', backgroundColor: '#d9d9d9' }}
+                style={{ textAlign: 'left', cursor: isActive ? 'text' : 'not-allowed', backgroundColor: '#d9d9d9', fontSize: standardSmallFontSize, ...borderLogic }}
                 size='sm'
                 type={isPassword ? 'password' : 'text'}
                 placeholder={label}
                 disabled={!isActive}
                 value={value}
-                onChange={onChange}
+                onChange={handleOnChange}
                 as={rows > 1 ? 'textarea' : 'input'}
                 rows={rows}
             />
+            {
+                modified && hasError && <Form.Text style={{ fontSize: standardSmallFontSize, margin: 0, color: 'red' }}>{errorMessage}</Form.Text>
+            }
         </div>
     );
 };
 
-export const StandardImage = ({ style, noErrorMessage, src, className, onClick, onLoaded = () => { }, toolTip }) => {
+export const StandardImage = ({ style, noErrorMessage, src, className, onClick, onLoaded = () => { }, toolTip, overlayText }) => {
+    const { standardSmallFontSize, bgColor } = useContext(AppContext);
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
     const handleOnLoad = () => {
@@ -97,7 +136,7 @@ export const StandardImage = ({ style, noErrorMessage, src, className, onClick, 
     }
 
     return (
-        < >
+        <>
             {isLoading &&
                 <StandardSpinner />
             }
@@ -107,14 +146,23 @@ export const StandardImage = ({ style, noErrorMessage, src, className, onClick, 
                     <div style={{ display: noErrorMessage ? 'none' : '' }}>No image found</div>
                 </>
             }
-            {!hasError && !toolTip &&
-                <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />
-            }
-            {!hasError && toolTip &&
-                <StandardTooltip text={toolTip}>
+            <div style={{ position: 'relative', display: 'inline-block', alignItems: 'center' }}>
+                {!hasError && !toolTip &&
                     <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />
-                </StandardTooltip>
-            }
+                }
+                {!hasError && toolTip &&
+                    <StandardTooltip text={toolTip}>
+                        <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />
+                    </StandardTooltip>
+                }
+                {!hasError && !isLoading &&
+                    <div className='legacyAppOverlay' style={{
+                        color: getThemeColor(1), fontSize: standardSmallFontSize,
+                        position: 'absolute', top: '45%', backgroundColor: bgColor,
+                        pointerEvents: 'none', left: 0, right: 0
+                    }}>{overlayText}</div>
+                }
+            </div>
         </>
     );
 };
@@ -122,24 +170,23 @@ export const StandardImage = ({ style, noErrorMessage, src, className, onClick, 
 export const StandardTooltip = ({ children, text }) => {
     const { fontStyle, standardSmallFontSize } = useContext(AppContext);
     return (
-        <OverlayTrigger placement='bottom' overlay={<Tooltip style={{ fontFamily: fontStyle, fontSize: standardSmallFontSize }}>{text}</Tooltip>}>
+        <OverlayTrigger placement='bottom' overlay={<Tooltip style={{ fontFamily: fontStyle, fontSize: standardSmallFontSize, marginTop: '1vh' }}>{text}</Tooltip>}>
             {children}
         </OverlayTrigger>
     );
 };
 
-export const StandardButton = ({ onClick, style, children, isActive = true }) => {
+export const StandardButton = ({ onClick, style, children, disabled = false }) => {
     const { standardBodyFontSize } = useContext(AppContext);
     return (
         <Card
-            onClick={isActive ? onClick : () => { }}
-            className='defaultButton'
+            onClick={disabled ? () => { } : onClick}
+            className={disabled ? 'defaultButtonDisabled' : 'defaultButton'}
             style={{
                 margin: 'auto',
                 ...style,
                 fontSize: standardBodyFontSize,
                 alignItems: 'center',
-                cursor: isActive || 'not-allowed',
                 display: 'flex',
                 maxWidth: '95%'
             }}>
@@ -148,11 +195,11 @@ export const StandardButton = ({ onClick, style, children, isActive = true }) =>
     );
 };
 
-export const StandardIconButton = ({ icon, style, onClick, toolTip, children }) => {
-    const padding = { padding: '1px', paddingLeft: '10px', paddingRight: '10px' };
+export const StandardIconButton = ({ icon, style, onClick, toolTip, children, disabled = false }) => {
+    const padding = { padding: '2px', paddingLeft: '20px', paddingRight: '20px' };
     return (
         <StandardTooltip text={toolTip}>
-            <div onClick={onClick} className={'iconButton'} style={{ fontSize: getIconSizing(), lineHeight: 0, margin: 'auto', maxWidth: 'max-content', cursor: 'pointer', ...style, ...padding }}>
+            <div onClick={disabled ? () => { } : onClick} className={disabled ? 'iconButtonDisabled' : 'iconButton'} style={{ fontSize: getIconSizing(), lineHeight: 0, margin: 'auto', maxWidth: 'max-content', cursor: 'pointer', ...style, ...padding }}>
                 {icon} {children}
             </div>
         </StandardTooltip>
@@ -170,7 +217,7 @@ export const StandardAlert = ({ success = false, text, alertOpen, setAlertOpen }
     }, [alertOpen])
 
     return (
-        <Alert style={{ position: 'fixed', zIndex: 1000000, bottom: 0, minWidth: '100%', right: 0, padding: '5px', margin: 0, fontFamily: fontStyle, fontSize: standardBodyFontSize }} show={alertOpen} variant={success ? 'success' : 'danger'}>{text}</Alert>
+        <Alert style={{ position: 'fixed', zIndex: 1000000, bottom: 0, minWidth: '100%', right: 0, padding: 0, margin: 0, fontFamily: fontStyle, fontSize: standardBodyFontSize }} show={alertOpen} variant={success ? 'success' : 'danger'}>{text}</Alert>
     );
 };
 
@@ -189,7 +236,7 @@ export const StandardSeparator = ({ style, onClick }) => {
 export const StandardCard = ({ title, style, children, className, onClick, noBorders }) => {
     const { standardBodyFontSize, standardTitleFontSize, fontStyle } = useContext(AppContext);
     return (
-        <Card
+        <div
             onClick={onClick}
             className={className}
             style={{
@@ -199,13 +246,12 @@ export const StandardCard = ({ title, style, children, className, onClick, noBor
                 fontSize: standardBodyFontSize,
                 alignItems: 'center',
                 border: 'none',
-                fontFamily: fontStyle
             }}>
-            {title && <div style={{ fontSize: standardTitleFontSize, borderTop: noBorders ? '' : `2px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderRadius: '15px', color: getThemeColor(1) }}>{title}</div>}
-            <div style={noBorders ? {} : { borderBottom: `2px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderRadius: '25px' }}>
+            <div style={noBorders ? {} : { borderBottom: `2px solid ${getThemeColor(0.5)}`, borderTop: `2px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderRadius: '25px', boxShadow: '3px 3px black', fontFamily: fontStyle }}>
+                <span style={{ fontSize: standardTitleFontSize, minWidth: '100%', color: getThemeColor(1) }}>{title}</span>
                 {children}
             </div>
-        </Card>
+        </div>
     );
 };
 

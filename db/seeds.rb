@@ -11,6 +11,7 @@
   User.create({
                 email: 'admin@prather.cc',
                 password: 'test',
-                password_confirmation: 'test'
+                password_confirmation: 'test',
+                group:'Administrator'
               })
 end

@@ -6,22 +6,36 @@ module Api
       def index
         software = Software.find(params[:software_id])
         downloads = software.downloads.all.sort_by(&:os_type)
-        render json: {
-          message: 'Loaded downloads',
-          data: downloads
-        }, status: 200
+        if downloads
+          render json: {
+            message: 'Loaded downloads',
+            data: downloads
+          }, status: 200
+        else
+          render json: {
+            message: 'No downloads found with given software id',
+            data: nil
+          }, status: 400
+        end
       end
 
       def show
         download = Download.find(params[:id])
-        render json: {
-          message: 'Loaded download',
-          data: download
-        }, status: 200
+        if download
+          render json: {
+            message: 'Loaded download',
+            data: download
+          }, status: 200
+        else
+          render json: {
+            message: 'Download with given id not found',
+            data: nil
+          }, status: 400
+        end
       end
 
       def create
-        if current_user
+        if current_user[:group] == 'Administrator'
           software = Software.find(params[:software_id])
           download = software.downloads.create(download_params)
           render json: {
@@ -37,7 +51,7 @@ module Api
       end
 
       def destroy
-        if current_user
+        if current_user[:group] == 'Administrator'
           download = Download.find(params[:id])
           download.destroy
           render json: {
@@ -53,7 +67,7 @@ module Api
       end
 
       def update
-        if current_user
+        if current_user[:group] == 'Administrator'
           download = Download.find(params[:id])
           if download.update(download_params)
             render json: {

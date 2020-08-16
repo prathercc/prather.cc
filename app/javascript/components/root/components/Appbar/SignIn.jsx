@@ -51,21 +51,27 @@ const Login = ({ setUserData, modalOpen, setModalOpen, displayAlert, userData })
     };
     const SignInButton = () => {
         return (
-            <StandardButton onClick={() => authenticateUser()}>Sign In</StandardButton>
+            <Row>
+                <Col>
+                    <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
+                </Col>
+                <Col>
+                    <StandardButton onClick={authenticateUser}>Sign In</StandardButton>
+                </Col>
+            </Row>
+
         );
     };
     const SignOutButton = () => {
         return (
-            <Container>
-                <Row>
-                    <Col>
-                        <StandardButton onClick={signOut}>Yes</StandardButton>
-                    </Col>
-                    <Col>
-                        <StandardButton onClick={() => setModalOpen(false)}>No</StandardButton>
-                    </Col>
-                </Row>
-            </Container>
+            <Row>
+                <Col>
+                    <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
+                </Col>
+                <Col>
+                    <StandardButton onClick={signOut}>Sign Out</StandardButton>
+                </Col>
+            </Row>
         );
     };
     return (

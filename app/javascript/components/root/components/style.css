@@ -12,38 +12,75 @@
 .defaultImageNudge {
     border: solid 2px rgb(79, 201, 201, 0.1);
     border-radius: 15px;
+    box-shadow: 3px 3px black;
     transition: all 0.2s ease-in-out;
 }
 
 .defaultImageNudge:hover {
     border: solid 2px rgb(79, 201, 201, 0.5);
     background-color: rgb(79, 201, 201, 0.1);
+    box-shadow: 11px 11px black;
     cursor: pointer;
+}
+
+.defaultButtonDisabled {
+    color: white;
+    background-color: rgb(79, 201, 201, 0.5) !important;
+    box-shadow: 3px 3px black;
+    filter: grayscale(1);
 }
 
 .defaultButton {
     color: white;
     background-color: rgb(79, 201, 201, 0.5) !important;
+    box-shadow: 3px 3px black;
     transition: all 0.2s ease-in-out;
 }
 
 .defaultButton:hover {
     cursor: pointer;
-    background-color: #1a1a1a !important;
+    background-color: rgb(79, 201, 201, 0.1) !important;
     color: rgb(79, 201, 201, 1);
     border: 1px solid rgb(79, 201, 201, 0);
+    box-shadow: 10px 10px black;
+}
+
+.iconButtonDisabled {
+    border-radius: 5px;
+    color: white !important;
+    background-color: rgb(79, 201, 201, 0.5);
+    box-shadow: 3px 3px black;
+    filter: grayscale(1);
 }
 
 .iconButton {
     border-radius: 5px;
     color: white !important;
     background-color: rgb(79, 201, 201, 0.5);
+    box-shadow: 5px 5px black;
     transition: all 0.2s ease-in-out;
 }
 
 .iconButton:hover {
     color: #4fc9c9 !important;
-    background-color: rgb(79, 201, 201, 0);
+    background-color: rgb(79, 201, 201, 0.1);
+    box-shadow: 10px 10px black;
+}
+
+.legacyAppOverlay {
+    animation: legacyFade infinite 4s both;
+}
+
+@keyframes legacyFade {
+    0% {
+        filter: opacity(1);
+    }
+    50% {
+        filter: opacity(0.5);
+    }
+    100% {
+        filter: opacity(1);
+    }
 }
 
 /* ******** */
@@ -89,7 +126,7 @@
 
 .appbarDefault:hover {
     color: rgb(79, 201, 201, 1) !important;
-    background-color: #1a1a1a;
+    background-color: #1f2c2c;
 }
 
 /* ************** */
@@ -97,25 +134,26 @@
 /* SoftwareApplication TABS SECTION */
 
 .tabsNavBar {
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-    padding-top: 1vh;
-    border-bottom: 2px solid rgb(79, 201, 201, 0.5);
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
     flex-direction: row !important;
+    box-shadow: 3px 3px black;
 }
 
 .tabsLeftBorderBlack {
     margin-left: 1px;
+    margin-top: 1px;
 }
 
 .tabsLinkActive {
     color: rgb(79, 201, 201, 1);
+    background-color: rgb(79, 201, 201, 0.1);
     outline: 0;
+    margin-top: 1px;
 }
 
 .tabsLinkInactive {
+    background-color: rgb(79, 201, 201, 0.5);
     color: white;
     cursor: pointer;
     outline: 0;
@@ -123,7 +161,9 @@
 }
 
 .tabsLinkInactive:hover {
+    background-color: rgb(79, 201, 201, 0.1);
     color: rgb(79, 201, 201, 1);
+    margin-top: 1px;
 }
 
 /* ************ */

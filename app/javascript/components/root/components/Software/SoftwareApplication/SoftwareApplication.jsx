@@ -72,18 +72,18 @@ const ViewSwitcher = () => {
   const BlankKeys = { Information: false, Downloads: false, Features: false, Video: false };
   const [activeKey, setActiveKey] = useState({ ...BlankKeys, Information: true });
   const padding = { paddingLeft: '15px', paddingRight: '15px', paddingTop: '3px', paddingBottom: '3px' };
-  const { standardTitleFontSize } = useContext(AppContext);
+  const { standardBodyFontSize } = useContext(AppContext);
 
   const CustomLink = ({ keyBool, keyText, displayText, icon, style }) => {
     return (
-      <Nav.Link as={'div'} className={keyBool ? 'tabsLinkActive' : 'tabsLinkInactive'} style={{ ...padding, ...style, fontSize: standardTitleFontSize }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{icon}<div />{displayText}</Nav.Link>
+      <Nav.Link as={'div'} className={keyBool ? 'tabsLinkActive' : 'tabsLinkInactive'} style={{ ...padding, ...style, fontSize: standardBodyFontSize }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{icon}<div />{displayText}</Nav.Link>
     );
   };
 
   return (
     <Nav className='tabsNavBar' style={{ margin: 'auto' }}>
       <Nav.Item className='tabsLeftBorderBlack'>
-        <CustomLink keyBool={activeKey.Information} keyText='Information' displayText='About' />
+        <CustomLink style={{ borderBottomLeftRadius: '10px' }} keyBool={activeKey.Information} keyText='Information' displayText='Information' />
       </Nav.Item>
       <Nav.Item className='tabsLeftBorderBlack'>
         <CustomLink keyBool={activeKey.Features} keyText='Features' displayText='Features' />
@@ -92,7 +92,7 @@ const ViewSwitcher = () => {
         <CustomLink keyBool={activeKey.Video} keyText='Video' displayText='Video' />
       </Nav.Item>
       <Nav.Item className='tabsLeftBorderBlack'>
-        <CustomLink keyBool={activeKey.Downloads} keyText='Downloads' displayText='Downloads' />
+        <CustomLink style={{ borderBottomRightRadius: '10px' }} keyBool={activeKey.Downloads} keyText='Downloads' displayText='Downloads' />
       </Nav.Item>
     </Nav>
   );

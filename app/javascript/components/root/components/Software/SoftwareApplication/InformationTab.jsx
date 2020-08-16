@@ -20,10 +20,10 @@ const InformationTab = ({ setImageModalObj, style, app }) => {
         return (
             <Row>
                 <Col>
-                    <StandardButton onClick={() => { window.open(app.repo_link); setRepoModalOpen(false); }}>Yes</StandardButton>
+                    <StandardButton onClick={() => { setRepoModalOpen(false); }}>Cancel</StandardButton>
                 </Col>
                 <Col>
-                    <StandardButton onClick={() => { setRepoModalOpen(false); }}>No</StandardButton>
+                    <StandardButton onClick={() => { window.open(app.repo_link); setRepoModalOpen(false); }}>Open</StandardButton>
                 </Col>
             </Row>
         );
@@ -41,11 +41,12 @@ const InformationTab = ({ setImageModalObj, style, app }) => {
                             onClick={() => setImageModalObj({ open: true, imageLink: image_link })}
                             src={image_link}
                             onLoaded={() => setLoadingObj({ ...loadingObj, image: true })}
+                            overlayText={app.is_legacy ? 'No Longer In Development' : ''}
                         />
                     </StandardCard>
                 </Col>
                 <Col md={12} lg={7} style={{ display: allContentLoaded ? 'flex' : 'none' }}>
-                    <StandardCard title={app.name} style={{ verticalAlign: 'middle', minWidth: '100%' }}>
+                    <StandardCard title={app.name} style={{ verticalAlign: 'middle', width: '95%' }}>
                         <div style={{ margin: 'auto', maxWidth: '90%', textAlign: 'center', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: description }} />
                         <StandardIconButton
                             icon={<CodeIcon />}
