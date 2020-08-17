@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AppContext } from './AppContext';
 import './components/style.css';
 import MainWrapper from './components/MainWrapper';
-import './components/Mainpage/SiteLogo/SiteLogo.css';
 import { StandardSpinner } from './components/Utility/Utility';
 
 function Root() {

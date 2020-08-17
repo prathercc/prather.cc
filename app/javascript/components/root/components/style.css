@@ -9,6 +9,76 @@
     color: #4fc9c9 !important;
 }
 
+/* ******** */
+
+/* BACKGROUND ANIMATION SECTION */
+
+.starbend {
+    background-repeat: repeat;
+    background-position: center;
+    animation: starbend infinite 300s linear;
+}
+
+@keyframes starbend {
+    0% {
+        transform: scale(1, 1) perspective(1px);
+    }
+    25% {
+        transform: scale(1, 1.5) perspective(1px);
+    }
+    50% {
+        transform: scale(1.5, 1) perspective(1px);
+    }
+    75% {
+        transform: scale(1, 1.5) perspective(1px);
+    }
+    100% {
+        transform: scale(1, 1) perspective(1px);
+    }
+}
+
+.blackhole {
+    background-repeat: no-repeat;
+    animation: blackhole infinite 60000s linear;
+    background-position: center;
+}
+
+@keyframes blackhole {
+    0% {
+        transform: scale(2, 0.5) perspective(1px) rotate(0deg);
+    }
+    50% {
+        transform: scale(2, 0.5) perspective(1px) rotate(-360000deg);
+    }
+    100% {
+        transform: scale(2, 0.5) perspective(1px) rotate(0deg);
+    }
+}
+
+.blackhole2 {
+    background-repeat: no-repeat;
+    animation: blackhole2 infinite 30000s linear;
+    background-position: center;
+    margin-top: 1vh;
+    filter: opacity(0.55);
+}
+
+@keyframes blackhole2 {
+    0% {
+        transform: scale(1.8, 0.65) perspective(1px) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.8, 0.65) perspective(1px) rotate(-360000deg);
+    }
+    100% {
+        transform: scale(1.8, 0.65) perspective(1px) rotate(0deg);
+    }
+}
+
+/* **************************** */
+
+/* STANDARD IMAGE SECTION */
+
 .defaultImageNudge {
     border: solid 2px rgb(79, 201, 201, 0.1);
     border-radius: 15px;
@@ -23,27 +93,25 @@
     cursor: pointer;
 }
 
-.defaultButtonDisabled {
-    color: white;
-    background-color: rgb(79, 201, 201, 0.5) !important;
-    box-shadow: 3px 3px black;
-    filter: grayscale(1);
+.legacyAppOverlay {
+    animation: legacyFade infinite 4s both;
 }
 
-.defaultButton {
-    color: white;
-    background-color: rgb(79, 201, 201, 0.5) !important;
-    box-shadow: 3px 3px black;
-    transition: all 0.2s ease-in-out;
+@keyframes legacyFade {
+    0% {
+        filter: opacity(1);
+    }
+    50% {
+        filter: opacity(0.5);
+    }
+    100% {
+        filter: opacity(1);
+    }
 }
 
-.defaultButton:hover {
-    cursor: pointer;
-    background-color: rgb(79, 201, 201, 0.1) !important;
-    color: rgb(79, 201, 201, 1);
-    border: 1px solid rgb(79, 201, 201, 0);
-    box-shadow: 10px 10px black;
-}
+/* ********************** */
+
+/*  STANDARD ICON BUTTON SECTION */
 
 .iconButtonDisabled {
     border-radius: 5px;
@@ -67,23 +135,33 @@
     box-shadow: 10px 10px black;
 }
 
-.legacyAppOverlay {
-    animation: legacyFade infinite 4s both;
+/* ***************************** */
+
+/* STANDARD BUTTON SECTION */
+
+.defaultButtonDisabled {
+    color: white;
+    background-color: rgb(79, 201, 201, 0.5) !important;
+    box-shadow: 3px 3px black;
+    filter: grayscale(1);
 }
 
-@keyframes legacyFade {
-    0% {
-        filter: opacity(1);
-    }
-    50% {
-        filter: opacity(0.5);
-    }
-    100% {
-        filter: opacity(1);
-    }
+.defaultButton {
+    color: white;
+    background-color: rgb(79, 201, 201, 0.5) !important;
+    box-shadow: 3px 3px black;
+    transition: all 0.2s ease-in-out;
 }
 
-/* ******** */
+.defaultButton:hover {
+    cursor: pointer;
+    background-color: rgb(79, 201, 201, 0.1) !important;
+    color: rgb(79, 201, 201, 1);
+    border: 1px solid rgb(79, 201, 201, 0);
+    box-shadow: 10px 10px black;
+}
+
+/* *********************** */
 
 /* MODAL SECTION */
 
@@ -149,7 +227,7 @@
     color: rgb(79, 201, 201, 1);
     background-color: rgb(79, 201, 201, 0.1);
     outline: 0;
-    margin-top: 1px;
+    /* margin-top: 1px; */
 }
 
 .tabsLinkInactive {
@@ -163,7 +241,7 @@
 .tabsLinkInactive:hover {
     background-color: rgb(79, 201, 201, 0.1);
     color: rgb(79, 201, 201, 1);
-    margin-top: 1px;
+    /* margin-top: 1px; */
 }
 
 /* ************ */

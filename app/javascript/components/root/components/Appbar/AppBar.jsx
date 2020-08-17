@@ -1,13 +1,15 @@
-import React, { useContext, forwardRef } from 'react';
+import React, { useContext, forwardRef, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Navbar from 'react-bootstrap/Navbar';
-import { getThemeColor, getIconSizing, StandardTooltip } from '../Utility/Utility';
+import { getThemeColor, getIconSizing, StandardTooltip, StandardModal, StandardImage, StandardButton } from '../Utility/Utility';
 import { AppContext } from '../../AppContext';
 import NavIcon from 'react-bootstrap-icons/dist/icons/list';
-import InfoIcon from 'react-bootstrap-icons/dist/icons/question-circle';
+import AtIcon from 'react-bootstrap-icons/dist/icons/at';
 import { useCurrentBreakpointName } from 'react-socks';
 import SignIn from './SignIn';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function AppBar({ userData, setUserData, onSelect, displayAlert }) {
   const { standardTitleFontSize, bgColor, fontStyle } = useContext(AppContext);
@@ -46,22 +48,34 @@ function AppBar({ userData, setUserData, onSelect, displayAlert }) {
           </Dropdown>
         </Nav>
         <SignIn displayAlert={displayAlert} setUserData={setUserData} userData={userData} />
-        <MoreInformation />
+        <RelatedLinks />
       </Navbar>
     </div >
   );
 };
 
-const MoreInformation = () => {
+const RelatedLinks = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <>
-      <StandardTooltip text='More Information'>
-        <Nav.Link style={{ minHeight: '100%', display: 'flex' }} as='span' className='appbarDefault'>
+      <StandardTooltip text='Related Links'>
+        <Nav.Link onClick={() => setModalOpen(true)} style={{ minHeight: '100%', display: 'flex' }} as='span' className='appbarDefault'>
           <span style={{ fontSize: getIconSizing(), margin: 'auto', lineHeight: 0 }}>
-            <InfoIcon />
+            <AtIcon />
           </span>
         </Nav.Link>
       </StandardTooltip>
+      <StandardModal title='Related Links' modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
+        <Row>
+          <Col xs={12} lg={6} style={{ marginTop: '1vh' }}>
+            <StandardImage onClick={() => window.open('https://www.youtube.com/channel/UC7_J0pO4THZ_QqQWqXwRl3w')} toolTip='Prathercc on YouTube' className='defaultImageNudge' style={{ maxWidth: '55%', padding: '25px' }} src='https://i92.servimg.com/u/f92/11/29/62/29/yt_log11.png' />
+          </Col>
+          <Col xs={12} lg={6} style={{ marginTop: '1vh' }}>
+            <StandardImage onClick={() => window.open('https://github.com/prathercc')} toolTip='Prathercc on GitHub' className='defaultImageNudge' style={{ maxWidth: '55%' }} src='https://i92.servimg.com/u/f92/11/29/62/29/github10.png' />
+          </Col>
+        </Row>
+      </StandardModal>
     </>
   );
 };
