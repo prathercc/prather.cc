@@ -42,10 +42,9 @@ function SoftwareApplication({ userData, name, displayAlert }) {
 
   return (
     <StandardPage title={app && app.name}>
-      {!app && <StandardSpinner />}
+      {!app && <StandardSpinner style={{ marginTop: '1vh' }} />}
       {
-        app &&
-        <Tab.Container defaultActiveKey={'Information'}>
+        app && <Tab.Container defaultActiveKey={'Information'}>
           <ViewSwitcher />
           <Tab.Content>
             <Tab.Pane eventKey='Information'>

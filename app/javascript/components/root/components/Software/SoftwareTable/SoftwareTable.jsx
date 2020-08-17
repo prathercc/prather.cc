@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { fetchAllSoftware, postSoftware, putSoftware, deleteSoftware } from '../../../softwareService';
-import { StandardImage, StandardDatePicker, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing, StandardSpinner, StandardIconButton, StandardTable } from '../../Utility/Utility';
+import { StandardImage, StandardDatePicker, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing, StandardSpinner, StandardIconButton } from '../../Utility/Utility';
 import Add from 'react-bootstrap-icons/dist/icons/file-plus';
 import Edit from 'react-bootstrap-icons/dist/icons/pencil';
 
@@ -29,7 +29,7 @@ function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
 
   return (
     <StandardPage title='Software Panel'>
-      <Table size='sm' hover style={{ color: 'white', backgroundColor: 'transparent', marginTop: '1vh' }}>
+      <Table size='sm' hover style={{ color: 'white', backgroundColor: 'transparent', marginTop: '1vh', display: software ? '' : 'none' }}>
         <thead>
           <tr>
             <CustomTh>Name</CustomTh>
@@ -52,7 +52,7 @@ function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
           })}
         </tbody>
       </Table>
-      <span style={{ marginBottom: '1vh', display: software ? 'none' : '' }}><StandardSpinner /></span>
+      {!software && <StandardSpinner style={{ marginTop: '1vh' }} />}
       {userData?.group === 'Administrator' && <EditSoftware displayAlert={displayAlert} setSoftware={setSoftware} />}
     </StandardPage>
   );
