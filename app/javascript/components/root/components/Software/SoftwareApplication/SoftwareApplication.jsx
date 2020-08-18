@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
-import { fetchSoftware } from '../../../softwareService';
+import { fetchAllSoftware } from '../../../softwareService';
 import { fetchFeatures } from '../../../featureService';
 import { StandardPage, StandardSpinner, StandardImageModal } from '../../Utility/Utility';
 import InformationTab from './InformationTab';
@@ -26,9 +26,10 @@ function SoftwareApplication({ userData, name, displayAlert }) {
 
   useEffect(() => {
     const fetch = async () => {
-      const { data } = await fetchSoftware(name);
-      if (data) {
-        setApp(data);
+      const { data } = await fetchAllSoftware();
+      const selectedSoftware = data.find(x => (x.name === name));
+      if (selectedSoftware) {
+        setApp(selectedSoftware);
       }
       else {
         window.open('/software', '_self')
