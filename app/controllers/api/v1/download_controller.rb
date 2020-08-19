@@ -4,18 +4,31 @@ module Api
   module V1
     class DownloadController < ApplicationController
       def index
+        sort_by = params[:sort_by]
+        sort_dir = params[:sort_dir]
         software = Software.find(params[:software_id])
-        downloads = software.downloads.all.sort_by(&:os_type)
-        if downloads
-          render json: {
-            message: 'Loaded downloads',
-            data: downloads
-          }, status: 200
+        if software
+          if sort_by && sort_dir
+            downloads = software.downloads.order(sort_by + ' ' + sort_dir)
+          else
+            downloads = software.downloads.all.sort_by(&:os_type)
+          end
+          if downloads
+            render json: {
+              message: 'Loaded downloads',
+              data: downloads
+            }, status: 200
+          else
+            render json: {
+              message: 'No downloads found with given software id',
+              data: nil
+            }, status: 400
+          end
         else
           render json: {
-            message: 'No downloads found with given software id',
+            message: 'No software found with given id',
             data: nil
-          }, status: 400
+          }, status: 404
         end
       end
 

@@ -11,6 +11,8 @@ import Edit from 'react-bootstrap-icons/dist/icons/pencil';
 
 function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
   const [software, setSoftware] = useState(null);
+  const [sortDir, setSortDir] = useState('desc');
+
   useEffect(() => {
     const loadSoftware = async () => {
       const { data } = await fetchAllSoftware();
@@ -19,10 +21,18 @@ function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
     loadSoftware();
   }, []);
 
-  const CustomTh = ({ children, onClick }) => {
+  const CustomTh = ({ children, name }) => {
+    const handleSort = async () => {
+      if (sortDir === 'desc')
+        setSortDir('asc');
+      else
+        setSortDir('desc');
+      const { data } = await fetchAllSoftware(name, sortDir);
+      setSoftware(data);
+    }
     return (
-      <th onClick={onClick} style={{ border: 'none', backgroundColor: getThemeColor(0), fontWeight: 'normal', color: getThemeColor(1) }}>
-        {children}
+      <th style={{ border: 'none', backgroundColor: getThemeColor(0), fontWeight: 'normal', color: getThemeColor(1) }}>
+        <span onClick={handleSort} className='tableHeaderMouseOver'>{children}</span>
       </th>
     );
   };
@@ -32,8 +42,8 @@ function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
       <Table size='sm' hover style={{ color: 'white', backgroundColor: 'transparent', marginTop: '1vh', display: software ? '' : 'none' }}>
         <thead>
           <tr>
-            <CustomTh>Name</CustomTh>
-            <CustomTh>Development Date</CustomTh>
+            <CustomTh name='name'>Name</CustomTh>
+            <CustomTh name='dev_date'>Development Date</CustomTh>
             {userData?.group === 'Administrator' && <CustomTh />}
           </tr>
         </thead>
@@ -214,7 +224,7 @@ const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication,
   const dateDisplayString = months[developmentDate.getMonth()] + ' ' + developmentDate.getFullYear();
 
   return (
-    <tr className='tableMouseOver' style={{ cursor: 'pointer' }}>
+    <tr className='tableMouseOver'>
       <CustomTd style={{ width: '50%' }}>
         <StandardImage noErrorMessage src={software.icon_link} style={{ width: getIconSizing() }} />
         {software.name}

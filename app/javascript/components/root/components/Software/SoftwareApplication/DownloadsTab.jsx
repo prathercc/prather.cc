@@ -3,7 +3,6 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
-import Container from 'react-bootstrap/Container';
 import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../../../downloadService';
 import { StandardModal, getThemeColor, StandardButton, StandardTextField, StandardDropDown, StandardSpinner, StandardIconButton } from '../../Utility/Utility';
 import ModifyIcon from 'react-bootstrap-icons/dist/icons/pencil';
@@ -32,10 +31,19 @@ function DownloadsTab({ app, userData, style, displayAlert }) {
 };
 
 const DownloadTable = ({ style, downloads, userData, app, setDownloads, displayAlert }) => {
-    const CustomTh = ({ children }) => {
+    const [sortDir, setSortDir] = useState('desc');
+    const CustomTh = ({ children, className, name }) => {
+        const handleSort = async () => {
+            if (sortDir === 'desc')
+                setSortDir('asc');
+            else
+                setSortDir('desc');
+            const { data } = await fetchDownloads(app.id, name, sortDir);
+            setDownloads(data);
+        }
         return (
             <th style={{ border: 'none', backgroundColor: getThemeColor(0), fontWeight: 'normal', color: getThemeColor(1) }}>
-                {children}
+                <span onClick={handleSort} className='tableHeaderMouseOver'>{children}</span>
             </th>
         );
     };
@@ -46,9 +54,9 @@ const DownloadTable = ({ style, downloads, userData, app, setDownloads, displayA
                 downloads?.length > 0 && <Table size='sm' hover style={{ ...style, color: 'white', backgroundColor: 'transparent' }}>
                     <thead>
                         <tr style={{ fontWeight: 'normal' }}>
-                            <CustomTh>Filename</CustomTh>
-                            <CustomTh>File Size </CustomTh>
-                            <CustomTh>Compatibility</CustomTh>
+                            <CustomTh name='file_name'>Filename</CustomTh>
+                            <CustomTh name='file_size'>File Size </CustomTh>
+                            <CustomTh name='os_type'>Compatibility</CustomTh>
                             {userData?.group === 'Administrator' && <CustomTh />}
                         </tr>
                     </thead>
