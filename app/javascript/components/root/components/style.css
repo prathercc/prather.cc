@@ -11,6 +11,29 @@
 
 /* ******** */
 
+/* Site Logo Section */
+
+.siteLogo {
+    animation: siteLogo infinite 15s both;
+}
+
+@keyframes siteLogo {
+    0% {
+        transform: rotate(-2deg) perspective(1px);
+        box-shadow: 0px 0px 60px rgb(79, 201, 201, 0.5), 0px 0px 60px #5a415a, 5px -6px black;
+    }
+    50% {
+        transform: rotate(2deg) perspective(1px);
+        box-shadow: 0px -10px 60px rgb(79, 201, 201, 0.5), 0px 20px 60px #5a415a, 11px -8px black;
+    }
+    100% {
+        transform: rotate(-2deg) perspective(1px);
+        box-shadow: 0px 0px 60px rgb(79, 201, 201, 0.5), 0px 0px 60px #5a415a, 5px -6px black;
+    }
+}
+
+/* ****************** */
+
 /* BACKGROUND ANIMATION SECTION */
 
 .starbend {
@@ -39,25 +62,25 @@
 
 .blackhole {
     background-repeat: no-repeat;
-    animation: blackhole infinite 60000s linear;
+    animation: blackhole infinite 25s linear;
     background-position: center;
 }
 
 @keyframes blackhole {
     0% {
-        transform: scale(2, 0.5) perspective(1px) rotate(0deg);
+        transform: scale(1.65, 0.45) perspective(1px) rotate(0deg);
     }
     50% {
-        transform: scale(2, 0.5) perspective(1px) rotate(-360000deg);
+        transform: scale(1.65, 0.45) perspective(1px) rotate(-180deg);
     }
     100% {
-        transform: scale(2, 0.5) perspective(1px) rotate(0deg);
+        transform: scale(1.65, 0.45) perspective(1px) rotate(-360deg);
     }
 }
 
 .blackhole2 {
     background-repeat: no-repeat;
-    animation: blackhole2 infinite 30000s linear;
+    animation: blackhole2 infinite 25s linear;
     background-position: center;
     margin-top: 1vh;
     filter: opacity(0.55);
@@ -65,13 +88,13 @@
 
 @keyframes blackhole2 {
     0% {
-        transform: scale(1.8, 0.65) perspective(1px) rotate(0deg);
+        transform: scale(1.8, 0.6) perspective(1px) rotate(0deg);
     }
     50% {
-        transform: scale(1.8, 0.65) perspective(1px) rotate(-360000deg);
+        transform: scale(2, 0.75) perspective(1px) rotate(-180deg);
     }
     100% {
-        transform: scale(1.8, 0.65) perspective(1px) rotate(0deg);
+        transform: scale(1.8, 0.6) perspective(1px) rotate(-360deg);
     }
 }
 
@@ -116,23 +139,20 @@
 .iconButtonDisabled {
     border-radius: 5px;
     color: white !important;
-    background-color: rgb(79, 201, 201, 0.5);
-    box-shadow: 3px 3px black;
+    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a, 3px 3px black;
     filter: grayscale(1);
 }
 
 .iconButton {
     border-radius: 5px;
     color: white !important;
-    background-color: rgb(79, 201, 201, 0.5);
-    box-shadow: 5px 5px black;
+    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a, 5px 5px black;
     transition: all 0.2s ease-in-out;
 }
 
 .iconButton:hover {
     color: #4fc9c9 !important;
-    background-color: rgb(79, 201, 201, 0.1);
-    box-shadow: 10px 10px black;
+    box-shadow: inset 0px 0px 35px #5a415a, inset 0px 0px 35px rgb(79, 201, 201, 0.5), 10px 10px black;
 }
 
 /* ***************************** */
@@ -141,24 +161,24 @@
 
 .defaultButtonDisabled {
     color: white;
-    background-color: rgb(79, 201, 201, 0.5) !important;
-    box-shadow: 3px 3px black;
+    background-color: rgb(79, 201, 201, 0) !important;
+    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a, 3px 3px black;
     filter: grayscale(1);
 }
 
 .defaultButton {
     color: white;
-    background-color: rgb(79, 201, 201, 0.5) !important;
-    box-shadow: 3px 3px black;
+    background-color: rgb(79, 201, 201, 0) !important;
+    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a, 5px 5px black;
     transition: all 0.2s ease-in-out;
 }
 
 .defaultButton:hover {
     cursor: pointer;
-    background-color: rgb(79, 201, 201, 0.1) !important;
+    background-color: rgb(79, 201, 201, 0) !important;
     color: rgb(79, 201, 201, 1);
     border: 1px solid rgb(79, 201, 201, 0);
-    box-shadow: 10px 10px black;
+    box-shadow: inset 0px 0px 35px #5a415a, inset 0px 0px 35px rgb(79, 201, 201, 0.5), 10px 10px black;
 }
 
 /* *********************** */
@@ -188,6 +208,21 @@
 .tableMouseOver:hover {
     color: rgb(79, 201, 201, 1) !important;
     background-color: rgb(79, 201, 201, 0.1) !important;
+    cursor: pointer;
+}
+
+.tableHeaderMouseOver {
+    color: rgb(79, 201, 201, 1) !important;
+    transition: all 0.2s ease-in-out;
+    border-radius: 100px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.tableHeaderMouseOver:hover {
+    /* color: white !important; */
+    background-color: rgb(79, 201, 201, 0.1) !important;
+    cursor: pointer;
 }
 
 /* ************* */
@@ -225,13 +260,12 @@
 
 .tabsLinkActive {
     color: rgb(79, 201, 201, 1);
-    background-color: rgb(79, 201, 201, 0.1);
+    box-shadow: inset 0px 0px 35px #5a415a, inset 0px 0px 35px rgb(79, 201, 201, 0.5);
     outline: 0;
-    /* margin-top: 1px; */
 }
 
 .tabsLinkInactive {
-    background-color: rgb(79, 201, 201, 0.5);
+    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a;
     color: white;
     cursor: pointer;
     outline: 0;
@@ -239,9 +273,8 @@
 }
 
 .tabsLinkInactive:hover {
-    background-color: rgb(79, 201, 201, 0.1);
+    box-shadow: inset 0px 0px 35px #5a415a, inset 0px 0px 35px rgb(79, 201, 201, 0.5);
     color: rgb(79, 201, 201, 1);
-    /* margin-top: 1px; */
 }
 
 /* ************ */

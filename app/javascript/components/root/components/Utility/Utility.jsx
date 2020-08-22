@@ -146,7 +146,7 @@ export const StandardImage = ({ style, noErrorMessage, src, className, onClick, 
                     <div style={{ display: noErrorMessage ? 'none' : '' }}>No image found</div>
                 </>
             }
-            <div style={{ position: 'relative', display: 'inline-block', alignItems: 'center' }}>
+            <div style={{ position: 'relative', display: 'inline-block', alignItems: 'center', maxWidth: 'max-content' }}>
                 {!hasError && !toolTip &&
                     <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />
                 }
@@ -242,12 +242,11 @@ export const StandardCard = ({ title, style, children, className, onClick, noBor
             style={{
                 margin: 'auto',
                 ...style,
-                backgroundColor: 'transparent',
                 fontSize: standardBodyFontSize,
                 alignItems: 'center',
                 border: 'none',
             }}>
-            <div style={noBorders ? {} : { borderBottom: `2px solid ${getThemeColor(0.5)}`, borderTop: `2px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderRadius: '25px', boxShadow: '3px 3px black', fontFamily: fontStyle }}>
+            <div style={noBorders ? {} : { borderBottom: `2px solid ${getThemeColor(0.3)}`, borderTop: `2px solid ${getThemeColor(0.3)}`, minWidth: '100%', borderRadius: '25px', boxShadow: '3px 3px black', fontFamily: fontStyle }}>
                 <span style={{ fontSize: standardTitleFontSize, minWidth: '100%', color: getThemeColor(1) }}>{title}</span>
                 {children}
             </div>
@@ -259,21 +258,21 @@ export const StandardPage = ({ title = '', children, style }) => {
     const { bgColor, fontStyle, standardBodyFontSize, standardTitleFontSize } = useContext(AppContext);
     return (
         <Container style={{ backgroundColor: 'transparent', position: 'relative', minWidth: '75%', ...style }}>
-            <div style={{ backgroundColor: bgColor }}>
-                <div style={{ fontFamily: fontStyle, fontSize: standardTitleFontSize, backgroundColor: getThemeColor(0.5), margin: 'auto', marginTop: '4vh', padding: '5px', borderRadius: '5px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>
+            <div style={{ backgroundColor: bgColor, marginTop: '6vh', borderRadius: '5px' }}>
+                <div style={{ fontFamily: fontStyle, fontSize: standardTitleFontSize, margin: 'auto', padding: '5px', borderRadius: '5px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0, background: getThemeBackground() }}>
                     {title}
                 </div>
                 <div
                     style={{
-                        backgroundColor: 'transparent',
                         fontFamily: fontStyle,
                         fontSize: standardBodyFontSize,
                         paddingTop: '0vh',
                         paddingBottom: '2vh',
-                        border: `3px solid ${getThemeColor(0.5)}`,
+                        border: `3px solid ${getThemeColor(0.3)}`,
                         borderTop: 'none',
                         paddingLeft: '0vw',
                         paddingRight: '0vw',
+                        borderRadius: '5px',
                         borderTopLeftRadius: 0,
                         borderTopRightRadius: 0
                     }}
@@ -300,7 +299,7 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
         >
             <div style={{ backgroundColor: bgColor }}>
                 <Modal.Header style={{
-                    backgroundColor: getThemeColor(0.5),
+                    background: getThemeBackground(),
                     borderBottom: 'none',
                     padding: '3px',
                     paddingTop: 0,
@@ -314,7 +313,7 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
                     style={{
                         backgroundColor: 'transparent',
                         color: 'white',
-                        border: `3px solid ${getThemeColor(0.5)}`,
+                        border: `3px solid ${getThemeColor(0.3)}`,
                         borderTop: 0,
                         fontSize: standardBodyFontSize,
                         ...bodyPadding
@@ -332,6 +331,9 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
     );
 };
 
+export const getThemeBackground = () => {
+    return 'linear-gradient(to top left, #5a415a, rgb(79, 201, 201, 0.5))';
+}
 
 export const getThemeColor = (opacity = 1) => {
     return `rgb(79, 201, 201, ${opacity})`;
