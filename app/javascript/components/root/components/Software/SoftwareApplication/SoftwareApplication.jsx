@@ -69,30 +69,28 @@ function SoftwareApplication({ userData, name, displayAlert }) {
 };
 
 const ViewSwitcher = () => {
-  const BlankKeys = { Information: false, Downloads: false, Features: false, Video: false };
-  const [activeKey, setActiveKey] = useState({ ...BlankKeys, Information: true });
   const padding = { paddingLeft: '15px', paddingRight: '15px', paddingTop: '3px', paddingBottom: '3px' };
   const { standardBodyFontSize } = useContext(AppContext);
 
-  const CustomLink = ({ keyBool, keyText, displayText, icon, style }) => {
+  const CustomLink = ({ keyText, displayText, style }) => {
     return (
-      <Nav.Link as={'div'} className={keyBool ? 'tabsLinkActive' : 'tabsLinkInactive'} style={{ ...padding, ...style, fontSize: standardBodyFontSize }} onClick={() => setActiveKey({ ...BlankKeys, [keyText]: true })} eventKey={keyText}>{icon}<div />{displayText}</Nav.Link>
+      <Nav.Link as={'div'} style={{ ...padding, ...style, fontSize: standardBodyFontSize }} eventKey={keyText}>{displayText}</Nav.Link>
     );
   };
 
   return (
-    <Nav className='tabsNavBar' style={{ margin: 'auto' }}>
-      <Nav.Item className='tabsLeftBorderBlack'>
-        <CustomLink style={{ borderBottomLeftRadius: '10px' }} keyBool={activeKey.Information} keyText='Information' displayText='Information' />
+    <Nav fill variant='tabs' className='tabsNavBar' style={{ marginBottom: '1vh' }}>
+      <Nav.Item>
+        <CustomLink keyText='Information' displayText='Information' />
       </Nav.Item>
-      <Nav.Item className='tabsLeftBorderBlack'>
-        <CustomLink keyBool={activeKey.Features} keyText='Features' displayText='Features' />
+      <Nav.Item>
+        <CustomLink keyText='Features' displayText='Features' />
       </Nav.Item>
-      <Nav.Item className='tabsLeftBorderBlack'>
-        <CustomLink keyBool={activeKey.Video} keyText='Video' displayText='Video' />
+      <Nav.Item>
+        <CustomLink keyText='Video' displayText='Video' />
       </Nav.Item>
-      <Nav.Item className='tabsLeftBorderBlack'>
-        <CustomLink style={{ borderBottomRightRadius: '10px' }} keyBool={activeKey.Downloads} keyText='Downloads' displayText='Downloads' />
+      <Nav.Item>
+        <CustomLink keyText='Downloads' displayText='Downloads' />
       </Nav.Item>
     </Nav>
   );
