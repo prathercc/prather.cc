@@ -35,7 +35,7 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app, displayAlert }) =
                 {
                     features?.map((feature, index) => {
                         return (
-                            <Carousel.Item key={index} style={{ paddingTop: '0.25vh' }}>
+                            <Carousel.Item key={index} style={{ paddingTop: '0.25vh', paddingBottom: '2vh' }}>
                                 <SoftwareFeature
                                     app={app}
                                     setImageModalObj={setImageModalObj}
@@ -49,14 +49,14 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app, displayAlert }) =
                 }
             </Carousel>
 
-            <Row style={{ maxWidth: '60%', margin: 'auto', display: features?.length > 0 ? '' : 'none', marginTop: '1vh' }}>
-                <Col>
+            <Row style={{ margin: 'auto', display: features?.length > 0 ? '' : 'none' }}>
+                <Col xs={5}>
                     <StandardIconButton toolTip='Previous' icon={<LeftArrow />} onClick={() => setCaroselIndex(caroselIndex === 0 ? features?.length - 1 : caroselIndex - 1)} />
                 </Col>
-                <Col style={{ paddingTop: '1vh' }}>
+                <Col xs={2} style={{ paddingTop: '1vh' }}>
                     {caroselIndex + 1} of {features?.length}
                 </Col>
-                <Col>
+                <Col xs={5}>
                     <StandardIconButton toolTip='Next' icon={<RightArrow />} onClick={() => setCaroselIndex(caroselIndex === features?.length - 1 ? 0 : caroselIndex + 1)} />
                 </Col>
             </Row>

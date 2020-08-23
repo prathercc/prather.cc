@@ -14,7 +14,7 @@
 /* Site Logo Section */
 
 .siteLogo {
-    animation: siteLogo infinite 15s both;
+    animation: siteLogo infinite 35s both;
 }
 
 @keyframes siteLogo {
@@ -80,9 +80,8 @@
 
 .blackhole2 {
     background-repeat: no-repeat;
-    animation: blackhole2 infinite 25s linear;
+    animation: blackhole2 infinite 45s linear;
     background-position: center;
-    margin-top: 1vh;
     filter: opacity(0.55);
 }
 
@@ -91,10 +90,10 @@
         transform: scale(1.8, 0.6) perspective(1px) rotate(0deg);
     }
     50% {
-        transform: scale(2, 0.75) perspective(1px) rotate(-180deg);
+        transform: scale(2, 0.75) perspective(1px) rotate(180deg);
     }
     100% {
-        transform: scale(1.8, 0.6) perspective(1px) rotate(-360deg);
+        transform: scale(1.8, 0.6) perspective(1px) rotate(360deg);
     }
 }
 
@@ -105,14 +104,14 @@
 .defaultImageNudge {
     border: solid 2px rgb(79, 201, 201, 0.1);
     border-radius: 15px;
-    box-shadow: 3px 3px black;
+    box-shadow: 3px 3px 10px black;
     transition: all 0.2s ease-in-out;
 }
 
 .defaultImageNudge:hover {
-    border: solid 2px rgb(79, 201, 201, 0.5);
+    border: solid 2px rgb(79, 201, 201, 0.3);
     background-color: rgb(79, 201, 201, 0.1);
-    box-shadow: 11px 11px black;
+    box-shadow: 11px 11px 10px black;
     cursor: pointer;
 }
 
@@ -152,7 +151,7 @@
 
 .iconButton:hover {
     color: #4fc9c9 !important;
-    box-shadow: inset 0px 0px 35px #5a415a, inset 0px 0px 35px rgb(79, 201, 201, 0.5), 10px 10px black;
+    box-shadow: inset 0px 0px 35px #5a415a, inset 0px 0px 35px rgb(79, 201, 201, 0.5), 10px 10px 10px black;
 }
 
 /* ***************************** */
@@ -178,7 +177,7 @@
     background-color: rgb(79, 201, 201, 0) !important;
     color: rgb(79, 201, 201, 1);
     border: 1px solid rgb(79, 201, 201, 0);
-    box-shadow: inset 0px 0px 35px #5a415a, inset 0px 0px 35px rgb(79, 201, 201, 0.5), 10px 10px black;
+    box-shadow: inset 0px 0px 35px #5a415a, inset 0px 0px 35px rgb(79, 201, 201, 0.5), 10px 10px 10px black;
 }
 
 /* *********************** */
@@ -246,35 +245,31 @@
 
 /* SoftwareApplication TABS SECTION */
 
-.tabsNavBar {
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    flex-direction: row !important;
-    box-shadow: 3px 3px black;
-}
-
-.tabsLeftBorderBlack {
-    margin-left: 1px;
-    margin-top: 1px;
-}
-
-.tabsLinkActive {
+.tabsNavBar .nav-item>.nav-link:hover {
+    background-color: rgb(79, 201, 201, 0.05);
     color: rgb(79, 201, 201, 1);
-    box-shadow: inset 0px 0px 35px #5a415a, inset 0px 0px 35px rgb(79, 201, 201, 0.5);
-    outline: 0;
+    border-bottom: 1px solid #1a1a1a;
 }
 
-.tabsLinkInactive {
-    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a;
+.tabsNavBar .nav-item>.nav-link.active {
+    background-color: rgb(79, 201, 201, 0.05);
+    color: rgb(79, 201, 201, 1);
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.tabsNavBar .nav-item>.nav-link {
+    background-color: rgb(79, 201, 201, 0);
     color: white;
-    cursor: pointer;
     outline: 0;
+    border: 0;
+    border-bottom: 1px solid #1a1a1a;
+    cursor: pointer;
     transition: all 0.2s ease-in-out;
 }
 
-.tabsLinkInactive:hover {
-    box-shadow: inset 0px 0px 35px #5a415a, inset 0px 0px 35px rgb(79, 201, 201, 0.5);
-    color: rgb(79, 201, 201, 1);
+.tabsNavBar {
+    background: linear-gradient(to top left, rgb(90, 65, 90, 0.2), rgb(79, 201, 201, 0.1));
+    margin-top: 1px;
 }
 
 /* ************ */

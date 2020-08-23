@@ -46,12 +46,11 @@ const InformationTab = ({ setImageModalObj, style, app }) => {
                     </StandardCard>
                 </Col>
                 <Col md={12} lg={7} style={{ display: allContentLoaded ? 'flex' : 'none' }}>
-                    <StandardCard title={app.name} style={{ verticalAlign: 'middle', width: '95%' }}>
-                        <div style={{ margin: 'auto', maxWidth: '90%', textAlign: 'center', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: description }} />
+                    <StandardCard title={app.name} style={{ verticalAlign: 'middle', width: '95%', paddingBottom: '1vh' }}>
+                        <div style={{ margin: 'auto', maxWidth: '90%', textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: description }} />
                         <StandardIconButton
                             icon={<CodeIcon />}
                             onClick={() => setRepoModalOpen(true)}
-                            style={{ marginBottom: '1vh' }}
                             toolTip='View Repository'
                         />
                     </StandardCard>

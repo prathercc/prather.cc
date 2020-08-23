@@ -239,17 +239,19 @@ export const StandardCard = ({ title, style, children, className, onClick, noBor
         <div
             onClick={onClick}
             className={className}
-            style={{
-                margin: 'auto',
-                ...style,
-                fontSize: standardBodyFontSize,
-                alignItems: 'center',
-                border: 'none',
-            }}>
-            <div style={noBorders ? {} : { borderBottom: `2px solid ${getThemeColor(0.3)}`, borderTop: `2px solid ${getThemeColor(0.3)}`, minWidth: '100%', borderRadius: '25px', boxShadow: '3px 3px black', fontFamily: fontStyle }}>
-                <span style={{ fontSize: standardTitleFontSize, minWidth: '100%', color: getThemeColor(1) }}>{title}</span>
-                {children}
-            </div>
+            style={noBorders ? { ...style, margin: 'auto' } :
+                {
+                    ...style,
+                    fontSize: standardBodyFontSize,
+                    margin: 'auto',
+                    borderBottom: `none`,
+                    borderTop: `none`,
+                    borderRadius: '5px',
+                    boxShadow: '3px 3px 10px black',
+                    fontFamily: fontStyle
+                }}>
+            <div style={{ fontSize: standardTitleFontSize, minWidth: '100%', color: 'white', background: getThemeBackground(), borderTopLeftRadius: '5px', borderTopRightRadius: '5px' }}>{title}</div>
+            {children}
         </div>
     );
 };
@@ -258,17 +260,13 @@ export const StandardPage = ({ title = '', children, style }) => {
     const { bgColor, fontStyle, standardBodyFontSize, standardTitleFontSize } = useContext(AppContext);
     return (
         <Container style={{ backgroundColor: 'transparent', position: 'relative', minWidth: '75%', ...style }}>
-            <div style={{ backgroundColor: bgColor, marginTop: '6vh', borderRadius: '5px' }}>
-                <div style={{ fontFamily: fontStyle, fontSize: standardTitleFontSize, margin: 'auto', padding: '5px', borderRadius: '5px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0, background: getThemeBackground() }}>
-                    {title}
-                </div>
+            <div style={{ backgroundColor: bgColor, marginTop: '6vh', borderRadius: '5px', boxShadow: '3px 3px 10px black' }}>
                 <div
                     style={{
                         fontFamily: fontStyle,
                         fontSize: standardBodyFontSize,
                         paddingTop: '0vh',
                         paddingBottom: '2vh',
-                        border: `3px solid ${getThemeColor(0.3)}`,
                         borderTop: 'none',
                         paddingLeft: '0vw',
                         paddingRight: '0vw',
@@ -277,9 +275,10 @@ export const StandardPage = ({ title = '', children, style }) => {
                         borderTopRightRadius: 0
                     }}
                 >
-                    <Card style={{ margin: 'auto', width: '95%', backgroundColor: 'transparent', border: 'none' }}>
-                        {children}
-                    </Card>
+                    <div style={{ fontFamily: fontStyle, fontSize: standardTitleFontSize, margin: 'auto', padding: '5px', borderRadius: '5px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0, background: getThemeBackground() }}>
+                        {title}
+                    </div>
+                    {children}
                 </div>
             </div>
         </Container>
@@ -313,9 +312,10 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
                     style={{
                         backgroundColor: 'transparent',
                         color: 'white',
-                        border: `3px solid ${getThemeColor(0.3)}`,
+                        boxShadow: '3px 3px 10px black',
                         borderTop: 0,
                         fontSize: standardBodyFontSize,
+                        borderRadius: '5px',
                         ...bodyPadding
                     }}
                 >
