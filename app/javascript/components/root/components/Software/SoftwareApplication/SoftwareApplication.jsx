@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 import { fetchAllSoftware } from '../../../softwareService';
 import { fetchFeatures } from '../../../featureService';
-import { StandardPage, StandardSpinner, StandardImageModal } from '../../Utility/Utility';
+import { StandardPage, StandardSpinner, StandardImageModal, StandardModal, getThemeColor, StandardButton } from '../../Utility/Utility';
 import InformationTab from './InformationTab';
 import FeaturesTab from './FeaturesTab';
 import DownloadsTab from './DownloadsTab';
@@ -46,7 +48,7 @@ function SoftwareApplication({ userData, name, displayAlert }) {
       {!app && <StandardSpinner style={{ marginTop: '1vh' }} />}
       {
         app && <Tab.Container defaultActiveKey={'Information'}>
-          <ViewSwitcher />
+          <ViewSwitcher app={app} />
           <Tab.Content>
             <Tab.Pane eventKey='Information'>
               <InformationTab style={{ marginTop: '1vh' }} app={app} setImageModalObj={setImageModalObj} />
@@ -68,9 +70,10 @@ function SoftwareApplication({ userData, name, displayAlert }) {
   );
 };
 
-const ViewSwitcher = () => {
+const ViewSwitcher = ({ app }) => {
   const padding = { paddingLeft: '15px', paddingRight: '15px', paddingTop: '3px', paddingBottom: '3px' };
   const { standardBodyFontSize } = useContext(AppContext);
+  const [repoModalOpen, setRepoModalOpen] = useState(false);
 
   const CustomLink = ({ keyText, displayText, style }) => {
     return (
@@ -78,21 +81,42 @@ const ViewSwitcher = () => {
     );
   };
 
+  const RepoModalButtons = () => {
+    return (
+      <Row>
+        <Col>
+          <StandardButton onClick={() => { setRepoModalOpen(false); }}>Cancel</StandardButton>
+        </Col>
+        <Col>
+          <StandardButton onClick={() => { window.open(app.repo_link); setRepoModalOpen(false); }}>Open</StandardButton>
+        </Col>
+      </Row>
+    );
+  };
+
   return (
-    <Nav fill variant='tabs' className='tabsNavBar' style={{ marginBottom: '1vh' }}>
-      <Nav.Item>
-        <CustomLink keyText='Information' displayText='Information' />
-      </Nav.Item>
-      <Nav.Item>
-        <CustomLink keyText='Features' displayText='Features' />
-      </Nav.Item>
-      <Nav.Item>
-        <CustomLink keyText='Video' displayText='Video' />
-      </Nav.Item>
-      <Nav.Item>
-        <CustomLink keyText='Downloads' displayText='Downloads' />
-      </Nav.Item>
-    </Nav>
+    <>
+      <Nav fill variant='tabs' className='tabsNavBar' style={{ marginBottom: '1vh' }}>
+        <Nav.Item>
+          <CustomLink keyText='Information' displayText='Summary' />
+        </Nav.Item>
+        <Nav.Item>
+          <CustomLink keyText='Features' displayText='Features' />
+        </Nav.Item>
+        <Nav.Item>
+          <CustomLink keyText='Video' displayText='Video' />
+        </Nav.Item>
+        <Nav.Item>
+          <CustomLink keyText='Downloads' displayText='Downloads' />
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link onClick={() => setRepoModalOpen(true)} as={'div'} style={{ ...padding, fontSize: standardBodyFontSize }}>Repository</Nav.Link>
+        </Nav.Item>
+      </Nav>
+      <StandardModal buttons={<RepoModalButtons />} title={`View Code`} modalOpen={repoModalOpen} handleModalClose={() => setRepoModalOpen(false)}>
+        Open the official <span style={{ color: getThemeColor(1) }}>{app.name}</span> GitHub repository?
+      </StandardModal>
+    </>
   );
 };
 export default SoftwareApplication;
