@@ -37,7 +37,7 @@ function DownloadsTab({ app, userData, style, displayAlert }) {
 
 const DownloadTable = ({ style, downloads, userData, app, setDownloads, displayAlert }) => {
     const [sortDir, setSortDir] = useState('desc');
-    const CustomTh = ({ children, className, name }) => {
+    const CustomTh = ({ children, name }) => {
         const handleSort = async () => {
             if (sortDir === 'desc')
                 setSortDir('asc');
@@ -48,7 +48,7 @@ const DownloadTable = ({ style, downloads, userData, app, setDownloads, displayA
         }
         return (
             <th style={{ border: 'none', backgroundColor: getThemeColor(0), fontWeight: 'normal', color: getThemeColor(1) }}>
-                <span onClick={handleSort} className='tableHeaderMouseOver'>{children}</span>
+                <div onClick={handleSort} className='tableHeaderMouseOver'>{children}</div>
             </th>
         );
     };

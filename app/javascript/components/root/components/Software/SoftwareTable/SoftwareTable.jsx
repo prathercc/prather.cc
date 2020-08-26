@@ -32,7 +32,7 @@ function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
     }
     return (
       <th style={{ border: 'none', backgroundColor: getThemeColor(0), fontWeight: 'normal', color: getThemeColor(1) }}>
-        <span onClick={handleSort} className='tableHeaderMouseOver'>{children}</span>
+        <div onClick={handleSort} className='tableHeaderMouseOver'>{children}</div>
       </th>
     );
   };

@@ -14,10 +14,13 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 export const StandardImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
+    const CancelButton = () => (
+        <StandardButton onClick={handleModalClose}>Cancel</StandardButton>
+    )
     return (
-        <StandardModal title='View Image' modalOpen={modalOpen} handleModalClose={handleModalClose}>
+        <StandardModal buttons={<CancelButton />} title='View Image' modalOpen={modalOpen} handleModalClose={handleModalClose}>
             <div style={{ maxWidth: 'max-content', margin: 'auto' }}>
-                <StandardImage toolTip='Open Raw Image' onClick={() => { window.open(imageLink); handleModalClose(); }} className='defaultImageNudge' src={imageLink} style={{ maxWidth: '85%' }} />
+                <StandardImage onClick={() => { window.open(imageLink); handleModalClose(); }} className='defaultImageNudge' src={imageLink} style={{ maxWidth: '85%' }} />
             </div>
         </StandardModal>
     );
@@ -250,7 +253,7 @@ export const StandardCard = ({ title, style, children, className, onClick, noBor
                     boxShadow: '3px 3px 10px black',
                     fontFamily: fontStyle
                 }}>
-            <div style={{ fontSize: standardTitleFontSize, minWidth: '100%', color: 'white', background: getThemeBackground(), borderTopLeftRadius: '5px', borderTopRightRadius: '5px' }}>{title}</div>
+            <div style={{ fontSize: standardBodyFontSize, minWidth: '100%', color: 'white', background: getThemeBackground(), borderTopLeftRadius: '5px', borderTopRightRadius: '5px' }}>{title}</div>
             {children}
         </div>
     );

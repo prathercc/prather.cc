@@ -40,7 +40,7 @@ function AppBar({ userData, setUserData, onSelect, displayAlert }) {
       <Nav className='mr-auto'>
         <Dropdown>
           <Dropdown.Toggle as={CustomToggle} />
-          <Dropdown.Menu style={{ minWidth: '100%', backgroundColor: bgColor, border: `2px solid ${getThemeColor(0.3)}`, borderTop: 'none', fontSize: standardTitleFontSize, textAlign: 'center', padding: 0, margin: 0 }}>
+          <Dropdown.Menu style={{ minWidth: '100%', backgroundColor: bgColor, border: `1px solid ${getThemeColor(0.3)}`, borderTop: 'none', fontSize: standardTitleFontSize, textAlign: 'center', padding: 0, margin: 0, boxShadow: '3px 3px 10px black' }}>
             <Nav.Link as='div' className='appbarDefault' eventKey='Home' onClick={() => onSelect('Home')}>Home</Nav.Link>
             <Nav.Link as='div' className='appbarDefault' eventKey='Software' onClick={() => onSelect('Software')}>Software</Nav.Link>
             {userData?.group === 'Administrator' && <Nav.Link as='div' className='appbarDefault' eventKey='Maintenance' onClick={() => onSelect('Maintenance')}>Maintenance</Nav.Link>}

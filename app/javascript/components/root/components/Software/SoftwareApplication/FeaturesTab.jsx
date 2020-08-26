@@ -81,7 +81,6 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
             <Col md={12} lg={allContentLoaded ? 5 : 12} style={{ display: 'flex', marginBottom: '1vh' }}>
                 <StandardCard noBorders style={{ verticalAlign: 'middle', margin: 'auto', maxWidth: '85%' }}>
                     <StandardImage
-                        toolTip='Expand Image'
                         className='defaultImageNudge'
                         src={feature.image_link}
                         onClick={() => setImageModalObj({ open: true, imageLink: feature.image_link })}
@@ -93,7 +92,7 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
             </Col>
             <Col md={12} lg={7} style={{ display: allContentLoaded ? 'flex' : 'none' }}>
                 <StandardCard title={feature.title} style={{ verticalAlign: 'middle', width: '95%' }}>
-                    <div style={{ margin: 'auto', maxWidth: '95%', textAlign: 'center', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
+                    <div style={{ margin: 'auto', maxWidth: '95%', textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
                     {userData?.group === 'Administrator' && <EditFeature displayAlert={displayAlert} app={app} setFeatures={setFeatures} feature={feature} />}
                 </StandardCard>
             </Col>
