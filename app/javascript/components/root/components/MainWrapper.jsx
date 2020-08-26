@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import AppBar from './Appbar/AppBar';
 import SoftwareApplication from './Software/SoftwareApplication/SoftwareApplication';
 import SoftwareTable from './Software/SoftwareTable/SoftwareTable';
-import SiteLogo from './Mainpage/SiteLogo/SiteLogo';
 import { getSession } from '../authService';
 import Tab from 'react-bootstrap/Tab';
 import { StandardAlert } from './Utility/Utility';
@@ -48,7 +47,6 @@ const MainWrapper = ({ activeKey: urlKey, activeApplication: urlApplication }) =
             <AppBar displayAlert={displayAlert} onSelect={handleOnSelect} userData={userData} setUserData={setUserData} />
             <Tab.Content>
                 <Tab.Pane unmountOnExit eventKey='Home'>
-                    <SiteLogo />
                 </Tab.Pane>
                 <Tab.Pane unmountOnExit eventKey='Software'>
                     <SoftwareTable displayAlert={displayAlert} userData={userData} setActiveApplication={(app) => { setActiveApplication(app); window.history.pushState({}, '', `/software/${app}`) }} />

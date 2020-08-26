@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AppContext } from './AppContext';
 import './components/style.css';
 import MainWrapper from './components/MainWrapper';
-import { StandardSpinner } from './components/Utility/Utility';
+import { StandardSpinner, StandardImage } from './components/Utility/Utility';
+import Row from 'react-bootstrap/Row';
 
 function Root() {
   const appSettings = useContext(AppContext);
@@ -31,9 +32,8 @@ function Root() {
         >
           <div style={{ marginTop: '45vh', display: loading ? '' : 'none' }}><StandardSpinner style={{ fontSize: '10vw' }} /><p style={{ marginTop: '1vh', fontSize: standardTitleFontSize, fontFamily: fontStyle }}>Loading Prather.cc</p></div>
           <div style={{ opacity: loading ? 0 : 100 }}>
-            <div className='starbend' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(https://i92.servimg.com/u/f92/11/29/62/29/stars11.png)`, opacity: 0.5 }} />
-            <div className='blackhole2' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(https://i92.servimg.com/u/f92/11/29/62/29/blackh16.png)`, opacity: 0.8 }} />
-            <div className='blackhole' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(https://i92.servimg.com/u/f92/11/29/62/29/blackh16.png)`, opacity: 1 }} />
+            <div className='starbend' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(https://i92.servimg.com/u/f92/11/29/62/29/stars11.png)`, opacity: 0.7 }} />
+            <SiteLogo />
             <Switch>
               <Route exact path='/software/:name' component={(props) => <MainWrapper activeApplication={props.match.params.name} activeKey='Software' />} />
             </Switch>
@@ -52,5 +52,17 @@ function Root() {
     </AppContext.Provider>
   );
 }
+
+function SiteLogo() {
+  return (
+    <Row className='siteLogoWrapper' style={{ filter: 'grayscale(0.2)', opacity: 1, padding: 0, maxWidth: 'max-content', margin: 'auto' }}>
+      <StandardImage
+        style={{ maxWidth: '45%', minWidth: '150px', borderRadius: '15px', pointerEvents: 'none' }}
+        className='siteLogo'
+        src='https://i92.servimg.com/u/f92/11/29/62/29/filter20.png'
+      />
+    </Row>
+  );
+};
 
 export default Root;
