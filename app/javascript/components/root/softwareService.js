@@ -1,13 +1,7 @@
 const host = `${window.location.origin}`;
 
-export const fetchAllSoftware = () => {
-  return fetch(`${host}/api/v1/software`).then(resp => resp.json());
-};
-
-export const fetchSoftware = (appName) => {
-  return fetch(
-    `${host}/api/v1/software?application_name=${appName}`
-  ).then(resp => resp.json());
+export const fetchAllSoftware = (sortBy = 'name', sortDir = 'asc') => {
+  return fetch(`${host}/api/v1/software?sort_by=${sortBy}&sort_dir=${sortDir}`).then(resp => resp.json());
 };
 
 export const postSoftware = (software) => {

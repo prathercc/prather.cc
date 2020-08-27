@@ -4,25 +4,18 @@ module Api
   module V1
     class SoftwareController < ApplicationController
       def index
-        app_name = params[:application_name]
-        softwares = Software.all.sort_by(&:name)
-        if !app_name.nil?
-          filtered_softwares = []
-
-          softwares.each do |d|
-            filtered_softwares.push(d) if d.name == app_name
-          end
-          render json: {
-            message: "Retrieved '#{app_name}'",
-            data: filtered_softwares.first
-          }, status: 200
+        sort_by = params[:sort_by]
+        sort_dir = params[:sort_dir]
+        if(sort_by && sort_dir)
+          softwares = Software.order(sort_by + ' ' + sort_dir)
         else
-          render json: {
-            message: 'Loaded software',
-            data: softwares
-          }, status: 200
+          softwares = Software.all.sort_by(&:name)
         end
-    end
+        render json: {
+          message: 'Loaded software',
+          data: softwares
+        }, status: 200
+      end
 
       def create
         if current_user[:group] == 'Administrator'

@@ -4,7 +4,6 @@ import { StandardTooltip, getIconSizing, StandardButton, StandardModal, Standard
 import SignInIcon from 'react-bootstrap-icons/dist/icons/person';
 import Form from 'react-bootstrap/Form';
 import { authenticate, clearSession } from '../../authService';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
@@ -14,7 +13,7 @@ const SignIn = ({ setUserData, userData, displayAlert }) => {
         <>
             <StandardTooltip text={userData ? 'Sign Out' : 'Sign In'}>
                 <Nav.Link onClick={() => setModalOpen(true)} style={{ minHeight: '100%', display: 'flex' }} as='span' className='appbarDefault'>
-                    <span style={{ fontSize: getIconSizing(), margin: 'auto', lineHeight: 0 }}>
+                    <span style={{ fontSize: getIconSizing('large'), margin: 'auto', lineHeight: 0 }}>
                         <SignInIcon />
                     </span>
                 </Nav.Link>

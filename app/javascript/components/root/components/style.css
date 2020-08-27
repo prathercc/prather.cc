@@ -9,62 +9,81 @@
     color: #4fc9c9 !important;
 }
 
+/* ******** */
+
+/* Site Logo Section */
+
+.siteLogoWrapper {
+    position: fixed;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.siteLogo {
+    margin: auto;
+    animation: siteLogo infinite 45s both;
+}
+
+@keyframes siteLogo {
+    0% {
+        transform: rotate(4deg) perspective(1px);
+        box-shadow: 0px 0px 60px rgb(79, 201, 201, 0.5), 0px 0px 60px #5a415a, 12px 9px black;
+    }
+    50% {
+        transform: rotate(-4deg) rotateY(-20deg) perspective(1px);
+        box-shadow: 0px -10px 60px rgb(79, 201, 201, 0.5), 0px 20px 60px #5a415a, -12px 9px black;
+    }
+    100% {
+        transform: rotate(4deg) perspective(1px);
+        box-shadow: 0px 0px 60px rgb(79, 201, 201, 0.5), 0px 0px 60px #5a415a, 12px 9px black;
+    }
+}
+
+/* ****************** */
+
+/* BACKGROUND ANIMATION SECTION */
+
+.starbend {
+    background-repeat: repeat;
+    background-position: center;
+    animation: starbend infinite 300s linear;
+}
+
+@keyframes starbend {
+    0% {
+        transform: scale(1, 1) perspective(1px);
+    }
+    25% {
+        transform: scale(1, 1.2) perspective(1px);
+    }
+    50% {
+        transform: scale(1.2, 1) perspective(1px);
+    }
+    75% {
+        transform: scale(1, 1.2) perspective(1px);
+    }
+    100% {
+        transform: scale(1, 1) perspective(1px);
+    }
+}
+
+/* ************************ */
+
+/* STANDARD IMAGE SECTION */
+
 .defaultImageNudge {
     border: solid 2px rgb(79, 201, 201, 0.1);
     border-radius: 15px;
-    box-shadow: 3px 3px black;
+    box-shadow: 3px 3px 5px black;
     transition: all 0.2s ease-in-out;
 }
 
 .defaultImageNudge:hover {
-    border: solid 2px rgb(79, 201, 201, 0.5);
-    background-color: rgb(79, 201, 201, 0.1);
-    box-shadow: 11px 11px black;
+    border: solid 2px rgb(79, 201, 201, 0.3);
+    /* background-color: rgb(79, 201, 201, 0.1); */
+    box-shadow: 8px 8px 8px black;
     cursor: pointer;
-}
-
-.defaultButtonDisabled {
-    color: white;
-    background-color: rgb(79, 201, 201, 0.5) !important;
-    box-shadow: 3px 3px black;
-    filter: grayscale(1);
-}
-
-.defaultButton {
-    color: white;
-    background-color: rgb(79, 201, 201, 0.5) !important;
-    box-shadow: 3px 3px black;
-    transition: all 0.2s ease-in-out;
-}
-
-.defaultButton:hover {
-    cursor: pointer;
-    background-color: rgb(79, 201, 201, 0.1) !important;
-    color: rgb(79, 201, 201, 1);
-    border: 1px solid rgb(79, 201, 201, 0);
-    box-shadow: 10px 10px black;
-}
-
-.iconButtonDisabled {
-    border-radius: 5px;
-    color: white !important;
-    background-color: rgb(79, 201, 201, 0.5);
-    box-shadow: 3px 3px black;
-    filter: grayscale(1);
-}
-
-.iconButton {
-    border-radius: 5px;
-    color: white !important;
-    background-color: rgb(79, 201, 201, 0.5);
-    box-shadow: 5px 5px black;
-    transition: all 0.2s ease-in-out;
-}
-
-.iconButton:hover {
-    color: #4fc9c9 !important;
-    background-color: rgb(79, 201, 201, 0.1);
-    box-shadow: 10px 10px black;
 }
 
 .legacyAppOverlay {
@@ -83,7 +102,56 @@
     }
 }
 
-/* ******** */
+/* ********************** */
+
+/*  STANDARD ICON BUTTON SECTION */
+
+.iconButtonDisabled {
+    border-radius: 5px;
+    color: white !important;
+    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a, 1px 1px black;
+    filter: grayscale(1);
+}
+
+.iconButton {
+    border-radius: 5px;
+    color: white !important;
+    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a, 1px 1px black;
+    transition: all 0.2s ease-in-out;
+}
+
+.iconButton:hover {
+    color: #4fc9c9 !important;
+    box-shadow: inset 0px 0px 35px #5a415a, inset 0px 0px 35px rgb(79, 201, 201, 0.5), 8px 8px 8px black;
+}
+
+/* ***************************** */
+
+/* STANDARD BUTTON SECTION */
+
+.defaultButtonDisabled {
+    color: white;
+    background-color: rgb(79, 201, 201, 0) !important;
+    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a, 1px 1px black;
+    filter: grayscale(1);
+}
+
+.defaultButton {
+    color: white;
+    background-color: rgb(79, 201, 201, 0) !important;
+    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a, 1px 1px black;
+    transition: all 0.2s ease-in-out;
+}
+
+.defaultButton:hover {
+    cursor: pointer;
+    background-color: rgb(79, 201, 201, 0) !important;
+    color: rgb(79, 201, 201, 1);
+    border: 1px solid rgb(79, 201, 201, 0);
+    box-shadow: inset 0px 0px 35px #5a415a, inset 0px 0px 35px rgb(79, 201, 201, 0.5), 8px 8px 8px black;
+}
+
+/* *********************** */
 
 /* MODAL SECTION */
 
@@ -110,6 +178,18 @@
 .tableMouseOver:hover {
     color: rgb(79, 201, 201, 1) !important;
     background-color: rgb(79, 201, 201, 0.1) !important;
+    cursor: pointer;
+}
+
+.tableHeaderMouseOver {
+    color: rgb(79, 201, 201, 1) !important;
+    transition: all 0.2s ease-in-out;
+    border-radius: 5px;
+}
+
+.tableHeaderMouseOver:hover {
+    background-color: rgb(79, 201, 201, 0.1) !important;
+    cursor: pointer;
 }
 
 /* ************* */
@@ -126,43 +206,42 @@
 
 .appbarDefault:hover {
     color: rgb(79, 201, 201, 1) !important;
-    background-color: #1f2c2c;
+    background-color: rgb(31, 44, 44, 0.8);
 }
 
 /* ************** */
 
 /* SoftwareApplication TABS SECTION */
 
-.tabsNavBar {
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    flex-direction: row !important;
-    box-shadow: 3px 3px black;
-}
-
-.tabsLeftBorderBlack {
-    margin-left: 1px;
-    margin-top: 1px;
-}
-
-.tabsLinkActive {
-    color: rgb(79, 201, 201, 1);
+.tabsNavBar .nav-item>.nav-link:hover {
     background-color: rgb(79, 201, 201, 0.1);
-    outline: 0;
-    margin-top: 1px;
+    color: rgb(79, 201, 201, 1);
+    border-bottom: 1px solid #1a1a1a;
 }
 
-.tabsLinkInactive {
-    background-color: rgb(79, 201, 201, 0.5);
+.tabsNavBar .nav-item>.nav-link.active {
+    background-color: rgb(79, 201, 201, 0.1);
+    color: rgb(79, 201, 201, 1);
+    border-bottom: 1px solid #1a1a1a;
+    cursor: default;
+}
+
+.tabsNavBar .nav-item>.nav-link {
+    background-color: rgb(79, 201, 201, 0);
     color: white;
-    cursor: pointer;
     outline: 0;
+    border: 0;
+    border-bottom: 1px solid #1a1a1a;
+    cursor: pointer;
     transition: all 0.2s ease-in-out;
 }
 
-.tabsLinkInactive:hover {
-    background-color: rgb(79, 201, 201, 0.1);
-    color: rgb(79, 201, 201, 1);
+.tabsNavBar .nav-item>.nav-link:focus {
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.tabsNavBar {
+    background: linear-gradient(to top left, rgb(79, 201, 201, 0.05), rgb(90, 65, 90, 0.1));
     margin-top: 1px;
 }
 

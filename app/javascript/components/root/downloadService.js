@@ -1,8 +1,8 @@
 const host = `${window.location.origin}`;
 
-export const fetchDownloads = (software_id) => {
+export const fetchDownloads = (software_id, sortBy = 'os_type', sortDir = 'asc') => {
   return fetch(
-    `${host}/api/v1/download?software_id=${software_id}`
+    `${host}/api/v1/download?software_id=${software_id}&sort_by=${sortBy}&sort_dir=${sortDir}`
   ).then(resp => resp.json());
 };
 

@@ -35,7 +35,7 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app, displayAlert }) =
                 {
                     features?.map((feature, index) => {
                         return (
-                            <Carousel.Item key={index} style={{ paddingTop: '0.25vh' }}>
+                            <Carousel.Item key={index} style={{ paddingTop: '0.25vh', paddingBottom: '2vh' }}>
                                 <SoftwareFeature
                                     app={app}
                                     setImageModalObj={setImageModalObj}
@@ -49,14 +49,14 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app, displayAlert }) =
                 }
             </Carousel>
 
-            <Row style={{ maxWidth: '60%', margin: 'auto', display: features?.length > 0 ? '' : 'none', marginTop: '1vh' }}>
-                <Col>
+            <Row style={{ margin: 'auto', display: features?.length > 0 ? '' : 'none' }}>
+                <Col xs={5}>
                     <StandardIconButton toolTip='Previous' icon={<LeftArrow />} onClick={() => setCaroselIndex(caroselIndex === 0 ? features?.length - 1 : caroselIndex - 1)} />
                 </Col>
-                <Col style={{ paddingTop: '1vh' }}>
+                <Col xs={2} style={{ paddingTop: '1vh' }}>
                     {caroselIndex + 1} of {features?.length}
                 </Col>
-                <Col>
+                <Col xs={5}>
                     <StandardIconButton toolTip='Next' icon={<RightArrow />} onClick={() => setCaroselIndex(caroselIndex === features?.length - 1 ? 0 : caroselIndex + 1)} />
                 </Col>
             </Row>
@@ -81,7 +81,6 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
             <Col md={12} lg={allContentLoaded ? 5 : 12} style={{ display: 'flex', marginBottom: '1vh' }}>
                 <StandardCard noBorders style={{ verticalAlign: 'middle', margin: 'auto', maxWidth: '85%' }}>
                     <StandardImage
-                        toolTip='Expand Image'
                         className='defaultImageNudge'
                         src={feature.image_link}
                         onClick={() => setImageModalObj({ open: true, imageLink: feature.image_link })}
@@ -93,7 +92,7 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
             </Col>
             <Col md={12} lg={7} style={{ display: allContentLoaded ? 'flex' : 'none' }}>
                 <StandardCard title={feature.title} style={{ verticalAlign: 'middle', width: '95%' }}>
-                    <div style={{ margin: 'auto', maxWidth: '95%', textAlign: 'center', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
+                    <div style={{ margin: 'auto', maxWidth: '95%', textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
                     {userData?.group === 'Administrator' && <EditFeature displayAlert={displayAlert} app={app} setFeatures={setFeatures} feature={feature} />}
                 </StandardCard>
             </Col>

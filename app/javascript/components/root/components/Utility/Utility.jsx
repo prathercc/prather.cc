@@ -3,7 +3,6 @@ import Spinner from 'react-bootstrap/Spinner';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import { AppContext } from '../../AppContext';
-import { useCurrentBreakpointName } from 'react-socks';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import XIcon from 'react-bootstrap-icons/dist/icons/x';
@@ -14,10 +13,13 @@ import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 export const StandardImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
+    const CancelButton = () => (
+        <StandardButton onClick={handleModalClose}>Cancel</StandardButton>
+    )
     return (
-        <StandardModal title='View Image' modalOpen={modalOpen} handleModalClose={handleModalClose}>
+        <StandardModal buttons={<CancelButton />} title='View Image' modalOpen={modalOpen} handleModalClose={handleModalClose}>
             <div style={{ maxWidth: 'max-content', margin: 'auto' }}>
-                <StandardImage toolTip='Open Raw Image' onClick={() => { window.open(imageLink); handleModalClose(); }} className='defaultImageNudge' src={imageLink} style={{ maxWidth: '85%' }} />
+                <StandardImage onClick={() => { window.open(imageLink); handleModalClose(); }} className='defaultImageNudge' src={imageLink} style={{ maxWidth: '85%' }} />
             </div>
         </StandardModal>
     );
@@ -121,8 +123,7 @@ export const StandardTextField = ({ onChange, label, isActive = true, value, row
     );
 };
 
-export const StandardImage = ({ style, noErrorMessage, src, className, onClick, onLoaded = () => { }, toolTip, overlayText }) => {
-    const { standardSmallFontSize, bgColor } = useContext(AppContext);
+export const StandardImage = ({ style, noErrorMessage, src, className, onClick, onLoaded = () => { }, toolTip }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
     const handleOnLoad = () => {
@@ -134,7 +135,6 @@ export const StandardImage = ({ style, noErrorMessage, src, className, onClick, 
         setIsLoading(false);
         onLoaded();
     }
-
     return (
         <>
             {isLoading &&
@@ -146,31 +146,22 @@ export const StandardImage = ({ style, noErrorMessage, src, className, onClick, 
                     <div style={{ display: noErrorMessage ? 'none' : '' }}>No image found</div>
                 </>
             }
-            <div style={{ position: 'relative', display: 'inline-block', alignItems: 'center' }}>
-                {!hasError && !toolTip &&
+            {!hasError && !toolTip &&
+                <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />
+            }
+            {!hasError && toolTip &&
+                <StandardTooltip text={toolTip}>
                     <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />
-                }
-                {!hasError && toolTip &&
-                    <StandardTooltip text={toolTip}>
-                        <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />
-                    </StandardTooltip>
-                }
-                {!hasError && !isLoading &&
-                    <div className='legacyAppOverlay' style={{
-                        color: getThemeColor(1), fontSize: standardSmallFontSize,
-                        position: 'absolute', top: '45%', backgroundColor: bgColor,
-                        pointerEvents: 'none', left: 0, right: 0
-                    }}>{overlayText}</div>
-                }
-            </div>
+                </StandardTooltip>
+            }
         </>
     );
 };
 
 export const StandardTooltip = ({ children, text }) => {
-    const { fontStyle, standardSmallFontSize } = useContext(AppContext);
+    const { fontStyle, standardBodyFontSize } = useContext(AppContext);
     return (
-        <OverlayTrigger placement='bottom' overlay={<Tooltip style={{ fontFamily: fontStyle, fontSize: standardSmallFontSize, marginTop: '1vh' }}>{text}</Tooltip>}>
+        <OverlayTrigger placement='bottom' overlay={<Tooltip style={{ fontFamily: fontStyle, fontSize: standardBodyFontSize, marginTop: '1vh' }}>{text}</Tooltip>}>
             {children}
         </OverlayTrigger>
     );
@@ -239,18 +230,19 @@ export const StandardCard = ({ title, style, children, className, onClick, noBor
         <div
             onClick={onClick}
             className={className}
-            style={{
-                margin: 'auto',
-                ...style,
-                backgroundColor: 'transparent',
-                fontSize: standardBodyFontSize,
-                alignItems: 'center',
-                border: 'none',
-            }}>
-            <div style={noBorders ? {} : { borderBottom: `2px solid ${getThemeColor(0.5)}`, borderTop: `2px solid ${getThemeColor(0.5)}`, minWidth: '100%', borderRadius: '25px', boxShadow: '3px 3px black', fontFamily: fontStyle }}>
-                <span style={{ fontSize: standardTitleFontSize, minWidth: '100%', color: getThemeColor(1) }}>{title}</span>
-                {children}
-            </div>
+            style={noBorders ? { ...style, margin: 'auto' } :
+                {
+                    ...style,
+                    fontSize: standardBodyFontSize,
+                    margin: 'auto',
+                    borderBottom: `none`,
+                    borderTop: `none`,
+                    borderRadius: '5px',
+                    boxShadow: '3px 3px 10px black',
+                    fontFamily: fontStyle
+                }}>
+            <div style={{ fontSize: standardBodyFontSize, minWidth: '100%', color: 'white', background: getThemeBackground(), borderTopLeftRadius: '5px', borderTopRightRadius: '5px' }}>{title}</div>
+            {children}
         </div>
     );
 };
@@ -259,28 +251,25 @@ export const StandardPage = ({ title = '', children, style }) => {
     const { bgColor, fontStyle, standardBodyFontSize, standardTitleFontSize } = useContext(AppContext);
     return (
         <Container style={{ backgroundColor: 'transparent', position: 'relative', minWidth: '75%', ...style }}>
-            <div style={{ backgroundColor: bgColor }}>
-                <div style={{ fontFamily: fontStyle, fontSize: standardTitleFontSize, backgroundColor: getThemeColor(0.5), margin: 'auto', marginTop: '4vh', padding: '5px', borderRadius: '5px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }}>
-                    {title}
-                </div>
+            <div style={{ backgroundColor: bgColor, marginTop: '6vh', borderRadius: '5px', boxShadow: '3px 3px 10px black' }}>
                 <div
                     style={{
-                        backgroundColor: 'transparent',
                         fontFamily: fontStyle,
                         fontSize: standardBodyFontSize,
                         paddingTop: '0vh',
                         paddingBottom: '2vh',
-                        border: `3px solid ${getThemeColor(0.5)}`,
                         borderTop: 'none',
                         paddingLeft: '0vw',
                         paddingRight: '0vw',
+                        borderRadius: '5px',
                         borderTopLeftRadius: 0,
                         borderTopRightRadius: 0
                     }}
                 >
-                    <Card style={{ margin: 'auto', width: '95%', backgroundColor: 'transparent', border: 'none' }}>
-                        {children}
-                    </Card>
+                    <div style={{ fontFamily: fontStyle, fontSize: standardTitleFontSize, margin: 'auto', padding: '5px', borderRadius: '5px', borderBottomLeftRadius: 0, borderBottomRightRadius: 0, background: getThemeBackground() }}>
+                        {title}
+                    </div>
+                    {children}
                 </div>
             </div>
         </Container>
@@ -300,7 +289,7 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
         >
             <div style={{ backgroundColor: bgColor }}>
                 <Modal.Header style={{
-                    backgroundColor: getThemeColor(0.5),
+                    background: getThemeBackground(),
                     borderBottom: 'none',
                     padding: '3px',
                     paddingTop: 0,
@@ -314,9 +303,10 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
                     style={{
                         backgroundColor: 'transparent',
                         color: 'white',
-                        border: `3px solid ${getThemeColor(0.5)}`,
+                        boxShadow: '3px 3px 10px black',
                         borderTop: 0,
                         fontSize: standardBodyFontSize,
+                        borderRadius: '5px',
                         ...bodyPadding
                     }}
                 >
@@ -332,18 +322,16 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
     );
 };
 
+export const getThemeBackground = () => {
+    return 'linear-gradient(to top left, #5a415a, rgb(79, 201, 201, 0.5))';
+}
 
 export const getThemeColor = (opacity = 1) => {
     return `rgb(79, 201, 201, ${opacity})`;
 };
 
 export const getIconSizing = (size = 'small') => {
-    let largeLogic = 'calc(1px + 6vmin)';
+    let largeLogic = 'calc(1px + 3.5vmin)';
     let smallLogic = 'calc(1px + 3vmin)';
     return size === 'large' ? largeLogic : smallLogic;
-};
-
-export const getLogoSizing = () => {
-    const breakpoint = useCurrentBreakpointName();
-    return breakpoint === 'xsmall' ? '15vw' : breakpoint === 'large' ? '12.5vw' : breakpoint === 'medium' ? '13.5vw' : breakpoint === 'small' ? '14.5vw' : '8vw';
 };
