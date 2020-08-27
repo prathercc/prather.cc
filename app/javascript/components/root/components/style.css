@@ -21,21 +21,22 @@
 }
 
 .siteLogo {
-    animation: siteLogo infinite 25s both;
+    margin: auto;
+    animation: siteLogo infinite 45s both;
 }
 
 @keyframes siteLogo {
     0% {
-        transform: rotate(-4deg) perspective(1px);
-        box-shadow: 0px 0px 60px rgb(79, 201, 201, 0.5), 0px 0px 60px #5a415a, 9px 9px black;
+        transform: rotate(4deg) perspective(1px);
+        box-shadow: 0px 0px 60px rgb(79, 201, 201, 0.5), 0px 0px 60px #5a415a, 12px 9px black;
     }
     50% {
-        transform: rotate(4deg) rotateY(20deg) perspective(1px);
-        box-shadow: 0px -10px 60px rgb(79, 201, 201, 0.5), 0px 20px 60px #5a415a, 5px 5px black;
+        transform: rotate(-4deg) rotateY(-20deg) perspective(1px);
+        box-shadow: 0px -10px 60px rgb(79, 201, 201, 0.5), 0px 20px 60px #5a415a, -12px 9px black;
     }
     100% {
-        transform: rotate(-4deg) perspective(1px);
-        box-shadow: 0px 0px 60px rgb(79, 201, 201, 0.5), 0px 0px 60px #5a415a, 9px 9px black;
+        transform: rotate(4deg) perspective(1px);
+        box-shadow: 0px 0px 60px rgb(79, 201, 201, 0.5), 0px 0px 60px #5a415a, 12px 9px black;
     }
 }
 
@@ -54,13 +55,13 @@
         transform: scale(1, 1) perspective(1px);
     }
     25% {
-        transform: scale(1, 1.5) perspective(1px);
+        transform: scale(1, 1.2) perspective(1px);
     }
     50% {
-        transform: scale(1.5, 1) perspective(1px);
+        transform: scale(1.2, 1) perspective(1px);
     }
     75% {
-        transform: scale(1, 1.5) perspective(1px);
+        transform: scale(1, 1.2) perspective(1px);
     }
     100% {
         transform: scale(1, 1) perspective(1px);
@@ -74,14 +75,14 @@
 .defaultImageNudge {
     border: solid 2px rgb(79, 201, 201, 0.1);
     border-radius: 15px;
-    box-shadow: 3px 3px 10px black;
+    box-shadow: 3px 3px 5px black;
     transition: all 0.2s ease-in-out;
 }
 
 .defaultImageNudge:hover {
     border: solid 2px rgb(79, 201, 201, 0.3);
-    background-color: rgb(79, 201, 201, 0.1);
-    box-shadow: 11px 11px 10px black;
+    /* background-color: rgb(79, 201, 201, 0.1); */
+    box-shadow: 8px 8px 8px black;
     cursor: pointer;
 }
 
@@ -108,20 +109,20 @@
 .iconButtonDisabled {
     border-radius: 5px;
     color: white !important;
-    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a, 3px 3px black;
+    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a, 1px 1px black;
     filter: grayscale(1);
 }
 
 .iconButton {
     border-radius: 5px;
     color: white !important;
-    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a, 3px 3px black;
+    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a, 1px 1px black;
     transition: all 0.2s ease-in-out;
 }
 
 .iconButton:hover {
     color: #4fc9c9 !important;
-    box-shadow: inset 0px 0px 35px #5a415a, inset 0px 0px 35px rgb(79, 201, 201, 0.5), 10px 10px 10px black;
+    box-shadow: inset 0px 0px 35px #5a415a, inset 0px 0px 35px rgb(79, 201, 201, 0.5), 8px 8px 8px black;
 }
 
 /* ***************************** */
@@ -131,14 +132,14 @@
 .defaultButtonDisabled {
     color: white;
     background-color: rgb(79, 201, 201, 0) !important;
-    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a, 3px 3px black;
+    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a, 1px 1px black;
     filter: grayscale(1);
 }
 
 .defaultButton {
     color: white;
     background-color: rgb(79, 201, 201, 0) !important;
-    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a, 3px 3px black;
+    box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a, 1px 1px black;
     transition: all 0.2s ease-in-out;
 }
 
@@ -147,7 +148,7 @@
     background-color: rgb(79, 201, 201, 0) !important;
     color: rgb(79, 201, 201, 1);
     border: 1px solid rgb(79, 201, 201, 0);
-    box-shadow: inset 0px 0px 35px #5a415a, inset 0px 0px 35px rgb(79, 201, 201, 0.5), 10px 10px 10px black;
+    box-shadow: inset 0px 0px 35px #5a415a, inset 0px 0px 35px rgb(79, 201, 201, 0.5), 8px 8px 8px black;
 }
 
 /* *********************** */
@@ -205,7 +206,7 @@
 
 .appbarDefault:hover {
     color: rgb(79, 201, 201, 1) !important;
-    background-color: #1f2c2c;
+    background-color: rgb(31, 44, 44, 0.8);
 }
 
 /* ************** */
@@ -213,13 +214,13 @@
 /* SoftwareApplication TABS SECTION */
 
 .tabsNavBar .nav-item>.nav-link:hover {
-    background-color: rgb(79, 201, 201, 0.05);
+    background-color: rgb(79, 201, 201, 0.1);
     color: rgb(79, 201, 201, 1);
     border-bottom: 1px solid #1a1a1a;
 }
 
 .tabsNavBar .nav-item>.nav-link.active {
-    background-color: rgb(79, 201, 201, 0.05);
+    background-color: rgb(79, 201, 201, 0.1);
     color: rgb(79, 201, 201, 1);
     border-bottom: 1px solid #1a1a1a;
     cursor: default;
@@ -240,7 +241,7 @@
 }
 
 .tabsNavBar {
-    background: linear-gradient(to top left, rgb(90, 65, 90, 0.2), rgb(79, 201, 201, 0.1));
+    background: linear-gradient(to top left, rgb(79, 201, 201, 0.05), rgb(90, 65, 90, 0.1));
     margin-top: 1px;
 }
 
