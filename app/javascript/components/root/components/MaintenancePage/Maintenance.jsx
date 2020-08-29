@@ -3,12 +3,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { StandardPage, StandardIconButton, StandardModal, StandardTextField, StandardButton, StandardDropDown, getThemeColor } from '../Utility/Utility';
-import CreateIcon from 'react-bootstrap-icons/dist/icons/person-plus';
-import DeleteIcon from 'react-bootstrap-icons/dist/icons/person-dash';
-import UpdateIcon from 'react-bootstrap-icons/dist/icons/person-check';
-import UnknownIcon from 'react-bootstrap-icons/dist/icons/question-diamond';
-import SessionIcon from 'react-bootstrap-icons/dist/icons/unlock';
 import { getUsers, createUser, deleteUser, updateUser, getUser } from '../../userService';
+import { MDBIcon } from "mdbreact";
+
 function Maintenance({ userData, displayAlert, onSelect }) {
     useEffect(() => {
         if (userData?.group !== 'Administrator')
@@ -19,7 +16,7 @@ function Maintenance({ userData, displayAlert, onSelect }) {
 
     return (
         <StandardPage title='Maintenance Portal'>
-            <Row style={{ marginTop: '2vh' }}>
+            <Row style={{ marginTop: '1vh' }}>
                 <Col xs={12} md={6} style={{ display: 'flex', margin: 'auto' }}>
                     <Col style={{ display: 'flex' }}>
                         <div style={{ verticalAlign: 'middle', margin: 'auto' }}>
@@ -31,8 +28,8 @@ function Maintenance({ userData, displayAlert, onSelect }) {
                     <Col style={{ display: 'flex' }}>
                         <div style={{ verticalAlign: 'middle', margin: 'auto' }}>
                             <ViewSession userData={userData} />
-                            <StandardIconButton disabled style={{ marginTop: '1vh' }} toolTip='TBD' icon={<UnknownIcon />} />
-                            <StandardIconButton disabled style={{ marginTop: '1vh' }} toolTip='TBD' icon={<UnknownIcon />} />
+                            <StandardIconButton disabled style={{ marginTop: '1vh' }} toolTip='TBD' icon={<MDBIcon icon="question" />} />
+                            <StandardIconButton disabled style={{ marginTop: '1vh' }} toolTip='TBD' icon={<MDBIcon icon="question" />} />
                         </div>
                     </Col>
                 </Col>
@@ -52,10 +49,10 @@ const ViewSession = ({ userData }) => {
 
     return (
         <>
-            <StandardIconButton onClick={() => setModalOpen(true)} style={{ marginTop: '1vh' }} toolTip='View Session' icon={<SessionIcon />} />
+            <StandardIconButton onClick={() => setModalOpen(true)} style={{ marginTop: '1vh' }} toolTip='View Session' icon={<MDBIcon icon="user-lock" />} />
             <StandardModal buttons={<CancelButton />} title='Session Information' modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
                 <Form.Group style={{ width: '95%', margin: 'auto', paddingBottom: '15px' }}>
-                    <div style={{ color: getThemeColor(1), marginTop: '1vh' }}>Email: <span style={{ color: 'white' }}>{userData?.email}</span></div>
+                    <div style={{ color: getThemeColor(1) }}>Email: <span style={{ color: 'white' }}>{userData?.email}</span></div>
                     <div style={{ color: getThemeColor(1) }}>Group: <span style={{ color: 'white' }}>{userData?.group}</span></div>
                     <div style={{ color: getThemeColor(1) }}>Session Token: <span style={{ color: 'white' }}>{userData?.token}</span></div>
                     <div style={{ color: getThemeColor(1) }}>Account Identifier: <span style={{ color: 'white' }}>{userData?.id}</span></div>
@@ -133,7 +130,7 @@ const UpdateUser = ({ userData, displayAlert }) => {
                     <StandardDropDown isActive={selectedUser !== 'Make a selection'} value={selectedRole} label='Group' data={groupOptions} onChange={(e) => setSelectedRole(e.target.value)} />
                 </Form.Group>
             </StandardModal>
-            <StandardIconButton style={{ marginTop: '1vh' }} onClick={() => setModalOpen(true)} toolTip='Update User' icon={<UpdateIcon />} />
+            <StandardIconButton style={{ marginTop: '1vh' }} onClick={() => setModalOpen(true)} toolTip='Update User' icon={<MDBIcon icon="user-edit" />} />
         </>
     )
 }
@@ -197,7 +194,7 @@ const DeleteUser = ({ userData, displayAlert }) => {
                     <StandardDropDown errorMessage='Selection must be valid' hasError={deleteButtonDisabled} value={selectedUser} label='User' data={filteredUsers} onChange={(e) => setSelectedUser(e.target.value)} />
                 </Form.Group>
             </StandardModal>
-            <StandardIconButton style={{ marginTop: '1vh' }} onClick={() => setModalOpen(true)} toolTip='Delete User' icon={<DeleteIcon />} />
+            <StandardIconButton style={{ marginTop: '1vh' }} onClick={() => setModalOpen(true)} toolTip='Delete User' icon={<MDBIcon icon="user-minus" />} />
         </>
     );
 };
@@ -239,12 +236,12 @@ const CreateUser = ({ userData, displayAlert }) => {
         <>
             <StandardModal buttons={<CreateButton />} title='Create User' modalOpen={modalOpen} handleModalClose={handleModalClose}>
                 <Form.Group style={{ width: '95%', margin: 'auto', paddingBottom: '15px' }}>
-                    <StandardTextField errorMessage='A valid email address is required!' hasError={newUser.email.length === 0 || !newUser.email.includes('.') || !newUser.email.includes('@')} value={newUser.email} label='Email' onChange={(e) => setNewUser({ ...newUser, email: e.target.value })} />
-                    <StandardTextField errorMessage='A valid password is required!' hasError={newUser.password.length === 0} isPassword value={newUser.password} label='Password' onChange={(e) => setNewUser({ ...newUser, password: e.target.value })} />
+                    <StandardTextField hasError={newUser.email.length === 0 || !newUser.email.includes('.') || !newUser.email.includes('@')} value={newUser.email} label='Email' onChange={(e) => setNewUser({ ...newUser, email: e.target.value })} />
+                    <StandardTextField hasError={newUser.password.length === 0} isPassword value={newUser.password} label='Password' onChange={(e) => setNewUser({ ...newUser, password: e.target.value })} />
                     <StandardTextField errorMessage='Passwords must match!' hasError={newUser.password2 !== newUser.password} isPassword value={newUser.password2} label='Password Again' onChange={(e) => setNewUser({ ...newUser, password2: e.target.value })} />
                 </Form.Group>
             </StandardModal>
-            <StandardIconButton style={{ marginTop: '1vh' }} onClick={() => setModalOpen(true)} toolTip='Create User' icon={<CreateIcon />} />
+            <StandardIconButton style={{ marginTop: '1vh' }} onClick={() => setModalOpen(true)} toolTip='Create User' icon={<MDBIcon icon="user-plus" />} />
         </>
     );
 };

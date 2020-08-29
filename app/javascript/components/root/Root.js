@@ -6,6 +6,7 @@ import './components/style.css';
 import MainWrapper from './components/MainWrapper';
 import { StandardSpinner, StandardImage } from './components/Utility/Utility';
 import Row from 'react-bootstrap/Row';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function Root() {
   const appSettings = useContext(AppContext);

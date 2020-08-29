@@ -6,8 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { fetchAllSoftware, postSoftware, putSoftware, deleteSoftware } from '../../../softwareService';
 import { StandardImage, StandardDatePicker, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing, StandardSpinner, StandardIconButton } from '../../Utility/Utility';
-import Add from 'react-bootstrap-icons/dist/icons/file-plus';
-import Edit from 'react-bootstrap-icons/dist/icons/pencil';
+import { MDBIcon } from "mdbreact";
 
 function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
   const [software, setSoftware] = useState(null);
@@ -161,19 +160,19 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares, d
   return (
     <>
       {existingSoftware &&
-        <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Edit Software' icon={<Edit />} />
+        <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Edit Software' icon={<MDBIcon icon="pencil-alt" />} />
       }
       {!existingSoftware &&
-        <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Add Software' icon={<Add />} />
+        <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Add Software' icon={<MDBIcon icon="plus" />} />
       }
       <StandardModal title={`Software Alteration - ${!existingSoftware ? 'Create' : 'Modify'}`} buttons={existingSoftware ? <ExistingButtons /> : <NewButtons />} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
         <Form.Group style={{ width: '95%', margin: 'auto' }}>
-          <StandardTextField errorMessage='A name is required!' hasError={software.name.length === 0} value={software.name} isActive={!existingSoftware} label='Name' onChange={(e) => setSoftware({ ...software, name: e.target.value })} />
-          <StandardTextField errorMessage='An icon link is required!' hasError={software.icon_link.length === 0} value={software.icon_link} label='Icon Image Link' onChange={(e) => setSoftware({ ...software, icon_link: e.target.value })} />
-          <StandardTextField errorMessage='An image link is required!' hasError={software.image_link.length === 0} value={software.image_link} label='Image Link' onChange={(e) => setSoftware({ ...software, image_link: e.target.value })} />
-          <StandardTextField errorMessage='A description is required!' hasError={software.description.length === 0} value={software.description} rows={4} label='Description' onChange={(e) => setSoftware({ ...software, description: e.target.value })} />
-          <StandardTextField errorMessage='A repository link is required!' hasError={software.repo_link.length === 0} value={software.repo_link} label='Repository Link' onChange={(e) => setSoftware({ ...software, repo_link: e.target.value })} />
-          <StandardTextField errorMessage='Language(s) are required!' hasError={software.languages.length === 0} value={software.languages} label='Languages' onChange={(e) => setSoftware({ ...software, languages: e.target.value })} />
+          <StandardTextField hasError={software.name.length === 0} value={software.name} isActive={!existingSoftware} label='Name' onChange={(e) => setSoftware({ ...software, name: e.target.value })} />
+          <StandardTextField hasError={software.icon_link.length === 0} value={software.icon_link} label='Icon Image Link' onChange={(e) => setSoftware({ ...software, icon_link: e.target.value })} />
+          <StandardTextField hasError={software.image_link.length === 0} value={software.image_link} label='Image Link' onChange={(e) => setSoftware({ ...software, image_link: e.target.value })} />
+          <StandardTextField hasError={software.description.length === 0} value={software.description} rows={4} label='Description' onChange={(e) => setSoftware({ ...software, description: e.target.value })} />
+          <StandardTextField hasError={software.repo_link.length === 0} value={software.repo_link} label='Repository Link' onChange={(e) => setSoftware({ ...software, repo_link: e.target.value })} />
+          <StandardTextField hasError={software.languages.length === 0} value={software.languages} label='Languages' onChange={(e) => setSoftware({ ...software, languages: e.target.value })} />
           <StandardTextField value={software.youtube_link} label='Youtube Video Identifier' onChange={(e) => setSoftware({ ...software, youtube_link: e.target.value })} />
           <Container>
             <Row>

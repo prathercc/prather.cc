@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { StandardTooltip, getIconSizing, StandardButton, StandardModal, StandardTextField } from '../Utility/Utility';
-import SignInIcon from 'react-bootstrap-icons/dist/icons/person';
 import Form from 'react-bootstrap/Form';
 import { authenticate, clearSession } from '../../authService';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { MDBIcon } from "mdbreact";
 
 const SignIn = ({ setUserData, userData, displayAlert }) => {
     const [modalOpen, setModalOpen] = useState(false);
@@ -13,8 +13,8 @@ const SignIn = ({ setUserData, userData, displayAlert }) => {
         <>
             <StandardTooltip text={userData ? 'Sign Out' : 'Sign In'}>
                 <Nav.Link onClick={() => setModalOpen(true)} style={{ minHeight: '100%', display: 'flex' }} as='span' className='appbarDefault'>
-                    <span style={{ fontSize: getIconSizing('large'), margin: 'auto', lineHeight: 0 }}>
-                        <SignInIcon />
+                    <span style={{ fontSize: getIconSizing(), margin: 'auto' }}>
+                        <MDBIcon icon="user" />
                     </span>
                 </Nav.Link>
             </StandardTooltip>
@@ -25,21 +25,17 @@ const SignIn = ({ setUserData, userData, displayAlert }) => {
 
 const Login = ({ setUserData, modalOpen, setModalOpen, displayAlert, userData }) => {
     const [credentials, setCredentials] = useState({ email: '', password: '' });
+    let signInDisabled = credentials.email.length === 0 || credentials.password.length === 0;
+
     const authenticateUser = async () => {
-        let canAuthenticate = credentials.email.length > 0 && credentials.password.length > 0;
-        if (canAuthenticate) {
-            const { data } = await authenticate(credentials);
-            if (data) {
-                setUserData(data);
-                setModalOpen(false);
-                displayAlert('Successfully signed in', true);
-            }
-            else {
-                displayAlert('Invalid credential combination', false);
-            }
+        const { data } = await authenticate(credentials);
+        if (data) {
+            setUserData(data);
+            setModalOpen(false);
+            displayAlert('Successfully signed in', true);
         }
         else {
-            displayAlert('Complete the form and try again', false);
+            displayAlert('Invalid credential combination', false);
         }
     };
     const signOut = async () => {
@@ -55,7 +51,7 @@ const Login = ({ setUserData, modalOpen, setModalOpen, displayAlert, userData })
                     <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
                 </Col>
                 <Col>
-                    <StandardButton onClick={authenticateUser}>Sign In</StandardButton>
+                    <StandardButton disabled={signInDisabled} onClick={authenticateUser}>Sign In</StandardButton>
                 </Col>
             </Row>
 
@@ -79,8 +75,8 @@ const Login = ({ setUserData, modalOpen, setModalOpen, displayAlert, userData })
                 {userData && 'Are you sure you want to sign out?'}
                 {
                     !userData && <>
-                        <StandardTextField value={credentials.email} label='Email' onChange={(e) => setCredentials({ ...credentials, email: e.target.value })} />
-                        <StandardTextField isPassword value={credentials.password} label='Password' onChange={(e) => setCredentials({ ...credentials, password: e.target.value })} />
+                        <StandardTextField hasError={credentials.email.length === 0} value={credentials.email} label='Email' onChange={(e) => setCredentials({ ...credentials, email: e.target.value })} />
+                        <StandardTextField hasError={credentials.password.length === 0} isPassword value={credentials.password} label='Password' onChange={(e) => setCredentials({ ...credentials, password: e.target.value })} />
                     </>
                 }
             </Form.Group>
