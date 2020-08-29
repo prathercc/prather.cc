@@ -2,36 +2,32 @@ import React, { useContext, forwardRef, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Navbar from 'react-bootstrap/Navbar';
-import { getThemeColor, getIconSizing, StandardTooltip, StandardModal, StandardImage, StandardSpinner, getThemeBackground, StandardButton } from '../Utility/Utility';
+import { getThemeColor, getIconSizing, StandardTooltip, getThemeBackground, StandardLinkModal } from '../Utility/Utility';
 import { AppContext } from '../../AppContext';
-import NavIcon from 'react-bootstrap-icons/dist/icons/list';
-import AtIcon from 'react-bootstrap-icons/dist/icons/at';
 import { useCurrentBreakpointName } from 'react-socks';
 import SignIn from './SignIn';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { useEffect } from 'react';
+import { MDBIcon } from "mdbreact";
 
 function AppBar({ userData, setUserData, onSelect, displayAlert }) {
   const { standardTitleFontSize, bgColor, fontStyle } = useContext(AppContext);
   const breakpoint = useCurrentBreakpointName();
-  const activePadding = breakpoint === 'xsmall' ? { paddingLeft: 0, paddingRight: 0 } : { paddingLeft: '15%', paddingRight: '15%' };
+  const activePadding = breakpoint === 'xsmall' ? { paddingLeft: 0, paddingRight: 0 } : { paddingLeft: '5%', paddingRight: '5%' };
 
   const CustomToggle = forwardRef(({ onClick }, ref) => (
     <Nav.Link
       as='div'
       className='appbarDefault'
-      style={{ minHeight: '100%', display: 'flex' }}
+      style={{ minHeight: '100%', display: 'flex', alignItems: 'center' }}
       ref={ref}
       onClick={(e) => {
         e.preventDefault();
         onClick(e);
       }}
     >
-      <span style={{ margin: 'auto', fontSize: standardTitleFontSize, lineHeight: 0 }}>
-        <NavIcon style={{ fontSize: getIconSizing('large') }} />
-        {' '}&#x25BE;
-      </span>
+      <div style={{ margin: 'auto', fontSize: getIconSizing() }}>
+        <MDBIcon icon="list-alt" />
+      </div>
+      <span style={{ fontSize: standardTitleFontSize, paddingLeft: '5px' }}>Browse{' '}&#x25BE;</span>
     </Nav.Link>
   ));
 
@@ -48,51 +44,44 @@ function AppBar({ userData, setUserData, onSelect, displayAlert }) {
         </Dropdown>
       </Nav>
       <SignIn displayAlert={displayAlert} setUserData={setUserData} userData={userData} />
-      <RelatedLinks />
+      <Github />
+      <Youtube />
     </Navbar>
   );
 };
 
-const RelatedLinks = () => {
+const Github = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [loadingObj, setLoadingObj] = useState({ youtube: false, github: false });
-  let allContentLoaded = loadingObj.youtube && loadingObj.github;
-
-  useEffect(() => {
-    if (!modalOpen) {
-      setLoadingObj({ youtube: false, github: false });
-    }
-  }, [modalOpen]);
-
-  const CancelButton = () => (
-    <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
-  )
-
   return (
     <>
-      <StandardTooltip text='External Links'>
+      <StandardTooltip text='GitHub'>
         <Nav.Link onClick={() => setModalOpen(true)} style={{ display: 'flex' }} as='span' className='appbarDefault'>
-          <span style={{ fontSize: getIconSizing('large'), margin: 'auto', lineHeight: 0 }}>
-            <AtIcon />
-          </span>
+          <div style={{ margin: 'auto', fontSize: getIconSizing() }}>
+            <MDBIcon fab icon="github" />
+          </div>
         </Nav.Link>
       </StandardTooltip>
-      <StandardModal buttons={<CancelButton />} title='External Links' modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
-        <Row style={{ margin: 'auto', display: allContentLoaded ? '' : 'none' }}>
-          <Col>Listed below are links to official <span style={{ color: getThemeColor(1) }}>Prather.cc</span> media/resources</Col>
-        </Row>
-        <Row style={{ display: allContentLoaded ? '' : 'none' }}>
-          <Col xs={12} lg={6} style={{ marginTop: '1vh' }}>
-            <StandardImage onLoaded={() => setLoadingObj({ ...loadingObj, youtube: true })} onClick={() => window.open('https://www.youtube.com/channel/UC7_J0pO4THZ_QqQWqXwRl3w')} className='defaultImageNudge' style={{ maxWidth: '55%', padding: '25px' }} src='https://i92.servimg.com/u/f92/11/29/62/29/yt_log11.png' />
-          </Col>
-          <Col xs={12} lg={6} style={{ marginTop: '1vh' }}>
-            <StandardImage onLoaded={() => setLoadingObj({ ...loadingObj, github: true })} onClick={() => window.open('https://github.com/prathercc')} className='defaultImageNudge' style={{ maxWidth: '55%' }} src='https://i92.servimg.com/u/f92/11/29/62/29/github10.png' />
-          </Col>
-        </Row>
-        <Row style={{ display: !allContentLoaded ? '' : 'none' }}>
-          <StandardSpinner />
-        </Row>
-      </StandardModal>
+      <StandardLinkModal modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)} link='https://github.com/prathercc'>
+        Open the official <span style={{ color: getThemeColor(1) }}>Prather.cc</span> GitHub page?
+      </StandardLinkModal>
+    </>
+  );
+};
+
+const Youtube = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+  return (
+    <>
+      <StandardTooltip text='YouTube'>
+        <Nav.Link onClick={() => setModalOpen(true)} style={{ display: 'flex' }} as='span' className='appbarDefault'>
+          <div style={{ margin: 'auto', fontSize: getIconSizing() }}>
+            <MDBIcon fab icon="youtube" />
+          </div>
+        </Nav.Link>
+      </StandardTooltip>
+      <StandardLinkModal modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)} link='https://www.youtube.com/channel/UC7_J0pO4THZ_QqQWqXwRl3w'>
+        Open the official <span style={{ color: getThemeColor(1) }}>Prather.cc</span> YouTube page?
+      </StandardLinkModal>
     </>
   );
 };
