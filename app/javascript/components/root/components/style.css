@@ -11,6 +11,19 @@
 
 /* ******** */
 
+/* Standard tooltip */
+
+.defaultTooltip>.tooltip-inner {
+    color: rgb(79, 201, 201, 1) !important;
+    background-color: #1a1a1a;
+}
+
+.bs-tooltip-auto[x-placement^=bottom] .arrow::before, .bs-tooltip-bottom .arrow::before {
+    border-bottom-color: #1a1a1a !important;
+}
+
+/* **************** */
+
 /* Site Logo Section */
 
 .siteLogoWrapper {
@@ -81,7 +94,6 @@
 
 .defaultImageNudge:hover {
     border: solid 2px rgb(79, 201, 201, 0.3);
-    /* background-color: rgb(79, 201, 201, 0.1); */
     box-shadow: 8px 8px 8px black;
     cursor: pointer;
 }
@@ -201,12 +213,13 @@
     cursor: pointer;
     outline: 0;
     background-color: rgb(79, 201, 201, 0);
+    padding: 0;
     transition: all 0.2s ease-in-out;
 }
 
 .appbarDefault:hover {
     color: rgb(79, 201, 201, 1) !important;
-    background-color: rgb(31, 44, 44, 0.8);
+    background-color: #1a1a1a;
 }
 
 /* ************** */
