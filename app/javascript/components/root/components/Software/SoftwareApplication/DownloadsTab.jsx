@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../../../downloadService';
-import { StandardModal, getThemeColor, StandardButton, StandardTextField, StandardDropDown, StandardSpinner, StandardIconButton } from '../../Utility/Utility';
+import { StandardModal, getThemeColor, StandardButton, StandardTextField, StandardDropDown, StandardSpinner, StandardIconButton, StandardTooltip } from '../../Utility/Utility';
 import { MDBIcon } from "mdbreact";
 
 const getFileSizeDisplayValue = (fileSize) => {
@@ -113,7 +113,13 @@ const DlRow = ({ download, userData, app, setDownloads, displayAlert }) => {
             <tr className='tableMouseOver' style={{ cursor: 'pointer' }}>
                 <CustomTd>{file_name}</CustomTd>
                 <CustomTd>{getFileSizeDisplayValue(file_size)}</CustomTd>
-                <CustomTd>{os_type}</CustomTd>
+                <CustomTd>
+                    {os_type === 'Windows' && <StandardTooltip text='Windows'><MDBIcon className='defaultMouseOver' fab icon="windows" /></StandardTooltip>}
+                    {os_type === 'Linux' && <StandardTooltip text='Linux'><MDBIcon className='defaultMouseOver' fab icon="linux" /></StandardTooltip>}
+                    {os_type === 'Apple' && <StandardTooltip text='Apple'><MDBIcon className='defaultMouseOver' fab icon="apple" /></StandardTooltip>}
+                    {os_type === 'Android' && <StandardTooltip text='Android'><MDBIcon className='defaultMouseOver' fab icon="android" /></StandardTooltip>}
+                    {os_type === 'All' && <StandardTooltip text='All'><MDBIcon className='defaultMouseOver' far icon="file-alt" /></StandardTooltip>}
+                </CustomTd>
                 {userData?.group === 'Administrator' && <CustomTd noOnClick><EditDownloads displayAlert={displayAlert} download={download} app={app} setMainDownloads={setDownloads} /></CustomTd>}
             </tr>
             <StandardModal buttons={<DownloadButton />} title='Download File' modalOpen={modalOpen} handleModalClose={() => { setModalOpen(false) }} closable={false}>

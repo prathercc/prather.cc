@@ -16,10 +16,11 @@
 .defaultTooltip>.tooltip-inner {
     color: rgb(79, 201, 201, 1) !important;
     background-color: #1a1a1a;
+    border: 1px solid rgb(79, 201, 201, 0.3) !important;
 }
 
 .bs-tooltip-auto[x-placement^=bottom] .arrow::before, .bs-tooltip-bottom .arrow::before {
-    border-bottom-color: #1a1a1a !important;
+    display: none;
 }
 
 /* **************** */
@@ -41,15 +42,15 @@
 @keyframes siteLogo {
     0% {
         transform: rotate(4deg) perspective(1px);
-        box-shadow: 0px 0px 60px rgb(79, 201, 201, 0.5), 0px 0px 60px #5a415a, 12px 9px black;
+        box-shadow: 0px 0px 60px rgb(79, 201, 201, 0.5), 0px 0px 60px #5a415a, 9px 6px black;
     }
     50% {
         transform: rotate(-4deg) rotateY(-20deg) perspective(1px);
-        box-shadow: 0px -10px 60px rgb(79, 201, 201, 0.5), 0px 20px 60px #5a415a, -12px 9px black;
+        box-shadow: 0px -10px 60px rgb(79, 201, 201, 0.5), 0px 20px 60px #5a415a, -9px 6px black;
     }
     100% {
         transform: rotate(4deg) perspective(1px);
-        box-shadow: 0px 0px 60px rgb(79, 201, 201, 0.5), 0px 0px 60px #5a415a, 12px 9px black;
+        box-shadow: 0px 0px 60px rgb(79, 201, 201, 0.5), 0px 0px 60px #5a415a, 9px 6px black;
     }
 }
 
@@ -204,6 +205,12 @@
     cursor: pointer;
 }
 
+.tableHeaderNotSortable {
+    color: rgb(79, 201, 201, 1) !important;
+    transition: all 0.2s ease-in-out;
+    border-radius: 5px;
+}
+
 /* ************* */
 
 /* AppBar SECTION */
@@ -213,7 +220,6 @@
     cursor: pointer;
     outline: 0;
     background-color: rgb(79, 201, 201, 0);
-    padding: 0;
     transition: all 0.2s ease-in-out;
 }
 
@@ -229,23 +235,24 @@
 .tabsNavBar .nav-item>.nav-link:hover {
     background-color: rgb(79, 201, 201, 0.1);
     color: rgb(79, 201, 201, 1);
-    border-bottom: 1px solid #1a1a1a;
+    border-bottom: 1px solid #1f2c2c;
 }
 
 .tabsNavBar .nav-item>.nav-link.active {
     background-color: rgb(79, 201, 201, 0.1);
     color: rgb(79, 201, 201, 1);
-    border-bottom: 1px solid #1a1a1a;
+    border-bottom: 1px solid #1f2c2c;
     cursor: default;
 }
 
 .tabsNavBar .nav-item>.nav-link {
     background-color: rgb(79, 201, 201, 0);
-    color: white;
+    color: rgb(79, 201, 201, 1);
     outline: 0;
     border: 0;
-    border-bottom: 1px solid #1a1a1a;
+    border-bottom: 1px solid #1f2c2c;
     cursor: pointer;
+    border-radius: 0;
     transition: all 0.2s ease-in-out;
 }
 
@@ -254,7 +261,7 @@
 }
 
 .tabsNavBar {
-    background: linear-gradient(to top left, rgb(79, 201, 201, 0.05), rgb(90, 65, 90, 0.1));
+    background: linear-gradient(to top left, rgb(79, 201, 201, 0), rgb(90, 65, 90, 0));
     margin-top: 1px;
 }
 

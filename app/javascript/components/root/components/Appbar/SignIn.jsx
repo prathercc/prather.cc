@@ -7,14 +7,14 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { MDBIcon } from "mdbreact";
 
-const SignIn = ({ setUserData, userData, displayAlert }) => {
+const SignIn = ({ setUserData, userData, displayAlert, style }) => {
     const [modalOpen, setModalOpen] = useState(false);
     return (
         <>
             <StandardTooltip text={userData ? 'Sign Out' : 'Sign In'}>
-                <Nav.Link onClick={() => setModalOpen(true)} style={{ minHeight: '100%', display: 'flex' }} as='span' className='appbarDefault'>
+                <Nav.Link onClick={() => setModalOpen(true)} style={{ minHeight: '100%', display: 'flex', ...style }} as='span' className='appbarDefault'>
                     <span style={{ fontSize: getIconSizing(), margin: 'auto' }}>
-                        <MDBIcon icon="user" />
+                        <MDBIcon icon="user-circle" />
                     </span>
                 </Nav.Link>
             </StandardTooltip>

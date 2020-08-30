@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { fetchAllSoftware, postSoftware, putSoftware, deleteSoftware } from '../../../softwareService';
-import { StandardImage, StandardDatePicker, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing, StandardSpinner, StandardIconButton } from '../../Utility/Utility';
+import { StandardImage, StandardDatePicker, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing, StandardSpinner, StandardIconButton, StandardTooltip } from '../../Utility/Utility';
 import { MDBIcon } from "mdbreact";
 
 function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
@@ -20,7 +20,7 @@ function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
     loadSoftware();
   }, []);
 
-  const CustomTh = ({ children, name }) => {
+  const CustomTh = ({ children, name, sortable = true }) => {
     const handleSort = async () => {
       if (sortDir === 'desc')
         setSortDir('asc');
@@ -31,7 +31,7 @@ function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
     }
     return (
       <th style={{ border: 'none', backgroundColor: getThemeColor(0), fontWeight: 'normal', color: getThemeColor(1) }}>
-        <div onClick={handleSort} className='tableHeaderMouseOver'>{children}</div>
+        <div onClick={sortable ? handleSort : () => { }} className={sortable ? 'tableHeaderMouseOver' : 'tableHeaderNotSortable'}>{children}</div>
       </th>
     );
   };
@@ -43,6 +43,7 @@ function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
           <tr>
             <CustomTh name='name'>Name</CustomTh>
             <CustomTh name='dev_date'>Development Date</CustomTh>
+            <CustomTh sortable={false}>Compatibility</CustomTh>
             {userData?.group === 'Administrator' && <CustomTh />}
           </tr>
         </thead>
@@ -221,6 +222,9 @@ const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication,
   ];
   const developmentDate = new Date(software.dev_date);
   const dateDisplayString = months[developmentDate.getMonth()] + ' ' + developmentDate.getFullYear();
+  const isWebApplication = !software.windows && !software.linux && !software.mac && !software.android;
+
+  const compatibilityStyling = { marginLeft: '3px', marginRight: '3px' };
 
   return (
     <tr className='tableMouseOver'>
@@ -229,6 +233,13 @@ const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication,
         {software.name}
       </CustomTd>
       <CustomTd>{dateDisplayString}</CustomTd>
+      <CustomTd>
+        {software.windows && <StandardTooltip text='Windows'><MDBIcon style={compatibilityStyling} className='defaultMouseOver' fab icon="windows" /></StandardTooltip>}
+        {software.linux && <StandardTooltip text='Linux'><MDBIcon style={compatibilityStyling} className='defaultMouseOver' fab icon="linux" /></StandardTooltip>}
+        {software.mac && <StandardTooltip text='Apple'><MDBIcon style={compatibilityStyling} className='defaultMouseOver' fab icon="apple" /></StandardTooltip>}
+        {software.android && <StandardTooltip text='Android'><MDBIcon style={compatibilityStyling} className='defaultMouseOver' fab icon="android" /></StandardTooltip>}
+        {isWebApplication && <StandardTooltip text='Web Application'><MDBIcon style={compatibilityStyling} className='defaultMouseOver' fab icon="chrome" /></StandardTooltip>}
+      </CustomTd>
       {userData?.group === 'Administrator' && <CustomTd noOnClick><EditSoftware displayAlert={displayAlert} setSoftware={setSoftware} software={software} /></CustomTd>}
     </tr>
   );

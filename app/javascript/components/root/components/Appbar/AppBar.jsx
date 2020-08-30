@@ -1,6 +1,5 @@
-import React, { useContext, forwardRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
-import Dropdown from 'react-bootstrap/Dropdown';
 import Navbar from 'react-bootstrap/Navbar';
 import { getThemeColor, getIconSizing, StandardTooltip, getThemeBackground, StandardLinkModal } from '../Utility/Utility';
 import { AppContext } from '../../AppContext';
@@ -12,52 +11,70 @@ function AppBar({ userData, setUserData, onSelect, displayAlert }) {
   const { standardTitleFontSize, bgColor, fontStyle } = useContext(AppContext);
   const breakpoint = useCurrentBreakpointName();
   const activePadding = breakpoint === 'xsmall' ? { paddingLeft: 0, paddingRight: 0 } : { paddingLeft: '5%', paddingRight: '5%' };
-
-  const CustomToggle = forwardRef(({ onClick }, ref) => (
-    <Nav.Link
-      as='div'
-      className='appbarDefault'
-      style={{ minHeight: '100%', display: 'flex', alignItems: 'center' }}
-      ref={ref}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      <div style={{ margin: 'auto', fontSize: getIconSizing() }}>
-        <MDBIcon icon="list-alt" />
-      </div>
-      <span style={{ fontSize: standardTitleFontSize, paddingLeft: '5px' }}>Browse{' '}&#x25BE;</span>
-    </Nav.Link>
-  ));
+  const linkPadding = { paddingLeft: '10px', paddingRight: '10px' };
 
   return (
     <Navbar style={{ fontSize: standardTitleFontSize, fontFamily: fontStyle, padding: 0, ...activePadding, margin: 'auto', background: getThemeBackground() }}>
       <Nav className='mr-auto'>
-        <Dropdown>
-          <Dropdown.Toggle as={CustomToggle} />
-          <Dropdown.Menu style={{ minWidth: '100%', backgroundColor: bgColor, border: `1px solid ${getThemeColor(0.3)}`, borderTop: 'none', fontSize: standardTitleFontSize, textAlign: 'center', padding: 0, margin: 0, boxShadow: '3px 3px 10px black' }}>
-            <Nav.Link as='div' className='appbarDefault' eventKey='Home' onClick={() => onSelect('Home')}>Home</Nav.Link>
-            <Nav.Link as='div' className='appbarDefault' eventKey='Software' onClick={() => onSelect('Software')}>Software</Nav.Link>
-            {userData?.group === 'Administrator' && <Nav.Link as='div' className='appbarDefault' eventKey='Maintenance' onClick={() => onSelect('Maintenance')}>Maintenance</Nav.Link>}
-          </Dropdown.Menu>
-        </Dropdown>
+        <Home style={linkPadding} onSelect={onSelect} />
+        <Software style={linkPadding} onSelect={onSelect} />
+        {userData?.group === 'Administrator' && <Maintenance style={linkPadding} onSelect={onSelect} />}
       </Nav>
-      <SignIn displayAlert={displayAlert} setUserData={setUserData} userData={userData} />
-      <Github />
-      <Youtube />
+      <SignIn style={linkPadding} displayAlert={displayAlert} setUserData={setUserData} userData={userData} />
+      <Github style={linkPadding} />
+      <Youtube style={linkPadding} />
     </Navbar>
   );
 };
 
-const Github = () => {
+const Maintenance = ({ onSelect, style }) => {
+  const { standardTitleFontSize } = useContext(AppContext);
+  return (
+    <StandardTooltip text='Maintenance'>
+      <Nav.Link onClick={() => onSelect('Maintenance')} style={{ display: 'flex', ...style }} as='span' className='appbarDefault'>
+        <div style={{ margin: 'auto', fontSize: getIconSizing() }}>
+          <MDBIcon fab icon="whmcs" /><span style={{ fontSize: standardTitleFontSize }}></span>
+        </div>
+      </Nav.Link>
+    </StandardTooltip>
+  );
+};
+
+const Software = ({ onSelect, style }) => {
+  const { standardTitleFontSize } = useContext(AppContext);
+  return (
+    <StandardTooltip text='Software'>
+      <Nav.Link onClick={() => onSelect('Software')} style={{ display: 'flex', ...style }} as='span' className='appbarDefault'>
+        <div style={{ margin: 'auto', fontSize: getIconSizing() }}>
+        <MDBIcon far icon="hdd" /><span style={{ fontSize: standardTitleFontSize }}></span>
+        </div>
+      </Nav.Link>
+    </StandardTooltip>
+  );
+};
+
+const Home = ({ onSelect, style }) => {
+  const { standardTitleFontSize } = useContext(AppContext);
+  return (
+    <StandardTooltip text='Home'>
+      <Nav.Link onClick={() => onSelect('Home')} style={{ display: 'flex', ...style }} as='span' className='appbarDefault'>
+        <div style={{ margin: 'auto', fontSize: getIconSizing() }}>
+          <MDBIcon icon="home" /><span style={{ fontSize: standardTitleFontSize }}></span>
+        </div>
+      </Nav.Link>
+    </StandardTooltip>
+  );
+};
+
+const Github = ({ style }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const { standardTitleFontSize } = useContext(AppContext);
   return (
     <>
       <StandardTooltip text='GitHub'>
-        <Nav.Link onClick={() => setModalOpen(true)} style={{ display: 'flex' }} as='span' className='appbarDefault'>
+        <Nav.Link onClick={() => setModalOpen(true)} style={{ display: 'flex', ...style }} as='span' className='appbarDefault'>
           <div style={{ margin: 'auto', fontSize: getIconSizing() }}>
-            <MDBIcon fab icon="github" />
+            <MDBIcon fab icon="github" /><span style={{ fontSize: standardTitleFontSize }}></span>
           </div>
         </Nav.Link>
       </StandardTooltip>
@@ -68,14 +85,15 @@ const Github = () => {
   );
 };
 
-const Youtube = () => {
+const Youtube = ({ style }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const { standardTitleFontSize } = useContext(AppContext);
   return (
     <>
       <StandardTooltip text='YouTube'>
-        <Nav.Link onClick={() => setModalOpen(true)} style={{ display: 'flex' }} as='span' className='appbarDefault'>
+        <Nav.Link onClick={() => setModalOpen(true)} style={{ display: 'flex', ...style }} as='span' className='appbarDefault'>
           <div style={{ margin: 'auto', fontSize: getIconSizing() }}>
-            <MDBIcon fab icon="youtube" />
+            <MDBIcon fab icon="youtube" /><span style={{ fontSize: standardTitleFontSize }}></span>
           </div>
         </Nav.Link>
       </StandardTooltip>

@@ -1,11 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import { fetchAllSoftware } from '../../../softwareService';
 import { fetchFeatures } from '../../../featureService';
-import { StandardPage, StandardSpinner, StandardImageModal, StandardModal, getThemeColor, StandardButton } from '../../Utility/Utility';
+import { StandardPage, StandardSpinner, StandardImageModal, getThemeColor, StandardLinkModal } from '../../Utility/Utility';
 import InformationTab from './InformationTab';
 import FeaturesTab from './FeaturesTab';
 import DownloadsTab from './DownloadsTab';
@@ -81,22 +79,9 @@ const ViewSwitcher = ({ app }) => {
     );
   };
 
-  const RepoModalButtons = () => {
-    return (
-      <Row>
-        <Col>
-          <StandardButton onClick={() => { setRepoModalOpen(false); }}>Cancel</StandardButton>
-        </Col>
-        <Col>
-          <StandardButton onClick={() => { window.open(app.repo_link); setRepoModalOpen(false); }}>Open</StandardButton>
-        </Col>
-      </Row>
-    );
-  };
-
   return (
     <>
-      <Nav fill variant='tabs' className='tabsNavBar' style={{ marginBottom: '1vh' }}>
+      <Nav justify fill variant='tabs' className='tabsNavBar' style={{ marginBottom: '1vh' }}>
         <Nav.Item>
           <CustomLink keyText='Information' displayText='Summary' />
         </Nav.Item>
@@ -113,9 +98,9 @@ const ViewSwitcher = ({ app }) => {
           <Nav.Link onClick={() => setRepoModalOpen(true)} as={'div'} style={{ ...padding, fontSize: standardBodyFontSize }}>Repository</Nav.Link>
         </Nav.Item>
       </Nav>
-      <StandardModal buttons={<RepoModalButtons />} title={`View Code`} modalOpen={repoModalOpen} handleModalClose={() => setRepoModalOpen(false)}>
+      <StandardLinkModal link={app.repo_link} handleModalClose={() => setRepoModalOpen(false)} modalOpen={repoModalOpen}>
         Open the official <span style={{ color: getThemeColor(1) }}>{app.name}</span> GitHub repository?
-      </StandardModal>
+      </StandardLinkModal>
     </>
   );
 };
