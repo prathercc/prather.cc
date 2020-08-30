@@ -16,7 +16,7 @@ const InformationTab = ({ setImageModalObj, style, app }) => {
 
     return (
         <Row style={{ ...style }}>
-            <Col md={12} lg={allContentLoaded ? 5 : 12} style={{ display: 'flex', marginBottom: '1vh' }}>
+            <Col xs={12} sm={allContentLoaded ? 5 : 12} style={{ display: 'flex', marginBottom: '1vh' }}>
                 <StandardCard noBorders style={{ verticalAlign: 'middle', maxWidth: '85%', color: getThemeColor(1) }}>
                     <StandardImage
                         className='defaultImageNudge'
@@ -28,7 +28,7 @@ const InformationTab = ({ setImageModalObj, style, app }) => {
                     />
                 </StandardCard>
             </Col>
-            <Col md={12} lg={7} style={{ display: allContentLoaded ? 'flex' : 'none' }}>
+            <Col xs={12} sm={7} style={{ display: allContentLoaded ? 'flex' : 'none' }}>
                 <StandardCard title={`Application Summary`} style={{ verticalAlign: 'middle', width: '95%', paddingBottom: '1vh' }}>
                     <div style={{ margin: 'auto', maxWidth: '90%', textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: description }} />
                 </StandardCard>

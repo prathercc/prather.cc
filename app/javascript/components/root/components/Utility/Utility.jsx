@@ -10,6 +10,8 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Alert from 'react-bootstrap/Alert';
 import DatePicker from 'react-datepicker';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import "react-datepicker/dist/react-datepicker.css";
 
 export const StandardImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
@@ -25,6 +27,28 @@ export const StandardImageModal = ({ modalOpen, handleModalClose, imageLink }) =
     );
 };
 
+export const StandardLinkModal = ({ modalOpen, handleModalClose, children, link }) => {
+    const handleLinkOpen = () => {
+        window.open(link);
+        handleModalClose();
+    }
+    const Buttons = () => (
+        <Row>
+            <Col>
+                <StandardButton onClick={handleModalClose}>Cancel</StandardButton>
+            </Col>
+            <Col>
+                <StandardButton onClick={handleLinkOpen}>Open</StandardButton>
+            </Col>
+        </Row>
+    );
+    return (
+        <StandardModal modalOpen={modalOpen} handleModalClose={handleModalClose} title='External Link' buttons={<Buttons />}>
+            {children}
+        </StandardModal>
+    )
+}
+
 export const StandardCheckBox = ({ label, value, onChange, style }) => {
     return (
         <span style={{ ...style }} onClick={onChange}>
@@ -39,7 +63,7 @@ export const StandardCheckBox = ({ label, value, onChange, style }) => {
     );
 };
 
-export const StandardDropDown = ({ onChange, label, isActive = true, style, data, value, errorMessage = 'Error', hasError = false }) => {
+export const StandardDropDown = ({ onChange, label, isActive = true, style, data, value, errorMessage = 'This field is required!', hasError = false }) => {
     const { standardBodyFontSize, fontStyle, standardSmallFontSize } = useContext(AppContext);
     const [modified, setModified] = useState(false);
     const borderLogic = modified && hasError ? { border: '1px solid red' } : {};
@@ -88,7 +112,7 @@ export const StandardDatePicker = ({ date, setDate, label }) => {
     );
 };
 
-export const StandardTextField = ({ onChange, label, isActive = true, value, rows = 1, isPassword, style, errorMessage = 'Error', hasError = false }) => {
+export const StandardTextField = ({ onChange, label, isActive = true, value, rows = 1, isPassword, style, errorMessage = 'This field is required!', hasError = false }) => {
     const { standardBodyFontSize, fontStyle, standardSmallFontSize } = useContext(AppContext);
 
     const [modified, setModified] = useState(false);
@@ -161,7 +185,7 @@ export const StandardImage = ({ style, noErrorMessage, src, className, onClick, 
 export const StandardTooltip = ({ children, text }) => {
     const { fontStyle, standardBodyFontSize } = useContext(AppContext);
     return (
-        <OverlayTrigger placement='bottom' overlay={<Tooltip style={{ fontFamily: fontStyle, fontSize: standardBodyFontSize, marginTop: '1vh' }}>{text}</Tooltip>}>
+        <OverlayTrigger placement='bottom' overlay={<Tooltip className='defaultTooltip' style={{ fontFamily: fontStyle, fontSize: standardBodyFontSize, backgroundColor: 'transparent', border: 'none', opacity: 1 }}>{text}</Tooltip>}>
             {children}
         </OverlayTrigger>
     );
@@ -187,7 +211,7 @@ export const StandardButton = ({ onClick, style, children, disabled = false }) =
 };
 
 export const StandardIconButton = ({ icon, style, onClick, toolTip, children, disabled = false }) => {
-    const padding = { padding: '2px', paddingLeft: '20px', paddingRight: '20px' };
+    const padding = { padding: '3px', paddingLeft: '30px', paddingRight: '30px' };
     return (
         <StandardTooltip text={toolTip}>
             <div onClick={disabled ? () => { } : onClick} className={disabled ? 'iconButtonDisabled' : 'iconButton'} style={{ fontSize: getIconSizing(), lineHeight: 0, margin: 'auto', maxWidth: 'max-content', cursor: 'pointer', ...style, ...padding }}>
@@ -332,6 +356,6 @@ export const getThemeColor = (opacity = 1) => {
 
 export const getIconSizing = (size = 'small') => {
     let largeLogic = 'calc(1px + 3.5vmin)';
-    let smallLogic = 'calc(1px + 3vmin)';
+    let smallLogic = 'calc(1px + 2.5vmin)';
     return size === 'large' ? largeLogic : smallLogic;
 };

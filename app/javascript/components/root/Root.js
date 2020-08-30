@@ -6,6 +6,7 @@ import './components/style.css';
 import MainWrapper from './components/MainWrapper';
 import { StandardSpinner, StandardImage } from './components/Utility/Utility';
 import Row from 'react-bootstrap/Row';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function Root() {
   const appSettings = useContext(AppContext);
@@ -57,7 +58,7 @@ function SiteLogo() {
   return (
     <Row className='siteLogoWrapper' style={{ filter: 'grayscale(0.2)', opacity: 1, padding: 0, maxWidth: 'max-content', margin: 'auto' }}>
       <StandardImage
-        style={{ maxWidth: '45%', minWidth: '150px', borderRadius: '15px', pointerEvents: 'none' }}
+        style={{ maxWidth: '170px', minWidth: '170px', borderRadius: '15px', pointerEvents: 'none' }}
         className='siteLogo'
         src='https://i92.servimg.com/u/f92/11/29/62/29/filter20.png'
       />

@@ -5,11 +5,8 @@ import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { StandardImage, StandardCard, StandardModal, StandardTextField, StandardIconButton, StandardButton } from '../../Utility/Utility';
 import Carousel from 'react-bootstrap/Carousel';
-import RightArrow from 'react-bootstrap-icons/dist/icons/arrow-right';
-import LeftArrow from 'react-bootstrap-icons/dist/icons/arrow-left';
-import Edit from 'react-bootstrap-icons/dist/icons/pencil';
-import Add from 'react-bootstrap-icons/dist/icons/file-plus';
 import { fetchFeatures, putFeature, deleteFeature, postFeature } from '../../../featureService';
+import { MDBIcon } from "mdbreact";
 
 const FeaturesTab = ({ setImageModalObj, userData, style, app, displayAlert }) => {
     const [caroselIndex, setCaroselIndex] = useState(0);
@@ -51,13 +48,13 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app, displayAlert }) =
 
             <Row style={{ margin: 'auto', display: features?.length > 0 ? '' : 'none' }}>
                 <Col xs={5}>
-                    <StandardIconButton toolTip='Previous' icon={<LeftArrow />} onClick={() => setCaroselIndex(caroselIndex === 0 ? features?.length - 1 : caroselIndex - 1)} />
+                    <StandardIconButton toolTip='Previous' icon={<MDBIcon icon="arrow-left" />} onClick={() => setCaroselIndex(caroselIndex === 0 ? features?.length - 1 : caroselIndex - 1)} />
                 </Col>
                 <Col xs={2} style={{ paddingTop: '1vh' }}>
                     {caroselIndex + 1} of {features?.length}
                 </Col>
                 <Col xs={5}>
-                    <StandardIconButton toolTip='Next' icon={<RightArrow />} onClick={() => setCaroselIndex(caroselIndex === features?.length - 1 ? 0 : caroselIndex + 1)} />
+                    <StandardIconButton toolTip='Next' icon={<MDBIcon icon="arrow-right" />} onClick={() => setCaroselIndex(caroselIndex === features?.length - 1 ? 0 : caroselIndex + 1)} />
                 </Col>
             </Row>
             {features?.length === 0 && 'No features found'}
@@ -181,14 +178,14 @@ const EditFeature = ({ feature, setFeatures, app: { id, name }, displayAlert }) 
 
     return (
         <>
-            {feature && <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Edit Feature' style={{ marginBottom: '1vh' }} icon={<Edit />} />}
-            {!feature && <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Add Feature' style={{ marginTop: '1vh' }} icon={<Add />} />}
+            {feature && <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Edit Feature' style={{ marginBottom: '1vh' }} icon={<MDBIcon icon="pencil-alt" />} />}
+            {!feature && <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Add Feature' style={{ marginTop: '1vh' }} icon={<MDBIcon icon="plus" />} />}
             <StandardModal title={`Feature Alteration - ${feature ? 'Modify' : 'Create'}`} buttons={feature ? <EditButtons /> : <CreateButtons />} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
                 <Form.Group style={{ width: '95%', margin: 'auto', padding: '10px', paddingTop: '5px' }}>
-                    <StandardTextField errorMessage='An application name is required!' hasError={activeFeature.application_name.length === 0} value={activeFeature.application_name} isActive={false} label='Application Name' onChange={(e) => setActiveFeature({ ...activeFeature, application_name: e.target.value })} />
-                    <StandardTextField errorMessage='A title is required!' hasError={activeFeature.title.length === 0} value={activeFeature.title} label='Feature Title' onChange={(e) => setActiveFeature({ ...activeFeature, title: e.target.value })} />
-                    <StandardTextField errorMessage='An image link is required!' hasError={activeFeature.image_link.length === 0} value={activeFeature.image_link} label='Image Link' onChange={(e) => setActiveFeature({ ...activeFeature, image_link: e.target.value })} />
-                    <StandardTextField errorMessage='A description is required!' hasError={activeFeature.content_description.length === 0} rows={8} value={activeFeature.content_description} label='Content Description' onChange={(e) => setActiveFeature({ ...activeFeature, content_description: e.target.value })} />
+                    <StandardTextField hasError={activeFeature.application_name.length === 0} value={activeFeature.application_name} isActive={false} label='Application Name' onChange={(e) => setActiveFeature({ ...activeFeature, application_name: e.target.value })} />
+                    <StandardTextField hasError={activeFeature.title.length === 0} value={activeFeature.title} label='Feature Title' onChange={(e) => setActiveFeature({ ...activeFeature, title: e.target.value })} />
+                    <StandardTextField hasError={activeFeature.image_link.length === 0} value={activeFeature.image_link} label='Image Link' onChange={(e) => setActiveFeature({ ...activeFeature, image_link: e.target.value })} />
+                    <StandardTextField hasError={activeFeature.content_description.length === 0} rows={8} value={activeFeature.content_description} label='Content Description' onChange={(e) => setActiveFeature({ ...activeFeature, content_description: e.target.value })} />
                 </Form.Group>
             </StandardModal>
         </>

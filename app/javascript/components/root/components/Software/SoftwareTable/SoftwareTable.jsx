@@ -5,9 +5,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { fetchAllSoftware, postSoftware, putSoftware, deleteSoftware } from '../../../softwareService';
-import { StandardImage, StandardDatePicker, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing, StandardSpinner, StandardIconButton } from '../../Utility/Utility';
-import Add from 'react-bootstrap-icons/dist/icons/file-plus';
-import Edit from 'react-bootstrap-icons/dist/icons/pencil';
+import { StandardImage, StandardDatePicker, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing, StandardSpinner, StandardIconButton, StandardTooltip } from '../../Utility/Utility';
+import { MDBIcon } from "mdbreact";
 
 function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
   const [software, setSoftware] = useState(null);
@@ -21,7 +20,7 @@ function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
     loadSoftware();
   }, []);
 
-  const CustomTh = ({ children, name }) => {
+  const CustomTh = ({ children, name, sortable = true }) => {
     const handleSort = async () => {
       if (sortDir === 'desc')
         setSortDir('asc');
@@ -32,7 +31,7 @@ function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
     }
     return (
       <th style={{ border: 'none', backgroundColor: getThemeColor(0), fontWeight: 'normal', color: getThemeColor(1) }}>
-        <div onClick={handleSort} className='tableHeaderMouseOver'>{children}</div>
+        <div onClick={sortable ? handleSort : () => { }} className={sortable ? 'tableHeaderMouseOver' : 'tableHeaderNotSortable'}>{children}</div>
       </th>
     );
   };
@@ -44,6 +43,7 @@ function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
           <tr>
             <CustomTh name='name'>Name</CustomTh>
             <CustomTh name='dev_date'>Development Date</CustomTh>
+            <CustomTh sortable={false}>Compatibility</CustomTh>
             {userData?.group === 'Administrator' && <CustomTh />}
           </tr>
         </thead>
@@ -161,19 +161,19 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares, d
   return (
     <>
       {existingSoftware &&
-        <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Edit Software' icon={<Edit />} />
+        <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Edit Software' icon={<MDBIcon icon="pencil-alt" />} />
       }
       {!existingSoftware &&
-        <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Add Software' icon={<Add />} />
+        <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Add Software' icon={<MDBIcon icon="plus" />} />
       }
       <StandardModal title={`Software Alteration - ${!existingSoftware ? 'Create' : 'Modify'}`} buttons={existingSoftware ? <ExistingButtons /> : <NewButtons />} modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
         <Form.Group style={{ width: '95%', margin: 'auto' }}>
-          <StandardTextField errorMessage='A name is required!' hasError={software.name.length === 0} value={software.name} isActive={!existingSoftware} label='Name' onChange={(e) => setSoftware({ ...software, name: e.target.value })} />
-          <StandardTextField errorMessage='An icon link is required!' hasError={software.icon_link.length === 0} value={software.icon_link} label='Icon Image Link' onChange={(e) => setSoftware({ ...software, icon_link: e.target.value })} />
-          <StandardTextField errorMessage='An image link is required!' hasError={software.image_link.length === 0} value={software.image_link} label='Image Link' onChange={(e) => setSoftware({ ...software, image_link: e.target.value })} />
-          <StandardTextField errorMessage='A description is required!' hasError={software.description.length === 0} value={software.description} rows={4} label='Description' onChange={(e) => setSoftware({ ...software, description: e.target.value })} />
-          <StandardTextField errorMessage='A repository link is required!' hasError={software.repo_link.length === 0} value={software.repo_link} label='Repository Link' onChange={(e) => setSoftware({ ...software, repo_link: e.target.value })} />
-          <StandardTextField errorMessage='Language(s) are required!' hasError={software.languages.length === 0} value={software.languages} label='Languages' onChange={(e) => setSoftware({ ...software, languages: e.target.value })} />
+          <StandardTextField hasError={software.name.length === 0} value={software.name} isActive={!existingSoftware} label='Name' onChange={(e) => setSoftware({ ...software, name: e.target.value })} />
+          <StandardTextField hasError={software.icon_link.length === 0} value={software.icon_link} label='Icon Image Link' onChange={(e) => setSoftware({ ...software, icon_link: e.target.value })} />
+          <StandardTextField hasError={software.image_link.length === 0} value={software.image_link} label='Image Link' onChange={(e) => setSoftware({ ...software, image_link: e.target.value })} />
+          <StandardTextField hasError={software.description.length === 0} value={software.description} rows={4} label='Description' onChange={(e) => setSoftware({ ...software, description: e.target.value })} />
+          <StandardTextField hasError={software.repo_link.length === 0} value={software.repo_link} label='Repository Link' onChange={(e) => setSoftware({ ...software, repo_link: e.target.value })} />
+          <StandardTextField hasError={software.languages.length === 0} value={software.languages} label='Languages' onChange={(e) => setSoftware({ ...software, languages: e.target.value })} />
           <StandardTextField value={software.youtube_link} label='Youtube Video Identifier' onChange={(e) => setSoftware({ ...software, youtube_link: e.target.value })} />
           <Container>
             <Row>
@@ -222,6 +222,9 @@ const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication,
   ];
   const developmentDate = new Date(software.dev_date);
   const dateDisplayString = months[developmentDate.getMonth()] + ' ' + developmentDate.getFullYear();
+  const isWebApplication = !software.windows && !software.linux && !software.mac && !software.android;
+
+  const compatibilityStyling = { marginLeft: '3px', marginRight: '3px' };
 
   return (
     <tr className='tableMouseOver'>
@@ -230,6 +233,13 @@ const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication,
         {software.name}
       </CustomTd>
       <CustomTd>{dateDisplayString}</CustomTd>
+      <CustomTd>
+        {software.windows && <StandardTooltip text='Windows'><MDBIcon style={compatibilityStyling} className='defaultMouseOver' fab icon="windows" /></StandardTooltip>}
+        {software.linux && <StandardTooltip text='Linux'><MDBIcon style={compatibilityStyling} className='defaultMouseOver' fab icon="linux" /></StandardTooltip>}
+        {software.mac && <StandardTooltip text='Apple'><MDBIcon style={compatibilityStyling} className='defaultMouseOver' fab icon="apple" /></StandardTooltip>}
+        {software.android && <StandardTooltip text='Android'><MDBIcon style={compatibilityStyling} className='defaultMouseOver' fab icon="android" /></StandardTooltip>}
+        {isWebApplication && <StandardTooltip text='Web Application'><MDBIcon style={compatibilityStyling} className='defaultMouseOver' fab icon="chrome" /></StandardTooltip>}
+      </CustomTd>
       {userData?.group === 'Administrator' && <CustomTd noOnClick><EditSoftware displayAlert={displayAlert} setSoftware={setSoftware} software={software} /></CustomTd>}
     </tr>
   );

@@ -4,9 +4,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../../../downloadService';
-import { StandardModal, getThemeColor, StandardButton, StandardTextField, StandardDropDown, StandardSpinner, StandardIconButton } from '../../Utility/Utility';
-import ModifyIcon from 'react-bootstrap-icons/dist/icons/pencil';
-import AddIcon from 'react-bootstrap-icons/dist/icons/file-plus';
+import { StandardModal, getThemeColor, StandardButton, StandardTextField, StandardDropDown, StandardSpinner, StandardIconButton, StandardTooltip } from '../../Utility/Utility';
+import { MDBIcon } from "mdbreact";
 
 const getFileSizeDisplayValue = (fileSize) => {
     const digits = fileSize.toString().length;
@@ -114,7 +113,13 @@ const DlRow = ({ download, userData, app, setDownloads, displayAlert }) => {
             <tr className='tableMouseOver' style={{ cursor: 'pointer' }}>
                 <CustomTd>{file_name}</CustomTd>
                 <CustomTd>{getFileSizeDisplayValue(file_size)}</CustomTd>
-                <CustomTd>{os_type}</CustomTd>
+                <CustomTd>
+                    {os_type === 'Windows' && <StandardTooltip text='Windows'><MDBIcon className='defaultMouseOver' fab icon="windows" /></StandardTooltip>}
+                    {os_type === 'Linux' && <StandardTooltip text='Linux'><MDBIcon className='defaultMouseOver' fab icon="linux" /></StandardTooltip>}
+                    {os_type === 'Apple' && <StandardTooltip text='Apple'><MDBIcon className='defaultMouseOver' fab icon="apple" /></StandardTooltip>}
+                    {os_type === 'Android' && <StandardTooltip text='Android'><MDBIcon className='defaultMouseOver' fab icon="android" /></StandardTooltip>}
+                    {os_type === 'All' && <StandardTooltip text='All'><MDBIcon className='defaultMouseOver' far icon="file-alt" /></StandardTooltip>}
+                </CustomTd>
                 {userData?.group === 'Administrator' && <CustomTd noOnClick><EditDownloads displayAlert={displayAlert} download={download} app={app} setMainDownloads={setDownloads} /></CustomTd>}
             </tr>
             <StandardModal buttons={<DownloadButton />} title='Download File' modalOpen={modalOpen} handleModalClose={() => { setModalOpen(false) }} closable={false}>
@@ -205,8 +210,8 @@ const EditDownloads = ({ app, setMainDownloads, download: value, displayAlert })
 
     return (
         <>
-            {value && <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Edit Download' icon={<ModifyIcon />} />}
-            {!value && <StandardIconButton onClick={() => setModalOpen(true)} style={{ marginTop: '1vh' }} toolTip='Add Download' icon={<AddIcon />} />}
+            {value && <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Edit Download' icon={<MDBIcon icon="pencil-alt" />} />}
+            {!value && <StandardIconButton onClick={() => setModalOpen(true)} style={{ marginTop: '1vh' }} toolTip='Add Download' icon={<MDBIcon icon="plus" />} />}
             <StandardModal
                 title={`Download Alteration - ${value ? 'Modify' : 'Create'}`}
                 modalOpen={modalOpen}
@@ -223,11 +228,11 @@ const Download = ({ download, setDownload }) => {
     const osTypes = [{ id: 'Windows', name: 'Windows' }, { id: 'Linux', name: 'Linux' }, { id: 'Mac', name: 'Mac' }, { id: 'Android', name: 'Android' }, { id: 'All', name: 'All' }];
     return (
         <Form.Group style={{ maxWidth: '95%', padding: '10px', paddingTop: '5px', margin: 'auto' }}>
-            <StandardTextField errorMessage='A file name is required!' hasError={download?.file_name.length === 0} value={download?.file_name} label='Name' onChange={(e) => setDownload({ ...download, file_name: e.target.value })} />
-            <StandardTextField errorMessage='A file size is required!' hasError={download?.file_size.length === 0} value={download?.file_size} label='Size' onChange={(e) => setDownload({ ...download, file_size: e.target.value })} />
-            <StandardDropDown errorMessage='An operating system must be selected!' hasError={download?.os_type === 'Make a selection'} value={download?.os_type} data={osTypes} label='Operating System' onChange={(e) => setDownload({ ...download, os_type: e.target.value })} />
-            <StandardTextField errorMessage='A download path is required!' hasError={download?.path.length === 0} value={download?.path} label='Path' onChange={(e) => setDownload({ ...download, path: e.target.value })} />
-            <StandardTextField errorMessage='A download description is required!' hasError={download?.download_description.length === 0} rows={4} value={download?.download_description} label='Description' onChange={(e) => setDownload({ ...download, download_description: e.target.value })} />
+            <StandardTextField hasError={download?.file_name.length === 0} value={download?.file_name} label='Name' onChange={(e) => setDownload({ ...download, file_name: e.target.value })} />
+            <StandardTextField hasError={download?.file_size.length === 0} value={download?.file_size} label='Size' onChange={(e) => setDownload({ ...download, file_size: e.target.value })} />
+            <StandardDropDown hasError={download?.os_type === 'Make a selection'} value={download?.os_type} data={osTypes} label='Operating System' onChange={(e) => setDownload({ ...download, os_type: e.target.value })} />
+            <StandardTextField hasError={download?.path.length === 0} value={download?.path} label='Path' onChange={(e) => setDownload({ ...download, path: e.target.value })} />
+            <StandardTextField hasError={download?.download_description.length === 0} rows={4} value={download?.download_description} label='Description' onChange={(e) => setDownload({ ...download, download_description: e.target.value })} />
         </Form.Group>
     );
 };
