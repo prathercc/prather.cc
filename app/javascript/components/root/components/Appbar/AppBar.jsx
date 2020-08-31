@@ -16,7 +16,7 @@ function AppBar({ userData, setUserData, onSelect, displayAlert }) {
   return (
     <Navbar style={{ fontSize: standardTitleFontSize, fontFamily: fontStyle, padding: 0, ...activePadding, margin: 'auto', background: getThemeBackground() }}>
       <Nav className='mr-auto'>
-        <Home style={linkPadding} onSelect={onSelect} />
+        {/* <Home style={linkPadding} onSelect={onSelect} /> */}
         <Software style={linkPadding} onSelect={onSelect} />
         {userData?.group === 'Administrator' && <Maintenance style={linkPadding} onSelect={onSelect} />}
       </Nav>
@@ -46,7 +46,7 @@ const Software = ({ onSelect, style }) => {
     <StandardTooltip text='Software'>
       <Nav.Link onClick={() => onSelect('Software')} style={{ display: 'flex', ...style }} as='span' className='appbarDefault'>
         <div style={{ margin: 'auto', fontSize: getIconSizing() }}>
-        <MDBIcon far icon="hdd" /><span style={{ fontSize: standardTitleFontSize }}></span>
+          <MDBIcon far icon="hdd" /><span style={{ fontSize: standardTitleFontSize }}></span>
         </div>
       </Nav.Link>
     </StandardTooltip>

@@ -18,6 +18,10 @@ const MainWrapper = ({ activeKey: urlKey, activeApplication: urlApplication }) =
             setUserData(data);
         };
         fetchSession();
+        if (activeKey === 'Home') {
+            setActiveKey('Software');
+            window.history.pushState({}, '', getMainKeyRoute('Software'));
+        }
     }, []);
 
     useEffect(() => {

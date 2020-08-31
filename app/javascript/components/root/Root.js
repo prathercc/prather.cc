@@ -7,6 +7,7 @@ import MainWrapper from './components/MainWrapper';
 import { StandardSpinner, StandardImage } from './components/Utility/Utility';
 import Row from 'react-bootstrap/Row';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { useCurrentBreakpointName } from 'react-socks';
 
 function Root() {
   const appSettings = useContext(AppContext);
@@ -55,14 +56,40 @@ function Root() {
 }
 
 function SiteLogo() {
+  const breakpoint = useCurrentBreakpointName();
+  const { standardTitleFontSize, fontStyle } = useContext(AppContext);
   return (
-    <Row className='siteLogoWrapper' style={{ filter: 'grayscale(0.2)', opacity: 1, padding: 0, maxWidth: 'max-content', margin: 'auto' }}>
-      <StandardImage
-        style={{ maxWidth: '170px', minWidth: '170px', borderRadius: '15px', pointerEvents: 'none' }}
-        className='siteLogo'
-        src='https://i92.servimg.com/u/f92/11/29/62/29/filter20.png'
-      />
-    </Row>
+    <>
+      <Row style={{
+        filter: 'grayscale(0.2)',
+        opacity: 1,
+        padding: 0,
+        maxWidth: 'max-content',
+        margin: 'auto',
+        position: 'fixed',
+        top: breakpoint === 'xsmall' ? '50%' : '80%',
+        left: breakpoint === 'xsmall' ? '50%' : '85%',
+        transform: 'translate(-50%, -50%)'
+      }}>
+        <StandardImage
+          style={{ width: '80%', borderRadius: '15px', pointerEvents: 'none', minWidth: '170px' }}
+          className='siteLogo'
+          src='https://i92.servimg.com/u/f92/11/29/62/29/filter20.png'
+        />
+      </Row>
+      <Row style={{
+        filter: 'grayscale(0.2)',
+        opacity: 1,
+        padding: 0,
+        maxWidth: 'max-content',
+        margin: 'auto',
+        position: 'fixed',
+        top: '95%',
+        left: '3%',
+      }}>
+        <div style={{ fontFamily: fontStyle, fontSize: standardTitleFontSize }}>Prather.cc</div>
+      </Row>
+    </>
   );
 };
 
