@@ -59,7 +59,6 @@ function SiteLogo() {
   const breakpoint = useCurrentBreakpointName();
   const { standardTitleFontSize, fontStyle } = useContext(AppContext);
   return (
-    <>
       <Row style={{
         filter: 'grayscale(0.2)',
         opacity: 1,
@@ -67,29 +66,16 @@ function SiteLogo() {
         maxWidth: 'max-content',
         margin: 'auto',
         position: 'fixed',
-        top: breakpoint === 'xsmall' ? '50%' : '80%',
-        left: breakpoint === 'xsmall' ? '50%' : '85%',
+        top: '50%',
+        left: '50%',
         transform: 'translate(-50%, -50%)'
       }}>
         <StandardImage
-          style={{ width: '80%', borderRadius: '15px', pointerEvents: 'none', minWidth: '170px' }}
+          style={{ width: '20%', borderRadius: '15px', pointerEvents: 'none', minWidth: '170px' }}
           className='siteLogo'
           src='https://i92.servimg.com/u/f92/11/29/62/29/filter20.png'
         />
       </Row>
-      <Row style={{
-        filter: 'grayscale(0.2)',
-        opacity: 1,
-        padding: 0,
-        maxWidth: 'max-content',
-        margin: 'auto',
-        position: 'fixed',
-        top: '95%',
-        left: '3%',
-      }}>
-        <div style={{ fontFamily: fontStyle, fontSize: standardTitleFontSize }}>Prather.cc</div>
-      </Row>
-    </>
   );
 };
 
