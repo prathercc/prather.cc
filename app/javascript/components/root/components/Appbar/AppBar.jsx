@@ -18,8 +18,8 @@ function AppBar({ userData, setUserData, onSelect, displayAlert }) {
       <Nav className='mr-auto'>
         <Home style={linkPadding} onSelect={onSelect} />
         <Software style={linkPadding} onSelect={onSelect} />
-        {userData?.group === 'Administrator' && <Maintenance style={linkPadding} onSelect={onSelect} />}
       </Nav>
+      {userData?.group === 'Administrator' && <Maintenance style={linkPadding} onSelect={onSelect} />}
       <SignIn style={linkPadding} displayAlert={displayAlert} setUserData={setUserData} userData={userData} />
       <Github style={linkPadding} />
       <Youtube style={linkPadding} />
@@ -43,22 +43,22 @@ const Maintenance = ({ onSelect, style }) => {
 const Software = ({ onSelect, style }) => {
   const { standardTitleFontSize } = useContext(AppContext);
   return (
-      <Nav.Link onClick={() => onSelect('Software')} style={{ display: 'flex', ...style }} as='span' className='appbarDefault'>
-        <div style={{ margin: 'auto', fontSize: standardTitleFontSize }}>
-          Software
+    <Nav.Link onClick={() => onSelect('Software')} style={{ display: 'flex', ...style }} as='span' className='appbarDefault'>
+      <div style={{ margin: 'auto', fontSize: standardTitleFontSize }}>
+        Software
         </div>
-      </Nav.Link>
+    </Nav.Link>
   );
 };
 
 const Home = ({ onSelect, style }) => {
   const { standardTitleFontSize } = useContext(AppContext);
   return (
-      <Nav.Link onClick={() => onSelect('Home')} style={{ display: 'flex', ...style }} as='span' className='appbarDefault'>
-        <div style={{ margin: 'auto', fontSize: standardTitleFontSize }}>
-          Home
+    <Nav.Link onClick={() => onSelect('Home')} style={{ display: 'flex', ...style }} as='span' className='appbarDefault'>
+      <div style={{ margin: 'auto', fontSize: standardTitleFontSize }}>
+        Home
         </div>
-      </Nav.Link>
+    </Nav.Link>
   );
 };
 
