@@ -29,14 +29,14 @@
 
 .siteLogoWrapper {
     position: fixed;
-    top: 45%;
-    left: 50%;
+    top: 80%;
+    left: 85%;
     transform: translate(-50%, -50%);
 }
 
 .siteLogo {
     margin: auto;
-    animation: siteLogo infinite 45s both;
+    animation: siteLogo infinite 15s both;
 }
 
 @keyframes siteLogo {

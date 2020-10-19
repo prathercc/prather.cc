@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Nav from 'react-bootstrap/Nav';
 import { StandardTooltip, getIconSizing, StandardButton, StandardModal, StandardTextField } from '../Utility/Utility';
 import Form from 'react-bootstrap/Form';
 import { authenticate, clearSession } from '../../authService';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { MDBIcon } from "mdbreact";
+import { MDBIcon } from 'mdbreact';
+import {AppContext} from '../../AppContext';
 
 const SignIn = ({ setUserData, userData, displayAlert, style }) => {
     const [modalOpen, setModalOpen] = useState(false);
+    const { standardTitleFontSize } = useContext(AppContext);
     return (
         <>
             <StandardTooltip text={userData ? 'Sign Out' : 'Sign In'}>
                 <Nav.Link onClick={() => setModalOpen(true)} style={{ minHeight: '100%', display: 'flex', ...style }} as='span' className='appbarDefault'>
-                    <span style={{ fontSize: getIconSizing(), margin: 'auto' }}>
+                    <span style={{ fontSize: standardTitleFontSize, margin: 'auto' }}>
                         <MDBIcon icon="user-circle" />
                     </span>
                 </Nav.Link>
