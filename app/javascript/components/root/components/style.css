@@ -1,3 +1,5 @@
+
+
 /* DEFAULT SECTION */
 
 .defaultMouseOver {
@@ -42,15 +44,54 @@
 @keyframes siteLogo {
     0% {
         transform: rotate(4deg) perspective(1px);
-        box-shadow: 0px 0px 60px rgb(79, 201, 201, 0.5), 0px 0px 60px #5a415a, 9px 6px black;
+        box-shadow: 0px 0px 20px rgb(79, 201, 201, 0.5), 0px 0px 20px #5a415a, 9px 6px black;
     }
     50% {
         transform: rotate(-4deg) rotateY(-20deg) perspective(1px);
-        box-shadow: 0px -10px 60px rgb(79, 201, 201, 0.5), 0px 20px 60px #5a415a, -9px 6px black;
+        box-shadow: 0px 0px 20px rgb(79, 201, 201, 0.5), 0px 0px 20px #5a415a, -9px 6px black;
     }
     100% {
         transform: rotate(4deg) perspective(1px);
-        box-shadow: 0px 0px 60px rgb(79, 201, 201, 0.5), 0px 0px 60px #5a415a, 9px 6px black;
+        box-shadow: 0px 0px 20px rgb(79, 201, 201, 0.5), 0px 0px 20px #5a415a, 9px 6px black;
+    }
+}
+
+.blackhole {
+    background-repeat: no-repeat;
+    animation: blackhole infinite 60000s linear;
+    background-position: center;
+    filter: opacity(0.75);
+}
+
+@keyframes blackhole {
+    0% {
+        transform: scale(2, 0.5) perspective(1px) rotate(0deg);
+    }
+    50% {
+        transform: scale(2, 0.5) perspective(1px) rotate(-360000deg);
+    }
+    100% {
+        transform: scale(2, 0.5) perspective(1px) rotate(0deg);
+    }
+}
+
+.blackhole2 {
+    background-repeat: no-repeat;
+    animation: blackhole2 infinite 30000s linear;
+    background-position: center;
+    margin-top: 1vh;
+    filter: opacity(0.45);
+}
+
+@keyframes blackhole2 {
+    0% {
+        transform: scale(1.8, 0.65) perspective(1px) rotate(0deg);
+    }
+    50% {
+        transform: scale(1.8, 0.65) perspective(1px) rotate(-360000deg);
+    }
+    100% {
+        transform: scale(1.8, 0.65) perspective(1px) rotate(0deg);
     }
 }
 
@@ -61,7 +102,7 @@
 .starbend {
     background-repeat: repeat;
     background-position: center;
-    animation: starbend infinite 300s linear;
+    animation: starbend infinite 100s linear;
 }
 
 @keyframes starbend {
