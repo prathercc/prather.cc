@@ -49,7 +49,7 @@ function SoftwareApplication({ userData, name, displayAlert }) {
           <ViewSwitcher app={app} />
           <Tab.Content>
             <Tab.Pane eventKey='Information'>
-              <InformationTab style={{ marginTop: '1vh' }} app={app} setImageModalObj={setImageModalObj} />
+              <InformationTab style={{ marginTop: '3vh' }} app={app} />
             </Tab.Pane>
             <Tab.Pane eventKey='Features'>
               <FeaturesTab displayAlert={displayAlert} style={{ marginTop: '1vh' }} setImageModalObj={setImageModalObj} features={features} userData={userData} app={app} />
@@ -104,4 +104,5 @@ const ViewSwitcher = ({ app }) => {
     </>
   );
 };
+
 export default SoftwareApplication;
