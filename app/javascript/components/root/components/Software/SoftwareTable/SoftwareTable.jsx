@@ -223,13 +223,13 @@ const SoftwareSample = ({ software, userData, setSoftware, setActiveApplication,
   const developmentDate = new Date(software.dev_date);
   const dateDisplayString = months[developmentDate.getMonth()] + ' ' + developmentDate.getFullYear();
   const isWebApplication = !software.windows && !software.linux && !software.mac && !software.android;
-
+  const [imageLoading, setImageLoading] = useState(true);
   const compatibilityStyling = { marginLeft: '3px', marginRight: '3px' };
 
   return (
-    <tr className='tableMouseOver'>
+    <tr style={{ opacity: imageLoading ? 0 : 1 }} className='tableMouseOver'>
       <CustomTd style={{ width: '50%' }}>
-        <StandardImage noErrorMessage src={software.icon_link} style={{ width: getIconSizing() }} />
+        <StandardImage noLoader onLoaded={() => setImageLoading(false)} noErrorMessage src={software.icon_link} style={{ width: getIconSizing() }} />
         {software.name}
       </CustomTd>
       <CustomTd>{dateDisplayString}</CustomTd>

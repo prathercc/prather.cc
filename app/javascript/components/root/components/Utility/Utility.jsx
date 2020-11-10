@@ -147,7 +147,7 @@ export const StandardTextField = ({ onChange, label, isActive = true, value, row
     );
 };
 
-export const StandardImage = ({ style, noErrorMessage, src, className, onClick, onLoaded = () => { }, toolTip }) => {
+export const StandardImage = ({ style, noErrorMessage, src, className, onClick, onLoaded = () => { }, toolTip, noLoader = false }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
     const handleOnLoad = () => {
@@ -161,7 +161,7 @@ export const StandardImage = ({ style, noErrorMessage, src, className, onClick, 
     }
     return (
         <>
-            {isLoading &&
+            {isLoading && !noLoader &&
                 <StandardSpinner />
             }
             {hasError &&
