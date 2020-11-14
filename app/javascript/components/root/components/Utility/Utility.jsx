@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import { AppContext } from '../../AppContext';
 import Modal from 'react-bootstrap/Modal';
@@ -194,7 +193,7 @@ export const StandardTooltip = ({ children, text }) => {
 export const StandardButton = ({ onClick, style, children, disabled = false }) => {
     const { standardBodyFontSize } = useContext(AppContext);
     return (
-        <Card
+        <div
             onClick={disabled ? () => { } : onClick}
             className={disabled ? 'defaultButtonDisabled' : 'defaultButton'}
             style={{
@@ -202,11 +201,10 @@ export const StandardButton = ({ onClick, style, children, disabled = false }) =
                 ...style,
                 fontSize: standardBodyFontSize,
                 alignItems: 'center',
-                display: 'flex',
-                maxWidth: '95%'
+                maxWidth: '95%',
             }}>
             {children}
-        </Card>
+        </div>
     );
 };
 
@@ -274,7 +272,7 @@ export const StandardCard = ({ title, style, children, className, onClick, noBor
 export const StandardPage = ({ title = '', children, style }) => {
     const { bgColor, fontStyle, standardBodyFontSize, standardTitleFontSize } = useContext(AppContext);
     return (
-        <Container style={{ backgroundColor: 'transparent', position: 'relative', minWidth: '75%', ...style }}>
+        <div style={{ backgroundColor: 'transparent', position: 'relative', maxWidth: '75%', margin: 'auto', ...style }}>
             <div style={{ backgroundColor: bgColor, marginTop: '6vh', borderRadius: '5px', boxShadow: '3px 3px 10px black' }}>
                 <div
                     style={{
@@ -296,7 +294,7 @@ export const StandardPage = ({ title = '', children, style }) => {
                     {children}
                 </div>
             </div>
-        </Container>
+        </div>
     );
 };
 
