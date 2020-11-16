@@ -6,6 +6,7 @@ import './components/style.css';
 import MainWrapper from './components/MainWrapper';
 import { StandardSpinner } from './components/Utility/Utility';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'antd/dist/antd.css';
 
 function Root() {
   const appSettings = useContext(AppContext);
