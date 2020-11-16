@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../../../downloadService';
 import { StandardModal, getThemeColor, StandardButton, StandardTextField, StandardDropDown, StandardSpinner, StandardIconButton, StandardTooltip } from '../../Utility/Utility';
 import { MDBIcon } from "mdbreact";
+import { Row, Col } from 'antd';
 
 const getFileSizeDisplayValue = (fileSize) => {
     const digits = fileSize.toString().length;
@@ -89,10 +88,10 @@ const DlRow = ({ download, userData, app, setDownloads, displayAlert }) => {
     const DownloadButton = () => {
         return (
             <Row>
-                <Col>
+                <Col span={12}>
                     <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
                 </Col>
-                <Col>
+                <Col span={12}>
                     <StandardButton onClick={handleDownload}>Download</StandardButton>
                 </Col>
             </Row>
@@ -182,13 +181,13 @@ const EditDownloads = ({ app, setMainDownloads, download: value, displayAlert })
     const EditButtons = () => {
         return (
             <Row>
-                <Col>
+                <Col span={8}>
                     <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
                 </Col>
-                <Col>
+                <Col span={8}>
                     <StandardButton onClick={handleDeleteDownload}>Delete</StandardButton>
                 </Col>
-                <Col>
+                <Col span={8}>
                     <StandardButton disabled={disabledButton} onClick={handleEditDownload}>Save</StandardButton>
                 </Col>
             </Row>
@@ -198,10 +197,10 @@ const EditDownloads = ({ app, setMainDownloads, download: value, displayAlert })
     const AddButton = () => {
         return (
             <Row>
-                <Col>
+                <Col span={12}>
                     <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
                 </Col>
-                <Col>
+                <Col span={12}>
                     <StandardButton disabled={disabledButton} onClick={() => handleAddDownload()}>Save</StandardButton>
                 </Col>
             </Row>

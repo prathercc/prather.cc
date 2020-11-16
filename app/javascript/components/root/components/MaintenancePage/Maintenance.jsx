@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { StandardPage, StandardIconButton, StandardModal, StandardTextField, StandardButton, StandardDropDown, getThemeColor } from '../Utility/Utility';
 import { getUsers, createUser, deleteUser, updateUser, getUser } from '../../userService';
 import { MDBIcon } from "mdbreact";
+import { Row, Col } from 'antd';
 
 function Maintenance({ userData, displayAlert, onSelect }) {
     useEffect(() => {
@@ -17,21 +16,15 @@ function Maintenance({ userData, displayAlert, onSelect }) {
     return (
         <StandardPage title='Maintenance Portal'>
             <Row style={{ marginTop: '1vh' }}>
-                <Col xs={12} md={6} style={{ display: 'flex', margin: 'auto' }}>
-                    <Col style={{ display: 'flex' }}>
-                        <div style={{ verticalAlign: 'middle', margin: 'auto' }}>
-                            <CreateUser userData={userData} displayAlert={displayAlert} />
-                            <UpdateUser userData={userData} displayAlert={displayAlert} />
-                            <DeleteUser userData={userData} displayAlert={displayAlert} />
-                        </div>
-                    </Col>
-                    <Col style={{ display: 'flex' }}>
-                        <div style={{ verticalAlign: 'middle', margin: 'auto' }}>
-                            <ViewSession userData={userData} />
-                            <StandardIconButton disabled style={{ marginTop: '1vh' }} toolTip='TBD' icon={<MDBIcon icon="question" />} />
-                            <StandardIconButton disabled style={{ marginTop: '1vh' }} toolTip='TBD' icon={<MDBIcon icon="question" />} />
-                        </div>
-                    </Col>
+                <Col xs={12} s={6}>
+                    <CreateUser userData={userData} displayAlert={displayAlert} />
+                    <UpdateUser userData={userData} displayAlert={displayAlert} />
+                    <DeleteUser userData={userData} displayAlert={displayAlert} />
+                </Col>
+                <Col xs={12} s={6}>
+                    <ViewSession userData={userData} />
+                    <StandardIconButton disabled style={{ marginTop: '1vh' }} toolTip='TBD' icon={<MDBIcon icon="question" />} />
+                    <StandardIconButton disabled style={{ marginTop: '1vh' }} toolTip='TBD' icon={<MDBIcon icon="question" />} />
                 </Col>
             </Row>
         </StandardPage>
@@ -103,10 +96,10 @@ const UpdateUser = ({ userData, displayAlert }) => {
     const UpdateButton = () => {
         return (
             <Row>
-                <Col>
+                <Col span={12}>
                     <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
                 </Col>
-                <Col>
+                <Col span={12}>
                     <StandardButton onClick={handleUpdate} disabled={disabledButton}>Update User</StandardButton>
                 </Col>
             </Row>
@@ -177,10 +170,10 @@ const DeleteUser = ({ userData, displayAlert }) => {
     const DeleteButton = () => {
         return (
             <Row>
-                <Col>
+                <Col span={12}>
                     <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
                 </Col>
-                <Col>
+                <Col span={12}>
                     <StandardButton disabled={deleteButtonDisabled} onClick={handleDeleteUser}>Delete User</StandardButton>
                 </Col>
             </Row>
@@ -218,10 +211,10 @@ const CreateUser = ({ userData, displayAlert }) => {
     const CreateButton = () => {
         return (
             <Row>
-                <Col>
+                <Col span={12}>
                     <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
                 </Col>
-                <Col>
+                <Col span={12}>
                     <StandardButton disabled={newButtonDisabled} onClick={handleCreateNewUser}>Create User</StandardButton>
                 </Col>
             </Row>

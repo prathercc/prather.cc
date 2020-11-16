@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-import Container from 'react-bootstrap/Container';
 import { AppContext } from '../../AppContext';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
@@ -9,9 +8,8 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Alert from 'react-bootstrap/Alert';
 import DatePicker from 'react-datepicker';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import "react-datepicker/dist/react-datepicker.css";
+import { Row, Col } from 'antd';
 
 export const StandardImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
     const CancelButton = () => (
@@ -33,10 +31,10 @@ export const StandardLinkModal = ({ modalOpen, handleModalClose, children, link 
     }
     const Buttons = () => (
         <Row>
-            <Col>
+            <Col span={12}>
                 <StandardButton onClick={handleModalClose}>Cancel</StandardButton>
             </Col>
-            <Col>
+            <Col span={12}>
                 <StandardButton onClick={handleLinkOpen}>Open</StandardButton>
             </Col>
         </Row>
@@ -334,9 +332,9 @@ export const StandardModal = ({ modalOpen, handleModalClose, children, buttons, 
                 >
                     {children}
                     <Modal.Footer style={{ padding: 0, marginTop: '1vh', border: 'none' }}>
-                        <Container>
+                        <div style={{ width: '100%' }}>
                             {buttons && buttons}
-                        </Container>
+                        </div>
                     </Modal.Footer>
                 </Modal.Body>
             </div>

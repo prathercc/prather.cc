@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { StandardImage, StandardCard, StandardModal, StandardTextField, StandardIconButton, StandardButton } from '../../Utility/Utility';
 import Carousel from 'react-bootstrap/Carousel';
 import { fetchFeatures, putFeature, deleteFeature, postFeature } from '../../../featureService';
 import { MDBIcon } from "mdbreact";
+import { Row, Col } from 'antd';
 
 const FeaturesTab = ({ setImageModalObj, userData, style, app, displayAlert }) => {
     const [caroselIndex, setCaroselIndex] = useState(0);
@@ -47,13 +45,13 @@ const FeaturesTab = ({ setImageModalObj, userData, style, app, displayAlert }) =
             </Carousel>
 
             <Row style={{ margin: 'auto', display: features?.length > 0 ? '' : 'none' }}>
-                <Col xs={5}>
+                <Col xs={10}>
                     <StandardIconButton toolTip='Previous' icon={<MDBIcon icon="arrow-left" />} onClick={() => setCaroselIndex(caroselIndex === 0 ? features?.length - 1 : caroselIndex - 1)} />
                 </Col>
-                <Col xs={2} style={{ paddingTop: '1vh' }}>
+                <Col xs={4} style={{ paddingTop: '1vh' }}>
                     {caroselIndex + 1} of {features?.length}
                 </Col>
-                <Col xs={5}>
+                <Col xs={10}>
                     <StandardIconButton toolTip='Next' icon={<MDBIcon icon="arrow-right" />} onClick={() => setCaroselIndex(caroselIndex === features?.length - 1 ? 0 : caroselIndex + 1)} />
                 </Col>
             </Row>
@@ -75,7 +73,7 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
 
     return (
         <Row>
-            <Col md={12} lg={allContentLoaded ? 5 : 12} style={{ display: 'flex', marginBottom: '1vh' }}>
+            <Col md={24} lg={allContentLoaded ? 10 : 24} style={{ display: 'flex', marginBottom: '1vh' }}>
                 <StandardCard noBorders style={{ verticalAlign: 'middle', margin: 'auto', maxWidth: '85%' }}>
                     <StandardImage
                         className='defaultImageNudge'
@@ -87,7 +85,7 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
                     />
                 </StandardCard>
             </Col>
-            <Col md={12} lg={7} style={{ display: allContentLoaded ? 'flex' : 'none' }}>
+            <Col md={24} lg={14} style={{ display: allContentLoaded ? 'flex' : 'none' }}>
                 <StandardCard title={feature.title} style={{ verticalAlign: 'middle', width: '95%' }}>
                     <div style={{ margin: 'auto', maxWidth: '95%', textAlign: 'left', marginTop: '1vh' }} dangerouslySetInnerHTML={{ __html: feature.content_description }} />
                     {userData?.group === 'Administrator' && <EditFeature displayAlert={displayAlert} app={app} setFeatures={setFeatures} feature={feature} />}
@@ -147,29 +145,27 @@ const EditFeature = ({ feature, setFeatures, app: { id, name }, displayAlert }) 
 
     const EditButtons = () => {
         return (
-            <Container>
-                <Row>
-                    <Col>
-                        <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
-                    </Col>
-                    <Col>
-                        <StandardButton onClick={handleDeleteFeature}>Delete</StandardButton>
-                    </Col>
-                    <Col>
-                        <StandardButton disabled={saveButtonDisabled} onClick={handleEditFeature}>Save</StandardButton>
-                    </Col>
-                </Row>
-            </Container>
+            <Row>
+                <Col span={8}>
+                    <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
+                </Col>
+                <Col span={8}>
+                    <StandardButton onClick={handleDeleteFeature}>Delete</StandardButton>
+                </Col>
+                <Col span={8}>
+                    <StandardButton disabled={saveButtonDisabled} onClick={handleEditFeature}>Save</StandardButton>
+                </Col>
+            </Row>
         );
     };
 
     const CreateButtons = () => {
         return (
             <Row>
-                <Col>
+                <Col span={12}>
                     <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
                 </Col>
-                <Col>
+                <Col span={12}>
                     <StandardButton disabled={saveButtonDisabled} style={{ maxWidth: 'max-content', paddingLeft: '15px', paddingRight: '15px' }} onClick={() => handleCreateFeature()}>Save</StandardButton>
                 </Col>
             </Row>

@@ -3,10 +3,9 @@ import Nav from 'react-bootstrap/Nav';
 import { StandardTooltip, getIconSizing, StandardButton, StandardModal, StandardTextField } from '../Utility/Utility';
 import Form from 'react-bootstrap/Form';
 import { authenticate, clearSession } from '../../authService';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import { MDBIcon } from 'mdbreact';
-import {AppContext} from '../../AppContext';
+import { AppContext } from '../../AppContext';
+import { Row, Col } from 'antd';
 
 const SignIn = ({ setUserData, userData, displayAlert, style }) => {
     const [modalOpen, setModalOpen] = useState(false);
@@ -49,10 +48,10 @@ const Login = ({ setUserData, modalOpen, setModalOpen, displayAlert, userData })
     const SignInButton = () => {
         return (
             <Row>
-                <Col>
+                <Col span={12}>
                     <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
                 </Col>
-                <Col>
+                <Col span={12}>
                     <StandardButton disabled={signInDisabled} onClick={authenticateUser}>Sign In</StandardButton>
                 </Col>
             </Row>
@@ -62,10 +61,10 @@ const Login = ({ setUserData, modalOpen, setModalOpen, displayAlert, userData })
     const SignOutButton = () => {
         return (
             <Row>
-                <Col>
+                <Col span={12}>
                     <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
                 </Col>
-                <Col>
+                <Col span={12}>
                     <StandardButton onClick={signOut}>Sign Out</StandardButton>
                 </Col>
             </Row>

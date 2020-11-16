@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { fetchAllSoftware, postSoftware, putSoftware, deleteSoftware } from '../../../softwareService';
 import { StandardImage, StandardDatePicker, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing, StandardSpinner, StandardIconButton, StandardTooltip } from '../../Utility/Utility';
 import { MDBIcon } from "mdbreact";
+import { Row, Col } from 'antd';
 
 function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
   const [software, setSoftware] = useState(null);
@@ -129,29 +127,27 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares, d
 
   const ExistingButtons = () => {
     return (
-      <Container>
-        <Row>
-          <Col>
-            <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
-          </Col>
-          <Col>
-            <StandardButton onClick={handleDeleteSoftware}>Delete</StandardButton>
-          </Col>
-          <Col>
-            <StandardButton disabled={isSubmitDisabled} onClick={handleEditSoftware}>Save</StandardButton>
-          </Col>
-        </Row>
-      </Container>
+      <Row>
+        <Col span={8}>
+          <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
+        </Col>
+        <Col span={8}>
+          <StandardButton onClick={handleDeleteSoftware}>Delete</StandardButton>
+        </Col>
+        <Col span={8}>
+          <StandardButton disabled={isSubmitDisabled} onClick={handleEditSoftware}>Save</StandardButton>
+        </Col>
+      </Row>
     );
   };
 
   const NewButtons = () => {
     return (
       <Row>
-        <Col>
+        <Col span={12}>
           <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
         </Col>
-        <Col>
+        <Col span={12}>
           <StandardButton disabled={isSubmitDisabled} onClick={handleCreateSoftware}>Create</StandardButton>
         </Col>
       </Row>
@@ -175,34 +171,28 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares, d
           <StandardTextField hasError={software.repo_link.length === 0} value={software.repo_link} label='Repository Link' onChange={(e) => setSoftware({ ...software, repo_link: e.target.value })} />
           <StandardTextField hasError={software.languages.length === 0} value={software.languages} label='Languages' onChange={(e) => setSoftware({ ...software, languages: e.target.value })} />
           <StandardTextField value={software.youtube_link} label='Youtube Video Identifier' onChange={(e) => setSoftware({ ...software, youtube_link: e.target.value })} />
-          <Container>
-            <Row>
-              <Col>
-                <StandardDatePicker label='Development Date' date={new Date(software.dev_date)} setDate={(d) => setSoftware({ ...software, dev_date: d })} />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <StandardCheckBox label='Windows' value={software.windows} onChange={() => setSoftware({ ...software, windows: !software.windows })} />
-              </Col>
-              <Col>
-                <StandardCheckBox label='Linux' value={software.linux} onChange={() => setSoftware({ ...software, linux: !software.linux })} />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <StandardCheckBox label='Mac' value={software.mac} onChange={() => setSoftware({ ...software, mac: !software.mac })} />
-              </Col>
-              <Col>
-                <StandardCheckBox label='Android' value={software.android} onChange={() => setSoftware({ ...software, android: !software.android })} />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <StandardCheckBox label='Legacy Application' value={software.is_legacy} onChange={() => setSoftware({ ...software, is_legacy: !software.is_legacy })} />
-              </Col>
-            </Row>
-          </Container>
+          <StandardDatePicker label='Development Date' date={new Date(software.dev_date)} setDate={(d) => setSoftware({ ...software, dev_date: d })} />
+          <Row>
+            <Col span={12}>
+              <StandardCheckBox label='Windows' value={software.windows} onChange={() => setSoftware({ ...software, windows: !software.windows })} />
+            </Col>
+            <Col span={12}>
+              <StandardCheckBox label='Linux' value={software.linux} onChange={() => setSoftware({ ...software, linux: !software.linux })} />
+            </Col>
+          </Row>
+          <Row>
+            <Col span={12}>
+              <StandardCheckBox label='Mac' value={software.mac} onChange={() => setSoftware({ ...software, mac: !software.mac })} />
+            </Col>
+            <Col span={12}>
+              <StandardCheckBox label='Android' value={software.android} onChange={() => setSoftware({ ...software, android: !software.android })} />
+            </Col>
+          </Row>
+          <Row>
+            <Col span={24}>
+              <StandardCheckBox label='Legacy Application' value={software.is_legacy} onChange={() => setSoftware({ ...software, is_legacy: !software.is_legacy })} />
+            </Col>
+          </Row>
         </Form.Group>
       </StandardModal>
     </>
