@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import Form from 'react-bootstrap/Form';
 import { fetchAllSoftware, postSoftware, putSoftware, deleteSoftware } from '../../../softwareService';
-import { StandardImage, StandardDatePicker, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing, StandardSpinner, StandardIconButton, StandardTooltip } from '../../Utility/Utility';
+import { StandardImage, StandardDatePicker, StandardPage, getThemeColor, StandardButton, StandardModal, StandardTextField, StandardCheckBox, getIconSizing, StandardIconButton, StandardTooltip } from '../../Utility/Utility';
 import { MDBIcon } from "mdbreact";
-import { Row, Col } from 'antd';
+import { Row, Col, Spin } from 'antd';
 
 function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
   const [software, setSoftware] = useState(null);
@@ -60,7 +60,7 @@ function SoftwareTable({ userData, setActiveApplication, displayAlert }) {
           })}
         </tbody>
       </Table>
-      {!software && <StandardSpinner style={{ marginTop: '1vh' }} />}
+      {!software && <Spin style={{ marginTop: '1vh' }} />}
       {userData?.group === 'Administrator' && <EditSoftware displayAlert={displayAlert} setSoftware={setSoftware} />}
     </StandardPage>
   );

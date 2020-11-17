@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-import Spinner from 'react-bootstrap/Spinner';
 import { AppContext } from '../../AppContext';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
@@ -9,7 +8,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import Alert from 'react-bootstrap/Alert';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import { Row, Col } from 'antd';
+import { Row, Col, Spin } from 'antd';
 
 export const StandardImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
     const CancelButton = () => (
@@ -159,7 +158,7 @@ export const StandardImage = ({ style, noErrorMessage, src, className, onClick, 
     return (
         <>
             {isLoading && !noLoader &&
-                <StandardSpinner />
+                <Spin />
             }
             {hasError &&
                 <>
@@ -230,13 +229,7 @@ export const StandardAlert = ({ success = false, text, alertOpen, setAlertOpen }
     return (
         <Alert style={{ position: 'fixed', zIndex: 1000000, bottom: 0, minWidth: '100%', right: 0, padding: 0, margin: 0, fontFamily: fontStyle, fontSize: standardBodyFontSize }} show={alertOpen} variant={success ? 'success' : 'danger'}>{text}</Alert>
     );
-};
-
-export const StandardSpinner = ({ style }) => {
-    return (
-        <Spinner style={{ margin: 'auto', color: getThemeColor(0.5), ...style }} animation='border' />
-    );
-};
+}
 
 export const StandardSeparator = ({ style, onClick }) => {
     return (

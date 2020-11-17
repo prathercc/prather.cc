@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import { fetchDownloads, postDownload, putDownload, deleteDownload } from '../../../downloadService';
-import { StandardModal, getThemeColor, StandardButton, StandardTextField, StandardDropDown, StandardSpinner, StandardIconButton, StandardTooltip } from '../../Utility/Utility';
+import { StandardModal, getThemeColor, StandardButton, StandardTextField, StandardDropDown, StandardIconButton, StandardTooltip } from '../../Utility/Utility';
 import { MDBIcon } from "mdbreact";
-import { Row, Col } from 'antd';
+import { Row, Col, Spin } from 'antd';
 
 const getFileSizeDisplayValue = (fileSize) => {
     const digits = fileSize.toString().length;
@@ -26,7 +26,7 @@ function DownloadsTab({ app, userData, style, displayAlert }) {
 
     return (
         <>
-            {!downloads && <StandardSpinner />}
+            {!downloads && <Spin />}
             {downloads && <DownloadTable displayAlert={displayAlert} downloads={downloads} style={{ margin: 'auto', ...style }} userData={userData} app={app} setDownloads={setDownloads} />}
             {userData?.group === 'Administrator' && <EditDownloads displayAlert={displayAlert} app={app} setMainDownloads={setDownloads} />}
         </>

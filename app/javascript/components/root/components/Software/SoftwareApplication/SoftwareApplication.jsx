@@ -3,12 +3,13 @@ import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
 import { fetchAllSoftware } from '../../../softwareService';
 import { fetchFeatures } from '../../../featureService';
-import { StandardPage, StandardSpinner, StandardImageModal, getThemeColor, StandardLinkModal } from '../../Utility/Utility';
+import { StandardPage, StandardImageModal, getThemeColor, StandardLinkModal } from '../../Utility/Utility';
 import InformationTab from './InformationTab';
 import FeaturesTab from './FeaturesTab';
 import DownloadsTab from './DownloadsTab';
 import VideoTab from './VideoTab';
 import { AppContext } from '../../../AppContext';
+import { Spin } from 'antd';
 
 function SoftwareApplication({ userData, name, displayAlert }) {
   const [features, setFeatures] = useState(null);
@@ -43,7 +44,7 @@ function SoftwareApplication({ userData, name, displayAlert }) {
 
   return (
     <StandardPage title={app && app.name}>
-      {!app && <StandardSpinner style={{ marginTop: '1vh' }} />}
+      {!app && <Spin style={{ marginTop: '1vh' }} />}
       {
         app && <Tab.Container defaultActiveKey={'Information'}>
           <ViewSwitcher app={app} />
