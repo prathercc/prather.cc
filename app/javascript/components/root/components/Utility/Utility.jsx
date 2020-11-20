@@ -2,13 +2,13 @@ import React, { useState, useContext, useEffect } from 'react';
 import { AppContext } from '../../AppContext';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-import XIcon from 'react-bootstrap-icons/dist/icons/x';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import Alert from 'react-bootstrap/Alert';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { Row, Col, Spin } from 'antd';
+import { CloseCircleOutlined } from '@ant-design/icons';
 
 export const StandardImageModal = ({ modalOpen, handleModalClose, imageLink }) => {
     const CancelButton = () => (
@@ -160,16 +160,22 @@ export const StandardImage = ({ style, noErrorMessage, src, className, onClick, 
             {isLoading && !noLoader &&
                 <Spin />
             }
-            {hasError &&
-                <>
-                    <XIcon style={{ fontSize: getIconSizing('medium'), color: 'red' }} />
-                    <div style={{ display: noErrorMessage ? 'none' : '' }}>No image found</div>
-                </>
+            {hasError && noErrorMessage &&
+                <CloseCircleOutlined style={{ fontSize: getIconSizing(), color: getThemeColor(), paddingLeft: '3px', paddingRight: '3px' }} />
             }
-            {!hasError && !toolTip &&
+            {
+                hasError && !noErrorMessage &&
+                <div className='siteLogo' style={{ padding: '15px', borderRadius: '10px', marginTop: '2vh', marginBottom: '2vh', paddingTop: '2px', paddingBottom: '2px' }}>
+                    <CloseCircleOutlined style={{ fontSize: getIconSizing(), color: getThemeColor() }} />
+                    <div style={{ display: noErrorMessage ? 'none' : '', color: 'white' }}>404 Not Found</div>
+                </div>
+            }
+            {
+                !hasError && !toolTip &&
                 <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />
             }
-            {!hasError && toolTip &&
+            {
+                !hasError && toolTip &&
                 <StandardTooltip text={toolTip}>
                     <img onClick={onClick} className={className} src={src} style={{ ...style, display: isLoading ? 'none' : '' }} onLoad={handleOnLoad} onError={handleOnError} />
                 </StandardTooltip>
@@ -205,13 +211,10 @@ export const StandardButton = ({ onClick, style, children, disabled = false }) =
     );
 };
 
-export const StandardIconButton = ({ icon, style, onClick, toolTip, children, disabled = false }) => {
-    const padding = { padding: '3px', paddingLeft: '30px', paddingRight: '30px' };
+export const StandardIconButton = ({ icon, style, onClick, toolTip, disabled = false }) => {
     return (
         <StandardTooltip text={toolTip}>
-            <div onClick={disabled ? () => { } : onClick} className={disabled ? 'iconButtonDisabled' : 'iconButton'} style={{ fontSize: getIconSizing(), lineHeight: 0, margin: 'auto', maxWidth: 'max-content', cursor: 'pointer', ...style, ...padding }}>
-                {icon} {children}
-            </div>
+            <span style={{ cursor: 'pointer', ...style }} onClick={disabled ? () => { } : onClick} className={disabled ? 'iconButtonDisabled' : 'iconButton'}>{icon}</span>
         </StandardTooltip>
     );
 };
