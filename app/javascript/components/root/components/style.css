@@ -56,17 +56,17 @@
 
 .blackhole {
     background-repeat: no-repeat;
-    animation: blackhole infinite 60000s linear;
+    animation: blackhole infinite 70000s linear;
     background-position: center;
-    filter: opacity(0.75);
 }
 
 @keyframes blackhole {
     0% {
         transform: scale(2, 0.5) perspective(1px) rotate(0deg);
+        filter: opacity(0.75) blur(2px);
     }
     50% {
-        transform: scale(2, 0.5) perspective(1px) rotate(-360000deg);
+        transform: scale(2, 0.5) perspective(1px) rotate(360000deg);
     }
     100% {
         transform: scale(2, 0.5) perspective(1px) rotate(0deg);
@@ -75,18 +75,18 @@
 
 .blackhole2 {
     background-repeat: no-repeat;
-    animation: blackhole2 infinite 30000s linear;
+    animation: blackhole2 infinite 40000s linear;
     background-position: center;
-    margin-top: 1vh;
-    filter: opacity(0.45);
+    margin-top: 0.25vh;
 }
 
 @keyframes blackhole2 {
     0% {
         transform: scale(1.8, 0.65) perspective(1px) rotate(0deg);
+        filter: opacity(0.45) blur(2px);
     }
     50% {
-        transform: scale(1.8, 0.65) perspective(1px) rotate(-360000deg);
+        transform: scale(1.8, 0.65) perspective(1px) rotate(360000deg);
     }
     100% {
         transform: scale(1.8, 0.65) perspective(1px) rotate(0deg);
