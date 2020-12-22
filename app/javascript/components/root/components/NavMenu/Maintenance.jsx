@@ -1,33 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import Form from 'react-bootstrap/Form';
-import { StandardPage, StandardIconButton, StandardModal, StandardTextField, StandardButton, StandardDropDown, getThemeColor } from '../Utility/Utility';
+import { StandardIconButton, StandardModal, StandardButton, getThemeColor, toggleNotification } from '../Utility/Utility';
 import { getUsers, createUser, deleteUser, updateUser, getUser } from '../../userService';
-import { MDBIcon } from "mdbreact";
-import { Row, Col } from 'antd';
+import { Row, Col, Input, Form, Select } from 'antd';
+import { UserSwitchOutlined, UserAddOutlined, UserDeleteOutlined, KeyOutlined } from '@ant-design/icons';
 
-function Maintenance({ userData, displayAlert, onSelect }) {
-    useEffect(() => {
-        if (userData?.group !== 'Administrator')
-            onSelect('Home');
-        else
-            onSelect('Maintenance');
-    }, [userData])
-
+function Maintenance({ userData }) {
     return (
-        <StandardPage title='Maintenance Portal'>
-            <Row style={{ marginTop: '1vh' }}>
-                <Col xs={12} s={6}>
-                    <CreateUser userData={userData} displayAlert={displayAlert} />
-                    <UpdateUser userData={userData} displayAlert={displayAlert} />
-                    <DeleteUser userData={userData} displayAlert={displayAlert} />
-                </Col>
-                <Col xs={12} s={6}>
-                    <ViewSession userData={userData} />
-                    <StandardIconButton disabled style={{ marginTop: '1vh' }} toolTip='TBD' icon={<MDBIcon icon="question" />} />
-                    <StandardIconButton disabled style={{ marginTop: '1vh' }} toolTip='TBD' icon={<MDBIcon icon="question" />} />
-                </Col>
-            </Row>
-        </StandardPage>
+        <Row>
+            <Col span={6}>
+                <CreateUser userData={userData} />
+            </Col>
+            <Col span={6}>
+                <UpdateUser userData={userData} />
+            </Col>
+            <Col span={6}>
+                <DeleteUser userData={userData} />
+            </Col>
+            <Col span={6}>
+                <ViewSession userData={userData} />
+            </Col>
+        </Row>
     );
 };
 
@@ -42,28 +34,28 @@ const ViewSession = ({ userData }) => {
 
     return (
         <>
-            <StandardIconButton onClick={() => setModalOpen(true)} style={{ marginTop: '1vh' }} toolTip='View Session' icon={<MDBIcon icon="user-lock" />} />
+            <StandardIconButton onClick={() => setModalOpen(true)} toolTip='View Session' icon={<KeyOutlined />} />
             <StandardModal buttons={<CancelButton />} title='Session Information' modalOpen={modalOpen} handleModalClose={() => setModalOpen(false)}>
-                <Form.Group style={{ width: '95%', margin: 'auto', paddingBottom: '15px' }}>
+                <div style={{ width: '95%', margin: 'auto' }}>
                     <div style={{ color: getThemeColor(1) }}>Email: <span style={{ color: 'white' }}>{userData?.email}</span></div>
                     <div style={{ color: getThemeColor(1) }}>Group: <span style={{ color: 'white' }}>{userData?.group}</span></div>
                     <div style={{ color: getThemeColor(1) }}>Session Token: <span style={{ color: 'white' }}>{userData?.token}</span></div>
                     <div style={{ color: getThemeColor(1) }}>Account Identifier: <span style={{ color: 'white' }}>{userData?.id}</span></div>
                     <div style={{ color: getThemeColor(1) }}>Account Created: <span style={{ color: 'white' }}>{new Date(userData?.created_at).toLocaleDateString()}</span></div>
                     <div style={{ color: getThemeColor(1) }}>Last Sign-in: <span style={{ color: 'white' }}>{new Date(userData?.updated_at).toLocaleDateString()}</span></div>
-                </Form.Group>
+                </div>
             </StandardModal>
         </>
     );
 };
 
-const UpdateUser = ({ userData, displayAlert }) => {
+const UpdateUser = ({ userData }) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState('Make a selection');
     const [selectedRole, setSelectedRole] = useState('Make a selection');
-    const groupOptions = [{ id: 'Administrator', name: 'Administrator' }, { id: 'Moderator', name: 'Moderator' }, { id: 'Member', name: 'Member' }];
+    const groupOptions = ['Administrator', 'Moderator', 'Member'];
     useEffect(() => {
         const fetchUsers = async () => {
             const { data } = await getUsers();
@@ -85,19 +77,24 @@ const UpdateUser = ({ userData, displayAlert }) => {
     const handleUpdate = async () => {
         const { data } = await updateUser(selectedUser, { group: selectedRole });
         if (data) {
-            displayAlert('User updated successfully', true);
+            toggleNotification('success', 'Success', 'Successfully updated user!');
             handleModalClose();
         }
         else {
-            displayAlert('Network error occured while trying to update user', false);
+            toggleNotification('error', 'Failure', 'Failed to update user!');
         }
     }
-    const disabledButton = selectedUser === 'Make a selection' || selectedRole === 'Make a selection' || selectedUser === userData?.id.toString();
+    const handleModalClose = () => {
+        setSelectedUser('Make a selection');
+        setSelectedRole('Make a selection');
+        setModalOpen(false);
+    }
+    const disabledButton = selectedUser === 'Make a selection' || selectedRole === 'Make a selection' || selectedUser === userData?.id;
     const UpdateButton = () => {
         return (
             <Row>
                 <Col span={12}>
-                    <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
+                    <StandardButton onClick={handleModalClose}>Cancel</StandardButton>
                 </Col>
                 <Col span={12}>
                     <StandardButton onClick={handleUpdate} disabled={disabledButton}>Update User</StandardButton>
@@ -105,35 +102,47 @@ const UpdateUser = ({ userData, displayAlert }) => {
             </Row>
         );
     };
-    const handleModalClose = () => {
-        setSelectedUser('Make a selection');
-        setModalOpen(false);
-    }
 
     const handleUserSelect = async (e) => {
-        setSelectedUser(e.target.value);
-        const { data } = await getUser(e.target.value);
+        setSelectedUser(e);
+        const { data } = await getUser(e);
         setSelectedRole(data.group || 'Make a selection');
     }
     return (
         <>
+            <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Update User' icon={<UserSwitchOutlined />} />
             <StandardModal buttons={<UpdateButton />} title='Update User' modalOpen={modalOpen} handleModalClose={handleModalClose}>
-                <Form.Group style={{ width: '95%', margin: 'auto', paddingBottom: '15px' }}>
-                    <StandardDropDown errorMessage='Select a valid user!' hasError={selectedUser === 'Make a selection' || selectedUser === userData?.id.toString()} value={selectedUser} label='User' data={filteredUsers} onChange={handleUserSelect} />
-                    <StandardDropDown isActive={selectedUser !== 'Make a selection'} value={selectedRole} label='Group' data={groupOptions} onChange={(e) => setSelectedRole(e.target.value)} />
-                </Form.Group>
+                <Form layout='vertical'>
+                    <Form.Item label='User'>
+                        <Select value={selectedUser} placeholder='Select a user' onChange={handleUserSelect}>
+                            {filteredUsers.map((user, i) => {
+                                return (
+                                    <Select.Option key={i} value={user.id}>{user.name}</Select.Option>
+                                )
+                            })}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item label='Role'>
+                        <Select disabled={selectedUser === 'Make a selection' || selectedUser === userData?.id} value={selectedRole} placeholder='Select a role' onChange={(e) => setSelectedRole(e)}>
+                            {groupOptions.map((group, i) => {
+                                return (
+                                    <Select.Option key={i} value={group}>{group}</Select.Option>
+                                )
+                            })}
+                        </Select>
+                    </Form.Item>
+                </Form>
             </StandardModal>
-            <StandardIconButton style={{ marginTop: '1vh' }} onClick={() => setModalOpen(true)} toolTip='Update User' icon={<MDBIcon icon="user-edit" />} />
         </>
     )
 }
 
-const DeleteUser = ({ userData, displayAlert }) => {
+const DeleteUser = ({ userData }) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [selectedUser, setSelectedUser] = useState('Make a selection');
-    const deleteButtonDisabled = selectedUser === 'Make a selection' || userData?.id.toString() === selectedUser;
+    const deleteButtonDisabled = selectedUser === 'Make a selection' || userData?.id === selectedUser;
     useEffect(() => {
         const fetchUsers = async () => {
             const { data } = await getUsers();
@@ -160,11 +169,11 @@ const DeleteUser = ({ userData, displayAlert }) => {
     const handleDeleteUser = async () => {
         const { data } = await deleteUser(selectedUser);
         if (data) {
-            displayAlert('User deleted successfully', true);
+            toggleNotification('success', 'Success', 'Successfully deleted user!');
             handleModalClose();
         }
         else {
-            displayAlert('Network error occured while trying to delete user', false);
+            toggleNotification('error', 'Failure', 'Failed to delete user!');
         }
     };
     const DeleteButton = () => {
@@ -182,37 +191,51 @@ const DeleteUser = ({ userData, displayAlert }) => {
 
     return (
         <>
+            <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Delete User' icon={<UserDeleteOutlined />} />
             <StandardModal buttons={<DeleteButton />} title='Delete User' modalOpen={modalOpen} handleModalClose={handleModalClose}>
-                <Form.Group style={{ width: '95%', margin: 'auto', paddingBottom: '15px' }}>
-                    <StandardDropDown errorMessage='Selection must be valid' hasError={deleteButtonDisabled} value={selectedUser} label='User' data={filteredUsers} onChange={(e) => setSelectedUser(e.target.value)} />
-                </Form.Group>
+                <Form layout='vertical'>
+                    <Form.Item label='User'>
+                        <Select value={selectedUser} placeholder='Select a user' onChange={(e) => setSelectedUser(e)}>
+                            {filteredUsers.map((user, i) => {
+                                return (
+                                    <Select.Option key={i} value={user.id}>{user.name}</Select.Option>
+                                )
+                            })}
+                        </Select>
+                    </Form.Item>
+                </Form>
             </StandardModal>
-            <StandardIconButton style={{ marginTop: '1vh' }} onClick={() => setModalOpen(true)} toolTip='Delete User' icon={<MDBIcon icon="user-minus" />} />
         </>
     );
 };
 
-const CreateUser = ({ userData, displayAlert }) => {
+const CreateUser = ({ userData }) => {
     const [modalOpen, setModalOpen] = useState(false);
     const blankUser = { email: '', password: '', password2: '', group: 'Member' };
     const [newUser, setNewUser] = useState(blankUser);
     const newButtonDisabled = newUser.email.length === 0 || newUser.password.length === 0 || newUser.password2 !== newUser.password
         || newUser.email === userData.email || !newUser.email.includes('.') || !newUser.email.includes('@');
+    const [form] = Form.useForm();
     const handleCreateNewUser = async () => {
         const { data } = await createUser(newUser);
         if (data) {
-            displayAlert('User created successfully', true);
+            toggleNotification('success', 'Success', 'Successfully created user!');
             handleModalClose();
         }
         else {
-            displayAlert('Network error occurred while creating new user', false);
+            toggleNotification('error', 'Failure', 'Failed to create user!');
         }
     };
+    const handleModalClose = () => {
+        setNewUser(blankUser);
+        form.setFieldsValue(blankUser);
+        setModalOpen(false);
+    }
     const CreateButton = () => {
         return (
             <Row>
                 <Col span={12}>
-                    <StandardButton onClick={() => setModalOpen(false)}>Cancel</StandardButton>
+                    <StandardButton onClick={handleModalClose}>Cancel</StandardButton>
                 </Col>
                 <Col span={12}>
                     <StandardButton disabled={newButtonDisabled} onClick={handleCreateNewUser}>Create User</StandardButton>
@@ -220,21 +243,22 @@ const CreateUser = ({ userData, displayAlert }) => {
             </Row>
         );
     };
-
-    const handleModalClose = () => {
-        setNewUser(blankUser);
-        setModalOpen(false);
-    }
     return (
         <>
+            <StandardIconButton onClick={() => setModalOpen(true)} toolTip='Create User' icon={<UserAddOutlined />} />
             <StandardModal buttons={<CreateButton />} title='Create User' modalOpen={modalOpen} handleModalClose={handleModalClose}>
-                <Form.Group style={{ width: '95%', margin: 'auto', paddingBottom: '15px' }}>
-                    <StandardTextField hasError={newUser.email.length === 0 || !newUser.email.includes('.') || !newUser.email.includes('@')} value={newUser.email} label='Email' onChange={(e) => setNewUser({ ...newUser, email: e.target.value })} />
-                    <StandardTextField hasError={newUser.password.length === 0} isPassword value={newUser.password} label='Password' onChange={(e) => setNewUser({ ...newUser, password: e.target.value })} />
-                    <StandardTextField errorMessage='Passwords must match!' hasError={newUser.password2 !== newUser.password} isPassword value={newUser.password2} label='Password Again' onChange={(e) => setNewUser({ ...newUser, password2: e.target.value })} />
-                </Form.Group>
+                <Form initialValues={{ ...newUser }} onValuesChange={(e) => setNewUser({ ...newUser, ...e })} form={form} layout='vertical'>
+                    <Form.Item name='email' label='Email'>
+                        <Input placeholder='Type an email' />
+                    </Form.Item>
+                    <Form.Item name='password' label='Password'>
+                        <Input.Password placeholder='Type a password' />
+                    </Form.Item>
+                    <Form.Item name='password2' label='Password Again'>
+                        <Input.Password placeholder='Retype the above password' />
+                    </Form.Item>
+                </Form>
             </StandardModal>
-            <StandardIconButton style={{ marginTop: '1vh' }} onClick={() => setModalOpen(true)} toolTip='Create User' icon={<MDBIcon icon="user-plus" />} />
         </>
     );
 };

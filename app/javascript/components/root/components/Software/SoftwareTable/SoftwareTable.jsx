@@ -28,7 +28,7 @@ function SoftwareTable({ userData, setActiveApplication }) {
   useEffect(() => {
     const assignCompatibility = async (data) => {
       setSoftwareIsLoading(true);
-      const updatedData = data.map(x => (
+      const updatedData = data.map((x) => (
         {
           ...x, dev_date_display: `${getSeason(new Date(x.dev_date).getMonth())} ${new Date(x.dev_date).getFullYear()}`,
           adminEdit: <EditSoftware setSoftware={setSoftware} software={x} />

@@ -1,20 +1,19 @@
-import React, { useEffect, useState, useContext } from 'react';
-import Nav from 'react-bootstrap/Nav';
-import Tab from 'react-bootstrap/Tab';
+import React, { useEffect, useState } from 'react';
 import { fetchAllSoftware } from '../../../softwareService';
 import { fetchFeatures } from '../../../featureService';
-import { StandardPage, StandardImageModal, getThemeColor, StandardLinkModal } from '../../Utility/Utility';
+import { StandardPage, StandardImageModal, getThemeColor, StandardLinkModal, StandardIconButton } from '../../Utility/Utility';
 import InformationTab from './InformationTab';
 import FeaturesTab from './FeaturesTab';
 import DownloadsTab from './DownloadsTab';
 import VideoTab from './VideoTab';
-import { AppContext } from '../../../AppContext';
-import { Spin } from 'antd';
+import { Spin, Tabs, Row, Col } from 'antd';
+import { GithubFilled } from '@ant-design/icons';
 
-function SoftwareApplication({ userData, name, displayAlert }) {
+function SoftwareApplication({ userData, name }) {
   const [features, setFeatures] = useState(null);
   const [imageModalObj, setImageModalObj] = useState({ open: false, imageLink: '' });
   const [app, setApp] = useState(null);
+  const [repoModalOpen, setRepoModalOpen] = useState(false);
 
   useEffect(() => {
     const featureFetch = async () => {
@@ -45,64 +44,22 @@ function SoftwareApplication({ userData, name, displayAlert }) {
   return (
     <StandardPage title={app && app.name}>
       {!app && <Spin style={{ marginTop: '1vh' }} />}
-      {
-        app && <Tab.Container defaultActiveKey={'Information'}>
-          <ViewSwitcher app={app} />
-          <Tab.Content>
-            <Tab.Pane eventKey='Information'>
-              <InformationTab style={{ marginTop: '3vh' }} app={app} />
-            </Tab.Pane>
-            <Tab.Pane eventKey='Features'>
-              <FeaturesTab displayAlert={displayAlert} style={{ marginTop: '1vh' }} setImageModalObj={setImageModalObj} features={features} userData={userData} app={app} />
-            </Tab.Pane>
-            <Tab.Pane eventKey='Video'>
-              <VideoTab style={{ marginTop: '1vh' }} app={app} userData={userData} />
-            </Tab.Pane>
-            <Tab.Pane eventKey='Downloads'>
-              <DownloadsTab displayAlert={displayAlert} style={{ marginTop: '1vh' }} app={app} userData={userData} />
-            </Tab.Pane>
-          </Tab.Content>
-        </Tab.Container>
-      }
+      {app && <Tabs defaultActiveKey='Information' centered>
+        <Tabs.TabPane tab='Information' key='Information'><InformationTab app={app} style={{ marginBottom: '2vh' }} /></Tabs.TabPane>
+        <Tabs.TabPane tab='Features' key='Features'><FeaturesTab setImageModalObj={setImageModalObj} features={features} userData={userData} app={app} /></Tabs.TabPane>
+        <Tabs.TabPane tab='Video' key='Video'><VideoTab app={app} userData={userData} /></Tabs.TabPane>
+        <Tabs.TabPane tab='Downloads' key='Downloads'><DownloadsTab app={app} userData={userData} /></Tabs.TabPane>
+      </Tabs>}
       <StandardImageModal modalOpen={imageModalObj.open} handleModalClose={() => setImageModalObj({ ...imageModalObj, open: false })} imageLink={imageModalObj.imageLink} />
-    </StandardPage>
-  );
-};
-
-const ViewSwitcher = ({ app }) => {
-  const padding = { paddingLeft: '15px', paddingRight: '15px', paddingTop: '3px', paddingBottom: '3px' };
-  const { standardBodyFontSize } = useContext(AppContext);
-  const [repoModalOpen, setRepoModalOpen] = useState(false);
-
-  const CustomLink = ({ keyText, displayText, style }) => {
-    return (
-      <Nav.Link as={'div'} style={{ ...padding, ...style, fontSize: standardBodyFontSize }} eventKey={keyText}>{displayText}</Nav.Link>
-    );
-  };
-
-  return (
-    <>
-      <Nav justify fill variant='tabs' className='tabsNavBar' style={{ marginBottom: '1vh' }}>
-        <Nav.Item>
-          <CustomLink keyText='Information' displayText='Summary' />
-        </Nav.Item>
-        <Nav.Item>
-          <CustomLink keyText='Features' displayText='Features' />
-        </Nav.Item>
-        <Nav.Item>
-          <CustomLink keyText='Video' displayText='Video' />
-        </Nav.Item>
-        <Nav.Item>
-          <CustomLink keyText='Downloads' displayText='Downloads' />
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link onClick={() => setRepoModalOpen(true)} as={'div'} style={{ ...padding, fontSize: standardBodyFontSize }}>Repository</Nav.Link>
-        </Nav.Item>
-      </Nav>
-      <StandardLinkModal link={app.repo_link} handleModalClose={() => setRepoModalOpen(false)} modalOpen={repoModalOpen}>
-        Open the official <span style={{ color: getThemeColor(1) }}>{app.name}</span> GitHub repository?
+      <Row style={{ marginTop: '1vh' }}>
+        <Col xs={24}>
+          <StandardIconButton onClick={() => setRepoModalOpen(true)} icon={<GithubFilled />} toolTip={`${app?.name} Repository`} />
+        </Col>
+      </Row>
+      <StandardLinkModal link={app?.repo_link} handleModalClose={() => setRepoModalOpen(false)} modalOpen={repoModalOpen}>
+        Open the official <span style={{ color: getThemeColor(1) }}>{app?.name}</span> GitHub repository?
       </StandardLinkModal>
-    </>
+    </StandardPage>
   );
 };
 

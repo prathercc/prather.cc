@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AppContext } from './AppContext';
-import './components/style.css';
 import MainWrapper from './components/MainWrapper';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'antd/dist/antd.css';
+import './components/style.css';
 import { Spin } from 'antd';
 
 function Root() {
@@ -31,8 +31,8 @@ function Root() {
             userSelect: 'none'
           }}
         >
-          <div style={{ marginTop: '45vh', display: loading ? '' : 'none' }}><Spin size='large' /><p style={{ marginTop: '1vh', fontSize: standardTitleFontSize, fontFamily: fontStyle }}>Loading Prather.cc</p></div>
-          <div style={{ opacity: loading ? 0 : 100 }}>
+          {/* <div style={{ marginTop: '45vh', display: loading ? '' : 'none' }}><Spin size='large' /><p style={{ marginTop: '1vh', fontSize: standardTitleFontSize, fontFamily: fontStyle }}>Loading Prather.cc</p></div> */}
+          <div style={{ opacity: loading ? 100 : 100 }}>
             <div className='starbend' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(https://i92.servimg.com/u/f92/11/29/62/29/stars11.png)`, opacity: 0.7 }} />
             <div className='blackhole2' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(https://i92.servimg.com/u/f92/11/29/62/29/blackh13.png)` }} />
             <div className='blackhole' style={{ position: 'absolute', width: '100%', height: '100%', backgroundImage: `url(https://i92.servimg.com/u/f92/11/29/62/29/blackh13.png)` }} />
@@ -44,9 +44,6 @@ function Root() {
             </Switch>
             <Switch>
               <Route exact path='/' component={() => <MainWrapper activeKey='Home' />} />
-            </Switch>
-            <Switch>
-              <Route exact path='/maintenance' component={() => <MainWrapper activeKey='Maintenance' />} />
             </Switch>
           </div>
         </div>
