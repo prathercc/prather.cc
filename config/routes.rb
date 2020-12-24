@@ -2,7 +2,6 @@
 
 Rails.application.routes.draw do
   root 'main#index'
-  get 'maintenance', to: 'main#index'
   get 'software', to: 'main#index'
   get 'software/*path', to: 'main#index'
   namespace 'api' do
