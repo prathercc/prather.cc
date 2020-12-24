@@ -453,8 +453,8 @@
     padding: 0;
     box-shadow: 3px 3px 10px black;
     border: none;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
 }
 
 .ant-modal-body {
@@ -466,8 +466,8 @@
     border-top: none;
     padding-top: 10px;
     box-shadow: 3px 3px 10px black;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
 .ant-modal-title {
@@ -475,15 +475,16 @@
     font-family: "Titillium Web";
     font-size: calc(2px + 1.75vmin);
     background: var(--standard-menu-bar-background);
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
     padding: 0;
     line-height: normal;
 }
 
 .ant-modal-content {
     background-color: transparent;
-    border-radius: 10px;
+    border-radius: 5px;
+    -webkit-user-select: none;
 }
 
 .ant-notification {
@@ -548,6 +549,14 @@
     font-size: calc(2px + 1.5vmin);
     color: rgb(79, 201, 201, 1);
     pointer-events: none;
+    background-color: black;
+    border: 1px solid var(--standard-border-color);
+    -webkit-user-select: none;
+    border-radius: 5px;
+}
+
+.ant-tooltip-arrow {
+    display: none;
 }
 
 .ant-drawer-footer {
