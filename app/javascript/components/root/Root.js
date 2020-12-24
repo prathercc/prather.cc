@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AppContext } from './AppContext';
 import MainWrapper from './components/MainWrapper';
-import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'antd/dist/antd.css';
 import './components/style.css';
 import { Spin } from 'antd';
