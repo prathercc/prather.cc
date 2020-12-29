@@ -198,6 +198,7 @@
     box-shadow: inset 0px 0px 35px rgb(79, 201, 201, 0.5), inset 0px 0px 35px #5a415a, 1px 1px black;
     border-radius: 5px;
     filter: grayscale(1);
+    border: 1px solid transparent;
 }
 
 .defaultButton {

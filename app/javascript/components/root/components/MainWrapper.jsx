@@ -37,7 +37,7 @@ const MainWrapper = ({ activeKey: urlKey, activeApplication: urlApplication }) =
 
     return (
         <Tabs tabBarStyle={{ display: 'none' }} activeKey={activeKey} defaultActiveKey='Home' centered>
-            <NavMenu onSelect={handleOnSelect} userData={userData} setUserData={setUserData} />
+            <NavMenu selection={activeKey} onSelect={handleOnSelect} userData={userData} setUserData={setUserData} />
             <Tabs.TabPane tab='Home' key='Home'></Tabs.TabPane>
             <Tabs.TabPane tab='Software' key='Software'><SoftwareTable userData={userData} setActiveApplication={(app) => { setActiveApplication(app); window.history.pushState({}, '', `/software/${app}`) }} /></Tabs.TabPane>
             <Tabs.TabPane forceRender tab='Application' key='Application'><SoftwareApplication userData={userData} name={activeApplication} /></Tabs.TabPane>

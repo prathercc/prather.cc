@@ -6,7 +6,7 @@ import { VerticalLeftOutlined, YoutubeFilled, GithubFilled, UserOutlined } from 
 import { authenticate, clearSession } from '../../authService';
 import Maintenance from './Maintenance';
 
-function NavMenu({ onSelect, userData, setUserData }) {
+function NavMenu({ onSelect, userData, setUserData, selection }) {
     const { standardTitleFontSize, fontStyle } = useContext(AppContext);
     const [drawerOpen, setDrawerOpen] = useState(false);
     return (
@@ -15,8 +15,8 @@ function NavMenu({ onSelect, userData, setUserData }) {
                 <VerticalLeftOutlined style={{ color: 'white', fontSize: standardTitleFontSize, fontFamily: fontStyle, top: '50%', left: '15%', position: 'fixed' }} />
             </div>
             <Drawer footer={<DrawerFooter userData={userData} setUserData={setUserData} />} title='Prather.cc' closable={false} placement='left' onClose={() => setDrawerOpen(false)} visible={drawerOpen}>
-                <StandardButton style={{ marginBottom: '1vh' }} onClick={() => { onSelect('Home'); setDrawerOpen(false); }}>Home</StandardButton>
-                <StandardButton onClick={() => { onSelect('Software'); setDrawerOpen(false); }}>Software</StandardButton>
+                <StandardButton disabled={selection === 'Home'} style={{ marginBottom: '1vh' }} onClick={() => { onSelect('Home'); setDrawerOpen(false); }}>Home</StandardButton>
+                <StandardButton disabled={selection === 'Software'} onClick={() => { onSelect('Software'); setDrawerOpen(false); }}>Software</StandardButton>
             </Drawer>
         </>
     );
