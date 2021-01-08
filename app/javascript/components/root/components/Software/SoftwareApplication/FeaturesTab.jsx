@@ -51,7 +51,7 @@ const SoftwareFeature = ({ userData, setImageModalObj, feature, setFeatures, app
 
     return (
         <Row style={{ marginBottom: '5vh' }}>
-            <Col xs={24} md={9} style={{ display: 'flex', marginBottom: '1vh' }}>
+            <Col xs={24} md={allContentLoaded ? 9 : 24} style={{ display: 'flex', marginBottom: '1vh' }}>
                 <StandardCard noBorders style={{ verticalAlign: 'middle', margin: 'auto', maxWidth: '85%' }}>
                     <StandardImage
                         className='defaultImageNudge'
