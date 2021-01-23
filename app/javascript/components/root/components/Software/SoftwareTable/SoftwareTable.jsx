@@ -215,9 +215,10 @@ const EditSoftware = ({ software: existingSoftware, setSoftware: setSoftwares })
 };
 
 const getSeason = (month) => {
-  const winterArr = [11, 12, 1, 2];
-  const springArr = [3, 4];
-  const summerArr = [5, 6, 7];
+  console.log(month);
+  const winterArr = [10, 11, 0, 1];
+  const springArr = [2, 3];
+  const summerArr = [4, 5, 6];
   return winterArr.includes(month) ? 'Winter' : springArr.includes(month) ? 'Spring' : summerArr.includes(month) ? 'Summer' : 'Fall';
 }
 
