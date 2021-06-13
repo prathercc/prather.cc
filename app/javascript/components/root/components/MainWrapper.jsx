@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import SoftwareApplication from "./Software/SoftwareApplication/SoftwareApplication";
-import SoftwareTable from "./Software/SoftwareTable/SoftwareTable";
 import { getSession } from "../authService";
 import NavMenu from "./NavMenu/NavMenu";
 import { Tabs } from "antd";
@@ -33,7 +32,7 @@ const MainWrapper = ({
   };
   const shouldUpdateRoute = (key) => {
     let arr = ["Github", "Youtube", "UserLogin"];
-    return !arr.includes(key);
+    return !arr.includes(key) && !key.includes('app:') && !key.includes('user:');
   };
   const handleOnSelect = (e) => {
     if (shouldUpdateRoute(e.key)) {
@@ -50,6 +49,7 @@ const MainWrapper = ({
         userData={userData}
         setUserData={setUserData}
         setActiveApplication={(app) => {
+          console.log(app);
             setActiveApplication(app);
             window.history.pushState({}, "", `/software/${app}`);
           }}
@@ -61,15 +61,6 @@ const MainWrapper = ({
         centered
       >
         <Tabs.TabPane tab="Home" key="Home"></Tabs.TabPane>
-        <Tabs.TabPane tab="Software" key="Software">
-          <SoftwareTable
-            userData={userData}
-            setActiveApplication={(app) => {
-              setActiveApplication(app);
-              window.history.pushState({}, "", `/software/${app}`);
-            }}
-          />
-        </Tabs.TabPane>
         <Tabs.TabPane forceRender tab="Application" key="Application">
           <SoftwareApplication userData={userData} name={activeApplication} />
         </Tabs.TabPane>

@@ -11,6 +11,7 @@ import { YoutubeFilled, GithubFilled, UserOutlined } from "@ant-design/icons";
 import { authenticate, clearSession } from "../../authService";
 import { fetchAllSoftware } from "../../softwareService";
 import Maintenance from "./Maintenance";
+import SoftwareModal from "../Software/SoftwareApplication/SoftwareModal";
 
 function NavMenu({ onSelect, userData, setUserData, setActiveApplication }) {
   const [applications, setApplications] = useState([]);
@@ -22,6 +23,22 @@ function NavMenu({ onSelect, userData, setUserData, setActiveApplication }) {
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [newSoftwareOpen, setNewSoftwareOpen] = useState(false);
+  const [software, setSoftware] = useState({
+    is_legacy: false,
+    icon_link: "",
+    name: "",
+    description: "",
+    image_link: "",
+    windows: false,
+    linux: false,
+    mac: false,
+    android: false,
+    repo_link: "",
+    languages: "",
+    youtube_link: "",
+    dev_date: new Date(),
+  });
   useEffect(() => {
     const fetchApplications = async () => {
       try {
@@ -41,7 +58,17 @@ function NavMenu({ onSelect, userData, setUserData, setActiveApplication }) {
       <Menu theme="dark" onClick={onSelect} mode="horizontal">
         <Menu.Item key="Home">Home</Menu.Item>
         <Menu.SubMenu key="Software" title="Software">
-          <Menu.ItemGroup title="Available Applications">
+          {userData && (
+            <Menu.ItemGroup title="Administration">
+              <Menu.Item
+                key="app:admin"
+                onClick={() => setNewSoftwareOpen(true)}
+              >
+                New Application
+              </Menu.Item>
+            </Menu.ItemGroup>
+          )}
+          <Menu.ItemGroup title="Applications">
             {loading ? (
               <Menu.Item icon={<Spin />} />
             ) : (
@@ -58,34 +85,24 @@ function NavMenu({ onSelect, userData, setUserData, setActiveApplication }) {
             )}
           </Menu.ItemGroup>
         </Menu.SubMenu>
-        <Menu.Item
-          icon={<GithubFilled />}
-          key="Github"
-          onClick={() => setGithubModalOpen(true)}
-        />
-        <Menu.Item
-          icon={<YoutubeFilled />}
-          key="Youtube"
-          onClick={() => setYoutubeModalOpen(true)}
-        />
         {userData ? (
           <Menu.SubMenu icon={<UserOutlined />}>
-            <Menu.ItemGroup title="Admin Panel">
-              <Menu.Item key="admin:0" onClick={() => setCreateModalOpen(true)}>
+            <Menu.ItemGroup title="Administration">
+              <Menu.Item key="user:0" onClick={() => setCreateModalOpen(true)}>
                 Add User
               </Menu.Item>
-              <Menu.Item key="admin:1" onClick={() => setUpdateModalOpen(true)}>
+              <Menu.Item key="user:1" onClick={() => setUpdateModalOpen(true)}>
                 Edit User
               </Menu.Item>
-              <Menu.Item key="admin:2" onClick={() => setDeleteModalOpen(true)}>
+              <Menu.Item key="user:2" onClick={() => setDeleteModalOpen(true)}>
                 Remove User
               </Menu.Item>
             </Menu.ItemGroup>
-            <Menu.ItemGroup title="User Panel">
-              <Menu.Item key="user:0" onClick={() => setSessionModalOpen(true)}>
+            <Menu.ItemGroup title="Settings">
+              <Menu.Item key="user:4" onClick={() => setSessionModalOpen(true)}>
                 View Session
               </Menu.Item>
-              <Menu.Item key="user:1" onClick={() => setUserModalOpen(true)}>
+              <Menu.Item key="user:5" onClick={() => setUserModalOpen(true)}>
                 Sign Out
               </Menu.Item>
             </Menu.ItemGroup>
@@ -97,6 +114,16 @@ function NavMenu({ onSelect, userData, setUserData, setActiveApplication }) {
             onClick={() => setUserModalOpen(true)}
           />
         )}
+        <Menu.Item
+          icon={<GithubFilled />}
+          key="Github"
+          onClick={() => setGithubModalOpen(true)}
+        />
+        <Menu.Item
+          icon={<YoutubeFilled />}
+          key="Youtube"
+          onClick={() => setYoutubeModalOpen(true)}
+        />
       </Menu>
       <Github modalOpen={githubModalOpen} setModalOpen={setGithubModalOpen} />
       <Youtube
@@ -119,6 +146,13 @@ function NavMenu({ onSelect, userData, setUserData, setActiveApplication }) {
         deleteModalOpen={deleteModalOpen}
         setDeleteModalOpen={setDeleteModalOpen}
         userData={userData}
+      />
+      <SoftwareModal
+        modalOpen={newSoftwareOpen}
+        setModalOpen={setNewSoftwareOpen}
+        software={software}
+        setSoftware={setSoftware}
+        setActiveApplication={setActiveApplication}
       />
     </>
   );

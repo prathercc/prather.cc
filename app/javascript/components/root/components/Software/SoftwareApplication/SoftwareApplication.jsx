@@ -7,13 +7,15 @@ import FeaturesTab from './FeaturesTab';
 import DownloadsTab from './DownloadsTab';
 import VideoTab from './VideoTab';
 import { Spin, Tabs, Row, Col } from 'antd';
-import { GithubFilled } from '@ant-design/icons';
+import { GithubFilled, EditOutlined } from '@ant-design/icons';
+import SoftwareModal from './SoftwareModal';
 
 function SoftwareApplication({ userData, name }) {
   const [features, setFeatures] = useState(null);
   const [imageModalObj, setImageModalObj] = useState({ open: false, imageLink: '' });
   const [app, setApp] = useState(null);
   const [repoModalOpen, setRepoModalOpen] = useState(false);
+  const [softwareModalOpen, setSoftwareModalOpen] = useState(false);
 
   useEffect(() => {
     const featureFetch = async () => {
@@ -32,7 +34,7 @@ function SoftwareApplication({ userData, name }) {
         setApp(selectedSoftware);
       }
       else {
-        window.open('/software', '_self')
+        window.open('/', '_self')
       }
     };
     setApp(null);
@@ -52,13 +54,17 @@ function SoftwareApplication({ userData, name }) {
       </Tabs>
         <StandardImageModal modalOpen={imageModalObj.open} handleModalClose={() => setImageModalObj({ ...imageModalObj, open: false })} imageLink={imageModalObj.imageLink} />
         <Row style={{ marginTop: '1vh' }}>
-          <Col xs={24}>
+          <Col xs={12}>
+            <StandardIconButton onClick={() => setSoftwareModalOpen(true)} icon={<EditOutlined />} toolTip={`Edit ${app?.name}`} />
+          </Col>
+          <Col xs={12}>
             <StandardIconButton onClick={() => setRepoModalOpen(true)} icon={<GithubFilled />} toolTip={`${app?.name} Repository`} />
           </Col>
         </Row>
         <StandardLinkModal link={app?.repo_link} handleModalClose={() => setRepoModalOpen(false)} modalOpen={repoModalOpen}>
           Open the official <span style={{ color: getThemeColor(1) }}>{app?.name}</span> GitHub repository?
       </StandardLinkModal>
+      <SoftwareModal newSoftware={false} modalOpen={softwareModalOpen} setModalOpen={setSoftwareModalOpen} software={app} setSoftware={setApp} />
       </>
       }
     </StandardPage>
