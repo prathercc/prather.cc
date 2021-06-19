@@ -277,7 +277,7 @@
 /* AppBar SECTION */
 
 .ant-menu-horizontal {
-  background: var(--standard-default-background);
+  /* background: var(--standard-default-background); */
   font-size: var(--standard-body-font-size);
   font-family: var(--standard-font-style);
   color: var(--standard-text-color);
@@ -293,6 +293,11 @@
   background-color: var(--standard-border-color);
   font-size: var(--standard-body-font-size);
   font-family: var(--standard-font-style);
+}
+.ant-menu.ant-menu-dark,
+.ant-menu-dark .ant-menu-sub,
+.ant-menu.ant-menu-dark .ant-menu-sub {
+  background: #001529;
 }
 .ant-menu-dark.ant-menu-horizontal > .ant-menu-item,
 .ant-menu-dark.ant-menu-horizontal > .ant-menu-submenu {
@@ -528,11 +533,10 @@
 
 .ant-modal-body {
   background: #001529;
-  opacity: 85%;
+  opacity: 95%;
   color: white;
   font-family: var(--standard-font-style);
   font-size: var(--standard-small-font-size);
-  border: 1px solid var(--standard-border-color);
   border-top: none;
   padding-top: 10px;
   box-shadow: 3px 3px 10px black;

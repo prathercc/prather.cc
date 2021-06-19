@@ -142,8 +142,8 @@ export const StandardCard = ({ title, style, children, className, onClick, noBor
 export const StandardPage = ({ title = '', children, style }) => {
     const { bgColor, fontStyle, standardBodyFontSize, standardTitleFontSize } = useContext(AppContext);
     return (
-        <div style={{ backgroundColor: 'transparent', position: 'relative', maxWidth: '75%', margin: 'auto', ...style, paddingTop: '6vh', borderRadius: '10px' }}>
-            <div style={{ backgroundColor: 'rgb(0, 21, 41, 0.8)', marginTop: '0vh', borderRadius: '10px', boxShadow: '3px 3px 10px black', border: `1px solid ${getThemeColor(0.25)}` }}>
+        <div style={{ backgroundColor: 'transparent', position: 'relative', maxWidth: '75%', margin: 'auto', ...style, paddingTop: '6vh', borderRadius: '10px', marginBottom:'10px'}}>
+            <div style={{ backgroundColor: 'rgb(0, 21, 41, 0.8)', marginTop: '0vh', borderRadius: '10px', boxShadow: '3px 3px 10px black' }}>
                 <div
                     style={{
                         fontFamily: fontStyle,
