@@ -49,7 +49,6 @@ const MainWrapper = ({
         userData={userData}
         setUserData={setUserData}
         setActiveApplication={(app) => {
-          console.log(app);
             setActiveApplication(app);
             window.history.pushState({}, "", `/software/${app}`);
           }}
