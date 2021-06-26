@@ -85,6 +85,26 @@ function NavMenu({ onSelect, userData, setUserData, setActiveApplication }) {
             )}
           </Menu.ItemGroup>
         </Menu.SubMenu>
+        <Menu.SubMenu key="external" title="Resources">
+          <Menu.ItemGroup title="Source">
+            <Menu.Item
+              icon={<GithubFilled />}
+              key="Github"
+              onClick={() => setGithubModalOpen(true)}
+            >
+              GitHub
+            </Menu.Item>
+          </Menu.ItemGroup>
+          <Menu.ItemGroup title="Media">
+            <Menu.Item
+              icon={<YoutubeFilled />}
+              key="Youtube"
+              onClick={() => setYoutubeModalOpen(true)}
+            >
+              YouTube
+            </Menu.Item>
+          </Menu.ItemGroup>
+        </Menu.SubMenu>
         {userData ? (
           <Menu.SubMenu icon={<UserOutlined />}>
             <Menu.ItemGroup title="Administration">
@@ -114,16 +134,6 @@ function NavMenu({ onSelect, userData, setUserData, setActiveApplication }) {
             onClick={() => setUserModalOpen(true)}
           />
         )}
-        <Menu.Item
-          icon={<GithubFilled />}
-          key="Github"
-          onClick={() => setGithubModalOpen(true)}
-        />
-        <Menu.Item
-          icon={<YoutubeFilled />}
-          key="Youtube"
-          onClick={() => setYoutubeModalOpen(true)}
-        />
       </Menu>
       <Github modalOpen={githubModalOpen} setModalOpen={setGithubModalOpen} />
       <Youtube
