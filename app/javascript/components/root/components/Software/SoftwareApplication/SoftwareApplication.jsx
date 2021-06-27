@@ -163,7 +163,11 @@ function SoftwareApplication({ userData, name }) {
               />
             </Descriptions.Item>
             <Descriptions.Item label="Description">
-              {app.description}
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: app.description,
+                }}
+              />
             </Descriptions.Item>
             {app.youtube_link && (
               <Descriptions.Item span={3} label="Video">
