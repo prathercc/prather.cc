@@ -226,7 +226,7 @@ function SoftwareApplication({ userData, name }) {
                         </div>
                       )}
                     </Descriptions.Item>
-                    <Descriptions.Item span={1} label={`Feature Description`}>
+                    <Descriptions.Item span={1} label={``}>
                       <div
                         dangerouslySetInnerHTML={{
                           __html: feature.content_description,
