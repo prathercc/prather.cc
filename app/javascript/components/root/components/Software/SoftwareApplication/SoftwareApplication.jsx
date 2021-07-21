@@ -184,12 +184,12 @@ function SoftwareApplication({ userData, name }) {
               </Descriptions.Item>
             )}
             {features &&
-              features.map((feature, i) => {
+              features.map((feature) => {
                 return (
                   <>
                     <Descriptions.Item
-                      span={2}
-                      label={`Feature ${i + 1} - ${feature.title}`}
+                      span={1}
+                      label={`${feature.title}`}
                     >
                       <StandardImage
                         className="defaultImageNudge"
@@ -226,7 +226,7 @@ function SoftwareApplication({ userData, name }) {
                         </div>
                       )}
                     </Descriptions.Item>
-                    <Descriptions.Item span={1} label={``}>
+                    <Descriptions.Item span={2} label={``}>
                       <div
                         dangerouslySetInnerHTML={{
                           __html: feature.content_description,
