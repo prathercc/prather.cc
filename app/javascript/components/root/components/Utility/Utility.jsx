@@ -1,6 +1,15 @@
 import React, { useState, useContext } from "react";
 import { AppContext } from "../../AppContext";
-import { Row, Col, Spin, Tooltip, notification, Modal, Button } from "antd";
+import {
+  Row,
+  Col,
+  Spin,
+  Tooltip,
+  notification,
+  Modal,
+  Button,
+  Form,
+} from "antd";
 import { CloseCircleOutlined } from "@ant-design/icons";
 
 export const StandardImageModal = ({
@@ -8,27 +17,34 @@ export const StandardImageModal = ({
   handleModalClose,
   imageLink,
 }) => {
-  const CancelButton = () => (
-    <StandardButton onClick={handleModalClose}>Cancel</StandardButton>
-  );
   return (
     <StandardModal
-      buttons={<CancelButton />}
       title="View Image"
       modalOpen={modalOpen}
       handleModalClose={handleModalClose}
     >
-      <div style={{ maxWidth: "max-content", margin: "auto" }}>
-        <StandardImage
-          onClick={() => {
-            window.open(imageLink);
-            handleModalClose();
-          }}
-          className="defaultImageNudge"
-          src={imageLink}
-          style={{ maxWidth: "85%" }}
-        />
-      </div>
+      <Form>
+        <Form.Item>
+          <div style={{ maxWidth: "max-content", margin: "auto" }}>
+            <StandardImage
+              onClick={() => {
+                window.open(imageLink);
+                handleModalClose();
+              }}
+              className="defaultImageNudge"
+              src={imageLink}
+              style={{ maxWidth: "85%" }}
+            />
+          </div>
+        </Form.Item>
+        <Form.Item>
+          <Row>
+            <Col span={24}>
+              <StandardButton onClick={handleModalClose}>Cancel</StandardButton>
+            </Col>
+          </Row>
+        </Form.Item>
+      </Form>
     </StandardModal>
   );
 };
@@ -39,26 +55,26 @@ export const StandardConfirmationModal = ({
   confirmationMessage,
   callback,
 }) => {
-
-  const Buttons = () => (
-    <Row>
-      <Col span={12}>
-        <StandardButton onClick={handleModalClose}>Cancel</StandardButton>
-      </Col>
-      <Col span={12}>
-        <StandardButton onClick={callback}>Continue</StandardButton>
-      </Col>
-    </Row>
-  );
   return (
     <StandardModal
       width={450}
       modalOpen={modalOpen}
       handleModalClose={handleModalClose}
       title="Are you sure?"
-      buttons={<Buttons />}
     >
-      {confirmationMessage}
+      <Form>
+        <Form.Item>{confirmationMessage}</Form.Item>
+        <Form.Item>
+          <Row>
+            <Col span={12}>
+              <StandardButton onClick={handleModalClose}>Cancel</StandardButton>
+            </Col>
+            <Col span={12}>
+              <StandardButton onClick={callback}>Continue</StandardButton>
+            </Col>
+          </Row>
+        </Form.Item>
+      </Form>
     </StandardModal>
   );
 };
@@ -73,25 +89,26 @@ export const StandardLinkModal = ({
     window.open(link);
     handleModalClose();
   };
-  const Buttons = () => (
-    <Row>
-      <Col span={12}>
-        <StandardButton onClick={handleModalClose}>Cancel</StandardButton>
-      </Col>
-      <Col span={12}>
-        <StandardButton onClick={handleLinkOpen}>Open</StandardButton>
-      </Col>
-    </Row>
-  );
   return (
     <StandardModal
       width={450}
       modalOpen={modalOpen}
       handleModalClose={handleModalClose}
       title="External Link"
-      buttons={<Buttons />}
     >
-      {children}
+      <Form>
+        <Form.Item>{children}</Form.Item>
+        <Form.Item>
+          <Row>
+            <Col span={12}>
+              <StandardButton onClick={handleModalClose}>Cancel</StandardButton>
+            </Col>
+            <Col span={12}>
+              <StandardButton onClick={handleLinkOpen}>Open</StandardButton>
+            </Col>
+          </Row>
+        </Form.Item>
+      </Form>
     </StandardModal>
   );
 };
@@ -133,7 +150,6 @@ export const StandardImage = ({
       {hasError && noErrorMessage && (
         <CloseCircleOutlined
           style={{
-            fontSize: getIconSizing(),
             color: getThemeColor(),
             paddingLeft: "3px",
             paddingRight: "3px",
@@ -152,7 +168,9 @@ export const StandardImage = ({
           }}
         >
           <CloseCircleOutlined
-            style={{ fontSize: getIconSizing(), color: getThemeColor() }}
+            style={{
+              color: getThemeColor(),
+            }}
           />
         </div>
       )}
@@ -198,10 +216,7 @@ export const StandardButton = ({
       style={{
         margin: "auto",
         ...style,
-        fontSize: standardSmallFontSize,
         alignItems: "center",
-        maxWidth: "95%",
-        minWidth: "95%",
         textAlign: "center",
       }}
     >
@@ -268,7 +283,6 @@ export const StandardCard = ({
           ? { ...style, margin: "auto" }
           : {
               ...style,
-              fontSize: standardBodyFontSize,
               margin: "auto",
               borderBottom: `none`,
               borderTop: `none`,
@@ -280,7 +294,6 @@ export const StandardCard = ({
     >
       <div
         style={{
-          fontSize: standardBodyFontSize,
           minWidth: "100%",
           color: "white",
           background: getThemeBackground(),
@@ -322,7 +335,6 @@ export const StandardPage = ({ title = "", children, style }) => {
         <div
           style={{
             fontFamily: fontStyle,
-            fontSize: standardBodyFontSize,
             paddingTop: "0vh",
             paddingBottom: "2vh",
             borderTop: "none",
@@ -336,7 +348,6 @@ export const StandardPage = ({ title = "", children, style }) => {
           <div
             style={{
               fontFamily: fontStyle,
-              fontSize: standardTitleFontSize,
               margin: "auto",
               padding: 0,
               borderRadius: "5px",
