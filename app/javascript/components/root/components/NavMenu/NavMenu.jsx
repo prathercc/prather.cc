@@ -220,48 +220,47 @@ const Login = ({ setUserData, userData, modalOpen, setModalOpen }) => {
     toggleNotification("success", "Success", "Successfully signed out!");
   };
 
-  const Buttons = () => {
-    return (
-      <Row>
-        <Col span={12}>
-          <StandardButton onClick={() => setModalOpen(false)}>
-            Cancel
-          </StandardButton>
-        </Col>
-        <Col span={12}>
-          <StandardButton
-            disabled={signInDisabled && !userData}
-            onClick={userData ? signOut : authenticateUser}
-          >
-            Sign {userData ? "Out" : "In"}
-          </StandardButton>
-        </Col>
-      </Row>
-    );
-  };
   return (
     <StandardModal
       title={userData ? "Sign Out" : "Sign In"}
-      buttons={<Buttons />}
       modalOpen={modalOpen}
       handleModalClose={() => setModalOpen(false)}
     >
       {userData && "Are you sure you want to sign out?"}
-      {!userData && (
-        <Form
-          initialValues={{ ...credentials }}
-          onValuesChange={(e) => setCredentials({ ...credentials, ...e })}
-          form={form}
-          layout="vertical"
-        >
-          <Form.Item name="email" label="Email">
-            <Input placeholder="Type an email address" />
-          </Form.Item>
-          <Form.Item name="password" label="Password">
-            <Input.Password placeholder="Type a password" />
-          </Form.Item>
-        </Form>
-      )}
+      <Form
+        initialValues={{ ...credentials }}
+        onValuesChange={(e) => setCredentials({ ...credentials, ...e })}
+        form={form}
+        layout="vertical"
+      >
+        {!userData && (
+          <>
+            <Form.Item name="email" label="Email">
+              <Input placeholder="Type an email address" />
+            </Form.Item>
+            <Form.Item name="password" label="Password">
+              <Input.Password placeholder="Type a password" />
+            </Form.Item>
+          </>
+        )}
+        <Form.Item>
+          <Row>
+            <Col span={12}>
+              <StandardButton onClick={() => setModalOpen(false)}>
+                Cancel
+              </StandardButton>
+            </Col>
+            <Col span={12}>
+              <StandardButton
+                disabled={signInDisabled && !userData}
+                onClick={userData ? signOut : authenticateUser}
+              >
+                Sign {userData ? "Out" : "In"}
+              </StandardButton>
+            </Col>
+          </Row>
+        </Form.Item>
+      </Form>
     </StandardModal>
   );
 };

@@ -283,8 +283,6 @@
 /* AppBar SECTION */
 
 .ant-menu-horizontal {
-  /* background: var(--standard-default-background); */
-  font-size: var(--standard-body-font-size);
   font-family: var(--standard-font-style);
   color: var(--standard-text-color);
   border-bottom: 1px solid var(--standard-border-color);
@@ -292,12 +290,10 @@
 .ant-menu.ant-menu-dark .ant-menu-item-selected,
 .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
   background-color: var(--standard-border-color);
-  font-size: var(--standard-body-font-size);
   font-family: var(--standard-font-style);
 }
 .ant-menu-dark.ant-menu-horizontal > .ant-menu-item:hover {
   background-color: var(--standard-border-color);
-  font-size: var(--standard-body-font-size);
   font-family: var(--standard-font-style);
 }
 .ant-menu.ant-menu-dark,
@@ -307,7 +303,6 @@
 }
 .ant-menu-dark.ant-menu-horizontal > .ant-menu-item,
 .ant-menu-dark.ant-menu-horizontal > .ant-menu-submenu {
-  font-size: var(--standard-body-font-size);
   font-family: var(--standard-font-style);
 }
 .ant-menu-item:hover,
@@ -324,17 +319,12 @@
 .ant-menu-item-group-title,
 .ant-menu-dark .ant-menu-item > a,
 .ant-menu-dark .ant-menu-item > span > a {
-  font-size: var(--standard-body-font-size);
   font-family: var(--standard-font-style);
-}
-.ant-menu-item-group-title {
-  font-size: var(--standard-small-font-size);
 }
 .ant-menu-vertical .ant-menu-item,
 .ant-menu-vertical-left .ant-menu-item,
 .ant-menu-vertical-right .ant-menu-item,
 .ant-menu-inline .ant-menu-item {
-  font-size: var(--standard-body-font-size);
   font-family: var(--standard-font-style);
 }
 
@@ -418,9 +408,6 @@
 
 :root {
   --standard-font-style: "Titillium Web";
-  --standard-title-font-size: calc(2px + 2vmin);
-  --standard-body-font-size: calc(2px + 1.75vmin);
-  --standard-small-font-size: calc(2px + 1.6vmin);
   --standard-menu-bar-background: linear-gradient(
     to top left,
     #5a415a,
@@ -434,7 +421,6 @@
 .ant-tabs {
   color: white;
   font-family: var(--standard-font-style);
-  font-size: var(--standard-small-font-size);
 }
 
 .ant-tabs-ink-bar {
@@ -446,7 +432,6 @@
 }
 
 .ant-tabs-tab-btn {
-  font-size: var(--standard-small-font-size);
   color: white;
 }
 
@@ -469,7 +454,6 @@
   color: white;
   border: none;
   font-family: var(--standard-font-style);
-  font-size: var(--standard-body-font-size);
   color: rgb(79, 201, 201, 1) !important;
   border-radius: 5px;
   padding: 3px;
@@ -512,14 +496,12 @@
   border-top: 1px solid rgb(79, 201, 201, 0.1);
   color: white;
   font-family: var(--standard-font-style);
-  font-size: var(--standard-small-font-size);
   padding: 5px;
 }
 
 .ant-table-tbody > tr.ant-table-row-level-0 > td > .anticon {
   color: white;
   font-family: var(--standard-font-style);
-  font-size: var(--standard-small-font-size);
 }
 
 .ant-table-tbody > tr.ant-table-row-level-0:hover > td {
@@ -542,9 +524,9 @@
   opacity: 95%;
   color: white;
   font-family: var(--standard-font-style);
-  font-size: var(--standard-small-font-size);
   border-top: none;
   padding-top: 10px;
+  padding-bottom: 1px;
   box-shadow: 3px 3px 10px black;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -553,7 +535,6 @@
 .ant-modal-title {
   color: white;
   font-family: "Titillium Web";
-  font-size: calc(2px + 1.75vmin);
   background: var(--standard-menu-bar-background);
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
@@ -575,13 +556,11 @@
 .ant-notification-notice {
   color: white;
   font-family: "Titillium Web";
-  font-size: var(--standard-small-font-size);
 }
 
 .ant-notification-notice-message {
   color: white;
   font-family: "Titillium Web";
-  font-size: var(--standard-body-font-size);
 }
 
 .ant-input-affix-wrapper {
@@ -626,7 +605,6 @@
 
 .ant-tooltip-inner {
   font-family: "Titillium Web";
-  font-size: calc(2px + 1.5vmin);
   color: rgb(79, 201, 201, 1);
   pointer-events: none;
   background-color: black;
@@ -649,7 +627,6 @@
 .ant-drawer-title {
   color: rgb(79, 201, 201, 1);
   font-family: "Titillium Web";
-  font-size: calc(2px + 2vmin);
   pointer-events: none;
   text-align: center;
 }
@@ -685,7 +662,6 @@
 .ant-form-item-label > label {
   color: var(--standard-text-color);
   font-family: "Titillium Web";
-  font-size: calc(2px + 1.75vmin);
 }
 
 .ant-checkbox-wrapper {

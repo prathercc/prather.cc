@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  StandardIconButton,
   StandardModal,
   StandardButton,
   getThemeColor,
@@ -13,13 +12,7 @@ import {
   updateUser,
   getUser,
 } from "../../userService";
-import { Row, Col, Input, Form, Select } from "antd";
-import {
-  UserSwitchOutlined,
-  UserAddOutlined,
-  UserDeleteOutlined,
-  KeyOutlined,
-} from "@ant-design/icons";
+import { Row, Col, Input, Form, Select, Descriptions } from "antd";
 
 function Maintenance({
   userData,
@@ -59,49 +52,54 @@ function Maintenance({
 }
 
 const ViewSession = ({ userData, modalOpen, setModalOpen }) => {
-  const CancelButton = () => {
-    return (
-      <StandardButton onClick={() => setModalOpen(false)}>
-        Cancel
-      </StandardButton>
-    );
-  };
-
+  const arrMap = [
+    { key: "Email", value: userData?.email },
+    { key: "Group", value: userData?.group },
+    { key: "Session Token", value: userData?.token },
+    { key: "Account Identifier", value: userData?.id },
+    {
+      key: "Account Created",
+      value: new Date(userData?.created_at).toLocaleDateString(),
+    },
+    {
+      key: "Last Sign-in",
+      value: new Date(userData?.updated_at).toLocaleDateString(),
+    },
+  ];
   return (
     <StandardModal
-      buttons={<CancelButton />}
       title="Session Information"
       modalOpen={modalOpen}
       handleModalClose={() => setModalOpen(false)}
     >
-      <div style={{ width: "95%", margin: "auto" }}>
-        <div style={{ color: getThemeColor(1) }}>
-          Email: <span style={{ color: "white" }}>{userData?.email}</span>
-        </div>
-        <div style={{ color: getThemeColor(1) }}>
-          Group: <span style={{ color: "white" }}>{userData?.group}</span>
-        </div>
-        <div style={{ color: getThemeColor(1) }}>
-          Session Token:{" "}
-          <span style={{ color: "white" }}>{userData?.token}</span>
-        </div>
-        <div style={{ color: getThemeColor(1) }}>
-          Account Identifier:{" "}
-          <span style={{ color: "white" }}>{userData?.id}</span>
-        </div>
-        <div style={{ color: getThemeColor(1) }}>
-          Account Created:{" "}
-          <span style={{ color: "white" }}>
-            {new Date(userData?.created_at).toLocaleDateString()}
-          </span>
-        </div>
-        <div style={{ color: getThemeColor(1) }}>
-          Last Sign-in:{" "}
-          <span style={{ color: "white" }}>
-            {new Date(userData?.updated_at).toLocaleDateString()}
-          </span>
-        </div>
-      </div>
+      <Form>
+        <Form.Item>
+          <Descriptions layout="vertical" bordered>
+            {arrMap.map((x) => {
+              return (
+                <>
+                  <Descriptions.Item
+                    style={{ color: getThemeColor(1) }}
+                    span={1}
+                  >
+                    {x.key}
+                  </Descriptions.Item>
+                  <Descriptions.Item span={2}>{x.value}</Descriptions.Item>
+                </>
+              );
+            })}
+          </Descriptions>
+        </Form.Item>
+        <Form.Item>
+          <Row>
+            <Col span={24}>
+              <StandardButton onClick={() => setModalOpen(false)}>
+                Cancel
+              </StandardButton>
+            </Col>
+          </Row>
+        </Form.Item>
+      </Form>
     </StandardModal>
   );
 };
@@ -150,20 +148,6 @@ const UpdateUser = ({ userData, modalOpen, setModalOpen }) => {
     selectedUser === "Make a selection" ||
     selectedRole === "Make a selection" ||
     selectedUser === userData?.id;
-  const UpdateButton = () => {
-    return (
-      <Row>
-        <Col span={12}>
-          <StandardButton onClick={handleModalClose}>Cancel</StandardButton>
-        </Col>
-        <Col span={12}>
-          <StandardButton onClick={handleUpdate} disabled={disabledButton}>
-            Update User
-          </StandardButton>
-        </Col>
-      </Row>
-    );
-  };
 
   const handleUserSelect = async (e) => {
     setSelectedUser(e);
@@ -172,7 +156,6 @@ const UpdateUser = ({ userData, modalOpen, setModalOpen }) => {
   };
   return (
     <StandardModal
-      buttons={<UpdateButton />}
       title="Update User"
       modalOpen={modalOpen}
       handleModalClose={handleModalClose}
@@ -211,6 +194,18 @@ const UpdateUser = ({ userData, modalOpen, setModalOpen }) => {
               );
             })}
           </Select>
+        </Form.Item>
+        <Form.Item>
+          <Row>
+            <Col span={12}>
+              <StandardButton onClick={handleModalClose}>Cancel</StandardButton>
+            </Col>
+            <Col span={12}>
+              <StandardButton onClick={handleUpdate} disabled={disabledButton}>
+                Update User
+              </StandardButton>
+            </Col>
+          </Row>
         </Form.Item>
       </Form>
     </StandardModal>
@@ -257,29 +252,9 @@ const DeleteUser = ({ userData, modalOpen, setModalOpen }) => {
       toggleNotification("error", "Failure", "Failed to delete user!");
     }
   };
-  const DeleteButton = () => {
-    return (
-      <Row>
-        <Col span={12}>
-          <StandardButton onClick={() => setModalOpen(false)}>
-            Cancel
-          </StandardButton>
-        </Col>
-        <Col span={12}>
-          <StandardButton
-            disabled={deleteButtonDisabled}
-            onClick={handleDeleteUser}
-          >
-            Delete User
-          </StandardButton>
-        </Col>
-      </Row>
-    );
-  };
 
   return (
     <StandardModal
-      buttons={<DeleteButton />}
       title="Delete User"
       modalOpen={modalOpen}
       handleModalClose={handleModalClose}
@@ -299,6 +274,23 @@ const DeleteUser = ({ userData, modalOpen, setModalOpen }) => {
               );
             })}
           </Select>
+        </Form.Item>
+        <Form.Item>
+          <Row>
+            <Col span={12}>
+              <StandardButton onClick={() => setModalOpen(false)}>
+                Cancel
+              </StandardButton>
+            </Col>
+            <Col span={12}>
+              <StandardButton
+                disabled={deleteButtonDisabled}
+                onClick={handleDeleteUser}
+              >
+                Delete User
+              </StandardButton>
+            </Col>
+          </Row>
         </Form.Item>
       </Form>
     </StandardModal>
@@ -330,26 +322,8 @@ const CreateUser = ({ userData, modalOpen, setModalOpen }) => {
     form.setFieldsValue(blankUser);
     setModalOpen(false);
   };
-  const CreateButton = () => {
-    return (
-      <Row>
-        <Col span={12}>
-          <StandardButton onClick={handleModalClose}>Cancel</StandardButton>
-        </Col>
-        <Col span={12}>
-          <StandardButton
-            disabled={newButtonDisabled}
-            onClick={handleCreateNewUser}
-          >
-            Create User
-          </StandardButton>
-        </Col>
-      </Row>
-    );
-  };
   return (
     <StandardModal
-      buttons={<CreateButton />}
       title="Create User"
       modalOpen={modalOpen}
       handleModalClose={handleModalClose}
@@ -368,6 +342,21 @@ const CreateUser = ({ userData, modalOpen, setModalOpen }) => {
         </Form.Item>
         <Form.Item name="password2" label="Password Again">
           <Input.Password placeholder="Retype the above password" />
+        </Form.Item>
+        <Form.Item>
+          <Row>
+            <Col span={12}>
+              <StandardButton onClick={handleModalClose}>Cancel</StandardButton>
+            </Col>
+            <Col span={12}>
+              <StandardButton
+                disabled={newButtonDisabled}
+                onClick={handleCreateNewUser}
+              >
+                Create User
+              </StandardButton>
+            </Col>
+          </Row>
         </Form.Item>
       </Form>
     </StandardModal>
